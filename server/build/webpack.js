@@ -11,6 +11,7 @@ import NextJsSsrImportPlugin from './plugins/nextjs-ssr-import'
 import DynamicChunksPlugin from './plugins/dynamic-chunks-plugin'
 import UnlinkFilePlugin from './plugins/unlink-file-plugin'
 import findBabelConfig from './babel/find-config'
+import Es3ifyPlugin from 'es3ify-webpack-plugin'
 
 const nextDir = path.join(__dirname, '..', '..', '..')
 const nextNodeModulesDir = path.join(nextDir, 'node_modules')
@@ -202,6 +203,7 @@ export default async function getBaseWebpackConfig (dir, {dev = false, isServer 
       ].filter(Boolean)
     },
     plugins: [
+      !isServer && new Es3ifyPlugin(),
       new webpack.IgnorePlugin(/(precomputed)/, /node_modules.+(elliptic)/),
       dev && new webpack.NoEmitOnErrorsPlugin(),
       dev && !isServer && new FriendlyErrorsWebpackPlugin(),
