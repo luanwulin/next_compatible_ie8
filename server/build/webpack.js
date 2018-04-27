@@ -164,10 +164,10 @@ export default async function getBaseWebpackConfig (dir, {dev = false, isServer 
             // So, you can still require nested modules like `react-dom/server`
             react$: dev ? 'react/cjs/react.development.js' : 'react/cjs/react.production.min.js',
             'react-dom$': dev ? 'react-dom/cjs/react-dom.development.js' : 'react-dom/cjs/react-dom.production.min.js',
-            "react": "anujs/dist/ReactIE.js",
-            "react-dom": "anujs/dist/ReactIE.js",
+            'react': 'anujs/dist/ReactIE.js',
+            'react-dom': 'anujs/dist/ReactIE.js',
             'prop-types': 'anujs/lib/ReactPropTypes',
-            'devtools': "anujs/lib/devtools",
+            'devtools': 'anujs/lib/devtools',
             'create-react-class': 'anujs/lib/createClass'
         }
     },
@@ -180,7 +180,7 @@ export default async function getBaseWebpackConfig (dir, {dev = false, isServer 
       ]
     },
     module: {
-      loaders: [
+      rules: [
         dev && !isServer && {
           test: /\.(js|jsx)(\?[^?]*)?$/,
           loader: 'hot-self-accept-loader',
@@ -193,7 +193,7 @@ export default async function getBaseWebpackConfig (dir, {dev = false, isServer 
           test: /\.+(js|jsx)$/,
           include: [dir],
           exclude: /node_modules/,
-          loader: defaultLoaders.babel
+          use: defaultLoaders.babel
         }
       ].filter(Boolean)
     },
@@ -260,7 +260,7 @@ export default async function getBaseWebpackConfig (dir, {dev = false, isServer 
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(dev ? 'development' : 'production')
       }),
-      !dev && webpack.optimize.ModuleConcatenationPlugin && new webpack.optimize.ModuleConcatenationPlugin(),
+      !dev && new webpack.optimize.ModuleConcatenationPlugin(),
       !isServer && new PagesPlugin(),
       !isServer && new DynamicChunksPlugin(),
       isServer && new NextJsSsrImportPlugin(),

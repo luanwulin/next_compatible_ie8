@@ -263,10 +263,10 @@ exports.default = function () {
                   // So, you can still require nested modules like `react-dom/server`
                   react$: dev ? 'react/cjs/react.development.js' : 'react/cjs/react.production.min.js',
                   'react-dom$': dev ? 'react-dom/cjs/react-dom.development.js' : 'react-dom/cjs/react-dom.production.min.js',
-                  "react": "anujs/dist/ReactIE.js",
-                  "react-dom": "anujs/dist/ReactIE.js",
+                  'react': 'anujs/dist/ReactIE.js',
+                  'react-dom': 'anujs/dist/ReactIE.js',
                   'prop-types': 'anujs/lib/ReactPropTypes',
-                  'devtools': "anujs/lib/devtools",
+                  'devtools': 'anujs/lib/devtools',
                   'create-react-class': 'anujs/lib/createClass'
                 }
               },
@@ -274,7 +274,7 @@ exports.default = function () {
                 modules: [nextNodeModulesDir, 'node_modules', _path2.default.join(__dirname, 'loaders')].concat((0, _toConsumableArray3.default)(nodePathList))
               },
               module: {
-                loaders: [dev && !isServer && {
+                rules: [dev && !isServer && {
                   test: /\.(js|jsx)(\?[^?]*)?$/,
                   loader: 'hot-self-accept-loader',
                   include: [_path2.default.join(dir, 'pages'), nextPagesDir]
@@ -282,7 +282,7 @@ exports.default = function () {
                   test: /\.+(js|jsx)$/,
                   include: [dir],
                   exclude: /node_modules/,
-                  loader: defaultLoaders.babel
+                  use: defaultLoaders.babel
                 }].filter(Boolean)
               },
               plugins: [new _webpack2.default.IgnorePlugin(/(precomputed)/, /node_modules.+(elliptic)/), dev && new _webpack2.default.NoEmitOnErrorsPlugin(), !isServer && new _es3ifyWebpackPlugin2.default(), dev && !isServer && new _friendlyErrorsWebpackPlugin2.default(), dev && new _webpack2.default.NamedModulesPlugin(), dev && !isServer && new _webpack2.default.HotModuleReplacementPlugin(), // Hot module replacement
@@ -336,7 +336,7 @@ exports.default = function () {
                 }
               }), new _webpack2.default.DefinePlugin({
                 'process.env.NODE_ENV': (0, _stringify2.default)(dev ? 'development' : 'production')
-              }), !dev && _webpack2.default.optimize.ModuleConcatenationPlugin && new _webpack2.default.optimize.ModuleConcatenationPlugin(), !isServer && new _pagesPlugin2.default(), !isServer && new _dynamicChunksPlugin2.default(), isServer && new _nextjsSsrImport2.default(),
+              }), !dev && new _webpack2.default.optimize.ModuleConcatenationPlugin(), !isServer && new _pagesPlugin2.default(), !isServer && new _dynamicChunksPlugin2.default(), isServer && new _nextjsSsrImport2.default(),
               // In dev mode, we don't move anything to the commons bundle.
               // In production we move common modules into the existing main.js bundle
               !isServer && new _webpack2.default.optimize.CommonsChunkPlugin({
