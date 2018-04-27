@@ -679,40 +679,823 @@ export default ({ url }) =>
   </ul>
 </details></p>
 
-#### 项目介绍
-{**以下是码云平台说明，您可以替换为您的项目简介**
-码云是开源中国推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用码云实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+Typically you start your next server with `next start`. It's possible, however, to start a server 100% programmatically in order to customize routes, use route patterns, etc.
 
-#### 软件架构
-软件架构说明
+When using a custom server with a server file, for example called `server.js`, make sure you update the scripts key in `package.json` to:
+
+```json
+{
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js"
+  }
+}
+```
+
+This example makes `/a` resolve to `./pages/b`, and `/b` resolve to `./pages/a`:
+
+```js
+// This file doesn't go through babel or webpack transformation.
+// Make sure the syntax and sources this file requires are compatible with the current node version you are running
+// See https://github.com/zeit/next.js/issues/1245 for discussions on Universal Webpack or universal Babel
+const { createServer } = require('http')
+const { parse } = require('url')
+const next = require('next')
+
+const dev = process.env.NODE_ENV !== 'production'
+const app = next({ dev })
+const handle = app.getRequestHandler()
+
+app.prepare().then(() => {
+  createServer((req, res) => {
+    // Be sure to pass `true` as the second argument to `url.parse`.
+    // This tells it to parse the query portion of the URL.
+    const parsedUrl = parse(req.url, true)
+    const { pathname, query } = parsedUrl
+
+    if (pathname === '/a') {
+      app.render(req, res, '/b', query)
+    } else if (pathname === '/b') {
+      app.render(req, res, '/a', query)
+    } else {
+      handle(req, res, parsedUrl)
+    }
+  }).listen(3000, err => {
+    if (err) throw err
+    console.log('> Ready on http://localhost:3000')
+  })
+})
+```
+
+The `next` API is as follows:
+- `next(opts: object)`
+
+Supported options:
+- `dev` (`bool`) whether to launch Next.js in dev mode - default `false`
+- `dir` (`string`) where the Next project is located - default `'.'`
+- `quiet` (`bool`) Hide error messages containing server information - default `false`
+- `conf` (`object`) the same object you would use in `next.config.js` - default `{}`
+
+Then, change your `start` script to `NODE_ENV=production node server.js`.
+
+#### Disabling file-system routing
+By default, `Next` will serve each file in `/pages` under a pathname matching the filename (eg, `/pages/some-file.js` is served at `site.com/some-file`.
+
+If your project uses custom routing, this behavior may result in the same content being served from multiple paths, which can present problems with SEO and UX.
+
+To disable this behavior & prevent routing based on files in `/pages`, simply set the following option in your `next.config.js`:
+
+```js
+// next.config.js
+module.exports = {
+  useFileSystemPublicRoutes: false
+}
+```
+
+#### Dynamic assetPrefix
+
+Sometimes we need to set the `assetPrefix` dynamically. This is useful when changing the `assetPrefix` based on incoming requests.
+For that, we can use `app.setAssetPrefix`.
+
+Here's an example usage of it:
+
+```js
+const next = require('next')
+const micro = require('micro')
+
+const dev = process.env.NODE_ENV !== 'production'
+const app = next({ dev })
+const handle = app.getRequestHandler()
+
+app.prepare().then(() => {
+  const server = micro((req, res) => {
+    // Add assetPrefix support based on the hostname
+    if (req.headers.host === 'my-app.com') {
+      app.setAssetPrefix('http://cdn.com/myapp')
+    } else {
+      app.setAssetPrefix('')
+    }
+
+    handleNextRequests(req, res)
+  })
+
+  server.listen(port, (err) => {
+    if (err) {
+      throw err
+    }
+
+    console.log(`> Ready on http://localhost:${port}`)
+  })
+})
+
+```
+
+### Dynamic Import
+
+<p><details>
+  <summary><b>Examples</b></summary>
+  <ul>
+    <li><a href="./examples/with-dynamic-import">With Dynamic Import</a></li>
+  </ul>
+</details></p>
+
+Next.js supports TC39 [dynamic import proposal](https://github.com/tc39/proposal-dynamic-import) for JavaScript.
+With that, you could import JavaScript modules (inc. React Components) dynamically and work with them.
+
+You can think dynamic imports as another way to split your code into manageable chunks.
+Since Next.js supports dynamic imports with SSR, you could do amazing things with it.
+
+Here are a few ways to use dynamic imports.
+
+#### 1. Basic Usage (Also does SSR)
+
+```jsx
+import dynamic from 'next/dynamic'
+
+const DynamicComponent = dynamic(import('../components/hello'))
+
+export default () =>
+  <div>
+    <Header />
+    <DynamicComponent />
+    <p>HOME PAGE is here!</p>
+  </div>
+```
+
+#### 2. With Custom Loading Component
+
+```jsx
+import dynamic from 'next/dynamic'
+
+const DynamicComponentWithCustomLoading = dynamic(
+  import('../components/hello2'),
+  {
+    loading: () => <p>...</p>
+  }
+)
+
+export default () =>
+  <div>
+    <Header />
+    <DynamicComponentWithCustomLoading />
+    <p>HOME PAGE is here!</p>
+  </div>
+```
+
+#### 3. With No SSR
+
+```jsx
+import dynamic from 'next/dynamic'
+
+const DynamicComponentWithNoSSR = dynamic(import('../components/hello3'), {
+  ssr: false
+})
+
+export default () =>
+  <div>
+    <Header />
+    <DynamicComponentWithNoSSR />
+    <p>HOME PAGE is here!</p>
+  </div>
+```
+
+#### 4. With Multiple Modules At Once
+
+```jsx
+import dynamic from 'next/dynamic'
+
+const HelloBundle = dynamic({
+  modules: props => {
+    const components = {
+      Hello1: import('../components/hello1'),
+      Hello2: import('../components/hello2')
+    }
+
+    // Add remove components based on props
+
+    return components
+  },
+  render: (props, { Hello1, Hello2 }) =>
+    <div>
+      <h1>
+        {props.title}
+      </h1>
+      <Hello1 />
+      <Hello2 />
+    </div>
+})
+
+export default () => <HelloBundle title="Dynamic Bundle" />
+```
+
+### Custom `<Document>`
+
+<p><details>
+  <summary><b>Examples</b></summary>
+  <ul><li><a href="./examples/with-styled-components">Styled components custom document</a></li></ul>
+  <ul><li><a href="./examples/with-amp">Google AMP</a></li></ul>
+</details></p>
+
+Pages in `Next.js` skip the definition of the surrounding document's markup. For example, you never include `<html>`, `<body>`, etc. To override that default behavior, you must create a file at `./pages/_document.js`, where you can extend the `Document` class:
+
+```jsx
+// _document is only rendered on the server side and not on the client side
+// Event handlers like onClick can't be added to this file
+
+// ./pages/_document.js
+import Document, { Head, Main, NextScript } from 'next/document'
+import flush from 'styled-jsx/server'
+
+export default class MyDocument extends Document {
+  static getInitialProps({ renderPage }) {
+    const { html, head, errorHtml, chunks } = renderPage()
+    const styles = flush()
+    return { html, head, errorHtml, chunks, styles }
+  }
+
+  render() {
+    return (
+      <html>
+        <Head>
+          <style>{`body { margin: 0 } /* custom! */`}</style>
+        </Head>
+        <body className="custom_class">
+          {this.props.customValue}
+          <Main />
+          <NextScript />
+        </body>
+      </html>
+    )
+  }
+}
+```
+
+The `ctx` object is equivalent to the one received in all [`getInitialProps`](#fetching-data-and-component-lifecycle) hooks, with one addition:
+
+- `renderPage` (`Function`) a callback that executes the actual React rendering logic (synchronously). It's useful to decorate this function in order to support server-rendering wrappers like Aphrodite's [`renderStatic`](https://github.com/Khan/aphrodite#server-side-rendering)
+
+__Note: React-components outside of `<Main />` will not be initialised by the browser. If you need shared components in all your pages (like a menu or a toolbar), do _not_ add application logic  here, but take a look at [this example](https://github.com/zeit/next.js/tree/master/examples/layout-component).__
+
+### Custom error handling
+
+404 or 500 errors are handled both client and server side by a default component `error.js`. If you wish to override it, define a `_error.js` in the pages folder:
+
+```jsx
+import React from 'react'
+
+export default class Error extends React.Component {
+  static getInitialProps({ res, err }) {
+    const statusCode = res ? res.statusCode : err ? err.statusCode : null;
+    return { statusCode }
+  }
+
+  render() {
+    return (
+      <p>
+        {this.props.statusCode
+          ? `An error ${this.props.statusCode} occurred on server`
+          : 'An error occurred on client'}
+      </p>
+    )
+  }
+}
+```
+
+### Reusing the built-in error page
+
+If you want to render the built-in error page you can by using `next/error`:
+
+```jsx
+import React from 'react'
+import Error from 'next/error'
+import fetch from 'isomorphic-unfetch'
+
+export default class Page extends React.Component {
+  static async getInitialProps() {
+    const res = await fetch('https://api.github.com/repos/zeit/next.js')
+    const statusCode = res.statusCode > 200 ? res.statusCode : false
+    const json = await res.json()
+
+    return { statusCode, stars: json.stargazers_count }
+  }
+
+  render() {
+    if (this.props.statusCode) {
+      return <Error statusCode={this.props.statusCode} />
+    }
+
+    return (
+      <div>
+        Next stars: {this.props.stars}
+      </div>
+    )
+  }
+}
+```
+
+> If you have created a custom error page you have to import your own `_error` component instead of `next/error`
+
+### Custom configuration
+
+For custom advanced behavior of Next.js, you can create a `next.config.js` in the root of your project directory (next to `pages/` and `package.json`).
+
+Note: `next.config.js` is a regular Node.js module, not a JSON file. It gets used by the Next server and build phases, and not included in the browser build.
+
+```js
+// next.config.js
+module.exports = {
+  /* config options here */
+}
+```
+
+Or use a function:
+
+```js
+module.exports = (phase, {defaultConfig}){
+  //
+  // https://github.com/zeit/
+  return {
+    /* config options here */
+  }
+}
+```
+
+`phase` is the current context in which the configuration is loaded. You can see all phases here: [constants](./lib/constants.js)
+Phases can be imported from `next/constants`:
+
+```js
+const {PHASE_DEVELOPMENT_SERVER} = require('next/constants')
+module.exports = (phase, {defaultConfig}){
+  if(phase === PHASE_DEVELOPMENT_SERVER) {
+    return {
+      /* development only config options here */
+    }
+  }
+
+  return {
+    /* config options for all phases except development here */
+  }
+}
+```
+
+#### Setting a custom build directory
+
+You can specify a name to use for a custom build directory. For example, the following config will create a `build` folder instead of a `.next` folder. If no configuration is specified then next will create a `.next` folder.
+
+```js
+// next.config.js
+module.exports = {
+  distDir: 'build'
+}
+```
+
+#### Disabling etag generation
+
+You can disable etag generation for HTML pages depending on your cache strategy. If no configuration is specified then Next will generate etags for every page.
+
+```js
+// next.config.js
+module.exports = {
+  generateEtags: false
+}
+```
+
+#### Configuring the onDemandEntries
+
+Next exposes some options that give you some control over how the server will dispose or keep in memories pages built:
+
+```js
+module.exports = {
+  onDemandEntries: {
+    // period (in ms) where the server will keep pages in the buffer
+    maxInactiveAge: 25 * 1000,
+    // number of pages that should be kept simultaneously without being disposed
+    pagesBufferLength: 2,
+  }
+}
+```
+
+This is development-only feature. If you want to cache SSR pages in production, please see [SSR-caching](https://github.com/zeit/next.js/tree/canary/examples/ssr-caching) example.
+
+#### Configuring extensions looked for when resolving pages in `pages`
+
+Aimed at modules like [`@zeit/next-typescript`](https://github.com/zeit/next-plugins/tree/master/packages/next-typescript), that add support for pages ending in `.ts`. `pageExtensions` allows you to configure the extensions looked for in the `pages` directory when resolving pages.
+
+```js
+// next.config.js
+module.exports = {
+  pageExtensions: ['jsx', 'js']
+}
+```
+
+### Customizing webpack config
+
+<p><details>
+  <summary><b>Examples</b></summary>
+  <ul><li><a href="./examples/with-webpack-bundle-analyzer">Custom webpack bundle analyzer</a></li></ul>
+</details></p>
+
+In order to extend our usage of `webpack`, you can define a function that extends its config via `next.config.js`.
+
+```js
+// This file is not going through babel transformation.
+// So, we write it in vanilla JS
+// (But you could use ES2015 features supported by your Node.js version)
+
+module.exports = {
+  webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
+    // Perform customizations to webpack config
+
+    // Important: return the modified config
+    return config
+  },
+  webpackDevMiddleware: config => {
+    // Perform customizations to webpack dev middleware config
+
+    // Important: return the modified config
+    return config
+  }
+}
+```
+
+Some commonly asked for features are available as modules:
+
+- [@zeit/next-css](https://github.com/zeit/next-plugins/tree/master/packages/next-css)
+- [@zeit/next-sass](https://github.com/zeit/next-plugins/tree/master/packages/next-sass)
+- [@zeit/next-less](https://github.com/zeit/next-plugins/tree/master/packages/next-less)
+- [@zeit/next-preact](https://github.com/zeit/next-plugins/tree/master/packages/next-preact)
+- [@zeit/next-typescript](https://github.com/zeit/next-plugins/tree/master/packages/next-typescript)
+
+*Warning: The `webpack` function is executed twice, once for the server and once for the client. This allows you to distinguish between client and server configuration using the `isServer` property*
+
+Multiple configurations can be combined together with function composition. For example:
+
+```js
+const withTypescript = require('@zeit/next-typescript')
+const withSass = require('@zeit/next-sass')
+
+module.exports = withTypescript(withSass({
+  webpack(config, options) {
+    // Further custom configuration here
+    return config
+  }
+}))
+```
 
 
-#### 安装教程
+### Customizing babel config
 
-1. xxxx
-2. xxxx
-3. xxxx
+<p><details>
+  <summary><b>Examples</b></summary>
+  <ul><li><a href="./examples/with-custom-babel-config">Custom babel configuration</a></li></ul>
+</details></p>
 
-#### 使用说明
+In order to extend our usage of `babel`, you can simply define a `.babelrc` file at the root of your app. This file is optional.
 
-1. xxxx
-2. xxxx
-3. xxxx
+If found, we're going to consider it the *source of truth*, therefore it needs to define what next needs as well, which is the `next/babel` preset.
 
-#### 参与贡献
+This is designed so that you are not surprised by modifications we could make to the babel configurations.
 
-1. Fork 本项目
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
+Here's an example `.babelrc` file:
 
+```json
+{
+  "presets": ["next/babel"],
+  "plugins": []
+}
+```
 
-#### 码云特技
+#### Exposing configuration to the server / client side
 
-1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2. 码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4. [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5. 码云官方提供的使用手册 [http://git.mydoc.io/](http://git.mydoc.io/)
-6. 码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+The `config` key allows for exposing runtime configuration in your app. All keys are server only by default. To expose a configuration to both the server and client side you can use the `public` key.
+
+```js
+// next.config.js
+module.exports = {
+  serverRuntimeConfig: { // Will only be available on the server side
+    mySecret: 'secret'
+  },
+  publicRuntimeConfig: { // Will be available on both server and client
+    staticFolder: '/static'
+  }
+}
+```
+
+```js
+// pages/index.js
+import getConfig from 'next/config'
+const {serverRuntimeConfig, publicRuntimeConfig} = getConfig()
+
+console.log(serverRuntimeConfig.mySecret) // Will only be available on the server side
+console.log(publicRuntimeConfig.staticFolder) // Will be available on both server and client
+
+export default () => <div>
+  <img src={`${publicRuntimeConfig.staticFolder}/logo.png`} alt="logo" />
+</div>
+```
+
+### CDN support with Asset Prefix
+
+To set up a CDN, you can set up the `assetPrefix` setting and configure your CDN's origin to resolve to the domain that Next.js is hosted on.
+
+```js
+const isProd = process.env.NODE_ENV === 'production'
+module.exports = {
+  // You may only need to add assetPrefix in the production.
+  assetPrefix: isProd ? 'https://cdn.mydomain.com' : ''
+}
+```
+
+Note: Next.js will automatically use that prefix in the scripts it loads, but this has no effect whatsoever on `/static`. If you want to serve those assets over the CDN, you'll have to introduce the prefix yourself. One way of introducing a prefix that works inside your components and varies by environment is documented [in this example](https://github.com/zeit/next.js/tree/master/examples/with-universal-configuration).
+
+## Production deployment
+
+To deploy, instead of running `next`, you want to build for production usage ahead of time. Therefore, building and starting are separate commands:
+
+```bash
+next build
+next start
+```
+
+For example, to deploy with [`now`](https://zeit.co/now) a `package.json` like follows is recommended:
+
+```json
+{
+  "name": "my-app",
+  "dependencies": {
+    "next": "latest"
+  },
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  }
+}
+```
+
+Then run `now` and enjoy!
+
+Next.js can be deployed to other hosting solutions too. Please have a look at the ['Deployment'](https://github.com/zeit/next.js/wiki/Deployment) section of the wiki.
+
+Note: `NODE_ENV` is properly configured by the `next` subcommands, if absent, to maximize performance. if you’re using Next.js [programmatically](#custom-server-and-routing), it’s your responsibility to set `NODE_ENV=production` manually!
+
+Note: we recommend putting `.next`, or your custom dist folder (Please have a look at ['Custom Config'](https://github.com/zeit/next.js#custom-configuration)). You can set a custom folder in config, `.npmignore`, or `.gitignore`. Otherwise, use `files` or `now.files` to opt-into a whitelist of files you want to deploy (and obviously exclude `.next` or your custom dist folder).
+
+## Static HTML export
+
+<p><details>
+  <summary><b>Examples</b></summary>
+  <ul><li><a href="./examples/with-static-export">Static export</a></li></ul>
+</details></p>
+
+This is a way to run your Next.js app as a standalone static app without any Node.js server. The export app supports almost every feature of Next.js including dynamic urls, prefetching, preloading and dynamic imports.
+
+### Usage
+
+Simply develop your app as you normally do with Next.js. Then create a custom Next.js [config](https://github.com/zeit/next.js#custom-configuration) as shown below:
+
+```js
+// next.config.js
+module.exports = {
+  exportPathMap: function() {
+    return {
+      '/': { page: '/' },
+      '/about': { page: '/about' },
+      '/readme.md': { page: '/readme' },
+      '/p/hello-nextjs': { page: '/post', query: { title: 'hello-nextjs' } },
+      '/p/learn-nextjs': { page: '/post', query: { title: 'learn-nextjs' } },
+      '/p/deploy-nextjs': { page: '/post', query: { title: 'deploy-nextjs' } }
+    }
+  }
+}
+```
+
+> Note that if the path ends with a directory, it will be exported as `/dir-name/index.html`, but if it ends with an extension, it will be exported as the specified filename, e.g. `/readme.md` above. If you use a file extension other than `.html`, you may need to set the `Content-Type` header to `text/html` when serving this content.
+
+In that, you specify what are the pages you need to export as static HTML.
+
+Then simply run these commands:
+
+```sh
+next build
+next export
+```
+
+For that you may need to add a NPM script to `package.json` like this:
+
+```json
+{
+  "scripts": {
+    "build": "next build && next export"
+  }
+}
+```
+
+And run it at once with:
+
+```sh
+npm run build
+```
+
+Then you've a static version of your app in the “out" directory.
+
+> You can also customize the output directory. For that run `next export -h` for the help.
+
+Now you can deploy that directory to any static hosting service. Note that there is an additional step for deploying to GitHub Pages, [documented here](https://github.com/zeit/next.js/wiki/Deploying-a-Next.js-app-into-GitHub-Pages).
+
+For an example, simply visit the “out” directory and run following command to deploy your app to [ZEIT now](https://zeit.co/now).
+
+```sh
+now
+```
+
+### Limitation
+
+With next export, we build HTML version of your app when you run the command `next export`. In that time, we'll run the `getInitialProps` functions of your pages.
+
+So, you could only use `pathname`, `query` and `asPath` fields of the `context` object passed to `getInitialProps`. You can't use `req` or `res` fields.
+
+> Basically, you won't be able to render HTML content dynamically as we pre-build HTML files. If you need that, you need run your app with `next start`.
+
+## Multi Zones
+
+<p><details>
+  <summary><b>Examples</b></summary>
+  <ul><li><a href="./examples/with-zones">With Zones</a></li></ul>
+</details></p>
+
+A zone is a single deployment of a Next.js app. Just like that, you can have multiple zones. Then you can merge them as a single app.
+
+For an example, you can have two zones like this:
+
+* https://docs.my-app.com for serving `/docs/**`
+* https://ui.my-app.com for serving all other pages
+
+With multi zones support, you can merge both these apps into a single one. Which allows your customers to browse it using a single URL. But you can develop and deploy both apps independently.
+
+> This is exactly the same concept as microservices, but for frontend apps.
+
+### How to define a zone
+
+There are no special zones related APIs. You only need to do following things:
+
+* Make sure to keep only the pages you need in your app. (For an example, https://ui.my-app.com should not contain pages for `/docs/**`)
+* Make sure your app has an [assetPrefix](https://github.com/zeit/next.js#cdn-support-with-asset-prefix). (You can also define the assetPrefix [dynamically](https://github.com/zeit/next.js#dynamic-assetprefix).)
+
+### How to merge them
+
+You can merge zones using any HTTP proxy.
+
+You can use [micro proxy](https://github.com/zeit/micro-proxy) as your local proxy server. It allows you to easily define routing rules like below:
+
+```json
+{
+  "rules": [
+    {"pathname": "/docs**", "method":["GET", "POST", "OPTIONS"], "dest": "https://docs.my-app.com"},
+    {"pathname": "/**", "dest": "https://ui.my-app.com"}
+  ]
+}
+```
+
+For the production deployment, you can use the [path alias](https://zeit.co/docs/features/path-aliases) feature if you are using [ZEIT now](https://zeit.co/now). Otherwise, you can configure your existing proxy server to route HTML pages using a set of rules as show above.
+
+## Recipes
+
+- [Setting up 301 redirects](https://www.raygesualdo.com/posts/301-redirects-with-nextjs/)
+- [Dealing with SSR and server only modules](https://arunoda.me/blog/ssr-and-server-only-modules)
+- [Building with React-Material-UI-Next-Express-Mongoose-Mongodb](https://github.com/builderbook/builderbook)
+
+## FAQ
+
+<details>
+  <summary>Is this production ready?</summary>
+  Next.js has been powering https://zeit.co since its inception.
+
+  We’re ecstatic about both the developer experience and end-user performance, so we decided to share it with the community.
+</details>
+
+<details>
+  <summary>How big is it?</summary>
+
+The client side bundle size should be measured in a per-app basis.
+A small Next main bundle is around 65kb gzipped.
+
+</details>
+
+<details>
+  <summary>Is this like `create-react-app`?</summary>
+
+Yes and No.
+
+Yes in that both make your life easier.
+
+No in that it enforces a _structure_ so that we can do more advanced things like:
+- Server side rendering
+- Automatic code splitting
+
+In addition, Next.js provides two built-in features that are critical for every single website:
+- Routing with lazy component loading: `<Link>` (by importing `next/link`)
+- A way for components to alter `<head>`: `<Head>` (by importing `next/head`)
+
+If you want to create re-usable React components that you can embed in your Next.js app or other React applications, using `create-react-app` is a great idea. You can later `import` it and keep your codebase clean!
+
+</details>
+
+<details>
+  <summary>How do I use CSS-in-JS solutions?</summary>
+
+Next.js bundles [styled-jsx](https://github.com/zeit/styled-jsx) supporting scoped css. However you can use any CSS-in-JS solution in your Next app by just including your favorite library [as mentioned before](#css-in-js) in the document.
+</details>
+
+<details>
+  <summary>What syntactic features are transpiled? How do I change them?</summary>
+
+We track V8. Since V8 has wide support for ES6 and `async` and `await`, we transpile those. Since V8 doesn’t support class decorators, we don’t transpile those.
+
+See [this](https://github.com/zeit/next.js/blob/master/server/build/webpack.js#L79) and [this](https://github.com/zeit/next.js/issues/26)
+
+</details>
+
+<details>
+  <summary>Why a new Router?</summary>
+
+Next.js is special in that:
+
+- Routes don’t need to be known ahead of time
+- Routes are always lazy-loadable
+- Top-level components can define `getInitialProps` that should _block_ the loading of the route (either when server-rendering or lazy-loading)
+
+As a result, we were able to introduce a very simple approach to routing that consists of two pieces:
+
+- Every top level component receives a `url` object to inspect the url or perform modifications to the history
+- A `<Link />` component is used to wrap elements like anchors (`<a/>`) to perform client-side transitions
+
+We tested the flexibility of the routing with some interesting scenarios. For an example, check out [nextgram](https://github.com/zeit/nextgram).
+
+</details>
+
+<details>
+<summary>How do I define a custom fancy route?</summary>
+
+We [added](#custom-server-and-routing) the ability to map between an arbitrary URL and any component by supplying a request handler.
+
+On the client side, we have a parameter call `as` on `<Link>` that _decorates_ the URL differently from the URL it _fetches_.
+</details>
+
+<details>
+<summary>How do I fetch data?</summary>
+
+It’s up to you. `getInitialProps` is an `async` function (or a regular function that returns a `Promise`). It can retrieve data from anywhere.
+</details>
+
+<details>
+  <summary>Can I use it with GraphQL?</summary>
+
+Yes! Here's an example with [Apollo](./examples/with-apollo).
+
+</details>
+
+<details>
+<summary>Can I use it with Redux?</summary>
+
+Yes! Here's an [example](./examples/with-redux)
+</details>
+
+<details>
+<summary>Why aren't routes I have for my static export accessible in the development server?</summary>
+
+This is a known issue with the architecture of Next.js. Until a solution is built into the framework, take a look at [this example solution](https://github.com/zeit/next.js/wiki/Centralizing-Routing) to centralize your routing.
+</details>
+
+<details>
+<summary>Can I use Next with my favorite Javascript library or toolkit?</summary>
+
+Since our first release we've had **many** example contributions, you can check them out in the [examples](./examples) directory
+</details>
+
+<details>
+<summary>What is this inspired by?</summary>
+
+Many of the goals we set out to accomplish were the ones listed in [The 7 principles of Rich Web Applications](http://rauchg.com/2014/7-principles-of-rich-web-applications/) by Guillermo Rauch.
+
+The ease-of-use of PHP is a great inspiration. We feel Next.js is a suitable replacement for many scenarios where you otherwise would use PHP to output HTML.
+
+Unlike PHP, we benefit from the ES6 module system and every file exports a **component or function** that can be easily imported for lazy evaluation or testing.
+
+As we were researching options for server-rendering React that didn’t involve a large number of steps, we came across [react-page](https://github.com/facebookarchive/react-page) (now deprecated), a similar approach to Next.js by the creator of React Jordan Walke.
+
+</details>
+
+## Contributing
+
+Please see our [contributing.md](./contributing.md)
+
+## Authors
+
+- Arunoda Susiripala ([@arunoda](https://twitter.com/arunoda)) – [ZEIT](https://zeit.co)
+- Tim Neutkens ([@timneutkens](https://github.com/timneutkens)) – [ZEIT](https://zeit.co)
+- Naoyuki Kanezawa ([@nkzawa](https://twitter.com/nkzawa)) – [ZEIT](https://zeit.co)
+- Tony Kovanen ([@tonykovanen](https://twitter.com/tonykovanen)) – [ZEIT](https://zeit.co)
+- Guillermo Rauch ([@rauchg](https://twitter.com/rauchg)) – [ZEIT](https://zeit.co)
+- Dan Zajdband ([@impronunciable](https://twitter.com/impronunciable)) – Knight-Mozilla / Coral Project
