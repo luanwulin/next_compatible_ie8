@@ -162,12 +162,12 @@ export default async function getBaseWebpackConfig (dir, {dev = false, isServer 
             // (But it didn't increase the overall build size)
             // Here we are doing an exact match with '$'
             // So, you can still require nested modules like `react-dom/server`
-            react$: dev ? 'react/cjs/react.development.js' : 'react/cjs/react.production.min.js',
-            'react-dom$': dev ? 'react-dom/cjs/react-dom.development.js' : 'react-dom/cjs/react-dom.production.min.js',
             'react': 'anujs/dist/ReactIE.js',
-            'react-dom': 'anujs/dist/ReactIE.js',
+            'react-dom$': 'anujs/dist/ReactIE.js',
+            'react-dom/server': 'anujs/dist/ReactDOMServer.js',
             'prop-types': 'anujs/lib/ReactPropTypes',
             'devtools': 'anujs/lib/devtools',
+            'redux$': 'anujs/lib/ReduxIE',
             'create-react-class': 'anujs/lib/createClass'
         }
     },
