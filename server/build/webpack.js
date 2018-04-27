@@ -260,7 +260,7 @@ export default async function getBaseWebpackConfig (dir, {dev = false, isServer 
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(dev ? 'development' : 'production')
       }),
-      !dev && new webpack.optimize.ModuleConcatenationPlugin(),
+      !dev && webpack.optimize.ModuleConcatenationPlugin && new webpack.optimize.ModuleConcatenationPlugin(),
       !isServer && new PagesPlugin(),
       !isServer && new DynamicChunksPlugin(),
       isServer && new NextJsSsrImportPlugin(),

@@ -336,7 +336,7 @@ exports.default = function () {
                 }
               }), new _webpack2.default.DefinePlugin({
                 'process.env.NODE_ENV': (0, _stringify2.default)(dev ? 'development' : 'production')
-              }), !dev && new _webpack2.default.optimize.ModuleConcatenationPlugin(), !isServer && new _pagesPlugin2.default(), !isServer && new _dynamicChunksPlugin2.default(), isServer && new _nextjsSsrImport2.default(),
+              }), !dev && _webpack2.default.optimize.ModuleConcatenationPlugin && new _webpack2.default.optimize.ModuleConcatenationPlugin(), !isServer && new _pagesPlugin2.default(), !isServer && new _dynamicChunksPlugin2.default(), isServer && new _nextjsSsrImport2.default(),
               // In dev mode, we don't move anything to the commons bundle.
               // In production we move common modules into the existing main.js bundle
               !isServer && new _webpack2.default.optimize.CommonsChunkPlugin({
