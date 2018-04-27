@@ -257,8 +257,18 @@ exports.default = function () {
                   // (But it didn't increase the overall build size)
                   // Here we are doing an exact match with '$'
                   // So, you can still require nested modules like `react-dom/server`
-                  react$: dev ? 'react/cjs/react.development.js' : 'react/cjs/react.production.min.js',
-                  'react-dom$': dev ? 'react-dom/cjs/react-dom.development.js' : 'react-dom/cjs/react-dom.production.min.js'
+                  // 若要兼容 IE 请使用以下配置
+                  'react$': 'anujs/dist/ReactIE',
+                  'react-dom$': 'anujs/dist/ReactIE',
+                  'react-dom/server': 'anujs/dist/ReactDOMServer.js',
+                  //这主要用于IE6－8，因为官方源码中的isPlainObject方法性能超差
+                  'redux': 'anujs/lib/ReduxIE',
+                  // 如果引用了 prop-types 或 create-react-class
+                  // 需要添加如下别名
+                  'prop-types': 'anujs/lib/ReactPropTypes',
+                  'create-react-class': 'anujs/lib/createClass',
+                  //如果你在移动端用到了onTouchTap事件
+                  'react-tap-event-plugin': 'anujs/lib/injectTapEventPlugin'
                 }
               },
               resolveLoader: {
