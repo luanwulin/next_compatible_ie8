@@ -66,4 +66,3 @@ function withRouter(ComposedComponent) {
 
   return (0, _hoistNonReactStatics2['default'])(WithRouteWrapper, ComposedComponent);
 }
-module.exports = exports['default'];

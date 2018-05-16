@@ -554,5 +554,3 @@ exports['default'] = function () {
 
     return createCompiler;
 }();
-
-module.exports = exports['default'];

@@ -19,5 +19,3 @@ exports['default'] = function (moduleRequire) {
     return absolutePath.substring(relativeStartIndex + RELATIVE_START.length);
   };
 };
-
-module.exports = exports['default'];

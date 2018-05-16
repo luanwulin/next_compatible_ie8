@@ -111,4 +111,3 @@ _ansiHtml2['default'].setColors({
   cyan: 'ebe7e5',
   red: 'ff001f'
 });
-module.exports = exports['default'];

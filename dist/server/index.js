@@ -1208,4 +1208,3 @@ var Server = function () {
 }();
 
 exports['default'] = Server;
-module.exports = exports['default'];

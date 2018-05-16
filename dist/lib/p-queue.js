@@ -124,4 +124,3 @@ var PQueue = function () {
 }();
 
 exports['default'] = PQueue;
-module.exports = exports['default'];

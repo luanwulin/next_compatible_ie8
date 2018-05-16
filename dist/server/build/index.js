@@ -186,5 +186,3 @@ function runCompiler(compiler) {
     });
   });
 }
-
-module.exports = exports['default'];

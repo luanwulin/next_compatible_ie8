@@ -145,5 +145,3 @@ exports['default'] = function () {
     });
   }, 10000);
 };
-
-module.exports = exports['default'];

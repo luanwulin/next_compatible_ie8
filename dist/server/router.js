@@ -113,4 +113,3 @@ var Router = function () {
 }();
 
 exports['default'] = Router;
-module.exports = exports['default'];

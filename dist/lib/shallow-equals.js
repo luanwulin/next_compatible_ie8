@@ -13,4 +13,3 @@ function shallowEquals(a, b) {
 
   return true;
 }
-module.exports = exports["default"];

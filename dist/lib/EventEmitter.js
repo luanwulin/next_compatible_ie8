@@ -49,4 +49,3 @@ var EventEmitter = function () {
 }();
 
 exports["default"] = EventEmitter;
-module.exports = exports["default"];

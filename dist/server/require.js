@@ -44,5 +44,3 @@ exports['default'] = function () {
 
   return requireModule;
 }();
-
-module.exports = exports['default'];

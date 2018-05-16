@@ -96,4 +96,3 @@ var UnlinkFilePlugin = function () {
 }();
 
 exports['default'] = UnlinkFilePlugin;
-module.exports = exports['default'];

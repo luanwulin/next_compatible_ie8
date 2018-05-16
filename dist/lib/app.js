@@ -192,4 +192,3 @@ function createUrl(router) {
     }
   };
 }
-module.exports = exports['default'];

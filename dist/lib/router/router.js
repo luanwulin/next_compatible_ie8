@@ -687,4 +687,3 @@ exports['default'] = Router;
 function toRoute(path) {
   return path.replace(/\/$/, '') || '/';
 }
-module.exports = exports['default'];

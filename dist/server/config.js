@@ -63,4 +63,3 @@ function loadConfig(dir, customConfig) {
 function withDefaults(config) {
   return (0, _assign2['default'])({}, defaultConfig, config);
 }
-module.exports = exports['default'];

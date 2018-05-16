@@ -16,7 +16,6 @@
     "transform-object-rest-spread",
     "transform-class-properties",
     "transform-runtime",
-    "add-module-exports",
     "syntax-dynamic-import",
     "transform-es3-property-literals",
     "transform-es3-member-expression-literals"

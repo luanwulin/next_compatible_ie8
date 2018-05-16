@@ -266,4 +266,3 @@ function copyPages(nextDir, outDir, buildId) {
     walker.on('end', resolve);
   });
 }
-module.exports = exports['default'];

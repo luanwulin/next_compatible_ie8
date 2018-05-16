@@ -47,4 +47,3 @@ var CombineAssetsPlugin = function () {
 }();
 
 exports['default'] = CombineAssetsPlugin;
-module.exports = exports['default'];

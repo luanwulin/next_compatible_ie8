@@ -175,4 +175,3 @@ var PageLoader = function () {
 }();
 
 exports['default'] = PageLoader;
-module.exports = exports['default'];

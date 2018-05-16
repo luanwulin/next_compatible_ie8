@@ -191,4 +191,3 @@ function isLocal(href) {
 }
 
 var warnLink = (0, _utils.execOnce)(_utils.warn);
-module.exports = exports['default'];

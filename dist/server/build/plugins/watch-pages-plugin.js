@@ -37,4 +37,3 @@ var WatchPagesPlugin = function () {
 }();
 
 exports['default'] = WatchPagesPlugin;
-module.exports = exports['default'];

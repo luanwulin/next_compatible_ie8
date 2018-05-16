@@ -19,4 +19,3 @@ function clean(dir) {
   var dist = (0, _config2['default'])(dir).distDir;
   return (0, _del2['default'])((0, _path.resolve)(dir, dist), { force: true });
 }
-module.exports = exports['default'];

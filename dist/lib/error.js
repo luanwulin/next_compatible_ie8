@@ -133,4 +133,3 @@ var styles = {
     padding: 0
   }
 };
-module.exports = exports['default'];

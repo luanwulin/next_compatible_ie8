@@ -357,5 +357,3 @@ var Invalidator = function () {
 
   return Invalidator;
 }();
-
-module.exports = exports['default'];

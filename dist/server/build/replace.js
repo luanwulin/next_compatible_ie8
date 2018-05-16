@@ -86,4 +86,3 @@ function move(from, to) {
     });
   });
 }
-module.exports = exports['default'];

@@ -21,4 +21,3 @@ function findBabelConfig(dir) {
 
   return configList[0];
 }
-module.exports = exports['default'];

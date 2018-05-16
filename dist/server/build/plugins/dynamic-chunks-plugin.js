@@ -63,4 +63,3 @@ var PagesPlugin = function () {
 }();
 
 exports['default'] = PagesPlugin;
-module.exports = exports['default'];

@@ -714,4 +714,3 @@ function toRoute(file) {
   var f = _path.sep === '\\' ? file.replace(/\\/g, '/') : file;
   return ('/' + f).replace(/(\/index)?\.js$/, '') || '/';
 }
-module.exports = exports['default'];

@@ -120,4 +120,3 @@ function reactElementToDOM(_ref) {
   }
   return el;
 }
-module.exports = exports['default'];

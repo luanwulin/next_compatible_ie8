@@ -115,4 +115,3 @@ function withSideEffect(reduceComponentsToState, handleStateChangeOnClient, mapS
     return SideEffect;
   };
 }
-module.exports = exports['default'];
