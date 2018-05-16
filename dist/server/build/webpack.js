@@ -1,28 +1,22 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+exports.__esModule = true;
+
+var _assign = require('babel-runtime/core-js/object/assign');
+
+var _assign2 = _interopRequireDefault(_assign);
 
 var _stringify = require('babel-runtime/core-js/json/stringify');
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
-var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
-
-var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
 var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _extends2 = require('babel-runtime/helpers/extends');
+var _getIterator2 = require('babel-runtime/core-js/get-iterator');
 
-var _extends3 = _interopRequireDefault(_extends2);
-
-var _keys = require('babel-runtime/core-js/object/keys');
-
-var _keys2 = _interopRequireDefault(_keys);
+var _getIterator3 = _interopRequireDefault(_getIterator2);
 
 var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
@@ -34,23 +28,15 @@ var _map2 = _interopRequireDefault(_map);
 
 var _path = require('path');
 
-var _path2 = _interopRequireDefault(_path);
+var _crypto = require('crypto');
 
 var _webpack = require('webpack');
 
 var _webpack2 = _interopRequireDefault(_webpack);
 
-var _resolve = require('resolve');
+var _globPromise = require('glob-promise');
 
-var _resolve2 = _interopRequireDefault(_resolve);
-
-var _uglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
-
-var _uglifyjsWebpackPlugin2 = _interopRequireDefault(_uglifyjsWebpackPlugin);
-
-var _caseSensitivePathsWebpackPlugin = require('case-sensitive-paths-webpack-plugin');
-
-var _caseSensitivePathsWebpackPlugin2 = _interopRequireDefault(_caseSensitivePathsWebpackPlugin);
+var _globPromise2 = _interopRequireDefault(_globPromise);
 
 var _writeFileWebpackPlugin = require('write-file-webpack-plugin');
 
@@ -60,346 +46,513 @@ var _friendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 var _friendlyErrorsWebpackPlugin2 = _interopRequireDefault(_friendlyErrorsWebpackPlugin);
 
-var _utils = require('./webpack/utils');
+var _caseSensitivePathsWebpackPlugin = require('case-sensitive-paths-webpack-plugin');
 
-var _pagesPlugin = require('./plugins/pages-plugin');
-
-var _pagesPlugin2 = _interopRequireDefault(_pagesPlugin);
-
-var _nextjsSsrImport = require('./plugins/nextjs-ssr-import');
-
-var _nextjsSsrImport2 = _interopRequireDefault(_nextjsSsrImport);
-
-var _dynamicChunksPlugin = require('./plugins/dynamic-chunks-plugin');
-
-var _dynamicChunksPlugin2 = _interopRequireDefault(_dynamicChunksPlugin);
+var _caseSensitivePathsWebpackPlugin2 = _interopRequireDefault(_caseSensitivePathsWebpackPlugin);
 
 var _unlinkFilePlugin = require('./plugins/unlink-file-plugin');
 
 var _unlinkFilePlugin2 = _interopRequireDefault(_unlinkFilePlugin);
 
-var _findConfig = require('./babel/find-config');
+var _pagesPlugin = require('./plugins/pages-plugin');
 
-var _findConfig2 = _interopRequireDefault(_findConfig);
+var _pagesPlugin2 = _interopRequireDefault(_pagesPlugin);
+
+var _dynamicChunksPlugin = require('./plugins/dynamic-chunks-plugin');
+
+var _dynamicChunksPlugin2 = _interopRequireDefault(_dynamicChunksPlugin);
+
+var _combineAssetsPlugin = require('./plugins/combine-assets-plugin');
+
+var _combineAssetsPlugin2 = _interopRequireDefault(_combineAssetsPlugin);
 
 var _es3ifyWebpackPlugin = require('es3ify-webpack-plugin');
 
 var _es3ifyWebpackPlugin2 = _interopRequireDefault(_es3ifyWebpackPlugin);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _config = require('../config');
 
-var nextDir = _path2.default.join(__dirname, '..', '..', '..');
-var nextNodeModulesDir = _path2.default.join(nextDir, 'node_modules');
-var nextPagesDir = _path2.default.join(nextDir, 'pages');
+var _config2 = _interopRequireDefault(_config);
+
+var _babelCore = require('babel-core');
+
+var babelCore = _interopRequireWildcard(_babelCore);
+
+var _findConfig = require('./babel/find-config');
+
+var _findConfig2 = _interopRequireDefault(_findConfig);
+
+var _rootModuleRelativePath = require('./root-module-relative-path');
+
+var _rootModuleRelativePath2 = _interopRequireDefault(_rootModuleRelativePath);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var documentPage = (0, _path.join)('pages', '_document.js');
 var defaultPages = ['_error.js', '_document.js'];
-var interpolateNames = new _map2.default(defaultPages.map(function (p) {
-  return [_path2.default.join(nextPagesDir, p), 'dist/bundles/pages/' + p];
+var nextPagesDir = (0, _path.join)(__dirname, '..', '..', 'pages');
+var nextNodeModulesDir = (0, _path.join)(__dirname, '..', '..', '..', 'node_modules');
+var interpolateNames = new _map2['default'](defaultPages.map(function (p) {
+    return [(0, _path.join)(nextPagesDir, p), 'dist/pages/' + p];
 }));
 
-function babelConfig(dir, _ref) {
-  var isServer = _ref.isServer,
-      dev = _ref.dev;
+var relativeResolve = (0, _rootModuleRelativePath2['default'])(require);
 
-  var mainBabelOptions = {
-    cacheDirectory: true,
-    presets: [],
-    plugins: [dev && !isServer && require.resolve('react-hot-loader/babel')].filter(Boolean)
-  };
+exports['default'] = function () {
+    var _ref = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee2(dir) {
+        var _this = this;
 
-  var externalBabelConfig = (0, _findConfig2.default)(dir);
-  if (externalBabelConfig) {
-    // Log it out once
-    if (!isServer) {
-      console.log('> Using external babel configuration');
-      console.log('> Location: "' + externalBabelConfig.loc + '"');
-    }
-    // It's possible to turn off babelrc support via babelrc itself.
-    // In that case, we should add our default preset.
-    // That's why we need to do this.
-    var options = externalBabelConfig.options;
+        var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+            buildId = _ref2.buildId,
+            _ref2$dev = _ref2.dev,
+            dev = _ref2$dev === undefined ? false : _ref2$dev,
+            _ref2$quiet = _ref2.quiet,
+            quiet = _ref2$quiet === undefined ? false : _ref2$quiet,
+            buildDir = _ref2.buildDir,
+            _ref2$conf = _ref2.conf,
+            conf = _ref2$conf === undefined ? null : _ref2$conf;
 
-    mainBabelOptions.babelrc = options.babelrc !== false;
-  } else {
-    mainBabelOptions.babelrc = false;
-  }
+        var config, defaultEntries, mainJS, totalPages, entry, plugins, nodePathList, mainBabelOptions, externalBabelConfig, options, rules, webpackConfig;
+        return _regenerator2['default'].wrap(function _callee2$(_context2) {
+            while (1) {
+                switch (_context2.prev = _context2.next) {
+                    case 0:
+                        dir = (0, _path.resolve)(dir);
+                        config = (0, _config2['default'])(dir, conf);
+                        defaultEntries = dev ? [(0, _path.join)(__dirname, '..', '..', 'client', 'webpack-hot-middleware-client'), (0, _path.join)(__dirname, '..', '..', 'client', 'on-demand-entries-client')] : [];
+                        mainJS = dev ? require.resolve('../../client/next-dev') : require.resolve('../../client/next');
+                        totalPages = void 0;
 
-  // Add our default preset if the no "babelrc" found.
-  if (!mainBabelOptions.babelrc) {
-    mainBabelOptions.presets.push(require.resolve('./babel/preset'));
-  }
+                        entry = function () {
+                            var _ref3 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee() {
+                                var entries, pages, devPages, _iterator, _isArray, _i, _ref4, p, _iterator2, _isArray2, _i2, _ref5, _p, _iterator3, _isArray3, _i3, _ref6, _p2, entryName;
 
-  return mainBabelOptions;
-}
+                                return _regenerator2['default'].wrap(function _callee$(_context) {
+                                    while (1) {
+                                        switch (_context.prev = _context.next) {
+                                            case 0:
+                                                entries = {
+                                                    'main.js': [].concat(defaultEntries, config.clientBootstrap || [], [mainJS])
+                                                };
+                                                _context.next = 3;
+                                                return (0, _globPromise2['default'])('pages/**/*.js', { cwd: dir });
 
-function externalsConfig(dir, isServer) {
-  var externals = [];
+                                            case 3:
+                                                pages = _context.sent;
+                                                devPages = pages.filter(function (p) {
+                                                    return p === 'pages/_document.js' || p === 'pages/_error.js';
+                                                });
 
-  if (!isServer) {
-    return externals;
-  }
+                                                if (!dev) {
+                                                    _context.next = 23;
+                                                    break;
+                                                }
 
-  externals.push(function (context, request, callback) {
-    (0, _resolve2.default)(request, { basedir: dir, preserveSymlinks: true }, function (err, res) {
-      if (err) {
-        return callback();
-      }
+                                                _iterator = devPages, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3['default'])(_iterator);
 
-      // Webpack itself has to be compiled because it doesn't always use module relative paths
-      if (res.match(/node_modules[/\\]next[/\\]dist[/\\]pages/)) {
-        return callback();
-      }
+                                            case 7:
+                                                if (!_isArray) {
+                                                    _context.next = 13;
+                                                    break;
+                                                }
 
-      if (res.match(/node_modules[/\\]webpack/)) {
-        return callback();
-      }
+                                                if (!(_i >= _iterator.length)) {
+                                                    _context.next = 10;
+                                                    break;
+                                                }
 
-      if (res.match(/node_modules[/\\].*\.js/)) {
-        return callback(null, 'commonjs ' + request);
-      }
+                                                return _context.abrupt('break', 21);
 
-      callback();
-    });
-  });
+                                            case 10:
+                                                _ref4 = _iterator[_i++];
+                                                _context.next = 17;
+                                                break;
 
-  return externals;
-}
+                                            case 13:
+                                                _i = _iterator.next();
 
-exports.default = function () {
-  var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(dir, _ref2) {
-    var _this = this;
+                                                if (!_i.done) {
+                                                    _context.next = 16;
+                                                    break;
+                                                }
 
-    var _ref2$dev = _ref2.dev,
-        dev = _ref2$dev === undefined ? false : _ref2$dev,
-        _ref2$isServer = _ref2.isServer,
-        isServer = _ref2$isServer === undefined ? false : _ref2$isServer,
-        buildId = _ref2.buildId,
-        config = _ref2.config;
-    var babelLoaderOptions, defaultLoaders, nodePathList, totalPages, webpackConfig;
-    return _regenerator2.default.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            babelLoaderOptions = babelConfig(dir, { dev: dev, isServer: isServer });
-            defaultLoaders = {
-              babel: {
-                loader: 'babel-loader',
-                options: babelLoaderOptions
-              }
+                                                return _context.abrupt('break', 21);
 
-              // Support for NODE_PATH
-            };
-            nodePathList = (process.env.NODE_PATH || '').split(process.platform === 'win32' ? ';' : ':').filter(function (p) {
-              return !!p;
-            });
-            totalPages = void 0;
-            webpackConfig = {
-              devtool: dev ? 'source-map' : false,
-              name: isServer ? 'server' : 'client',
-              cache: true,
-              target: isServer ? 'node' : 'web',
-              externals: externalsConfig(dir, isServer),
-              context: dir,
-              entry: function () {
-                var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
-                  var pages, mainJS, clientConfig;
-                  return _regenerator2.default.wrap(function _callee$(_context) {
-                    while (1) {
-                      switch (_context.prev = _context.next) {
-                        case 0:
-                          _context.next = 2;
-                          return (0, _utils.getPages)(dir, { dev: dev, isServer: isServer, pageExtensions: config.pageExtensions.join('|') });
+                                            case 16:
+                                                _ref4 = _i.value;
 
-                        case 2:
-                          pages = _context.sent;
+                                            case 17:
+                                                p = _ref4;
 
-                          totalPages = (0, _keys2.default)(pages).length;
-                          mainJS = require.resolve('../../client/next' + (dev ? '-dev' : ''));
-                          clientConfig = !isServer ? {
-                            'main.js': [dev && !isServer && _path2.default.join(__dirname, '..', '..', 'client', 'webpack-hot-middleware-client'), dev && !isServer && _path2.default.join(__dirname, '..', '..', 'client', 'on-demand-entries-client'), mainJS].filter(Boolean)
-                          } : {};
-                          return _context.abrupt('return', (0, _extends3.default)({}, clientConfig, pages));
+                                                entries[(0, _path.join)('bundles', p)] = ['./' + p + '?entry'];
 
-                        case 7:
-                        case 'end':
-                          return _context.stop();
-                      }
-                    }
-                  }, _callee, _this);
-                }));
+                                            case 19:
+                                                _context.next = 7;
+                                                break;
 
-                function entry() {
-                  return _ref4.apply(this, arguments);
+                                            case 21:
+                                                _context.next = 38;
+                                                break;
+
+                                            case 23:
+                                                _iterator2 = pages, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : (0, _getIterator3['default'])(_iterator2);
+
+                                            case 24:
+                                                if (!_isArray2) {
+                                                    _context.next = 30;
+                                                    break;
+                                                }
+
+                                                if (!(_i2 >= _iterator2.length)) {
+                                                    _context.next = 27;
+                                                    break;
+                                                }
+
+                                                return _context.abrupt('break', 38);
+
+                                            case 27:
+                                                _ref5 = _iterator2[_i2++];
+                                                _context.next = 34;
+                                                break;
+
+                                            case 30:
+                                                _i2 = _iterator2.next();
+
+                                                if (!_i2.done) {
+                                                    _context.next = 33;
+                                                    break;
+                                                }
+
+                                                return _context.abrupt('break', 38);
+
+                                            case 33:
+                                                _ref5 = _i2.value;
+
+                                            case 34:
+                                                _p = _ref5;
+
+                                                entries[(0, _path.join)('bundles', _p)] = ['./' + _p + '?entry'];
+
+                                            case 36:
+                                                _context.next = 24;
+                                                break;
+
+                                            case 38:
+                                                _iterator3 = defaultPages, _isArray3 = Array.isArray(_iterator3), _i3 = 0, _iterator3 = _isArray3 ? _iterator3 : (0, _getIterator3['default'])(_iterator3);
+
+                                            case 39:
+                                                if (!_isArray3) {
+                                                    _context.next = 45;
+                                                    break;
+                                                }
+
+                                                if (!(_i3 >= _iterator3.length)) {
+                                                    _context.next = 42;
+                                                    break;
+                                                }
+
+                                                return _context.abrupt('break', 54);
+
+                                            case 42:
+                                                _ref6 = _iterator3[_i3++];
+                                                _context.next = 49;
+                                                break;
+
+                                            case 45:
+                                                _i3 = _iterator3.next();
+
+                                                if (!_i3.done) {
+                                                    _context.next = 48;
+                                                    break;
+                                                }
+
+                                                return _context.abrupt('break', 54);
+
+                                            case 48:
+                                                _ref6 = _i3.value;
+
+                                            case 49:
+                                                _p2 = _ref6;
+                                                entryName = (0, _path.join)('bundles', 'pages', _p2);
+
+                                                if (!entries[entryName]) {
+                                                    entries[entryName] = [(0, _path.join)(nextPagesDir, _p2) + '?entry'];
+                                                }
+
+                                            case 52:
+                                                _context.next = 39;
+                                                break;
+
+                                            case 54:
+
+                                                totalPages = pages.filter(function (p) {
+                                                    return p !== documentPage;
+                                                }).length;
+
+                                                return _context.abrupt('return', entries);
+
+                                            case 56:
+                                            case 'end':
+                                                return _context.stop();
+                                        }
+                                    }
+                                }, _callee, _this);
+                            }));
+
+                            return function entry() {
+                                return _ref3.apply(this, arguments);
+                            };
+                        }();
+
+                        plugins = [new _webpack2['default'].IgnorePlugin(/(precomputed)/, /node_modules.+(elliptic)/), new _webpack2['default'].LoaderOptionsPlugin({
+                            options: {
+                                context: dir,
+                                customInterpolateName: function customInterpolateName(url, name, opts) {
+                                    return interpolateNames.get(this.resourcePath) || url;
+                                }
+                            }
+                        }), new _writeFileWebpackPlugin2['default']({
+                            exitOnErrors: false,
+                            log: false,
+
+                            useHashIndex: false
+                        }), new _webpack2['default'].optimize.CommonsChunkPlugin({
+                            name: 'commons',
+                            filename: 'commons.js',
+                            minChunks: function minChunks(module, count) {
+                                if (module.context && module.context.indexOf(_path.sep + 'react-dom' + _path.sep) >= 0) {
+                                    return true;
+                                }
+
+                                if (dev) {
+                                    return false;
+                                }
+
+                                if (totalPages <= 2) {
+                                    return count >= totalPages;
+                                }
+                                return count >= totalPages * 0.5;
+                            }
+                        }), new _webpack2['default'].optimize.CommonsChunkPlugin({
+                            name: 'manifest',
+                            filename: 'manifest.js'
+                        }), new _webpack2['default'].DefinePlugin({
+                            'process.env.NODE_ENV': (0, _stringify2['default'])(dev ? 'development' : 'production')
+                        }), new _pagesPlugin2['default'](), new _dynamicChunksPlugin2['default'](), new _caseSensitivePathsWebpackPlugin2['default'](), new _es3ifyWebpackPlugin2['default']()];
+
+
+                        if (dev) {
+                            plugins.push(new _webpack2['default'].HotModuleReplacementPlugin(), new _webpack2['default'].NoEmitOnErrorsPlugin(), new _unlinkFilePlugin2['default']());
+                            if (!quiet) {
+                                plugins.push(new _friendlyErrorsWebpackPlugin2['default']());
+                            }
+                        } else {
+                            plugins.push(new _webpack2['default'].IgnorePlugin(/react-hot-loader/));
+                            plugins.push(new _combineAssetsPlugin2['default']({
+                                input: ['manifest.js', 'commons.js', 'main.js'],
+                                output: 'app.js'
+                            }), new _webpack2['default'].optimize.UglifyJsPlugin({
+                                compress: { warnings: false },
+                                sourceMap: false
+                            }));
+                            plugins.push(new _webpack2['default'].optimize.ModuleConcatenationPlugin());
+                        }
+
+                        nodePathList = (process.env.NODE_PATH || '').split(process.platform === 'win32' ? ';' : ':').filter(function (p) {
+                            return !!p;
+                        });
+                        mainBabelOptions = {
+                            cacheDirectory: true,
+                            presets: []
+                        };
+                        externalBabelConfig = (0, _findConfig2['default'])(dir);
+
+                        if (externalBabelConfig) {
+                            console.log('> Using external babel configuration');
+                            console.log('> Location: "' + externalBabelConfig.loc + '"');
+                            options = externalBabelConfig.options;
+
+                            mainBabelOptions.babelrc = options.babelrc !== false;
+                        } else {
+                            mainBabelOptions.babelrc = false;
+                        }
+
+                        if (!mainBabelOptions.babelrc) {
+                            mainBabelOptions.presets.push(require.resolve('./babel/preset'));
+                        }
+
+                        rules = (dev ? [{
+                            test: /\.js(\?[^?]*)?$/,
+                            loader: 'hot-self-accept-loader',
+                            include: [(0, _path.join)(dir, 'pages'), nextPagesDir]
+                        }, {
+                            test: /\.js(\?[^?]*)?$/,
+                            loader: 'react-hot-loader/webpack',
+                            exclude: /node_modules/
+                        }] : []).concat([{
+                            test: /\.json$/,
+                            loader: 'json-loader'
+                        }, {
+                            test: /\.(js|json)(\?[^?]*)?$/,
+                            loader: 'emit-file-loader',
+                            include: [dir, nextPagesDir],
+                            exclude: function exclude(str) {
+                                return (/node_modules/.test(str) && str.indexOf(nextPagesDir) !== 0
+                                );
+                            },
+
+                            options: {
+                                name: 'dist/[path][name].[ext]',
+                                transform: function transform(_ref7) {
+                                    var content = _ref7.content,
+                                        sourceMap = _ref7.sourceMap,
+                                        interpolatedName = _ref7.interpolatedName;
+
+                                    if (!/\.js$/.test(interpolatedName)) {
+                                        return { content: content, sourceMap: sourceMap };
+                                    }
+
+                                    var transpiled = babelCore.transform(content, {
+                                        babelrc: false,
+                                        sourceMaps: dev ? 'both' : false,
+
+                                        plugins: [[require.resolve('babel-plugin-transform-es2015-modules-commonjs')], [require.resolve('babel-plugin-module-resolver'), {
+                                            alias: {
+                                                'babel-runtime': relativeResolve('babel-runtime/package'),
+                                                'next/link': relativeResolve('../../lib/link'),
+                                                'next/prefetch': relativeResolve('../../lib/prefetch'),
+                                                'next/css': relativeResolve('../../lib/css'),
+                                                'next/dynamic': relativeResolve('../../lib/dynamic'),
+                                                'next/head': relativeResolve('../../lib/head'),
+                                                'next/document': relativeResolve('../../server/document'),
+                                                'next/router': relativeResolve('../../lib/router'),
+                                                'next/error': relativeResolve('../../lib/error'),
+                                                'styled-jsx/style': relativeResolve('styled-jsx/style')
+                                            }
+                                        }]],
+                                        inputSourceMap: sourceMap
+                                    });
+
+                                    var map = transpiled.map;
+
+                                    var output = transpiled.code;
+
+                                    if (map) {
+                                        var nodeMap = (0, _assign2['default'])({}, map);
+                                        nodeMap.sources = nodeMap.sources.map(function (source) {
+                                            return source.replace(/\?entry/, '');
+                                        });
+                                        delete nodeMap.sourcesContent;
+
+                                        var sourceMapUrl = new Buffer((0, _stringify2['default'])(nodeMap), 'utf-8').toString('base64');
+                                        output = output + '\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,' + sourceMapUrl;
+                                    }
+
+                                    return {
+                                        content: output,
+                                        sourceMap: transpiled.map
+                                    };
+                                }
+                            }
+                        }, {
+                            loader: 'babel-loader',
+                            include: nextPagesDir,
+                            exclude: function exclude(str) {
+                                return (/node_modules/.test(str) && str.indexOf(nextPagesDir) !== 0
+                                );
+                            },
+
+                            options: {
+                                babelrc: false,
+                                cacheDirectory: true,
+                                presets: [require.resolve('./babel/preset')]
+                            }
+                        }, {
+                            test: /\.js(\?[^?]*)?$/,
+                            loader: 'babel-loader',
+                            include: [dir],
+                            exclude: function exclude(str) {
+                                return (/node_modules/.test(str)
+                                );
+                            },
+
+                            options: mainBabelOptions
+                        }]);
+                        webpackConfig = {
+                            context: dir,
+                            entry: entry,
+                            output: {
+                                path: buildDir ? (0, _path.join)(buildDir, '.next') : (0, _path.join)(dir, config.distDir),
+                                filename: '[name]',
+                                libraryTarget: 'commonjs2',
+                                publicPath: '/_next/' + buildId + '/webpack/',
+                                strictModuleExceptionHandling: true,
+                                devtoolModuleFilenameTemplate: function devtoolModuleFilenameTemplate(_ref8) {
+                                    var resourcePath = _ref8.resourcePath;
+
+                                    var hash = (0, _crypto.createHash)('sha1');
+                                    hash.update(Date.now() + '');
+                                    var id = hash.digest('hex').slice(0, 7);
+
+                                    return 'webpack:///' + resourcePath + '?' + id;
+                                },
+
+                                chunkFilename: '[name]'
+                            },
+                            resolve: {
+                                modules: [nextNodeModulesDir, 'node_modules'].concat(nodePathList),
+                                alias: {
+                                    'react': 'anujs/dist/ReactIE',
+                                    'react-dom$': 'anujs/dist/ReactIE',
+                                    'react-dom/server': 'anujs/dist/ReactDOMServer',
+                                    'redux': 'anujs/lib/ReduxIE',
+                                    'prop-types': 'anujs/lib/ReactPropTypes',
+                                    'create-react-class': 'anujs/lib/createClass',
+                                    'react-tap-event-plugin': 'anujs/lib/injectTapEventPlugin',
+                                    'devtools': "anujs/lib/devtools"
+                                }
+                            },
+                            resolveLoader: {
+                                modules: [nextNodeModulesDir, 'node_modules', (0, _path.join)(__dirname, 'loaders')].concat(nodePathList)
+                            },
+                            plugins: plugins,
+                            module: {
+                                rules: rules
+                            },
+                            devtool: dev ? 'cheap-module-inline-source-map' : false,
+                            performance: { hints: false }
+                        };
+
+                        if (!config.webpack) {
+                            _context2.next = 20;
+                            break;
+                        }
+
+                        console.log('> Using "webpack" config function defined in ' + config.configOrigin + '.');
+                        _context2.next = 19;
+                        return config.webpack(webpackConfig, { buildId: buildId, dev: dev });
+
+                    case 19:
+                        webpackConfig = _context2.sent;
+
+                    case 20:
+                        return _context2.abrupt('return', (0, _webpack2['default'])(webpackConfig));
+
+                    case 21:
+                    case 'end':
+                        return _context2.stop();
                 }
-
-                return entry;
-              }(),
-              output: {
-                path: _path2.default.join(dir, config.distDir, isServer ? 'dist' : ''), // server compilation goes to `.next/dist`
-                filename: '[name]',
-                libraryTarget: 'commonjs2',
-                // This saves chunks with the name given via require.ensure()
-                chunkFilename: '[name]-[chunkhash].js',
-                strictModuleExceptionHandling: true,
-                devtoolModuleFilenameTemplate: function devtoolModuleFilenameTemplate(info) {
-                  if (dev) {
-                    return '[absolute-resource-path]';
-                  }
-
-                  return '' + info.absoluteResourcePath.replace(dir, '.').replace(nextDir, './node_modules/next');
-                }
-              },
-              performance: { hints: false },
-              resolve: {
-                extensions: ['.js', '.jsx', '.json'],
-                modules: [nextNodeModulesDir, 'node_modules'].concat((0, _toConsumableArray3.default)(nodePathList)),
-                alias: {
-                  next: nextDir,
-                  // React already does something similar to this.
-                  // But if the user has react-devtools, it'll throw an error showing that
-                  // we haven't done dead code elimination (via uglifyjs).
-                  // We purposly do not uglify React code to save the build time.
-                  // (But it didn't increase the overall build size)
-                  // Here we are doing an exact match with '$'
-                  // So, you can still require nested modules like `react-dom/server`
-                  // 若要兼容 IE 请使用以下配置
-                  'react$': 'anujs/dist/ReactIE',
-                  'react-dom$': 'anujs/dist/ReactIE',
-                  'react-dom/server': 'anujs/dist/ReactDOMServer.js',
-                  //这主要用于IE6－8，因为官方源码中的isPlainObject方法性能超差
-                  'redux': 'anujs/lib/ReduxIE',
-                  // 如果引用了 prop-types 或 create-react-class
-                  // 需要添加如下别名
-                  'prop-types': 'anujs/lib/ReactPropTypes',
-                  'create-react-class': 'anujs/lib/createClass',
-                  //如果你在移动端用到了onTouchTap事件
-                  'react-tap-event-plugin': 'anujs/lib/injectTapEventPlugin'
-                }
-              },
-              resolveLoader: {
-                modules: [nextNodeModulesDir, 'node_modules', _path2.default.join(__dirname, 'loaders')].concat((0, _toConsumableArray3.default)(nodePathList))
-              },
-              module: {
-                rules: [dev && !isServer && {
-                  test: /\.(js|jsx)(\?[^?]*)?$/,
-                  loader: 'hot-self-accept-loader',
-                  include: [_path2.default.join(dir, 'pages'), nextPagesDir]
-                }, {
-                  test: /\.+(js|jsx)$/,
-                  include: [dir],
-                  exclude: /node_modules/,
-                  use: defaultLoaders.babel
-                }].filter(Boolean)
-              },
-              plugins: [!isServer && new _es3ifyWebpackPlugin2.default(), new _webpack2.default.IgnorePlugin(/(precomputed)/, /node_modules.+(elliptic)/), dev && new _webpack2.default.NoEmitOnErrorsPlugin(), dev && !isServer && new _friendlyErrorsWebpackPlugin2.default(), dev && new _webpack2.default.NamedModulesPlugin(), dev && !isServer && new _webpack2.default.HotModuleReplacementPlugin(), // Hot module replacement
-              dev && new _unlinkFilePlugin2.default(), dev && new _caseSensitivePathsWebpackPlugin2.default(), // Since on macOS the filesystem is case-insensitive this will make sure your path are case-sensitive
-              dev && new _webpack2.default.LoaderOptionsPlugin({
-                options: {
-                  context: dir,
-                  customInterpolateName: function customInterpolateName(url, name, opts) {
-                    return interpolateNames.get(this.resourcePath) || url;
-                  }
-                }
-              }), dev && new _writeFileWebpackPlugin2.default({
-                exitOnErrors: false,
-                log: false,
-                // required not to cache removed files
-                useHashIndex: false
-              }), !dev && new _webpack2.default.IgnorePlugin(/react-hot-loader/), !isServer && !dev && new _uglifyjsWebpackPlugin2.default({
-                exclude: /react\.js/,
-                parallel: true,
-                sourceMap: false,
-                uglifyOptions: {
-                  compress: {
-                    arrows: false,
-                    booleans: false,
-                    collapse_vars: false,
-                    comparisons: false,
-                    computed_props: false,
-                    hoist_funs: false,
-                    hoist_props: false,
-                    hoist_vars: false,
-                    if_return: false,
-                    inline: false,
-                    join_vars: false,
-                    keep_infinity: true,
-                    loops: false,
-                    negate_iife: false,
-                    properties: false,
-                    reduce_funcs: false,
-                    reduce_vars: false,
-                    sequences: false,
-                    side_effects: false,
-                    switches: false,
-                    top_retain: false,
-                    toplevel: false,
-                    typeofs: false,
-                    unused: false,
-                    conditionals: true,
-                    dead_code: true,
-                    evaluate: true
-                  }
-                }
-              }), new _webpack2.default.DefinePlugin({
-                'process.env.NODE_ENV': (0, _stringify2.default)(dev ? 'development' : 'production')
-              }), !dev && new _webpack2.default.optimize.ModuleConcatenationPlugin(), !isServer && new _pagesPlugin2.default(), !isServer && new _dynamicChunksPlugin2.default(), isServer && new _nextjsSsrImport2.default(),
-              // In dev mode, we don't move anything to the commons bundle.
-              // In production we move common modules into the existing main.js bundle
-              !isServer && new _webpack2.default.optimize.CommonsChunkPlugin({
-                name: 'main.js',
-                filename: 'main.js',
-                minChunks: function minChunks(module, count) {
-                  // React and React DOM are used everywhere in Next.js. So they should always be common. Even in development mode, to speed up compilation.
-                  if (module.resource && module.resource.includes(_path.sep + 'react-dom' + _path.sep) && count >= 0) {
-                    return true;
-                  }
-
-                  if (module.resource && module.resource.includes(_path.sep + 'react' + _path.sep) && count >= 0) {
-                    return true;
-                  }
-
-                  // In the dev we use on-demand-entries.
-                  // So, it makes no sense to use commonChunks based on the minChunks count.
-                  // Instead, we move all the code in node_modules into each of the pages.
-                  if (dev) {
-                    return false;
-                  }
-
-                  // commons
-                  // If there are one or two pages, only move modules to common if they are
-                  // used in all of the pages. Otherwise, move modules used in at-least
-                  // 1/2 of the total pages into commons.
-                  if (totalPages <= 2) {
-                    return count >= totalPages;
-                  }
-                  return count >= totalPages * 0.5;
-                  // commons end
-                }
-              }),
-              // We use a manifest file in development to speed up HMR
-              dev && !isServer && new _webpack2.default.optimize.CommonsChunkPlugin({
-                name: 'manifest',
-                filename: 'manifest.js'
-              })].filter(Boolean)
-            };
-
-
-            if (typeof config.webpack === 'function') {
-              webpackConfig = config.webpack(webpackConfig, { dir: dir, dev: dev, isServer: isServer, buildId: buildId, config: config, defaultLoaders: defaultLoaders, totalPages: totalPages });
             }
+        }, _callee2, this);
+    }));
 
-            return _context2.abrupt('return', webpackConfig);
+    function createCompiler(_x2) {
+        return _ref.apply(this, arguments);
+    }
 
-          case 7:
-          case 'end':
-            return _context2.stop();
-        }
-      }
-    }, _callee2, this);
-  }));
-
-  function getBaseWebpackConfig(_x, _x2) {
-    return _ref3.apply(this, arguments);
-  }
-
-  return getBaseWebpackConfig;
+    return createCompiler;
 }();
+
+module.exports = exports['default'];

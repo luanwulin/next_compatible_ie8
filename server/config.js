@@ -1,4 +1,5 @@
-import findUp from 'find-up'
+import { join } from 'path'
+import { existsSync } from 'fs'
 
 const cache = new Map()
 
@@ -9,35 +10,29 @@ const defaultConfig = {
   distDir: '.next',
   assetPrefix: '',
   configOrigin: 'default',
-  useFileSystemPublicRoutes: true,
-  generateEtags: true,
-  pageExtensions: ['jsx', 'js'] // jsx before js because otherwise regex matching will match js first
+  useFileSystemPublicRoutes: true
 }
 
-export default function getConfig (phase, dir, customConfig) {
+export default function getConfig (dir, customConfig) {
   if (!cache.has(dir)) {
-    cache.set(dir, loadConfig(phase, dir, customConfig))
+    cache.set(dir, loadConfig(dir, customConfig))
   }
   return cache.get(dir)
 }
 
-export function loadConfig (phase, dir, customConfig) {
+function loadConfig (dir, customConfig) {
   if (customConfig && typeof customConfig === 'object') {
     customConfig.configOrigin = 'server'
     return withDefaults(customConfig)
   }
-  const path = findUp.sync('next.config.js', {
-    cwd: dir
-  })
+  const path = join(dir, 'next.config.js')
 
   let userConfig = {}
 
-  if (path && path.length) {
+  const userHasConfig = existsSync(path)
+  if (userHasConfig) {
     const userConfigModule = require(path)
     userConfig = userConfigModule.default || userConfigModule
-    if (typeof userConfigModule === 'function') {
-      userConfig = userConfigModule(phase, {defaultConfig})
-    }
     userConfig.configOrigin = 'next.config.js'
   }
 

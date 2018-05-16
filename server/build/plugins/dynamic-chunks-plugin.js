@@ -1,48 +1,39 @@
-import { ConcatSource } from 'webpack-sources'
-
-const isImportChunk = /^chunks[/\\]/
-const matchChunkName = /^chunks[/\\](.*)$/
-
-class DynamicChunkTemplatePlugin {
-  apply (chunkTemplate) {
-    chunkTemplate.plugin('render', function (modules, chunk) {
-      if (!isImportChunk.test(chunk.name)) {
-        return modules
-      }
-
-      const chunkName = matchChunkName.exec(chunk.name)[1]
-      const source = new ConcatSource()
-
-      source.add(`
-        __NEXT_REGISTER_CHUNK('${chunkName}', function() {
-      `)
-      source.add(modules)
-      source.add(`
-        })
-      `)
-
-      return source
-    })
-  }
-}
-
-export default class DynamicChunksPlugin {
+export default class PagesPlugin {
   apply (compiler) {
-    compiler.plugin('compilation', (compilation) => {
-      compilation.chunkTemplate.apply(new DynamicChunkTemplatePlugin())
+    const isImportChunk = /^chunks[/\\].*\.js$/
+    const matchChunkName = /^chunks[/\\](.*)$/
 
-      compilation.plugin('additional-chunk-assets', (chunks) => {
-        chunks = chunks.filter(chunk =>
-          isImportChunk.test(chunk.name) && compilation.assets[chunk.name]
-        )
+    compiler.plugin('after-compile', (compilation, callback) => {
+      const chunks = Object
+        .keys(compilation.namedChunks)
+        .map(key => compilation.namedChunks[key])
+        .filter(chunk => isImportChunk.test(chunk.name))
 
-        chunks.forEach((chunk) => {
-          // This is to support, webpack dynamic import support with HMR
-          const copyFilename = `chunks/${chunk.name}`
-          compilation.additionalChunkAssets.push(copyFilename)
-          compilation.assets[copyFilename] = compilation.assets[chunk.name]
-        })
+      chunks.forEach((chunk) => {
+        const asset = compilation.assets[chunk.name]
+        if (!asset) return
+
+        const chunkName = matchChunkName.exec(chunk.name)[1]
+
+        const content = asset.source()
+        const newContent = `
+          window.__NEXT_REGISTER_CHUNK('${chunkName}', function() {
+            ${content}
+          })
+        `
+        // Replace the exisiting chunk with the new content
+        compilation.assets[chunk.name] = {
+          source: () => newContent,
+          size: () => newContent.length
+        }
+
+        // This is to support, webpack dynamic import support with HMR
+        compilation.assets[`chunks/${chunk.id}`] = {
+          source: () => newContent,
+          size: () => newContent.length
+        }
       })
+      callback()
     })
   }
 }

@@ -6,8 +6,6 @@ import EventEmitter from '../lib/EventEmitter'
 import App from '../lib/app'
 import { loadGetInitialProps, getURL } from '../lib/utils'
 import PageLoader from '../lib/page-loader'
-import * as asset from '../lib/asset'
-import * as envConfig from '../lib/runtime-config'
 
 // Polyfill Promise globally
 // This is needed because Webpack2's dynamic loading(common chunks) code
@@ -22,27 +20,14 @@ const {
   __NEXT_DATA__: {
     props,
     err,
-    page,
     pathname,
     query,
     buildId,
     chunks,
-    assetPrefix,
-    runtimeConfig
+    assetPrefix
   },
   location
 } = window
-
-// With dynamic assetPrefix it's no longer possible to set assetPrefix at the build time
-// So, this is how we do it in the client side at runtime
-__webpack_public_path__ = `${assetPrefix}/_next/webpack/` //eslint-disable-line
-// Initialize next/asset with the assetPrefix
-asset.setAssetPrefix(assetPrefix)
-// Initialize next/config with the environment configuration
-envConfig.setConfig({
-  serverRuntimeConfig: {},
-  publicRuntimeConfig: runtimeConfig
-})
 
 const asPath = getURL()
 
@@ -84,7 +69,7 @@ export default async ({ ErrorDebugComponent: passedDebugComponent, stripAnsi: pa
   ErrorComponent = await pageLoader.loadPage('/_error')
 
   try {
-    Component = await pageLoader.loadPage(page)
+    Component = await pageLoader.loadPage(pathname)
   } catch (err) {
     console.error(stripAnsi(`${err.message}\n${err.stack}`))
     Component = ErrorComponent
@@ -108,7 +93,10 @@ export default async ({ ErrorDebugComponent: passedDebugComponent, stripAnsi: pa
 }
 
 export async function render (props) {
-  if (props.err) {
+  // There are some errors we should ignore.
+  // Next.js rendering logic knows how to handle them.
+  // These are specially 404 errors
+  if (props.err && !props.err.ignore) {
     await renderError(props.err)
     return
   }
@@ -171,8 +159,7 @@ async function doRender ({ Component, props, hash, err, emitter: emitterProp = e
 
 let isInitialRender = true
 function renderReactElement (reactEl, domEl) {
-  // The check for `.hydrate` is there to support React alternatives like preact
-  if (isInitialRender && typeof ReactDOM.hydrate === 'function') {
+  if (isInitialRender) {
     ReactDOM.hydrate(reactEl, domEl)
     isInitialRender = false
   } else {

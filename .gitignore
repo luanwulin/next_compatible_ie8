@@ -4,11 +4,9 @@
 # dependencies
 node_modules
 package-lock.json
-test/node_modules
 
-# logs & pids
+# logs
 *.log
-pids
 
 # coverage
 .nyc_output
@@ -17,7 +15,3 @@ coverage
 # test output
 test/**/out
 .DS_Store
-
-.idea
-.idea/**/*
-.idea/**

@@ -14,7 +14,7 @@ const appDir = join(__dirname, '../')
 let appPort
 let server
 let app
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 60 * 5
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000
 
 describe('Production Usage', () => {
   beforeAll(async () => {
@@ -39,11 +39,11 @@ describe('Production Usage', () => {
 
   describe('File locations', () => {
     it('should build the app within the given `dist` directory', () => {
-      expect(existsSync(join(__dirname, '/../dist/main.js'))).toBeTruthy()
+      expect(existsSync(join(__dirname, '/../dist/app.js'))).toBeTruthy()
     })
 
     it('should not build the app within the default `.next` directory', () => {
-      expect(existsSync(join(__dirname, '/../.next/main.js'))).toBeFalsy()
+      expect(existsSync(join(__dirname, '/../.next/app.js'))).toBeFalsy()
     })
   })
 })

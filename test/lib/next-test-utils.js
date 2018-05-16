@@ -5,7 +5,6 @@ import express from 'express'
 import path from 'path'
 import portfinder from 'portfinder'
 import { spawn } from 'child_process'
-import { readFileSync, writeFileSync, existsSync, unlinkSync } from 'fs'
 import fkill from 'fkill'
 
 import server from '../../dist/server/next'
@@ -18,48 +17,14 @@ export const nextBuild = build
 export const nextExport = _export
 export const pkg = _pkg
 
-export function initNextServerScript (scriptPath, successRegexp, env) {
-  return new Promise((resolve, reject) => {
-    const instance = spawn('node', [scriptPath], { env })
-
-    function handleStdout (data) {
-      const message = data.toString()
-      if (successRegexp.test(message)) {
-        resolve(instance)
-      }
-      process.stdout.write(message)
-    }
-
-    function handleStderr (data) {
-      process.stderr.write(data.toString())
-    }
-
-    instance.stdout.on('data', handleStdout)
-    instance.stderr.on('data', handleStderr)
-
-    instance.on('close', () => {
-      instance.stdout.removeListener('data', handleStdout)
-      instance.stderr.removeListener('data', handleStderr)
-    })
-
-    instance.on('error', (err) => {
-      reject(err)
-    })
-  })
-}
-
 export function renderViaAPI (app, pathname, query) {
   const url = `${pathname}${query ? `?${qs.stringify(query)}` : ''}`
   return app.renderToHTML({ url }, {}, pathname, query)
 }
 
 export function renderViaHTTP (appPort, pathname, query) {
-  return fetchViaHTTP(appPort, pathname, query).then((res) => res.text())
-}
-
-export function fetchViaHTTP (appPort, pathname, query) {
   const url = `http://localhost:${appPort}${pathname}${query ? `?${qs.stringify(query)}` : ''}`
-  return fetch(url)
+  return fetch(url).then((res) => res.text())
 }
 
 export function findPort () {
@@ -146,41 +111,4 @@ export async function startStaticServer (dir) {
 
   await promiseCall(server, 'listen')
   return server
-}
-
-export async function check (contentFn, regex) {
-  while (true) {
-    try {
-      const newContent = await contentFn()
-      if (regex.test(newContent)) break
-      await waitFor(1000)
-    } catch (ex) {}
-  }
-}
-
-export class File {
-  constructor (path) {
-    this.path = path
-    this.originalContent = existsSync(this.path) ? readFileSync(this.path, 'utf8') : null
-  }
-
-  write (content) {
-    if (!this.originalContent) {
-      this.originalContent = content
-    }
-    writeFileSync(this.path, content, 'utf8')
-  }
-
-  replace (pattern, newValue) {
-    const newContent = this.originalContent.replace(pattern, newValue)
-    this.write(newContent)
-  }
-
-  delete () {
-    unlinkSync(this.path)
-  }
-
-  restore () {
-    this.write(this.originalContent)
-  }
 }
