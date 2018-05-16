@@ -33,7 +33,7 @@
     "test": "npm run testonly -- --coverage --forceExit --runInBand --verbose --bail",
     "coveralls": "nyc --instrument=false --source-map=false report --temp-directory=./coverage --reporter=text-lcov | coveralls",
     "lint": "standard 'bin/*' 'client/**/*.js' 'examples/**/*.js' 'lib/**/*.js' 'pages/**/*.js' 'server/**/*.js' 'test/**/*.js'",
-    "prepublish": "npm run release",
+    "prepublish": "npm run release"
   },
   "standard": {
     "parser": "babel-eslint",
