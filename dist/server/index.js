@@ -70,12 +70,6 @@ var _package4 = _interopRequireDefault(_package3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-if (!/^16\./.test(_package4.default.version)) {
-  var message = '\nError: Next.js 4 requires React 16.\nInstall React 16 with:\n  npm remove react react-dom\n  npm install --save react@16 react-dom@16\n';
-  console.error(message);
-  process.exit(1);
-}
-
 var internalPrefixes = [/^\/_next\//, /^\/static\//];
 
 var blockedPages = {
