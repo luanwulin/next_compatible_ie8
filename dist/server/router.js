@@ -34,19 +34,19 @@ var _pathMatch = require('path-match');
 
 var _pathMatch2 = _interopRequireDefault(_pathMatch);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var route = (0, _pathMatch2['default'])();
+var route = (0, _pathMatch2.default)();
 
 var Router = function () {
   function Router() {
-    (0, _classCallCheck3['default'])(this, Router);
+    (0, _classCallCheck3.default)(this, Router);
 
-    this.routes = new _map2['default']();
+    this.routes = new _map2.default();
   }
 
   Router.prototype.add = function add(method, path, fn) {
-    var routes = this.routes.get(method) || new _set2['default']();
+    var routes = this.routes.get(method) || new _set2.default();
     routes.add({ match: route(path), fn: fn });
     this.routes.set(method, routes);
   };
@@ -64,8 +64,8 @@ var Router = function () {
       if (params) {
         return {
           v: function () {
-            var _ref2 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee() {
-              return _regenerator2['default'].wrap(function _callee$(_context) {
+            var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
+              return _regenerator2.default.wrap(function _callee$(_context) {
                 while (1) {
                   switch (_context.prev = _context.next) {
                     case 0:
@@ -89,7 +89,7 @@ var Router = function () {
       }
     };
 
-    for (var _iterator = routes, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3['default'])(_iterator);;) {
+    for (var _iterator = routes, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);;) {
       var _ref;
 
       if (_isArray) {
@@ -105,11 +105,11 @@ var Router = function () {
 
       var _ret = _loop(r);
 
-      if ((typeof _ret === 'undefined' ? 'undefined' : (0, _typeof3['default'])(_ret)) === "object") return _ret.v;
+      if ((typeof _ret === 'undefined' ? 'undefined' : (0, _typeof3.default)(_ret)) === "object") return _ret.v;
     }
   };
 
   return Router;
 }();
 
-exports['default'] = Router;
+exports.default = Router;

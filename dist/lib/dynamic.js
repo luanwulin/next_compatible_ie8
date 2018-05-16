@@ -27,7 +27,7 @@ var _set = require('babel-runtime/core-js/set');
 
 var _set2 = _interopRequireDefault(_set);
 
-exports['default'] = dynamicComponent;
+exports.default = dynamicComponent;
 exports.registerChunk = registerChunk;
 exports.flushChunks = flushChunks;
 
@@ -37,9 +37,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _utils = require('./utils');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var currentChunks = new _set2['default']();
+var currentChunks = new _set2.default();
 
 function dynamicComponent(p, o) {
   var promise = void 0;
@@ -63,19 +63,19 @@ function dynamicComponent(p, o) {
   }
 
   return function (_React$Component) {
-    (0, _inherits3['default'])(DynamicComponent, _React$Component);
+    (0, _inherits3.default)(DynamicComponent, _React$Component);
 
     function DynamicComponent() {
-      (0, _classCallCheck3['default'])(this, DynamicComponent);
+      (0, _classCallCheck3.default)(this, DynamicComponent);
 
       for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
 
-      var _this = (0, _possibleConstructorReturn3['default'])(this, _React$Component.call.apply(_React$Component, [this].concat(args)));
+      var _this = (0, _possibleConstructorReturn3.default)(this, _React$Component.call.apply(_React$Component, [this].concat(args)));
 
       _this.LoadingComponent = options.loading ? options.loading : function () {
-        return _react2['default'].createElement(
+        return _react2.default.createElement(
           'p',
           null,
           'loading...'
@@ -108,7 +108,7 @@ function dynamicComponent(p, o) {
       var _this2 = this;
 
       promise.then(function (m) {
-        var AsyncComponent = m['default'] || m;
+        var AsyncComponent = m.default || m;
 
         var asyncCompName = (0, _utils.getDisplayName)(AsyncComponent);
         if (asyncCompName) {
@@ -133,7 +133,7 @@ function dynamicComponent(p, o) {
       this.loadingBundle = true;
 
       var modulePromiseMap = options.modules(props);
-      var moduleNames = (0, _keys2['default'])(modulePromiseMap);
+      var moduleNames = (0, _keys2.default)(modulePromiseMap);
       var remainingPromises = moduleNames.length;
       var moduleMap = {};
 
@@ -156,7 +156,7 @@ function dynamicComponent(p, o) {
       var loadModule = function loadModule(name) {
         var promise = modulePromiseMap[name];
         promise.then(function (m) {
-          var Component = m['default'] || m;
+          var Component = m.default || m;
           if (_this3.isServer) {
             registerChunk(m.__webpackChunkName);
           }
@@ -199,13 +199,13 @@ function dynamicComponent(p, o) {
 
 
       if (asyncElement) return asyncElement;
-      if (AsyncComponent) return _react2['default'].createElement(AsyncComponent, this.props);
+      if (AsyncComponent) return _react2.default.createElement(AsyncComponent, this.props);
 
-      return _react2['default'].createElement(LoadingComponent, this.props);
+      return _react2.default.createElement(LoadingComponent, this.props);
     };
 
     return DynamicComponent;
-  }(_react2['default'].Component);
+  }(_react2.default.Component);
 }
 
 function registerChunk(chunk) {
@@ -213,14 +213,14 @@ function registerChunk(chunk) {
 }
 
 function flushChunks() {
-  var chunks = (0, _from2['default'])(currentChunks);
+  var chunks = (0, _from2.default)(currentChunks);
   currentChunks.clear();
   return chunks;
 }
 
 var SameLoopPromise = exports.SameLoopPromise = function () {
   function SameLoopPromise(cb) {
-    (0, _classCallCheck3['default'])(this, SameLoopPromise);
+    (0, _classCallCheck3.default)(this, SameLoopPromise);
 
     this.onResultCallbacks = [];
     this.onErrorCallbacks = [];
@@ -279,7 +279,7 @@ var SameLoopPromise = exports.SameLoopPromise = function () {
     return promise;
   };
 
-  SameLoopPromise.prototype['catch'] = function _catch(onError) {
+  SameLoopPromise.prototype.catch = function _catch(onError) {
     var _this5 = this;
 
     this.runIfNeeded();

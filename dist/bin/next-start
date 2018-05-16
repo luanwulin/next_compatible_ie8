@@ -11,9 +11,9 @@ var _server = require('../server');
 
 var _server2 = _interopRequireDefault(_server);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var argv = (0, _minimist2['default'])(process.argv.slice(2), {
+var argv = (0, _minimist2.default)(process.argv.slice(2), {
   alias: {
     h: 'help',
     H: 'hostname',
@@ -21,7 +21,7 @@ var argv = (0, _minimist2['default'])(process.argv.slice(2), {
   },
   boolean: ['h'],
   string: ['H'],
-  'default': { p: 3000 }
+  default: { p: 3000 }
 });
 
 if (argv.hostname === '') {
@@ -36,12 +36,12 @@ if (argv.help) {
 
 var dir = (0, _path.resolve)(argv._[0] || '.');
 
-var srv = new _server2['default']({ dir: dir });
+var srv = new _server2.default({ dir: dir });
 srv.start(argv.port, argv.hostname).then(function () {
   if (!process.env.NOW) {
     console.log('> Ready on http://' + (argv.hostname ? argv.hostname : 'localhost') + ':' + argv.port);
   }
-})['catch'](function (err) {
+}).catch(function (err) {
   console.error(err);
   process.exit(1);
 });

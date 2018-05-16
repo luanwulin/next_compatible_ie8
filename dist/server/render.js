@@ -28,9 +28,9 @@ var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 var render = exports.render = function () {
-  var _ref = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee(req, res, pathname, query, opts) {
+  var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(req, res, pathname, query, opts) {
     var html;
-    return _regenerator2['default'].wrap(function _callee$(_context) {
+    return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
@@ -56,9 +56,9 @@ var render = exports.render = function () {
 }();
 
 var renderError = exports.renderError = function () {
-  var _ref2 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee2(err, req, res, pathname, query, opts) {
+  var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(err, req, res, pathname, query, opts) {
     var html;
-    return _regenerator2['default'].wrap(function _callee2$(_context2) {
+    return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
@@ -84,7 +84,7 @@ var renderError = exports.renderError = function () {
 }();
 
 var doRender = function () {
-  var _ref3 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee3(req, res, pathname, query) {
+  var _ref3 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3(req, res, pathname, query) {
     var _ref4 = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {},
         err = _ref4.err,
         page = _ref4.page,
@@ -104,7 +104,7 @@ var doRender = function () {
 
     var dist, _ref5, Component, Document, asPath, ctx, props, renderPage, docProps, devBuildId, doc;
 
-    return _regenerator2['default'].wrap(function _callee3$(_context3) {
+    return _regenerator2.default.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
@@ -114,17 +114,17 @@ var doRender = function () {
             return ensurePage(page, { dir: dir, hotReloader: hotReloader });
 
           case 3:
-            dist = (0, _config2['default'])(dir).distDir;
+            dist = (0, _config2.default)(dir).distDir;
             _context3.next = 6;
-            return _promise2['default'].all([(0, _require2['default'])((0, _path.join)(dir, dist, 'dist', 'pages', page)), (0, _require2['default'])((0, _path.join)(dir, dist, 'dist', 'pages', '_document'))]);
+            return _promise2.default.all([(0, _require2.default)((0, _path.join)(dir, dist, 'dist', 'pages', page)), (0, _require2.default)((0, _path.join)(dir, dist, 'dist', 'pages', '_document'))]);
 
           case 6:
             _ref5 = _context3.sent;
             Component = _ref5[0];
             Document = _ref5[1];
 
-            Component = Component['default'] || Component;
-            Document = Document['default'] || Document;
+            Component = Component.default || Component;
+            Document = Document.default || Document;
             asPath = req.url;
             ctx = { err: err, req: req, res: res, pathname: pathname, query: query, asPath: asPath };
             _context3.next = 15;
@@ -146,7 +146,7 @@ var doRender = function () {
                 return Page;
               };
 
-              var app = (0, _react.createElement)(_app2['default'], {
+              var app = (0, _react.createElement)(_app2.default, {
                 Component: enhancer(Component),
                 props: props,
                 router: new _router.Router(pathname, query, asPath)
@@ -160,14 +160,14 @@ var doRender = function () {
 
               try {
                 if (err && dev) {
-                  errorHtml = render((0, _react.createElement)(_errorDebug2['default'], { error: err }));
+                  errorHtml = render((0, _react.createElement)(_errorDebug2.default, { error: err }));
                 } else if (err) {
                   errorHtml = render(app);
                 } else {
                   html = render(app);
                 }
               } finally {
-                head = _head2['default'].rewind() || (0, _head.defaultHead)();
+                head = _head2.default.rewind() || (0, _head.defaultHead)();
               }
               var chunks = loadChunks({ dev: dev, dir: dir, dist: dist, availableChunks: availableChunks });
 
@@ -175,7 +175,7 @@ var doRender = function () {
             };
 
             _context3.next = 21;
-            return (0, _utils.loadGetInitialProps)(Document, (0, _extends3['default'])({}, ctx, { renderPage: renderPage }));
+            return (0, _utils.loadGetInitialProps)(Document, (0, _extends3.default)({}, ctx, { renderPage: renderPage }));
 
           case 21:
             docProps = _context3.sent;
@@ -197,7 +197,7 @@ var doRender = function () {
             throw new Error('_document.js is not exporting a React element');
 
           case 27:
-            doc = (0, _react.createElement)(Document, (0, _extends3['default'])({
+            doc = (0, _react.createElement)(Document, (0, _extends3.default)({
               __NEXT_DATA__: {
                 props: props,
                 pathname: pathname,
@@ -228,17 +228,17 @@ var doRender = function () {
 }();
 
 var renderScript = exports.renderScript = function () {
-  var _ref6 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee4(req, res, page, opts) {
+  var _ref6 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee4(req, res, page, opts) {
     var dist, path, realPath;
-    return _regenerator2['default'].wrap(function _callee4$(_context4) {
+    return _regenerator2.default.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
             _context4.prev = 0;
-            dist = (0, _config2['default'])(opts.dir).distDir;
+            dist = (0, _config2.default)(opts.dir).distDir;
             path = (0, _path.join)(opts.dir, dist, 'bundles', 'pages', page);
             _context4.next = 5;
-            return (0, _resolve2['default'])(path);
+            return (0, _resolve2.default)(path);
 
           case 5:
             realPath = _context4.sent;
@@ -278,16 +278,16 @@ var renderScript = exports.renderScript = function () {
 }();
 
 var renderScriptError = exports.renderScriptError = function () {
-  var _ref8 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee5(req, res, page, error, customFields, _ref7) {
+  var _ref8 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee5(req, res, page, error, customFields, _ref7) {
     var dev = _ref7.dev;
     var errorJson;
-    return _regenerator2['default'].wrap(function _callee5$(_context5) {
+    return _regenerator2.default.wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
             res.setHeader('Cache-Control', 'no-store, must-revalidate');
 
-            page = _xssFilters2['default'].uriInSingleQuotedAttr(page);
+            page = _xssFilters2.default.uriInSingleQuotedAttr(page);
             res.setHeader('Content-Type', 'text/javascript');
 
             if (!(error.code === 'ENOENT')) {
@@ -299,10 +299,10 @@ var renderScriptError = exports.renderScriptError = function () {
             return _context5.abrupt('return');
 
           case 6:
-            errorJson = (0, _extends3['default'])({}, serializeError(dev, error), customFields);
+            errorJson = (0, _extends3.default)({}, serializeError(dev, error), customFields);
 
 
-            res.end('\n    window.__NEXT_REGISTER_PAGE(\'' + page + '\', function() {\n      var error = ' + (0, _stringify2['default'])(errorJson) + '\n      return { error: error }\n    })\n  ');
+            res.end('\n    window.__NEXT_REGISTER_PAGE(\'' + page + '\', function() {\n      var error = ' + (0, _stringify2.default)(errorJson) + '\n      return { error: error }\n    })\n  ');
 
           case 8:
           case 'end':
@@ -318,10 +318,10 @@ var renderScriptError = exports.renderScriptError = function () {
 }();
 
 var ensurePage = function () {
-  var _ref11 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee6(page, _ref10) {
+  var _ref11 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee6(page, _ref10) {
     var dir = _ref10.dir,
         hotReloader = _ref10.hotReloader;
-    return _regenerator2['default'].wrap(function _callee6$(_context6) {
+    return _regenerator2.default.wrap(function _callee6$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
           case 0:
@@ -417,7 +417,7 @@ var _xssFilters = require('xss-filters');
 
 var _xssFilters2 = _interopRequireDefault(_xssFilters);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function renderToHTML(req, res, pathname, query, opts) {
   return doRender(req, res, pathname, query, opts);
@@ -426,16 +426,16 @@ function renderToHTML(req, res, pathname, query, opts) {
 function renderErrorToHTML(err, req, res, pathname, query) {
   var opts = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : {};
 
-  return doRender(req, res, pathname, query, (0, _extends3['default'])({}, opts, { err: err, page: '_error' }));
+  return doRender(req, res, pathname, query, (0, _extends3.default)({}, opts, { err: err, page: '_error' }));
 }
 
 function sendHTML(req, res, html, method, _ref9) {
   var dev = _ref9.dev;
 
   if (res.finished) return;
-  var etag = (0, _etag2['default'])(html);
+  var etag = (0, _etag2.default)(html);
 
-  if ((0, _fresh2['default'])(req.headers, { etag: etag })) {
+  if ((0, _fresh2.default)(req.headers, { etag: etag })) {
     res.statusCode = 304;
     res.end();
     return;
@@ -454,7 +454,7 @@ function sendHTML(req, res, html, method, _ref9) {
 function sendJSON(res, obj, method) {
   if (res.finished) return;
 
-  var json = (0, _stringify2['default'])(obj);
+  var json = (0, _stringify2.default)(obj);
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Content-Length', Buffer.byteLength(json));
   res.end(method === 'HEAD' ? null : json);
@@ -485,8 +485,8 @@ function serializeError(dev, err) {
 }
 
 function serveStatic(req, res, path) {
-  return new _promise2['default'](function (resolve, reject) {
-    (0, _send2['default'])(req, path).on('directory', function () {
+  return new _promise2.default(function (resolve, reject) {
+    (0, _send2.default)(req, path).on('directory', function () {
       var err = new Error('No directory access');
       err.code = 'ENOENT';
       reject(err);
@@ -503,7 +503,7 @@ function loadChunks(_ref12) {
   var flushedChunks = (0, _dynamic.flushChunks)();
   var validChunks = [];
 
-  for (var _iterator = flushedChunks, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3['default'])(_iterator);;) {
+  for (var _iterator = flushedChunks, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);;) {
     var _ref13;
 
     if (_isArray) {

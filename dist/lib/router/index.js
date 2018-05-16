@@ -12,7 +12,7 @@ var _withRouter = require('./with-router');
 Object.defineProperty(exports, 'withRouter', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_withRouter)['default'];
+    return _interopRequireDefault(_withRouter).default;
   }
 });
 exports._notifyBuildIdMismatch = _notifyBuildIdMismatch;
@@ -23,7 +23,7 @@ var _router = require('./router');
 
 var _router2 = _interopRequireDefault(_router);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var SingletonRouter = {
   router: null,
@@ -41,7 +41,7 @@ var coreMethodFields = ['push', 'replace', 'reload', 'back', 'prefetch'];
 var routerEvents = ['routeChangeStart', 'beforeHistoryChange', 'routeChangeComplete', 'routeChangeError'];
 
 propertyFields.forEach(function (field) {
-  (0, _defineProperty2['default'])(SingletonRouter, field, {
+  (0, _defineProperty2.default)(SingletonRouter, field, {
     get: function get() {
       throwIfNoRouter();
       return SingletonRouter.router[field];
@@ -81,13 +81,13 @@ function throwIfNoRouter() {
   }
 }
 
-exports['default'] = SingletonRouter;
+exports.default = SingletonRouter;
 var createRouter = exports.createRouter = function createRouter() {
   for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
     args[_key] = arguments[_key];
   }
 
-  SingletonRouter.router = new (Function.prototype.bind.apply(_router2['default'], [null].concat(args)))();
+  SingletonRouter.router = new (Function.prototype.bind.apply(_router2.default, [null].concat(args)))();
   SingletonRouter.readyCallbacks.forEach(function (cb) {
     return cb();
   });
@@ -96,7 +96,7 @@ var createRouter = exports.createRouter = function createRouter() {
   return SingletonRouter.router;
 };
 
-var Router = exports.Router = _router2['default'];
+var Router = exports.Router = _router2.default;
 
 function _notifyBuildIdMismatch(nextRoute) {
   if (SingletonRouter.onAppUpdated) {
@@ -140,7 +140,7 @@ function makePublicRouterInstance(router) {
   var instance = {};
 
   propertyFields.forEach(function (field) {
-    (0, _defineProperty2['default'])(instance, field, {
+    (0, _defineProperty2.default)(instance, field, {
       get: function get() {
         return router[field];
       }

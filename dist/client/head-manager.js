@@ -10,7 +10,7 @@ var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var DEFAULT_TITLE = '';
 
@@ -23,7 +23,7 @@ var DOMAttributeNames = {
 
 var HeadManager = function () {
   function HeadManager() {
-    (0, _classCallCheck3['default'])(this, HeadManager);
+    (0, _classCallCheck3.default)(this, HeadManager);
 
     this.updatePromise = null;
   }
@@ -31,7 +31,7 @@ var HeadManager = function () {
   HeadManager.prototype.updateHead = function updateHead(head) {
     var _this = this;
 
-    var promise = this.updatePromise = _promise2['default'].resolve().then(function () {
+    var promise = this.updatePromise = _promise2.default.resolve().then(function () {
       if (promise !== _this.updatePromise) return;
 
       _this.updatePromise = null;
@@ -94,7 +94,7 @@ var HeadManager = function () {
   return HeadManager;
 }();
 
-exports['default'] = HeadManager;
+exports.default = HeadManager;
 
 
 function reactElementToDOM(_ref) {

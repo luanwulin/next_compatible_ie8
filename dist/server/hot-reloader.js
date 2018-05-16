@@ -70,7 +70,7 @@ var _uuid2 = _interopRequireDefault(_uuid);
 
 var _utils = require('./utils');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var HotReloader = function () {
   function HotReloader(dir) {
@@ -78,7 +78,7 @@ var HotReloader = function () {
         quiet = _ref.quiet,
         conf = _ref.conf;
 
-    (0, _classCallCheck3['default'])(this, HotReloader);
+    (0, _classCallCheck3.default)(this, HotReloader);
 
     this.dir = dir;
     this.quiet = quiet;
@@ -93,28 +93,28 @@ var HotReloader = function () {
     this.prevFailedChunkNames = null;
     this.prevChunkHashes = null;
 
-    this.buildId = _uuid2['default'].v4();
+    this.buildId = _uuid2.default.v4();
 
-    this.config = (0, _config2['default'])(dir, conf);
+    this.config = (0, _config2.default)(dir, conf);
   }
 
   HotReloader.prototype.run = function () {
-    var _ref2 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee(req, res) {
+    var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(req, res) {
       var _this = this;
 
       var _loop, _iterator, _isArray, _i, _ref3, fn;
 
-      return _regenerator2['default'].wrap(function _callee$(_context2) {
+      return _regenerator2.default.wrap(function _callee$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              _loop = _regenerator2['default'].mark(function _loop(fn) {
-                return _regenerator2['default'].wrap(function _loop$(_context) {
+              _loop = _regenerator2.default.mark(function _loop(fn) {
+                return _regenerator2.default.wrap(function _loop$(_context) {
                   while (1) {
                     switch (_context.prev = _context.next) {
                       case 0:
                         _context.next = 2;
-                        return new _promise2['default'](function (resolve, reject) {
+                        return new _promise2.default(function (resolve, reject) {
                           fn(req, res, function (err) {
                             if (err) return reject(err);
                             resolve();
@@ -128,7 +128,7 @@ var HotReloader = function () {
                   }
                 }, _loop, _this);
               });
-              _iterator = this.middlewares, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3['default'])(_iterator);
+              _iterator = this.middlewares, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);
 
             case 2:
               if (!_isArray) {
@@ -185,15 +185,15 @@ var HotReloader = function () {
   }();
 
   HotReloader.prototype.start = function () {
-    var _ref4 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee2() {
+    var _ref4 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2() {
       var _ref5, compiler, buildTools;
 
-      return _regenerator2['default'].wrap(function _callee2$(_context3) {
+      return _regenerator2.default.wrap(function _callee2$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
               _context3.next = 2;
-              return _promise2['default'].all([(0, _webpack2['default'])(this.dir, { buildId: this.buildId, dev: true, quiet: this.quiet }), (0, _clean2['default'])(this.dir)]);
+              return _promise2.default.all([(0, _webpack2.default)(this.dir, { buildId: this.buildId, dev: true, quiet: this.quiet }), (0, _clean2.default)(this.dir)]);
 
             case 2:
               _ref5 = _context3.sent;
@@ -228,9 +228,9 @@ var HotReloader = function () {
   }();
 
   HotReloader.prototype.stop = function () {
-    var _ref6 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee3(webpackDevMiddleware) {
+    var _ref6 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3(webpackDevMiddleware) {
       var middleware;
-      return _regenerator2['default'].wrap(function _callee3$(_context4) {
+      return _regenerator2.default.wrap(function _callee3$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
@@ -241,7 +241,7 @@ var HotReloader = function () {
                 break;
               }
 
-              return _context4.abrupt('return', new _promise2['default'](function (resolve, reject) {
+              return _context4.abrupt('return', new _promise2.default(function (resolve, reject) {
                 middleware.close(function (err) {
                   if (err) return reject(err);
                   resolve();
@@ -264,17 +264,17 @@ var HotReloader = function () {
   }();
 
   HotReloader.prototype.reload = function () {
-    var _ref7 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee4() {
+    var _ref7 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee4() {
       var _ref8, compiler, buildTools, oldWebpackDevMiddleware;
 
-      return _regenerator2['default'].wrap(function _callee4$(_context5) {
+      return _regenerator2.default.wrap(function _callee4$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
               this.stats = null;
 
               _context5.next = 3;
-              return _promise2['default'].all([(0, _webpack2['default'])(this.dir, { buildId: this.buildId, dev: true, quiet: this.quiet }), (0, _clean2['default'])(this.dir)]);
+              return _promise2.default.all([(0, _webpack2.default)(this.dir, { buildId: this.buildId, dev: true, quiet: this.quiet }), (0, _clean2.default)(this.dir)]);
 
             case 3:
               _ref8 = _context5.sent;
@@ -323,11 +323,11 @@ var HotReloader = function () {
   };
 
   HotReloader.prototype.prepareBuildTools = function () {
-    var _ref10 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee5(compiler) {
+    var _ref10 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee5(compiler) {
       var _this2 = this;
 
       var ignored, webpackDevMiddlewareConfig, webpackDevMiddleware, webpackHotMiddleware, onDemandEntries;
-      return _regenerator2['default'].wrap(function _callee5$(_context6) {
+      return _regenerator2.default.wrap(function _callee5$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
@@ -336,7 +336,7 @@ var HotReloader = function () {
 
 
                 if (_this2.prevAssets) {
-                  for (var _iterator2 = (0, _keys2['default'])(assets), _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : (0, _getIterator3['default'])(_iterator2);;) {
+                  for (var _iterator2 = (0, _keys2.default)(assets), _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : (0, _getIterator3.default)(_iterator2);;) {
                     var _ref11;
 
                     if (_isArray2) {
@@ -352,7 +352,7 @@ var HotReloader = function () {
 
                     deleteCache(assets[f].existsAt);
                   }
-                  for (var _iterator3 = (0, _keys2['default'])(_this2.prevAssets), _isArray3 = Array.isArray(_iterator3), _i3 = 0, _iterator3 = _isArray3 ? _iterator3 : (0, _getIterator3['default'])(_iterator3);;) {
+                  for (var _iterator3 = (0, _keys2.default)(_this2.prevAssets), _isArray3 = Array.isArray(_iterator3), _i3 = 0, _iterator3 = _isArray3 ? _iterator3 : (0, _getIterator3.default)(_iterator3);;) {
                     var _ref12;
 
                     if (_isArray3) {
@@ -379,13 +379,13 @@ var HotReloader = function () {
               compiler.plugin('done', function (stats) {
                 var compilation = stats.compilation;
 
-                var chunkNames = new _set2['default'](compilation.chunks.map(function (c) {
+                var chunkNames = new _set2.default(compilation.chunks.map(function (c) {
                   return c.name;
                 }).filter(function (name) {
                   return _utils.IS_BUNDLED_PAGE.test(name);
                 }));
 
-                var failedChunkNames = new _set2['default'](compilation.errors.map(function (e) {
+                var failedChunkNames = new _set2.default(compilation.errors.map(function (e) {
                   return e.module.reasons;
                 }).reduce(function (a, b) {
                   return a.concat(b);
@@ -397,7 +397,7 @@ var HotReloader = function () {
                   return c.name;
                 }));
 
-                var chunkHashes = new _map2['default'](compilation.chunks.filter(function (c) {
+                var chunkHashes = new _map2.default(compilation.chunks.filter(function (c) {
                   return _utils.IS_BUNDLED_PAGE.test(c.name);
                 }).map(function (c) {
                   return [c.name, c.hash];
@@ -412,7 +412,7 @@ var HotReloader = function () {
 
                   var rootDir = (0, _path.join)('bundles', 'pages');
 
-                  for (var _iterator4 = new _set2['default']([].concat(added, removed, failed, succeeded)), _isArray4 = Array.isArray(_iterator4), _i4 = 0, _iterator4 = _isArray4 ? _iterator4 : (0, _getIterator3['default'])(_iterator4);;) {
+                  for (var _iterator4 = new _set2.default([].concat(added, removed, failed, succeeded)), _isArray4 = Array.isArray(_iterator4), _i4 = 0, _iterator4 = _isArray4 ? _iterator4 : (0, _getIterator3.default)(_iterator4);;) {
                     var _ref13;
 
                     if (_isArray4) {
@@ -430,7 +430,7 @@ var HotReloader = function () {
                     _this2.send('reload', route);
                   }
 
-                  for (var _iterator5 = chunkHashes, _isArray5 = Array.isArray(_iterator5), _i5 = 0, _iterator5 = _isArray5 ? _iterator5 : (0, _getIterator3['default'])(_iterator5);;) {
+                  for (var _iterator5 = chunkHashes, _isArray5 = Array.isArray(_iterator5), _i5 = 0, _iterator5 = _isArray5 ? _iterator5 : (0, _getIterator3.default)(_iterator5);;) {
                     var _ref15;
 
                     if (_isArray5) {
@@ -478,13 +478,13 @@ var HotReloader = function () {
                 webpackDevMiddlewareConfig = this.config.webpackDevMiddleware(webpackDevMiddlewareConfig);
               }
 
-              webpackDevMiddleware = (0, _webpackDevMiddleware2['default'])(compiler, webpackDevMiddlewareConfig);
-              webpackHotMiddleware = (0, _webpackHotMiddleware2['default'])(compiler, {
+              webpackDevMiddleware = (0, _webpackDevMiddleware2.default)(compiler, webpackDevMiddlewareConfig);
+              webpackHotMiddleware = (0, _webpackHotMiddleware2.default)(compiler, {
                 path: '/_next/webpack-hmr',
                 log: false,
                 heartbeat: 2500
               });
-              onDemandEntries = (0, _onDemandEntryHandler2['default'])(webpackDevMiddleware, compiler, (0, _extends3['default'])({
+              onDemandEntries = (0, _onDemandEntryHandler2.default)(webpackDevMiddleware, compiler, (0, _extends3.default)({
                 dir: this.dir,
                 dev: true,
                 reload: this.reload.bind(this)
@@ -512,16 +512,16 @@ var HotReloader = function () {
 
   HotReloader.prototype.waitUntilValid = function waitUntilValid(webpackDevMiddleware) {
     var middleware = webpackDevMiddleware || this.webpackDevMiddleware;
-    return new _promise2['default'](function (resolve) {
+    return new _promise2.default(function (resolve) {
       middleware.waitUntilValid(resolve);
     });
   };
 
   HotReloader.prototype.getCompilationErrors = function () {
-    var _ref16 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee6() {
+    var _ref16 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee6() {
       var _stats$compilation, compiler, errors, _iterator6, _isArray6, _i6, _ref17, err, _iterator7, _isArray7, _i7, _ref18, r, _iterator8, _isArray8, _i8, _ref19, c, path, _errors;
 
-      return _regenerator2['default'].wrap(function _callee6$(_context7) {
+      return _regenerator2.default.wrap(function _callee6$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
@@ -534,7 +534,7 @@ var HotReloader = function () {
                 break;
               }
 
-              this.compilationErrors = new _map2['default']();
+              this.compilationErrors = new _map2.default();
 
               if (!this.stats.hasErrors()) {
                 _context7.next = 51;
@@ -542,7 +542,7 @@ var HotReloader = function () {
               }
 
               _stats$compilation = this.stats.compilation, compiler = _stats$compilation.compiler, errors = _stats$compilation.errors;
-              _iterator6 = errors, _isArray6 = Array.isArray(_iterator6), _i6 = 0, _iterator6 = _isArray6 ? _iterator6 : (0, _getIterator3['default'])(_iterator6);
+              _iterator6 = errors, _isArray6 = Array.isArray(_iterator6), _i6 = 0, _iterator6 = _isArray6 ? _iterator6 : (0, _getIterator3.default)(_iterator6);
 
             case 7:
               if (!_isArray6) {
@@ -577,7 +577,7 @@ var HotReloader = function () {
 
             case 17:
               err = _ref17;
-              _iterator7 = err.module.reasons, _isArray7 = Array.isArray(_iterator7), _i7 = 0, _iterator7 = _isArray7 ? _iterator7 : (0, _getIterator3['default'])(_iterator7);
+              _iterator7 = err.module.reasons, _isArray7 = Array.isArray(_iterator7), _i7 = 0, _iterator7 = _isArray7 ? _iterator7 : (0, _getIterator3.default)(_iterator7);
 
             case 19:
               if (!_isArray7) {
@@ -612,7 +612,7 @@ var HotReloader = function () {
 
             case 29:
               r = _ref18;
-              _iterator8 = r.module.chunks, _isArray8 = Array.isArray(_iterator8), _i8 = 0, _iterator8 = _isArray8 ? _iterator8 : (0, _getIterator3['default'])(_iterator8);
+              _iterator8 = r.module.chunks, _isArray8 = Array.isArray(_iterator8), _i8 = 0, _iterator8 = _isArray8 ? _iterator8 : (0, _getIterator3.default)(_iterator8);
 
             case 31:
               if (!_isArray8) {
@@ -697,7 +697,7 @@ var HotReloader = function () {
   return HotReloader;
 }();
 
-exports['default'] = HotReloader;
+exports.default = HotReloader;
 
 
 function deleteCache(path) {
@@ -705,7 +705,7 @@ function deleteCache(path) {
 }
 
 function diff(a, b) {
-  return new _set2['default']([].concat(a).filter(function (v) {
+  return new _set2.default([].concat(a).filter(function (v) {
     return !b.has(v);
   }));
 }

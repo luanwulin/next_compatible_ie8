@@ -8,11 +8,11 @@ var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
 var _path = require('path');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var WatchPagesPlugin = function () {
   function WatchPagesPlugin(dir) {
-    (0, _classCallCheck3['default'])(this, WatchPagesPlugin);
+    (0, _classCallCheck3.default)(this, WatchPagesPlugin);
 
     this.dir = (0, _path.resolve)(dir, 'pages');
   }
@@ -36,4 +36,4 @@ var WatchPagesPlugin = function () {
   return WatchPagesPlugin;
 }();
 
-exports['default'] = WatchPagesPlugin;
+exports.default = WatchPagesPlugin;

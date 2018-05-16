@@ -19,16 +19,16 @@ var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 var isFile = function () {
-  var _ref4 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee2(p) {
+  var _ref4 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(p) {
     var stat, realpath;
-    return _regenerator2['default'].wrap(function _callee2$(_context2) {
+    return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             stat = void 0;
             _context2.prev = 1;
             _context2.next = 4;
-            return _fs2['default'].stat(p);
+            return _fs2.default.stat(p);
 
           case 4:
             stat = _context2.sent;
@@ -80,9 +80,9 @@ var isFile = function () {
 }();
 
 var getTrueFilePath = function () {
-  var _ref5 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee3(p) {
+  var _ref5 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3(p) {
     var fsPathNormalized, pathRoot, noDrivePath, result;
-    return _regenerator2['default'].wrap(function _callee3$(_context3) {
+    return _regenerator2.default.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
@@ -93,7 +93,7 @@ var getTrueFilePath = function () {
             pathRoot = (0, _path.parse)(fsPathNormalized).root;
             noDrivePath = fsPathNormalized.slice(Math.max(pathRoot.length - 1, 0));
             _context3.next = 6;
-            return (0, _globPromise2['default'])(noDrivePath, { nocase: true, cwd: pathRoot });
+            return (0, _globPromise2.default)(noDrivePath, { nocase: true, cwd: pathRoot });
 
           case 6:
             result = _context3.sent;
@@ -124,18 +124,18 @@ var _globPromise = require('glob-promise');
 
 var _globPromise2 = _interopRequireDefault(_globPromise);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports['default'] = function () {
-  var _ref = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee(id) {
+exports.default = function () {
+  var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(id) {
     var paths, _iterator, _isArray, _i, _ref2, p, err;
 
-    return _regenerator2['default'].wrap(function _callee$(_context) {
+    return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             paths = getPaths(id);
-            _iterator = paths, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3['default'])(_iterator);
+            _iterator = paths, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);
 
           case 2:
             if (!_isArray) {
@@ -208,8 +208,8 @@ exports['default'] = function () {
 
 function resolveFromList(id, files) {
   var paths = getPaths(id);
-  var set = new _set2['default'](files);
-  for (var _iterator2 = paths, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : (0, _getIterator3['default'])(_iterator2);;) {
+  var set = new _set2.default(files);
+  for (var _iterator2 = paths, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : (0, _getIterator3.default)(_iterator2);;) {
     var _ref3;
 
     if (_isArray2) {

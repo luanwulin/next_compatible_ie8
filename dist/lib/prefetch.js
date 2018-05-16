@@ -34,7 +34,7 @@ var _router2 = _interopRequireDefault(_router);
 
 var _utils = require('./utils');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var warnImperativePrefetch = (0, _utils.execOnce)(function () {
   var message = '> You are using deprecated "next/prefetch". It will be removed with Next.js 2.0.\n' + '> Use "Router.prefetch(href)" instead.';
@@ -48,27 +48,27 @@ var wantLinkPrefetch = (0, _utils.execOnce)(function () {
 
 function prefetch(href) {
   warnImperativePrefetch();
-  return _router2['default'].prefetch(href);
+  return _router2.default.prefetch(href);
 }
 
 var LinkPrefetch = function (_React$Component) {
-  (0, _inherits3['default'])(LinkPrefetch, _React$Component);
+  (0, _inherits3.default)(LinkPrefetch, _React$Component);
 
   function LinkPrefetch() {
-    (0, _classCallCheck3['default'])(this, LinkPrefetch);
-    return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+    (0, _classCallCheck3.default)(this, LinkPrefetch);
+    return (0, _possibleConstructorReturn3.default)(this, _React$Component.apply(this, arguments));
   }
 
   LinkPrefetch.prototype.render = function render() {
     wantLinkPrefetch();
-    var props = (0, _extends3['default'])({}, this.props, {
+    var props = (0, _extends3.default)({}, this.props, {
       prefetch: this.props.prefetch !== false
     });
 
-    return _react2['default'].createElement(_link2['default'], props);
+    return _react2.default.createElement(_link2.default, props);
   };
 
   return LinkPrefetch;
-}(_react2['default'].Component);
+}(_react2.default.Component);
 
-exports['default'] = LinkPrefetch;
+exports.default = LinkPrefetch;

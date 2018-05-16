@@ -6,7 +6,7 @@ var _path = require('path');
 
 var RELATIVE_START = 'node_modules' + _path.sep;
 
-exports['default'] = function (moduleRequire) {
+exports.default = function (moduleRequire) {
   return function (path) {
     var absolutePath = moduleRequire.resolve(path).replace(/[\\/]package\.json$/, '');
 

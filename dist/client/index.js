@@ -20,8 +20,8 @@ var _promise = require('babel-runtime/core-js/promise');
 var _promise2 = _interopRequireDefault(_promise);
 
 var render = exports.render = function () {
-  var _ref7 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee2(props) {
-    return _regenerator2['default'].wrap(function _callee2$(_context2) {
+  var _ref7 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(props) {
+    return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
@@ -74,16 +74,16 @@ var render = exports.render = function () {
 }();
 
 var renderError = exports.renderError = function () {
-  var _ref8 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee3(error) {
+  var _ref8 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3(error) {
     var prod, errorMessage, initProps, _props;
 
-    return _regenerator2['default'].wrap(function _callee3$(_context3) {
+    return _regenerator2.default.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
             prod = process.env.NODE_ENV === 'production';
 
-            _reactDom2['default'].unmountComponentAtNode(appContainer);
+            _reactDom2.default.unmountComponentAtNode(appContainer);
 
             errorMessage = error.message + '\n' + error.stack;
 
@@ -122,7 +122,7 @@ var renderError = exports.renderError = function () {
 }();
 
 var doRender = function () {
-  var _ref10 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee4(_ref9) {
+  var _ref10 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee4(_ref9) {
     var Component = _ref9.Component,
         props = _ref9.props,
         hash = _ref9.hash,
@@ -132,7 +132,7 @@ var doRender = function () {
 
     var _router, _pathname, _query, _asPath, appProps;
 
-    return _regenerator2['default'].wrap(function _callee4$(_context4) {
+    return _regenerator2.default.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
@@ -159,8 +159,8 @@ var doRender = function () {
 
             emitterProp.emit('before-reactdom-render', { Component: Component, ErrorComponent: ErrorComponent, appProps: appProps });
 
-            _reactDom2['default'].unmountComponentAtNode(errorContainer);
-            renderReactElement((0, _react.createElement)(_app2['default'], appProps), appContainer);
+            _reactDom2.default.unmountComponentAtNode(errorContainer);
+            renderReactElement((0, _react.createElement)(_app2.default, appProps), appContainer);
 
             emitterProp.emit('after-reactdom-render', { Component: Component, ErrorComponent: ErrorComponent, appProps: appProps });
 
@@ -203,10 +203,10 @@ var _pageLoader = require('../lib/page-loader');
 
 var _pageLoader2 = _interopRequireDefault(_pageLoader);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 if (!window.Promise) {
-  window.Promise = _promise2['default'];
+  window.Promise = _promise2.default;
 }
 
 var _window = window,
@@ -223,7 +223,7 @@ var _window = window,
 
 var asPath = (0, _utils.getURL)();
 
-var pageLoader = new _pageLoader2['default'](buildId, assetPrefix);
+var pageLoader = new _pageLoader2.default(buildId, assetPrefix);
 window.__NEXT_LOADED_PAGES__.forEach(function (_ref) {
   var route = _ref.route,
       fn = _ref.fn;
@@ -243,7 +243,7 @@ delete window.__NEXT_LOADED_CHUNKS__;
 window.__NEXT_REGISTER_PAGE = pageLoader.registerPage.bind(pageLoader);
 window.__NEXT_REGISTER_CHUNK = pageLoader.registerChunk.bind(pageLoader);
 
-var headManager = new _headManager2['default']();
+var headManager = new _headManager2.default();
 var appContainer = document.getElementById('__next');
 var errorContainer = document.getElementById('__next-error');
 
@@ -256,20 +256,20 @@ var stripAnsi = function stripAnsi(s) {
   return s;
 };
 
-var emitter = exports.emitter = new _EventEmitter2['default']();
+var emitter = exports.emitter = new _EventEmitter2.default();
 
-exports['default'] = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee() {
+exports.default = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
   var _ref4 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
       passedDebugComponent = _ref4.ErrorDebugComponent,
       passedStripAnsi = _ref4.stripAnsi;
 
   var _iterator, _isArray, _i, _ref5, chunkName, hash;
 
-  return _regenerator2['default'].wrap(function _callee$(_context) {
+  return _regenerator2.default.wrap(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
-          _iterator = chunks, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3['default'])(_iterator);
+          _iterator = chunks, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);
 
         case 1:
           if (!_isArray) {
@@ -372,9 +372,9 @@ exports['default'] = (0, _asyncToGenerator3['default'])(_regenerator2['default']
 var isInitialRender = true;
 function renderReactElement(reactEl, domEl) {
   if (isInitialRender) {
-    _reactDom2['default'].hydrate(reactEl, domEl);
+    _reactDom2.default.hydrate(reactEl, domEl);
     isInitialRender = false;
   } else {
-    _reactDom2['default'].render(reactEl, domEl);
+    _reactDom2.default.render(reactEl, domEl);
   }
 }

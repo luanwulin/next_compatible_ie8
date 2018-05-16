@@ -68,9 +68,9 @@ var _package3 = require('react/package');
 
 var _package4 = _interopRequireDefault(_package3);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-if (!/^16\./.test(_package4['default'].version)) {
+if (!/^16\./.test(_package4.default.version)) {
   var message = '\nError: Next.js 4 requires React 16.\nInstall React 16 with:\n  npm remove react react-dom\n  npm install --save react@16 react-dom@16\n';
   console.error(message);
   process.exit(1);
@@ -97,7 +97,7 @@ var Server = function () {
         _ref$conf = _ref.conf,
         conf = _ref$conf === undefined ? null : _ref$conf;
 
-    (0, _classCallCheck3['default'])(this, Server);
+    (0, _classCallCheck3.default)(this, Server);
 
     if (dev) {
       require('source-map-support').install({
@@ -108,12 +108,12 @@ var Server = function () {
     this.dir = (0, _path.resolve)(dir);
     this.dev = dev;
     this.quiet = quiet;
-    this.router = new _router2['default']();
+    this.router = new _router2.default();
     this.hotReloader = dev ? this.getHotReloader(this.dir, { quiet: quiet, conf: conf }) : null;
     this.http = null;
-    this.config = (0, _config2['default'])(this.dir, conf);
+    this.config = (0, _config2.default)(this.dir, conf);
     this.dist = this.config.distDir;
-    if (!dev && !_fs2['default'].existsSync((0, _path.resolve)(dir, this.dist, 'BUILD_ID'))) {
+    if (!dev && !_fs2.default.existsSync((0, _path.resolve)(dir, this.dist, 'BUILD_ID'))) {
       console.error('> Could not find a valid build in the \'' + this.dist + '\' directory! Try building your app with \'next build\' before starting the server.');
       process.exit(1);
     }
@@ -134,14 +134,14 @@ var Server = function () {
   }
 
   Server.prototype.getHotReloader = function getHotReloader(dir, options) {
-    var HotReloader = require('./hot-reloader')['default'];
+    var HotReloader = require('./hot-reloader').default;
     return new HotReloader(dir, options);
   };
 
   Server.prototype.handleRequest = function handleRequest(req, res, parsedUrl) {
     var _this = this;
 
-    if (!parsedUrl || (typeof parsedUrl === 'undefined' ? 'undefined' : (0, _typeof3['default'])(parsedUrl)) !== 'object') {
+    if (!parsedUrl || (typeof parsedUrl === 'undefined' ? 'undefined' : (0, _typeof3.default)(parsedUrl)) !== 'object') {
       parsedUrl = (0, _url.parse)(req.url, true);
     }
 
@@ -150,7 +150,7 @@ var Server = function () {
     }
 
     res.statusCode = 200;
-    return this.run(req, res, parsedUrl)['catch'](function (err) {
+    return this.run(req, res, parsedUrl).catch(function (err) {
       if (!_this.quiet) console.error(err);
       res.statusCode = 500;
       res.end(_http.STATUS_CODES[500]);
@@ -162,8 +162,8 @@ var Server = function () {
   };
 
   Server.prototype.prepare = function () {
-    var _ref2 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee() {
-      return _regenerator2['default'].wrap(function _callee$(_context) {
+    var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
+      return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
@@ -191,10 +191,10 @@ var Server = function () {
   }();
 
   Server.prototype.close = function () {
-    var _ref3 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee2() {
+    var _ref3 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2() {
       var _this2 = this;
 
-      return _regenerator2['default'].wrap(function _callee2$(_context2) {
+      return _regenerator2.default.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
@@ -213,7 +213,7 @@ var Server = function () {
               }
 
               _context2.next = 6;
-              return new _promise2['default'](function (resolve, reject) {
+              return new _promise2.default(function (resolve, reject) {
                 _this2.http.close(function (err) {
                   if (err) return reject(err);
                   return resolve();
@@ -240,9 +240,9 @@ var Server = function () {
 
     var routes = {
       '/_next-prefetcher.js': function () {
-        var _ref4 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee3(req, res, params) {
+        var _ref4 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee3(req, res, params) {
           var p;
-          return _regenerator2['default'].wrap(function _callee3$(_context3) {
+          return _regenerator2.default.wrap(function _callee3$(_context3) {
             while (1) {
               switch (_context3.prev = _context3.next) {
                 case 0:
@@ -266,9 +266,9 @@ var Server = function () {
       }(),
 
       '/_next/:buildId/webpack/chunks/:name': function () {
-        var _ref5 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee4(req, res, params) {
+        var _ref5 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee4(req, res, params) {
           var p;
-          return _regenerator2['default'].wrap(function _callee4$(_context4) {
+          return _regenerator2.default.wrap(function _callee4$(_context4) {
             while (1) {
               switch (_context4.prev = _context4.next) {
                 case 0:
@@ -300,9 +300,9 @@ var Server = function () {
       }(),
 
       '/_next/:buildId/webpack/:id': function () {
-        var _ref6 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee5(req, res, params) {
+        var _ref6 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee5(req, res, params) {
           var p;
-          return _regenerator2['default'].wrap(function _callee5$(_context5) {
+          return _regenerator2.default.wrap(function _callee5$(_context5) {
             while (1) {
               switch (_context5.prev = _context5.next) {
                 case 0:
@@ -334,9 +334,9 @@ var Server = function () {
       }(),
 
       '/_next/:hash/manifest.js': function () {
-        var _ref7 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee6(req, res, params) {
+        var _ref7 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee6(req, res, params) {
           var p;
-          return _regenerator2['default'].wrap(function _callee6$(_context6) {
+          return _regenerator2.default.wrap(function _callee6$(_context6) {
             while (1) {
               switch (_context6.prev = _context6.next) {
                 case 0:
@@ -370,9 +370,9 @@ var Server = function () {
       }(),
 
       '/_next/:hash/main.js': function () {
-        var _ref8 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee7(req, res, params) {
+        var _ref8 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee7(req, res, params) {
           var p;
-          return _regenerator2['default'].wrap(function _callee7$(_context7) {
+          return _regenerator2.default.wrap(function _callee7$(_context7) {
             while (1) {
               switch (_context7.prev = _context7.next) {
                 case 0:
@@ -406,9 +406,9 @@ var Server = function () {
       }(),
 
       '/_next/:hash/commons.js': function () {
-        var _ref9 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee8(req, res, params) {
+        var _ref9 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee8(req, res, params) {
           var p;
-          return _regenerator2['default'].wrap(function _callee8$(_context8) {
+          return _regenerator2.default.wrap(function _callee8$(_context8) {
             while (1) {
               switch (_context8.prev = _context8.next) {
                 case 0:
@@ -442,9 +442,9 @@ var Server = function () {
       }(),
 
       '/_next/:hash/app.js': function () {
-        var _ref10 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee9(req, res, params) {
+        var _ref10 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee9(req, res, params) {
           var p;
-          return _regenerator2['default'].wrap(function _callee9$(_context9) {
+          return _regenerator2.default.wrap(function _callee9$(_context9) {
             while (1) {
               switch (_context9.prev = _context9.next) {
                 case 0:
@@ -478,9 +478,9 @@ var Server = function () {
       }(),
 
       '/_next/:buildId/page/_error*': function () {
-        var _ref11 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee10(req, res, params) {
+        var _ref11 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee10(req, res, params) {
           var error, customFields, p;
-          return _regenerator2['default'].wrap(function _callee10$(_context10) {
+          return _regenerator2.default.wrap(function _callee10$(_context10) {
             while (1) {
               switch (_context10.prev = _context10.next) {
                 case 0:
@@ -518,10 +518,10 @@ var Server = function () {
       }(),
 
       '/_next/:buildId/page/:path*': function () {
-        var _ref12 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee11(req, res, params) {
+        var _ref12 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee11(req, res, params) {
           var paths, page, error, customFields, compilationErr, _customFields, p;
 
-          return _regenerator2['default'].wrap(function _callee11$(_context11) {
+          return _regenerator2.default.wrap(function _callee11$(_context11) {
             while (1) {
               switch (_context11.prev = _context11.next) {
                 case 0:
@@ -604,9 +604,9 @@ var Server = function () {
       }(),
 
       '/_next/:path*': function () {
-        var _ref13 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee12(req, res, params) {
+        var _ref13 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee12(req, res, params) {
           var p;
-          return _regenerator2['default'].wrap(function _callee12$(_context12) {
+          return _regenerator2.default.wrap(function _callee12$(_context12) {
             while (1) {
               switch (_context12.prev = _context12.next) {
                 case 0:
@@ -630,9 +630,9 @@ var Server = function () {
       }(),
 
       '/static/:path*': function () {
-        var _ref14 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee13(req, res, params) {
+        var _ref14 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee13(req, res, params) {
           var p;
-          return _regenerator2['default'].wrap(function _callee13$(_context13) {
+          return _regenerator2.default.wrap(function _callee13$(_context13) {
             while (1) {
               switch (_context13.prev = _context13.next) {
                 case 0:
@@ -658,9 +658,9 @@ var Server = function () {
 
     if (this.config.useFileSystemPublicRoutes) {
       routes['/:path*'] = function () {
-        var _ref15 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee14(req, res, params, parsedUrl) {
+        var _ref15 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee14(req, res, params, parsedUrl) {
           var pathname, query;
-          return _regenerator2['default'].wrap(function _callee14$(_context14) {
+          return _regenerator2.default.wrap(function _callee14$(_context14) {
             while (1) {
               switch (_context14.prev = _context14.next) {
                 case 0:
@@ -685,7 +685,7 @@ var Server = function () {
     var _arr = ['GET', 'HEAD'];
     for (var _i = 0; _i < _arr.length; _i++) {
       var method = _arr[_i];
-      for (var _iterator = (0, _keys2['default'])(routes), _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : (0, _getIterator3['default'])(_iterator);;) {
+      for (var _iterator = (0, _keys2.default)(routes), _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);;) {
         var _ref16;
 
         if (_isArray) {
@@ -705,10 +705,10 @@ var Server = function () {
   };
 
   Server.prototype.start = function () {
-    var _ref17 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee15(port, hostname) {
+    var _ref17 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee15(port, hostname) {
       var _this4 = this;
 
-      return _regenerator2['default'].wrap(function _callee15$(_context15) {
+      return _regenerator2.default.wrap(function _callee15$(_context15) {
         while (1) {
           switch (_context15.prev = _context15.next) {
             case 0:
@@ -716,9 +716,9 @@ var Server = function () {
               return this.prepare();
 
             case 2:
-              this.http = _http2['default'].createServer(this.getRequestHandler());
+              this.http = _http2.default.createServer(this.getRequestHandler());
               _context15.next = 5;
-              return new _promise2['default'](function (resolve, reject) {
+              return new _promise2.default(function (resolve, reject) {
                 _this4.http.on('error', reject);
                 _this4.http.on('listening', function () {
                   return resolve();
@@ -742,9 +742,9 @@ var Server = function () {
   }();
 
   Server.prototype.run = function () {
-    var _ref18 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee16(req, res, parsedUrl) {
+    var _ref18 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee16(req, res, parsedUrl) {
       var fn;
-      return _regenerator2['default'].wrap(function _callee16$(_context16) {
+      return _regenerator2.default.wrap(function _callee16$(_context16) {
         while (1) {
           switch (_context16.prev = _context16.next) {
             case 0:
@@ -803,9 +803,9 @@ var Server = function () {
   }();
 
   Server.prototype.render = function () {
-    var _ref19 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee17(req, res, pathname, query, parsedUrl) {
+    var _ref19 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee17(req, res, pathname, query, parsedUrl) {
       var html;
-      return _regenerator2['default'].wrap(function _callee17$(_context17) {
+      return _regenerator2.default.wrap(function _callee17$(_context17) {
         while (1) {
           switch (_context17.prev = _context17.next) {
             case 0:
@@ -831,7 +831,7 @@ var Server = function () {
             case 6:
 
               if (this.config.poweredByHeader) {
-                res.setHeader('X-Powered-By', 'Next.js ' + _package2['default'].version);
+                res.setHeader('X-Powered-By', 'Next.js ' + _package2.default.version);
               }
               _context17.next = 9;
               return this.renderToHTML(req, res, pathname, query);
@@ -856,9 +856,9 @@ var Server = function () {
   }();
 
   Server.prototype.renderToHTML = function () {
-    var _ref20 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee18(req, res, pathname, query) {
+    var _ref20 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee18(req, res, pathname, query) {
       var compilationErr;
-      return _regenerator2['default'].wrap(function _callee18$(_context18) {
+      return _regenerator2.default.wrap(function _callee18$(_context18) {
         while (1) {
           switch (_context18.prev = _context18.next) {
             case 0:
@@ -922,9 +922,9 @@ var Server = function () {
   }();
 
   Server.prototype.renderError = function () {
-    var _ref21 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee19(err, req, res, pathname, query) {
+    var _ref21 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee19(err, req, res, pathname, query) {
       var html;
-      return _regenerator2['default'].wrap(function _callee19$(_context19) {
+      return _regenerator2.default.wrap(function _callee19$(_context19) {
         while (1) {
           switch (_context19.prev = _context19.next) {
             case 0:
@@ -951,9 +951,9 @@ var Server = function () {
   }();
 
   Server.prototype.renderErrorToHTML = function () {
-    var _ref22 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee20(err, req, res, pathname, query) {
+    var _ref22 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee20(err, req, res, pathname, query) {
       var compilationErr;
-      return _regenerator2['default'].wrap(function _callee20$(_context20) {
+      return _regenerator2.default.wrap(function _callee20$(_context20) {
         while (1) {
           switch (_context20.prev = _context20.next) {
             case 0:
@@ -1016,10 +1016,10 @@ var Server = function () {
   }();
 
   Server.prototype.render404 = function () {
-    var _ref23 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee21(req, res) {
+    var _ref23 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee21(req, res) {
       var parsedUrl = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : (0, _url.parse)(req.url, true);
       var pathname, query;
-      return _regenerator2['default'].wrap(function _callee21$(_context21) {
+      return _regenerator2.default.wrap(function _callee21$(_context21) {
         while (1) {
           switch (_context21.prev = _context21.next) {
             case 0:
@@ -1044,8 +1044,8 @@ var Server = function () {
   }();
 
   Server.prototype.serveStatic = function () {
-    var _ref24 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee22(req, res, path) {
-      return _regenerator2['default'].wrap(function _callee22$(_context22) {
+    var _ref24 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee22(req, res, path) {
+      return _regenerator2.default.wrap(function _callee22$(_context22) {
         while (1) {
           switch (_context22.prev = _context22.next) {
             case 0:
@@ -1105,7 +1105,7 @@ var Server = function () {
   };
 
   Server.prototype.isInternalUrl = function isInternalUrl(req) {
-    for (var _iterator2 = internalPrefixes, _isArray2 = Array.isArray(_iterator2), _i3 = 0, _iterator2 = _isArray2 ? _iterator2 : (0, _getIterator3['default'])(_iterator2);;) {
+    for (var _iterator2 = internalPrefixes, _isArray2 = Array.isArray(_iterator2), _i3 = 0, _iterator2 = _isArray2 ? _iterator2 : (0, _getIterator3.default)(_iterator2);;) {
       var _ref25;
 
       if (_isArray2) {
@@ -1129,7 +1129,7 @@ var Server = function () {
 
   Server.prototype.readBuildId = function readBuildId() {
     var buildIdPath = (0, _path.join)(this.dir, this.dist, 'BUILD_ID');
-    var buildId = _fs2['default'].readFileSync(buildIdPath, 'utf8');
+    var buildId = _fs2.default.readFileSync(buildIdPath, 'utf8');
     return buildId.trim();
   };
 
@@ -1144,9 +1144,9 @@ var Server = function () {
   };
 
   Server.prototype.getCompilationError = function () {
-    var _ref26 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee23() {
+    var _ref26 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee23() {
       var errors;
-      return _regenerator2['default'].wrap(function _callee23$(_context23) {
+      return _regenerator2.default.wrap(function _callee23$(_context23) {
         while (1) {
           switch (_context23.prev = _context23.next) {
             case 0:
@@ -1172,7 +1172,7 @@ var Server = function () {
               return _context23.abrupt('return');
 
             case 7:
-              return _context23.abrupt('return', (0, _from2['default'])(errors.values())[0][0]);
+              return _context23.abrupt('return', (0, _from2.default)(errors.values())[0][0]);
 
             case 8:
             case 'end':
@@ -1207,4 +1207,4 @@ var Server = function () {
   return Server;
 }();
 
-exports['default'] = Server;
+exports.default = Server;

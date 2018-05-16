@@ -12,16 +12,16 @@ var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
 var _utils = require('../../utils');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var PagesPlugin = function () {
   function PagesPlugin() {
-    (0, _classCallCheck3['default'])(this, PagesPlugin);
+    (0, _classCallCheck3.default)(this, PagesPlugin);
   }
 
   PagesPlugin.prototype.apply = function apply(compiler) {
     compiler.plugin('after-compile', function (compilation, callback) {
-      var pages = (0, _keys2['default'])(compilation.namedChunks).map(function (key) {
+      var pages = (0, _keys2.default)(compilation.namedChunks).map(function (key) {
         return compilation.namedChunks[key];
       }).filter(function (chunk) {
         return _utils.IS_BUNDLED_PAGE.test(chunk.name);
@@ -63,4 +63,4 @@ var PagesPlugin = function () {
   return PagesPlugin;
 }();
 
-exports['default'] = PagesPlugin;
+exports.default = PagesPlugin;

@@ -30,7 +30,7 @@ var _symbol = require('babel-runtime/core-js/symbol');
 
 var _symbol2 = _interopRequireDefault(_symbol);
 
-exports['default'] = onDemandEntryHandler;
+exports.default = onDemandEntryHandler;
 
 var _DynamicEntryPlugin = require('webpack/lib/DynamicEntryPlugin');
 
@@ -52,11 +52,11 @@ var _touch2 = _interopRequireDefault(_touch);
 
 var _utils = require('./utils');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var ADDED = (0, _symbol2['default'])('added');
-var BUILDING = (0, _symbol2['default'])('building');
-var BUILT = (0, _symbol2['default'])('built');
+var ADDED = (0, _symbol2.default)('added');
+var BUILDING = (0, _symbol2.default)('building');
+var BUILT = (0, _symbol2.default)('built');
 
 function onDemandEntryHandler(devMiddleware, compiler, _ref) {
   var dir = _ref.dir,
@@ -81,7 +81,7 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
 
     invalidator.startBuilding();
 
-    var allEntries = (0, _keys2['default'])(entries).map(function (page) {
+    var allEntries = (0, _keys2.default)(entries).map(function (page) {
       var _entries$page = entries[page],
           name = _entries$page.name,
           entry = _entries$page.entry;
@@ -90,9 +90,9 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
       return addEntry(compilation, _this.context, name, entry);
     });
 
-    _promise2['default'].all(allEntries).then(function () {
+    _promise2.default.all(allEntries).then(function () {
       return done();
-    })['catch'](done);
+    }).catch(done);
   });
 
   compiler.plugin('done', function (stats) {
@@ -114,13 +114,13 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
       return normalizePage('/' + pageName);
     });
 
-    (0, _keys2['default'])(entries).forEach(function (page) {
+    (0, _keys2.default)(entries).forEach(function (page) {
       var entryInfo = entries[page];
       if (entryInfo.status !== BUILDING) return;
 
       if (!touchedAPage) {
         setTimeout(function () {
-          _touch2['default'].sync(entryInfo.pathname);
+          _touch2.default.sync(entryInfo.pathname);
         }, 1000);
         touchedAPage = true;
       }
@@ -139,7 +139,7 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
         console.log('> Webpack reloaded.');
         reloadCallbacks.emit('done');
         stop();
-      })['catch'](function (err) {
+      }).catch(function (err) {
         console.error('> Webpack reloading failed: ' + err.message);
         console.error(err.stack);
         process.exit(1);
@@ -161,17 +161,17 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
 
   return {
     waitUntilReloaded: function waitUntilReloaded() {
-      if (!reloading) return _promise2['default'].resolve(true);
-      return new _promise2['default'](function (resolve) {
+      if (!reloading) return _promise2.default.resolve(true);
+      return new _promise2.default(function (resolve) {
         reloadCallbacks.once('done', function () {
           resolve();
         });
       });
     },
     ensurePage: function () {
-      var _ref2 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee(page) {
+      var _ref2 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(page) {
         var pagePath, pathname, name, entry;
-        return _regenerator2['default'].wrap(function _callee$(_context) {
+        return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
@@ -183,14 +183,14 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
 
                 pagePath = (0, _path.join)(dir, 'pages', page);
                 _context.next = 6;
-                return (0, _resolve2['default'])(pagePath);
+                return (0, _resolve2.default)(pagePath);
 
               case 6:
                 pathname = _context.sent;
                 name = (0, _path.join)('bundles', pathname.substring(dir.length));
                 entry = [pathname + '?entry'];
                 _context.next = 11;
-                return new _promise2['default'](function (resolve, reject) {
+                return new _promise2.default(function (resolve, reject) {
                   var entryInfo = entries[page];
 
                   if (entryInfo) {
@@ -279,8 +279,8 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
 }
 
 function addEntry(compilation, context, name, entry) {
-  return new _promise2['default'](function (resolve, reject) {
-    var dep = _DynamicEntryPlugin2['default'].createDependency(entry, name);
+  return new _promise2.default(function (resolve, reject) {
+    var dep = _DynamicEntryPlugin2.default.createDependency(entry, name);
     compilation.addEntry(context, dep, name, function (err) {
       if (err) return reject(err);
       resolve();
@@ -291,7 +291,7 @@ function addEntry(compilation, context, name, entry) {
 function disposeInactiveEntries(devMiddleware, entries, lastAccessPages, maxInactiveAge) {
   var disposingPages = [];
 
-  (0, _keys2['default'])(entries).forEach(function (page) {
+  (0, _keys2.default)(entries).forEach(function (page) {
     var _entries$page2 = entries[page],
         lastActiveTime = _entries$page2.lastActiveTime,
         status = _entries$page2.status;
@@ -321,12 +321,12 @@ function normalizePage(page) {
 function sendJson(res, payload) {
   res.setHeader('Content-Type', 'application/json');
   res.status = 200;
-  res.end((0, _stringify2['default'])(payload));
+  res.end((0, _stringify2.default)(payload));
 }
 
 var Invalidator = function () {
   function Invalidator(devMiddleware) {
-    (0, _classCallCheck3['default'])(this, Invalidator);
+    (0, _classCallCheck3.default)(this, Invalidator);
 
     this.devMiddleware = devMiddleware;
     this.building = false;

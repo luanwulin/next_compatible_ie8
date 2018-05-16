@@ -33,9 +33,9 @@ var _pkgUp = require('pkg-up');
 
 var _pkgUp2 = _interopRequireDefault(_pkgUp);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var argv = (0, _minimist2['default'])(process.argv.slice(2), {
+var argv = (0, _minimist2.default)(process.argv.slice(2), {
   alias: {
     h: 'help',
     H: 'hostname',
@@ -43,7 +43,7 @@ var argv = (0, _minimist2['default'])(process.argv.slice(2), {
   },
   boolean: ['h'],
   string: ['H'],
-  'default': { p: 3000 }
+  default: { p: 3000 }
 });
 
 if (argv.help) {
@@ -65,9 +65,9 @@ if (!(0, _fs.existsSync)((0, _path.join)(dir, 'pages'))) {
   (0, _utils.printAndExit)('> Couldn\'t find a `pages` directory. Please create one under the project root');
 }
 
-var srv = new _server2['default']({ dir: dir, dev: true });
-srv.start(argv.port, argv.hostname).then((0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee() {
-  return _regenerator2['default'].wrap(function _callee$(_context) {
+var srv = new _server2.default({ dir: dir, dev: true });
+srv.start(argv.port, argv.hostname).then((0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
+  return _regenerator2.default.wrap(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
@@ -81,12 +81,12 @@ srv.start(argv.port, argv.hostname).then((0, _asyncToGenerator3['default'])(_reg
       }
     }
   }, _callee, undefined);
-})))['catch'](function (err) {
+}))).catch(function (err) {
   if (err.code === 'EADDRINUSE') {
     var errorMessage = 'Port ' + argv.port + ' is already in use.';
-    var pkgAppPath = _pkgUp2['default'].sync('.');
+    var pkgAppPath = _pkgUp2.default.sync('.');
     var appPackage = JSON.parse((0, _fs.readFileSync)(pkgAppPath, 'utf8'));
-    var nextScript = (0, _entries2['default'])(appPackage.scripts).find(function (scriptLine) {
+    var nextScript = (0, _entries2.default)(appPackage.scripts).find(function (scriptLine) {
       return scriptLine[1] === 'next';
     });
     if (nextScript) errorMessage += '\nUse `npm run ' + nextScript[0] + ' -- -p <some other port>`.';

@@ -14,17 +14,17 @@ var _resolve = require('./resolve');
 
 var _resolve2 = _interopRequireDefault(_resolve);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports['default'] = function () {
-  var _ref = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee(path) {
+exports.default = function () {
+  var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(path) {
     var f;
-    return _regenerator2['default'].wrap(function _callee$(_context) {
+    return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return (0, _resolve2['default'])(path);
+            return (0, _resolve2.default)(path);
 
           case 2:
             f = _context.sent;

@@ -14,23 +14,23 @@ var _EventEmitter = require('./EventEmitter');
 
 var _EventEmitter2 = _interopRequireDefault(_EventEmitter);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var webpackModule = module;
 
 var PageLoader = function () {
   function PageLoader(buildId, assetPrefix) {
-    (0, _classCallCheck3['default'])(this, PageLoader);
+    (0, _classCallCheck3.default)(this, PageLoader);
 
     this.buildId = buildId;
     this.assetPrefix = assetPrefix;
 
     this.pageCache = {};
     this.pageLoadedHandlers = {};
-    this.pageRegisterEvents = new _EventEmitter2['default']();
+    this.pageRegisterEvents = new _EventEmitter2.default();
     this.loadingRoutes = {};
 
-    this.chunkRegisterEvents = new _EventEmitter2['default']();
+    this.chunkRegisterEvents = new _EventEmitter2.default();
     this.loadedChunks = {};
   }
 
@@ -49,7 +49,7 @@ var PageLoader = function () {
 
     route = this.normalizeRoute(route);
 
-    return new _promise2['default'](function (resolve, reject) {
+    return new _promise2.default(function (resolve, reject) {
       var fire = function fire(_ref) {
         var error = _ref.error,
             page = _ref.page;
@@ -147,10 +147,10 @@ var PageLoader = function () {
 
     var loadedChunk = this.loadedChunks[chunkName];
     if (loadedChunk) {
-      return _promise2['default'].resolve(true);
+      return _promise2.default.resolve(true);
     }
 
-    return new _promise2['default'](function (resolve) {
+    return new _promise2.default(function (resolve) {
       var register = function register(chunk) {
         _this4.chunkRegisterEvents.off(chunkName, register);
         resolve(chunk);
@@ -174,4 +174,4 @@ var PageLoader = function () {
   return PageLoader;
 }();
 
-exports['default'] = PageLoader;
+exports.default = PageLoader;
