@@ -3,11 +3,12 @@
     [
       "env",
       {
-        "loose": true,
-        "useBuiltIns": "entry",
         "targets": {
-          "browsers": ["ie >= 8"]
-        }
+          "browsers": [
+            "ie >= 7"
+          ]
+        },
+        "loose": true
       }
     ],
     "react"
