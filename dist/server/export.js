@@ -1,8 +1,6 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+exports.__esModule = true;
 
 var _promise = require('babel-runtime/core-js/promise');
 
@@ -54,13 +52,13 @@ var _utils = require('./utils');
 
 var _utils2 = require('../lib/utils');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-exports.default = function () {
-  var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(dir, options, configuration) {
-    var config, nextDir, buildId, buildStats, outDir, exportPathMap, exportPaths, renderOpts, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, path, _exportPathMap$path, page, _exportPathMap$path$q, query, req, res, htmlFilename, baseDir, htmlFilepath, html, log;
+exports['default'] = function () {
+  var _ref = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee(dir, options, configuration) {
+    var config, nextDir, buildId, buildStats, outDir, exportPathMap, exportPaths, renderOpts, _iterator, _isArray, _i, _ref2, path, _exportPathMap$path, page, _exportPathMap$path$q, query, req, res, htmlFilename, baseDir, htmlFilepath, html, log;
 
-    return _regenerator2.default.wrap(function _callee$(_context) {
+    return _regenerator2['default'].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
@@ -70,7 +68,7 @@ exports.default = function () {
             };
 
             dir = (0, _path.resolve)(dir);
-            config = configuration || (0, _config2.default)(dir);
+            config = configuration || (0, _config2['default'])(dir);
             nextDir = (0, _path.join)(dir, config.distDir);
 
 
@@ -83,24 +81,21 @@ exports.default = function () {
 
             buildId = (0, _fs.readFileSync)((0, _path.join)(nextDir, 'BUILD_ID'), 'utf8');
             buildStats = require((0, _path.join)(nextDir, 'build-stats.json'));
-
-            // Initialize the output directory
-
             outDir = options.outdir;
             _context.next = 11;
-            return (0, _del2.default)((0, _path.join)(outDir, '*'));
+            return (0, _del2['default'])((0, _path.join)(outDir, '*'));
 
           case 11:
             _context.next = 13;
-            return (0, _mkdirpThen2.default)((0, _path.join)(outDir, '_next', buildStats['app.js'].hash));
+            return (0, _mkdirpThen2['default'])((0, _path.join)(outDir, '_next', buildStats['app.js'].hash));
 
           case 13:
             _context.next = 15;
-            return (0, _mkdirpThen2.default)((0, _path.join)(outDir, '_next', buildId));
+            return (0, _mkdirpThen2['default'])((0, _path.join)(outDir, '_next', buildId));
 
           case 15:
             _context.next = 17;
-            return (0, _recursiveCopy2.default)((0, _path.join)(nextDir, 'app.js'), (0, _path.join)(outDir, '_next', buildStats['app.js'].hash, 'app.js'));
+            return (0, _recursiveCopy2['default'])((0, _path.join)(nextDir, 'app.js'), (0, _path.join)(outDir, '_next', buildStats['app.js'].hash, 'app.js'));
 
           case 17:
             if (!(0, _fs.existsSync)((0, _path.join)(dir, 'static'))) {
@@ -110,7 +105,7 @@ exports.default = function () {
 
             log('  copying "static" directory');
             _context.next = 21;
-            return (0, _recursiveCopy2.default)((0, _path.join)(dir, 'static'), (0, _path.join)(outDir, 'static'));
+            return (0, _recursiveCopy2['default'])((0, _path.join)(dir, 'static'), (0, _path.join)(outDir, 'static'));
 
           case 21:
             if (!(0, _fs.existsSync)((0, _path.join)(nextDir, 'chunks'))) {
@@ -121,19 +116,17 @@ exports.default = function () {
             log('  copying dynamic import chunks');
 
             _context.next = 25;
-            return (0, _mkdirpThen2.default)((0, _path.join)(outDir, '_next', buildId, 'webpack'));
+            return (0, _mkdirpThen2['default'])((0, _path.join)(outDir, '_next', buildId, 'webpack'));
 
           case 25:
             _context.next = 27;
-            return (0, _recursiveCopy2.default)((0, _path.join)(nextDir, 'chunks'), (0, _path.join)(outDir, '_next', buildId, 'webpack', 'chunks'));
+            return (0, _recursiveCopy2['default'])((0, _path.join)(nextDir, 'chunks'), (0, _path.join)(outDir, '_next', buildId, 'webpack', 'chunks'));
 
           case 27:
             _context.next = 29;
             return copyPages(nextDir, outDir, buildId);
 
           case 29:
-
-            // Get the exportPathMap from the `next.config.js`
             if (typeof config.exportPathMap !== 'function') {
               (0, _utils2.printAndExit)('> Could not find "exportPathMap" function inside "next.config.js"\n' + '> "next export" uses that function to build html pages.');
             }
@@ -143,10 +136,7 @@ exports.default = function () {
 
           case 32:
             exportPathMap = _context.sent;
-            exportPaths = (0, _keys2.default)(exportPathMap);
-
-            // Start the rendering process
-
+            exportPaths = (0, _keys2['default'])(exportPathMap);
             renderOpts = {
               dir: dir,
               buildStats: buildStats,
@@ -157,26 +147,47 @@ exports.default = function () {
               staticMarkup: false,
               hotReloader: null,
               availableChunks: (0, _utils.getAvailableChunks)(dir, config.distDir)
-
-              // We need this for server rendering the Link component.
             };
+
             global.__NEXT_DATA__ = {
               nextExport: true
             };
 
-            _iteratorNormalCompletion = true;
-            _didIteratorError = false;
-            _iteratorError = undefined;
-            _context.prev = 39;
-            _iterator = (0, _getIterator3.default)(exportPaths);
+            _iterator = exportPaths, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3['default'])(_iterator);
 
-          case 41:
-            if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-              _context.next = 60;
+          case 37:
+            if (!_isArray) {
+              _context.next = 43;
               break;
             }
 
-            path = _step.value;
+            if (!(_i >= _iterator.length)) {
+              _context.next = 40;
+              break;
+            }
+
+            return _context.abrupt('break', 64);
+
+          case 40:
+            _ref2 = _iterator[_i++];
+            _context.next = 47;
+            break;
+
+          case 43:
+            _i = _iterator.next();
+
+            if (!_i.done) {
+              _context.next = 46;
+              break;
+            }
+
+            return _context.abrupt('break', 64);
+
+          case 46:
+            _ref2 = _i.value;
+
+          case 47:
+            path = _ref2;
 
             log('  exporting path: ' + path);
 
@@ -186,76 +197,37 @@ exports.default = function () {
             htmlFilename = '' + path + _path.sep + 'index.html';
 
             if ((0, _path.extname)(path) !== '') {
-              // If the path has an extension, use that as the filename instead
               htmlFilename = path;
             } else if (path === '/') {
-              // If the path is the root, just use index.html
               htmlFilename = 'index.html';
             }
             baseDir = (0, _path.join)(outDir, (0, _path.dirname)(htmlFilename));
             htmlFilepath = (0, _path.join)(outDir, htmlFilename);
-            _context.next = 53;
-            return (0, _mkdirpThen2.default)(baseDir);
+            _context.next = 58;
+            return (0, _mkdirpThen2['default'])(baseDir);
 
-          case 53:
-            _context.next = 55;
+          case 58:
+            _context.next = 60;
             return (0, _render.renderToHTML)(req, res, page, query, renderOpts);
 
-          case 55:
+          case 60:
             html = _context.sent;
 
             (0, _fs.writeFileSync)(htmlFilepath, html, 'utf8');
 
-          case 57:
-            _iteratorNormalCompletion = true;
-            _context.next = 41;
-            break;
-
-          case 60:
-            _context.next = 66;
-            break;
-
           case 62:
-            _context.prev = 62;
-            _context.t0 = _context['catch'](39);
-            _didIteratorError = true;
-            _iteratorError = _context.t0;
+            _context.next = 37;
+            break;
 
-          case 66:
-            _context.prev = 66;
-            _context.prev = 67;
-
-            if (!_iteratorNormalCompletion && _iterator.return) {
-              _iterator.return();
-            }
-
-          case 69:
-            _context.prev = 69;
-
-            if (!_didIteratorError) {
-              _context.next = 72;
-              break;
-            }
-
-            throw _iteratorError;
-
-          case 72:
-            return _context.finish(69);
-
-          case 73:
-            return _context.finish(66);
-
-          case 74:
-
-            // Add an empty line to the console for the better readability.
+          case 64:
             log('');
 
-          case 75:
+          case 65:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, this, [[39, 62, 66, 74], [67,, 69, 73]]);
+    }, _callee, this);
   }));
 
   return function (_x, _x2, _x3) {
@@ -264,18 +236,15 @@ exports.default = function () {
 }();
 
 function copyPages(nextDir, outDir, buildId) {
-  // TODO: do some proper error handling
-  return new _promise2.default(function (resolve, reject) {
+  return new _promise2['default'](function (resolve, reject) {
     var nextBundlesDir = (0, _path.join)(nextDir, 'bundles', 'pages');
-    var walker = _walk2.default.walk(nextBundlesDir, { followLinks: false });
+    var walker = _walk2['default'].walk(nextBundlesDir, { followLinks: false });
 
     walker.on('file', function (root, stat, next) {
       var filename = stat.name;
       var fullFilePath = '' + root + _path.sep + filename;
       var relativeFilePath = fullFilePath.replace(nextBundlesDir, '');
 
-      // We should not expose this page to the client side since
-      // it has no use in the client side.
       if (relativeFilePath === '/_document.js') {
         next();
         return;
@@ -291,7 +260,7 @@ function copyPages(nextDir, outDir, buildId) {
         destFilePath = (0, _path.join)(outDir, '_next', buildId, 'page', relativeFilePath);
       }
 
-      (0, _recursiveCopy2.default)(fullFilePath, destFilePath).then(next).catch(reject);
+      (0, _recursiveCopy2['default'])(fullFilePath, destFilePath).then(next)['catch'](reject);
     });
 
     walker.on('end', resolve);

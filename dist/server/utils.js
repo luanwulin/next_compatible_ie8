@@ -1,8 +1,6 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+exports.__esModule = true;
 exports.MATCH_ROUTE_NAME = exports.IS_BUNDLED_PAGE = undefined;
 exports.getAvailableChunks = getAvailableChunks;
 

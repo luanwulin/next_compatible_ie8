@@ -1,8 +1,6 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+exports.__esModule = true;
 
 var _promise = require('babel-runtime/core-js/promise');
 
@@ -20,29 +18,24 @@ var _createClass2 = require('babel-runtime/helpers/createClass');
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// based on https://github.com/sindresorhus/p-queue (MIT)
-// modified for browser support
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var Queue = function () {
   function Queue() {
-    (0, _classCallCheck3.default)(this, Queue);
+    (0, _classCallCheck3['default'])(this, Queue);
 
     this._queue = [];
   }
 
-  (0, _createClass3.default)(Queue, [{
-    key: 'enqueue',
-    value: function enqueue(run) {
-      this._queue.push(run);
-    }
-  }, {
-    key: 'dequeue',
-    value: function dequeue() {
-      return this._queue.shift();
-    }
-  }, {
+  Queue.prototype.enqueue = function enqueue(run) {
+    this._queue.push(run);
+  };
+
+  Queue.prototype.dequeue = function dequeue() {
+    return this._queue.shift();
+  };
+
+  (0, _createClass3['default'])(Queue, [{
     key: 'size',
     get: function get() {
       return this._queue.length;
@@ -53,9 +46,9 @@ var Queue = function () {
 
 var PQueue = function () {
   function PQueue(opts) {
-    (0, _classCallCheck3.default)(this, PQueue);
+    (0, _classCallCheck3['default'])(this, PQueue);
 
-    opts = (0, _assign2.default)({
+    opts = (0, _assign2['default'])({
       concurrency: Infinity,
       queueClass: Queue
     }, opts);
@@ -64,62 +57,59 @@ var PQueue = function () {
       throw new TypeError('Expected `concurrency` to be a number from 1 and up');
     }
 
-    this.queue = new opts.queueClass(); // eslint-disable-line new-cap
+    this.queue = new opts.queueClass();
     this._pendingCount = 0;
     this._concurrency = opts.concurrency;
     this._resolveEmpty = function () {};
   }
 
-  (0, _createClass3.default)(PQueue, [{
-    key: '_next',
-    value: function _next() {
-      this._pendingCount--;
+  PQueue.prototype._next = function _next() {
+    this._pendingCount--;
 
-      if (this.queue.size > 0) {
-        this.queue.dequeue()();
+    if (this.queue.size > 0) {
+      this.queue.dequeue()();
+    } else {
+      this._resolveEmpty();
+    }
+  };
+
+  PQueue.prototype.add = function add(fn, opts) {
+    var _this = this;
+
+    return new _promise2['default'](function (resolve, reject) {
+      var run = function run() {
+        _this._pendingCount++;
+
+        fn().then(function (val) {
+          resolve(val);
+          _this._next();
+        }, function (err) {
+          reject(err);
+          _this._next();
+        });
+      };
+
+      if (_this._pendingCount < _this._concurrency) {
+        run();
       } else {
-        this._resolveEmpty();
+        _this.queue.enqueue(run, opts);
       }
-    }
-  }, {
-    key: 'add',
-    value: function add(fn, opts) {
-      var _this = this;
+    });
+  };
 
-      return new _promise2.default(function (resolve, reject) {
-        var run = function run() {
-          _this._pendingCount++;
+  PQueue.prototype.onEmpty = function onEmpty() {
+    var _this2 = this;
 
-          fn().then(function (val) {
-            resolve(val);
-            _this._next();
-          }, function (err) {
-            reject(err);
-            _this._next();
-          });
-        };
+    return new _promise2['default'](function (resolve) {
+      var existingResolve = _this2._resolveEmpty;
+      _this2._resolveEmpty = function () {
+        existingResolve();
+        resolve();
+      };
+    });
+  };
 
-        if (_this._pendingCount < _this._concurrency) {
-          run();
-        } else {
-          _this.queue.enqueue(run, opts);
-        }
-      });
-    }
-  }, {
-    key: 'onEmpty',
-    value: function onEmpty() {
-      var _this2 = this;
-
-      return new _promise2.default(function (resolve) {
-        var existingResolve = _this2._resolveEmpty;
-        _this2._resolveEmpty = function () {
-          existingResolve();
-          resolve();
-        };
-      });
-    }
-  }, {
+  (0, _createClass3['default'])(PQueue, [{
     key: 'size',
     get: function get() {
       return this.queue.size;
@@ -133,4 +123,4 @@ var PQueue = function () {
   return PQueue;
 }();
 
-exports.default = PQueue;
+exports['default'] = PQueue;

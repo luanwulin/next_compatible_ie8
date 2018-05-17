@@ -1,8 +1,6 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+exports.__esModule = true;
 
 var _assign = require('babel-runtime/core-js/object/assign');
 
@@ -16,15 +14,15 @@ var _map = require('babel-runtime/core-js/map');
 
 var _map2 = _interopRequireDefault(_map);
 
-exports.default = getConfig;
+exports['default'] = getConfig;
 
 var _path = require('path');
 
 var _fs = require('fs');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var cache = new _map2.default();
+var cache = new _map2['default']();
 
 var defaultConfig = {
   webpack: null,
@@ -44,7 +42,7 @@ function getConfig(dir, customConfig) {
 }
 
 function loadConfig(dir, customConfig) {
-  if (customConfig && (typeof customConfig === 'undefined' ? 'undefined' : (0, _typeof3.default)(customConfig)) === 'object') {
+  if (customConfig && (typeof customConfig === 'undefined' ? 'undefined' : (0, _typeof3['default'])(customConfig)) === 'object') {
     customConfig.configOrigin = 'server';
     return withDefaults(customConfig);
   }
@@ -55,7 +53,7 @@ function loadConfig(dir, customConfig) {
   var userHasConfig = (0, _fs.existsSync)(path);
   if (userHasConfig) {
     var userConfigModule = require(path);
-    userConfig = userConfigModule.default || userConfigModule;
+    userConfig = userConfigModule['default'] || userConfigModule;
     userConfig.configOrigin = 'next.config.js';
   }
 
@@ -63,5 +61,5 @@ function loadConfig(dir, customConfig) {
 }
 
 function withDefaults(config) {
-  return (0, _assign2.default)({}, defaultConfig, config);
+  return (0, _assign2['default'])({}, defaultConfig, config);
 }

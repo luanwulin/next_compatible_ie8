@@ -1,9 +1,7 @@
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = shallowEquals;
+exports.__esModule = true;
+exports["default"] = shallowEquals;
 function shallowEquals(a, b) {
   for (var i in a) {
     if (b[i] !== a[i]) return false;
