@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _promise = require('babel-runtime/core-js/promise');
 
@@ -56,7 +58,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 
 exports['default'] = function () {
   var _ref = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee(dir, options, configuration) {
-    var config, nextDir, buildId, buildStats, outDir, exportPathMap, exportPaths, renderOpts, _iterator, _isArray, _i, _ref2, path, _exportPathMap$path, page, _exportPathMap$path$q, query, req, res, htmlFilename, baseDir, htmlFilepath, html, log;
+    var config, nextDir, buildId, buildStats, outDir, exportPathMap, exportPaths, renderOpts, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, path, _exportPathMap$path, page, _exportPathMap$path$q, query, req, res, htmlFilename, baseDir, htmlFilepath, html, log;
 
     return _regenerator2['default'].wrap(function _callee$(_context) {
       while (1) {
@@ -153,41 +155,19 @@ exports['default'] = function () {
               nextExport: true
             };
 
-            _iterator = exportPaths, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3['default'])(_iterator);
+            _iteratorNormalCompletion = true;
+            _didIteratorError = false;
+            _iteratorError = undefined;
+            _context.prev = 39;
+            _iterator = (0, _getIterator3['default'])(exportPaths);
 
-          case 37:
-            if (!_isArray) {
-              _context.next = 43;
+          case 41:
+            if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
+              _context.next = 60;
               break;
             }
 
-            if (!(_i >= _iterator.length)) {
-              _context.next = 40;
-              break;
-            }
-
-            return _context.abrupt('break', 64);
-
-          case 40:
-            _ref2 = _iterator[_i++];
-            _context.next = 47;
-            break;
-
-          case 43:
-            _i = _iterator.next();
-
-            if (!_i.done) {
-              _context.next = 46;
-              break;
-            }
-
-            return _context.abrupt('break', 64);
-
-          case 46:
-            _ref2 = _i.value;
-
-          case 47:
-            path = _ref2;
+            path = _step.value;
 
             log('  exporting path: ' + path);
 
@@ -203,31 +183,66 @@ exports['default'] = function () {
             }
             baseDir = (0, _path.join)(outDir, (0, _path.dirname)(htmlFilename));
             htmlFilepath = (0, _path.join)(outDir, htmlFilename);
-            _context.next = 58;
+            _context.next = 53;
             return (0, _mkdirpThen2['default'])(baseDir);
 
-          case 58:
-            _context.next = 60;
+          case 53:
+            _context.next = 55;
             return (0, _render.renderToHTML)(req, res, page, query, renderOpts);
 
-          case 60:
+          case 55:
             html = _context.sent;
 
             (0, _fs.writeFileSync)(htmlFilepath, html, 'utf8');
 
-          case 62:
-            _context.next = 37;
+          case 57:
+            _iteratorNormalCompletion = true;
+            _context.next = 41;
             break;
 
-          case 64:
+          case 60:
+            _context.next = 66;
+            break;
+
+          case 62:
+            _context.prev = 62;
+            _context.t0 = _context['catch'](39);
+            _didIteratorError = true;
+            _iteratorError = _context.t0;
+
+          case 66:
+            _context.prev = 66;
+            _context.prev = 67;
+
+            if (!_iteratorNormalCompletion && _iterator['return']) {
+              _iterator['return']();
+            }
+
+          case 69:
+            _context.prev = 69;
+
+            if (!_didIteratorError) {
+              _context.next = 72;
+              break;
+            }
+
+            throw _iteratorError;
+
+          case 72:
+            return _context.finish(69);
+
+          case 73:
+            return _context.finish(66);
+
+          case 74:
             log('');
 
-          case 65:
+          case 75:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, this);
+    }, _callee, this, [[39, 62, 66, 74], [67,, 69, 73]]);
   }));
 
   return function (_x, _x2, _x3) {

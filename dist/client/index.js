@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.renderError = exports.render = exports.emitter = exports.ErrorComponent = exports.router = undefined;
 
 var _regenerator = require('babel-runtime/regenerator');
@@ -20,7 +22,7 @@ var _promise = require('babel-runtime/core-js/promise');
 var _promise2 = _interopRequireDefault(_promise);
 
 var render = exports.render = function () {
-  var _ref7 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee2(props) {
+  var _ref6 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee2(props) {
     return _regenerator2['default'].wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -69,12 +71,12 @@ var render = exports.render = function () {
   }));
 
   return function render(_x2) {
-    return _ref7.apply(this, arguments);
+    return _ref6.apply(this, arguments);
   };
 }();
 
 var renderError = exports.renderError = function () {
-  var _ref8 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee3(error) {
+  var _ref7 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee3(error) {
     var prod, errorMessage, initProps, _props;
 
     return _regenerator2['default'].wrap(function _callee3$(_context3) {
@@ -117,18 +119,18 @@ var renderError = exports.renderError = function () {
   }));
 
   return function renderError(_x3) {
-    return _ref8.apply(this, arguments);
+    return _ref7.apply(this, arguments);
   };
 }();
 
 var doRender = function () {
-  var _ref10 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee4(_ref9) {
-    var Component = _ref9.Component,
-        props = _ref9.props,
-        hash = _ref9.hash,
-        err = _ref9.err,
-        _ref9$emitter = _ref9.emitter,
-        emitterProp = _ref9$emitter === undefined ? emitter : _ref9$emitter;
+  var _ref9 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee4(_ref8) {
+    var Component = _ref8.Component,
+        props = _ref8.props,
+        hash = _ref8.hash,
+        err = _ref8.err,
+        _ref8$emitter = _ref8.emitter,
+        emitterProp = _ref8$emitter === undefined ? emitter : _ref8$emitter;
 
     var _router, _pathname, _query, _asPath, appProps;
 
@@ -173,7 +175,7 @@ var doRender = function () {
   }));
 
   return function doRender(_x4) {
-    return _ref10.apply(this, arguments);
+    return _ref9.apply(this, arguments);
   };
 }();
 
@@ -263,80 +265,93 @@ exports['default'] = (0, _asyncToGenerator3['default'])(_regenerator2['default']
       passedDebugComponent = _ref4.ErrorDebugComponent,
       passedStripAnsi = _ref4.stripAnsi;
 
-  var _iterator, _isArray, _i, _ref5, chunkName, hash;
+  var _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, chunkName, hash;
 
   return _regenerator2['default'].wrap(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
-          _iterator = chunks, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3['default'])(_iterator);
+          _iteratorNormalCompletion = true;
+          _didIteratorError = false;
+          _iteratorError = undefined;
+          _context.prev = 3;
+          _iterator = (0, _getIterator3['default'])(chunks);
 
-        case 1:
-          if (!_isArray) {
-            _context.next = 7;
+        case 5:
+          if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
+            _context.next = 12;
             break;
           }
 
-          if (!(_i >= _iterator.length)) {
-            _context.next = 4;
-            break;
-          }
-
-          return _context.abrupt('break', 16);
-
-        case 4:
-          _ref5 = _iterator[_i++];
-          _context.next = 11;
-          break;
-
-        case 7:
-          _i = _iterator.next();
-
-          if (!_i.done) {
-            _context.next = 10;
-            break;
-          }
-
-          return _context.abrupt('break', 16);
-
-        case 10:
-          _ref5 = _i.value;
-
-        case 11:
-          chunkName = _ref5;
-          _context.next = 14;
+          chunkName = _step.value;
+          _context.next = 9;
           return pageLoader.waitForChunk(chunkName);
 
-        case 14:
-          _context.next = 1;
+        case 9:
+          _iteratorNormalCompletion = true;
+          _context.next = 5;
           break;
 
-        case 16:
+        case 12:
+          _context.next = 18;
+          break;
+
+        case 14:
+          _context.prev = 14;
+          _context.t0 = _context['catch'](3);
+          _didIteratorError = true;
+          _iteratorError = _context.t0;
+
+        case 18:
+          _context.prev = 18;
+          _context.prev = 19;
+
+          if (!_iteratorNormalCompletion && _iterator['return']) {
+            _iterator['return']();
+          }
+
+        case 21:
+          _context.prev = 21;
+
+          if (!_didIteratorError) {
+            _context.next = 24;
+            break;
+          }
+
+          throw _iteratorError;
+
+        case 24:
+          return _context.finish(21);
+
+        case 25:
+          return _context.finish(18);
+
+        case 26:
 
           stripAnsi = passedStripAnsi || stripAnsi;
           ErrorDebugComponent = passedDebugComponent;
-          _context.next = 20;
+          _context.next = 30;
           return pageLoader.loadPage('/_error');
 
-        case 20:
+        case 30:
           exports.ErrorComponent = ErrorComponent = _context.sent;
-          _context.prev = 21;
-          _context.next = 24;
+          _context.prev = 31;
+          _context.next = 34;
           return pageLoader.loadPage(pathname);
 
-        case 24:
+        case 34:
           Component = _context.sent;
-          _context.next = 31;
+          _context.next = 41;
           break;
 
-        case 27:
-          _context.prev = 27;
-          _context.t0 = _context['catch'](21);
+        case 37:
+          _context.prev = 37;
+          _context.t1 = _context['catch'](31);
 
-          console.error(stripAnsi(_context.t0.message + '\n' + _context.t0.stack));
+          console.error(stripAnsi(_context.t1.message + '\n' + _context.t1.stack));
           Component = ErrorComponent;
 
-        case 31:
+        case 41:
 
           exports.router = router = (0, _router2.createRouter)(pathname, query, asPath, {
             pageLoader: pageLoader,
@@ -345,11 +360,11 @@ exports['default'] = (0, _asyncToGenerator3['default'])(_regenerator2['default']
             err: err
           });
 
-          router.subscribe(function (_ref6) {
-            var Component = _ref6.Component,
-                props = _ref6.props,
-                hash = _ref6.hash,
-                err = _ref6.err;
+          router.subscribe(function (_ref5) {
+            var Component = _ref5.Component,
+                props = _ref5.props,
+                hash = _ref5.hash,
+                err = _ref5.err;
 
             render({ Component: Component, props: props, err: err, hash: hash, emitter: emitter });
           });
@@ -360,12 +375,12 @@ exports['default'] = (0, _asyncToGenerator3['default'])(_regenerator2['default']
 
           return _context.abrupt('return', emitter);
 
-        case 36:
+        case 46:
         case 'end':
           return _context.stop();
       }
     }
-  }, _callee, undefined, [[21, 27]]);
+  }, _callee, undefined, [[3, 14, 18, 26], [19,, 21, 25], [31, 37]]);
 }));
 
 
