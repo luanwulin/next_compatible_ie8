@@ -1,21 +1,12 @@
 {
   "presets": [
-    [
-      "env",
-      {
-        "loose": true,
-        "useBuiltIns": "entry",
-        "targets": {
-          "browsers": ["ie >= 7"]
-        }
-      }
-    ],
+    "env",
     "react"
   ],
   "plugins": [
     "transform-object-rest-spread",
     "transform-class-properties",
-    "transform-runtime",
+    "transform-runtime"
   ],
   "env": {
     "test": {
@@ -24,6 +15,5 @@
         "./babel"
       ]
     }
-  },
-  "comments": false
+  }
 }
