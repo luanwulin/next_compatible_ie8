@@ -1,8 +1,6 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+exports.__esModule = true;
 
 var _promise = require('babel-runtime/core-js/promise');
 
@@ -29,17 +27,15 @@ var Queue = function () {
     this._queue = [];
   }
 
+  Queue.prototype.enqueue = function enqueue(run) {
+    this._queue.push(run);
+  };
+
+  Queue.prototype.dequeue = function dequeue() {
+    return this._queue.shift();
+  };
+
   (0, _createClass3['default'])(Queue, [{
-    key: 'enqueue',
-    value: function enqueue(run) {
-      this._queue.push(run);
-    }
-  }, {
-    key: 'dequeue',
-    value: function dequeue() {
-      return this._queue.shift();
-    }
-  }, {
     key: 'size',
     get: function get() {
       return this._queue.length;
@@ -67,56 +63,53 @@ var PQueue = function () {
     this._resolveEmpty = function () {};
   }
 
-  (0, _createClass3['default'])(PQueue, [{
-    key: '_next',
-    value: function _next() {
-      this._pendingCount--;
+  PQueue.prototype._next = function _next() {
+    this._pendingCount--;
 
-      if (this.queue.size > 0) {
-        this.queue.dequeue()();
+    if (this.queue.size > 0) {
+      this.queue.dequeue()();
+    } else {
+      this._resolveEmpty();
+    }
+  };
+
+  PQueue.prototype.add = function add(fn, opts) {
+    var _this = this;
+
+    return new _promise2['default'](function (resolve, reject) {
+      var run = function run() {
+        _this._pendingCount++;
+
+        fn().then(function (val) {
+          resolve(val);
+          _this._next();
+        }, function (err) {
+          reject(err);
+          _this._next();
+        });
+      };
+
+      if (_this._pendingCount < _this._concurrency) {
+        run();
       } else {
-        this._resolveEmpty();
+        _this.queue.enqueue(run, opts);
       }
-    }
-  }, {
-    key: 'add',
-    value: function add(fn, opts) {
-      var _this = this;
+    });
+  };
 
-      return new _promise2['default'](function (resolve, reject) {
-        var run = function run() {
-          _this._pendingCount++;
+  PQueue.prototype.onEmpty = function onEmpty() {
+    var _this2 = this;
 
-          fn().then(function (val) {
-            resolve(val);
-            _this._next();
-          }, function (err) {
-            reject(err);
-            _this._next();
-          });
-        };
+    return new _promise2['default'](function (resolve) {
+      var existingResolve = _this2._resolveEmpty;
+      _this2._resolveEmpty = function () {
+        existingResolve();
+        resolve();
+      };
+    });
+  };
 
-        if (_this._pendingCount < _this._concurrency) {
-          run();
-        } else {
-          _this.queue.enqueue(run, opts);
-        }
-      });
-    }
-  }, {
-    key: 'onEmpty',
-    value: function onEmpty() {
-      var _this2 = this;
-
-      return new _promise2['default'](function (resolve) {
-        var existingResolve = _this2._resolveEmpty;
-        _this2._resolveEmpty = function () {
-          existingResolve();
-          resolve();
-        };
-      });
-    }
-  }, {
+  (0, _createClass3['default'])(PQueue, [{
     key: 'size',
     get: function get() {
       return this.queue.size;

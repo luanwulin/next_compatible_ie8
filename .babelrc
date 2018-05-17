@@ -1,6 +1,15 @@
 {
   "presets": [
-    "env",
+    [
+      "env",
+      {
+        "loose": true,
+        "useBuiltIns": "entry",
+        "targets": {
+          "browsers": ["ie >= 8"]
+        }
+      }
+    ],
     "react"
   ],
   "plugins": [

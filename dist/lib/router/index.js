@@ -1,13 +1,7 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+exports.__esModule = true;
 exports.Router = exports.createRouter = exports.withRouter = undefined;
-
-var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
-
-var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
 
 var _defineProperty = require('babel-runtime/core-js/object/define-property');
 
@@ -115,15 +109,13 @@ function _notifyBuildIdMismatch(nextRoute) {
 
 function _rewriteUrlForNextExport(url) {
   var _url$split = url.split('#'),
-      _url$split2 = (0, _slicedToArray3['default'])(_url$split, 2),
-      hash = _url$split2[1];
+      hash = _url$split[1];
 
   url = url.replace(/#.*/, '');
 
-  var _url$split3 = url.split('?'),
-      _url$split4 = (0, _slicedToArray3['default'])(_url$split3, 2),
-      path = _url$split4[0],
-      qs = _url$split4[1];
+  var _url$split2 = url.split('?'),
+      path = _url$split2[0],
+      qs = _url$split2[1];
 
   path = path.replace(/\/$/, '');
 

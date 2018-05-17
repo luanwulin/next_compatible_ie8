@@ -1,16 +1,8 @@
 'use strict';
 
-var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
-
-var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
 var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
-
-var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
-
-var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -27,9 +19,8 @@ function styledJsxOptions(opts) {
 
   opts.plugins = opts.plugins.map(function (plugin) {
     if (Array.isArray(plugin)) {
-      var _plugin = (0, _slicedToArray3['default'])(plugin, 2),
-          name = _plugin[0],
-          options = _plugin[1];
+      var name = plugin[0],
+          options = plugin[1];
 
       return [require.resolve(name), options];
     }
@@ -53,7 +44,7 @@ module.exports = function (context) {
     presets: [[require.resolve('babel-preset-env'), (0, _extends3['default'])({
       modules: false
     }, opts['preset-env'])], require.resolve('babel-preset-react')],
-    plugins: [require.resolve('babel-plugin-react-require'), require.resolve('./plugins/handle-import'), require.resolve('babel-plugin-transform-object-rest-spread'), require.resolve('babel-plugin-transform-class-properties'), [require.resolve('babel-plugin-transform-runtime'), opts['transform-runtime'] || {}], [require.resolve('styled-jsx/babel'), styledJsxOptions(opts['styled-jsx'])]].concat((0, _toConsumableArray3['default'])(plugins), [[require.resolve('babel-plugin-module-resolver'), {
+    plugins: [require.resolve('babel-plugin-react-require'), require.resolve('./plugins/handle-import'), require.resolve('babel-plugin-transform-object-rest-spread'), require.resolve('babel-plugin-transform-class-properties'), [require.resolve('babel-plugin-transform-runtime'), opts['transform-runtime'] || {}], [require.resolve('styled-jsx/babel'), styledJsxOptions(opts['styled-jsx'])]].concat(plugins, [[require.resolve('babel-plugin-module-resolver'), {
       alias: {
         'babel-runtime': relativeResolve('babel-runtime/package'),
         'next/link': relativeResolve('../../../lib/link'),

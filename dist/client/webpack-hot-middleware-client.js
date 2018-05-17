@@ -1,20 +1,14 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
-
-var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
-var _keys = require('babel-runtime/core-js/object/keys');
-
-var _keys2 = _interopRequireDefault(_keys);
+exports.__esModule = true;
 
 var _getIterator2 = require('babel-runtime/core-js/get-iterator');
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
+
+var _keys = require('babel-runtime/core-js/object/keys');
+
+var _keys2 = _interopRequireDefault(_keys);
 
 var _webpackHmr = require('webpack-hot-middleware/client?overlay=false&reload=true&path=/_next/webpack-hmr');
 
@@ -30,34 +24,25 @@ exports['default'] = function () {
   var handlers = {
     reload: function reload(route) {
       if (route === '/_error') {
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+        for (var _iterator = (0, _keys2['default'])(_router2['default'].components), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3['default'])(_iterator);;) {
+          var _ref;
 
-        try {
-          for (var _iterator = (0, _getIterator3['default'])((0, _keys2['default'])(_router2['default'].components)), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var r = _step.value;
-            var err = _router2['default'].components[r].err;
-
-            if (err) {
-              _router2['default'].reload(r);
-            }
+          if (_isArray) {
+            if (_i >= _iterator.length) break;
+            _ref = _iterator[_i++];
+          } else {
+            _i = _iterator.next();
+            if (_i.done) break;
+            _ref = _i.value;
           }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator['return']) {
-              _iterator['return']();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
+
+          var r = _ref;
+          var err = _router2['default'].components[r].err;
+
+          if (err) {
+            _router2['default'].reload(r);
           }
         }
-
         return;
       }
 
@@ -74,9 +59,9 @@ exports['default'] = function () {
         return;
       }
 
-      var _ref = _router2['default'].components[route] || {},
-          err = _ref.err,
-          Component = _ref.Component;
+      var _ref2 = _router2['default'].components[route] || {},
+          err = _ref2.err,
+          Component = _ref2.Component;
 
       if (err) {
         _router2['default'].reload(route);
@@ -97,7 +82,7 @@ exports['default'] = function () {
     var fn = handlers[obj.action];
     if (fn) {
       var data = obj.data || [];
-      fn.apply(undefined, (0, _toConsumableArray3['default'])(data));
+      fn.apply(undefined, data);
     } else {
       throw new Error('Unexpected action ' + obj.action);
     }

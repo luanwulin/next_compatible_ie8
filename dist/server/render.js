@@ -1,8 +1,6 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+exports.__esModule = true;
 exports.renderScriptError = exports.renderScript = exports.renderError = exports.render = undefined;
 
 var _getIterator2 = require('babel-runtime/core-js/get-iterator');
@@ -16,10 +14,6 @@ var _stringify2 = _interopRequireDefault(_stringify);
 var _promise = require('babel-runtime/core-js/promise');
 
 var _promise2 = _interopRequireDefault(_promise);
-
-var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
-
-var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
 
 var _extends2 = require('babel-runtime/helpers/extends');
 
@@ -108,7 +102,7 @@ var doRender = function () {
         _ref4$nextExport = _ref4.nextExport,
         nextExport = _ref4$nextExport === undefined ? false : _ref4$nextExport;
 
-    var dist, _ref5, _ref6, Component, Document, asPath, ctx, props, renderPage, docProps, devBuildId, doc;
+    var dist, _ref5, Component, Document, asPath, ctx, props, renderPage, docProps, devBuildId, doc;
 
     return _regenerator2['default'].wrap(function _callee3$(_context3) {
       while (1) {
@@ -126,28 +120,27 @@ var doRender = function () {
 
           case 6:
             _ref5 = _context3.sent;
-            _ref6 = (0, _slicedToArray3['default'])(_ref5, 2);
-            Component = _ref6[0];
-            Document = _ref6[1];
+            Component = _ref5[0];
+            Document = _ref5[1];
 
             Component = Component['default'] || Component;
             Document = Document['default'] || Document;
             asPath = req.url;
             ctx = { err: err, req: req, res: res, pathname: pathname, query: query, asPath: asPath };
-            _context3.next = 16;
+            _context3.next = 15;
             return (0, _utils.loadGetInitialProps)(Component, ctx);
 
-          case 16:
+          case 15:
             props = _context3.sent;
 
             if (!res.finished) {
-              _context3.next = 19;
+              _context3.next = 18;
               break;
             }
 
             return _context3.abrupt('return');
 
-          case 19:
+          case 18:
             renderPage = function renderPage() {
               var enhancer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function (Page) {
                 return Page;
@@ -181,29 +174,29 @@ var doRender = function () {
               return { html: html, head: head, errorHtml: errorHtml, chunks: chunks };
             };
 
-            _context3.next = 22;
+            _context3.next = 21;
             return (0, _utils.loadGetInitialProps)(Document, (0, _extends3['default'])({}, ctx, { renderPage: renderPage }));
 
-          case 22:
+          case 21:
             docProps = _context3.sent;
             devBuildId = Date.now();
 
             if (!res.finished) {
-              _context3.next = 26;
+              _context3.next = 25;
               break;
             }
 
             return _context3.abrupt('return');
 
-          case 26:
+          case 25:
             if (!(!Document.prototype || !Document.prototype.isReactComponent)) {
-              _context3.next = 28;
+              _context3.next = 27;
               break;
             }
 
             throw new Error('_document.js is not exporting a React element');
 
-          case 28:
+          case 27:
             doc = (0, _react.createElement)(Document, (0, _extends3['default'])({
               __NEXT_DATA__: {
                 props: props,
@@ -221,7 +214,7 @@ var doRender = function () {
             }, docProps));
             return _context3.abrupt('return', '<!DOCTYPE html>' + (0, _server.renderToStaticMarkup)(doc));
 
-          case 30:
+          case 29:
           case 'end':
             return _context3.stop();
         }
@@ -235,7 +228,7 @@ var doRender = function () {
 }();
 
 var renderScript = exports.renderScript = function () {
-  var _ref7 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee4(req, res, page, opts) {
+  var _ref6 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee4(req, res, page, opts) {
     var dist, path, realPath;
     return _regenerator2['default'].wrap(function _callee4$(_context4) {
       while (1) {
@@ -280,13 +273,13 @@ var renderScript = exports.renderScript = function () {
   }));
 
   return function renderScript(_x19, _x20, _x21, _x22) {
-    return _ref7.apply(this, arguments);
+    return _ref6.apply(this, arguments);
   };
 }();
 
 var renderScriptError = exports.renderScriptError = function () {
-  var _ref9 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee5(req, res, page, error, customFields, _ref8) {
-    var dev = _ref8.dev;
+  var _ref8 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee5(req, res, page, error, customFields, _ref7) {
+    var dev = _ref7.dev;
     var errorJson;
     return _regenerator2['default'].wrap(function _callee5$(_context5) {
       while (1) {
@@ -320,14 +313,14 @@ var renderScriptError = exports.renderScriptError = function () {
   }));
 
   return function renderScriptError(_x23, _x24, _x25, _x26, _x27, _x28) {
-    return _ref9.apply(this, arguments);
+    return _ref8.apply(this, arguments);
   };
 }();
 
 var ensurePage = function () {
-  var _ref12 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee6(page, _ref11) {
-    var dir = _ref11.dir,
-        hotReloader = _ref11.hotReloader;
+  var _ref11 = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee6(page, _ref10) {
+    var dir = _ref10.dir,
+        hotReloader = _ref10.hotReloader;
     return _regenerator2['default'].wrap(function _callee6$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
@@ -360,7 +353,7 @@ var ensurePage = function () {
   }));
 
   return function ensurePage(_x29, _x30) {
-    return _ref12.apply(this, arguments);
+    return _ref11.apply(this, arguments);
   };
 }();
 
@@ -436,8 +429,8 @@ function renderErrorToHTML(err, req, res, pathname, query) {
   return doRender(req, res, pathname, query, (0, _extends3['default'])({}, opts, { err: err, page: '_error' }));
 }
 
-function sendHTML(req, res, html, method, _ref10) {
-  var dev = _ref10.dev;
+function sendHTML(req, res, html, method, _ref9) {
+  var dev = _ref9.dev;
 
   if (res.finished) return;
   var etag = (0, _etag2['default'])(html);
@@ -501,41 +494,33 @@ function serveStatic(req, res, path) {
   });
 }
 
-function loadChunks(_ref13) {
-  var dev = _ref13.dev,
-      dir = _ref13.dir,
-      dist = _ref13.dist,
-      availableChunks = _ref13.availableChunks;
+function loadChunks(_ref12) {
+  var dev = _ref12.dev,
+      dir = _ref12.dir,
+      dist = _ref12.dist,
+      availableChunks = _ref12.availableChunks;
 
   var flushedChunks = (0, _dynamic.flushChunks)();
   var validChunks = [];
 
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
+  for (var _iterator = flushedChunks, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3['default'])(_iterator);;) {
+    var _ref13;
 
-  try {
-    for (var _iterator = (0, _getIterator3['default'])(flushedChunks), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-      var chunk = _step.value;
-
-      var filename = (0, _path.join)(dir, dist, 'chunks', chunk);
-      var exists = dev ? (0, _fs.existsSync)(filename) : availableChunks[chunk];
-      if (exists) {
-        validChunks.push(chunk);
-      }
+    if (_isArray) {
+      if (_i >= _iterator.length) break;
+      _ref13 = _iterator[_i++];
+    } else {
+      _i = _iterator.next();
+      if (_i.done) break;
+      _ref13 = _i.value;
     }
-  } catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion && _iterator['return']) {
-        _iterator['return']();
-      }
-    } finally {
-      if (_didIteratorError) {
-        throw _iteratorError;
-      }
+
+    var chunk = _ref13;
+
+    var filename = (0, _path.join)(dir, dist, 'chunks', chunk);
+    var exists = dev ? (0, _fs.existsSync)(filename) : availableChunks[chunk];
+    if (exists) {
+      validChunks.push(chunk);
     }
   }
 
