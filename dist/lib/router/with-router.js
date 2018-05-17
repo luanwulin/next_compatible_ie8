@@ -1,14 +1,24 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
 
 var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
 
@@ -44,17 +54,19 @@ function withRouter(ComposedComponent) {
 
     function WithRouteWrapper() {
       (0, _classCallCheck3['default'])(this, WithRouteWrapper);
-      return (0, _possibleConstructorReturn3['default'])(this, _Component.apply(this, arguments));
+      return (0, _possibleConstructorReturn3['default'])(this, (WithRouteWrapper.__proto__ || (0, _getPrototypeOf2['default'])(WithRouteWrapper)).apply(this, arguments));
     }
 
-    WithRouteWrapper.prototype.render = function render() {
-      var props = (0, _extends3['default'])({
-        router: this.context.router
-      }, this.props);
+    (0, _createClass3['default'])(WithRouteWrapper, [{
+      key: 'render',
+      value: function render() {
+        var props = (0, _extends3['default'])({
+          router: this.context.router
+        }, this.props);
 
-      return _react2['default'].createElement(ComposedComponent, props);
-    };
-
+        return _react2['default'].createElement(ComposedComponent, props);
+      }
+    }]);
     return WithRouteWrapper;
   }(_react.Component);
 

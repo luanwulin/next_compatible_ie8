@@ -7,8 +7,7 @@
           "browsers": [
             "ie >= 7"
           ]
-        },
-        "loose": true
+        }
       }
     ],
     "react"

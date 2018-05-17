@@ -1,14 +1,24 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
 
 var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
 
@@ -40,6 +50,8 @@ var App = function (_Component) {
   (0, _inherits3['default'])(App, _Component);
 
   function App() {
+    var _ref;
+
     var _temp, _this, _ret;
 
     (0, _classCallCheck3['default'])(this, App);
@@ -48,49 +60,53 @@ var App = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3['default'])(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3['default'])(this, (_ref = App.__proto__ || (0, _getPrototypeOf2['default'])(App)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       hasError: null
     }, _temp), (0, _possibleConstructorReturn3['default'])(_this, _ret);
   }
 
-  App.prototype.getChildContext = function getChildContext() {
-    var headManager = this.props.headManager;
+  (0, _createClass3['default'])(App, [{
+    key: 'getChildContext',
+    value: function getChildContext() {
+      var headManager = this.props.headManager;
 
-    return {
-      headManager: headManager,
-      router: (0, _router.makePublicRouterInstance)(this.props.router)
-    };
-  };
-
-  App.prototype.componentDidCatch = function componentDidCatch(error, info) {
-    error.stack = error.stack + '\n\n' + info.componentStack;
-    window.next.renderError(error);
-    this.setState({ hasError: true });
-  };
-
-  App.prototype.render = function render() {
-    if (this.state.hasError) return null;
-
-    var _props = this.props,
-        Component = _props.Component,
-        props = _props.props,
-        hash = _props.hash,
-        router = _props.router;
-
-    var url = createUrl(router);
-
-    if (typeof Component !== 'function') {
-      throw new Error('The default export is not a React Component in page: "' + url.pathname + '"');
+      return {
+        headManager: headManager,
+        router: (0, _router.makePublicRouterInstance)(this.props.router)
+      };
     }
-    var containerProps = { Component: Component, props: props, hash: hash, router: router, url: url };
+  }, {
+    key: 'componentDidCatch',
+    value: function componentDidCatch(error, info) {
+      error.stack = error.stack + '\n\n' + info.componentStack;
+      window.next.renderError(error);
+      this.setState({ hasError: true });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      if (this.state.hasError) return null;
 
-    return _react2['default'].createElement(
-      'div',
-      null,
-      _react2['default'].createElement(Container, containerProps)
-    );
-  };
+      var _props = this.props,
+          Component = _props.Component,
+          props = _props.props,
+          hash = _props.hash,
+          router = _props.router;
 
+      var url = createUrl(router);
+
+      if (typeof Component !== 'function') {
+        throw new Error('The default export is not a React Component in page: "' + url.pathname + '"');
+      }
+      var containerProps = { Component: Component, props: props, hash: hash, router: router, url: url };
+
+      return _react2['default'].createElement(
+        'div',
+        null,
+        _react2['default'].createElement(Container, containerProps)
+      );
+    }
+  }]);
   return App;
 }(_react.Component);
 
@@ -105,57 +121,63 @@ var Container = function (_Component2) {
 
   function Container() {
     (0, _classCallCheck3['default'])(this, Container);
-    return (0, _possibleConstructorReturn3['default'])(this, _Component2.apply(this, arguments));
+    return (0, _possibleConstructorReturn3['default'])(this, (Container.__proto__ || (0, _getPrototypeOf2['default'])(Container)).apply(this, arguments));
   }
 
-  Container.prototype.componentDidMount = function componentDidMount() {
-    this.scrollToHash();
-  };
-
-  Container.prototype.componentDidUpdate = function componentDidUpdate() {
-    this.scrollToHash();
-  };
-
-  Container.prototype.scrollToHash = function scrollToHash() {
-    var hash = this.props.hash;
-
-    if (!hash) return;
-
-    var el = document.getElementById(hash);
-    if (!el) return;
-
-    setTimeout(function () {
-      return el.scrollIntoView();
-    }, 0);
-  };
-
-  Container.prototype.shouldComponentUpdate = function shouldComponentUpdate(nextProps) {
-    return !(0, _shallowEquals2['default'])(this.props, nextProps);
-  };
-
-  Container.prototype.render = function render() {
-    var _props2 = this.props,
-        Component = _props2.Component,
-        props = _props2.props,
-        url = _props2.url;
-
-
-    if (process.env.NODE_ENV === 'production') {
-      return _react2['default'].createElement(Component, (0, _extends3['default'])({}, props, { url: url }));
-    } else {
-      var ErrorDebug = require('./error-debug')['default'];
-
-      var _require = require('react-hot-loader'),
-          AppContainer = _require.AppContainer;
-
-      return _react2['default'].createElement(
-        AppContainer,
-        { warnings: false, errorReporter: ErrorDebug },
-        _react2['default'].createElement(Component, (0, _extends3['default'])({}, props, { url: url }))
-      );
+  (0, _createClass3['default'])(Container, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.scrollToHash();
     }
-  };
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      this.scrollToHash();
+    }
+  }, {
+    key: 'scrollToHash',
+    value: function scrollToHash() {
+      var hash = this.props.hash;
 
+      if (!hash) return;
+
+      var el = document.getElementById(hash);
+      if (!el) return;
+
+      setTimeout(function () {
+        return el.scrollIntoView();
+      }, 0);
+    }
+  }, {
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate(nextProps) {
+      return !(0, _shallowEquals2['default'])(this.props, nextProps);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props2 = this.props,
+          Component = _props2.Component,
+          props = _props2.props,
+          url = _props2.url;
+
+
+      if (process.env.NODE_ENV === 'production') {
+        return _react2['default'].createElement(Component, (0, _extends3['default'])({}, props, { url: url }));
+      } else {
+        var ErrorDebug = require('./error-debug')['default'];
+
+        var _require = require('react-hot-loader'),
+            AppContainer = _require.AppContainer;
+
+        return _react2['default'].createElement(
+          AppContainer,
+          { warnings: false, errorReporter: ErrorDebug },
+          _react2['default'].createElement(Component, (0, _extends3['default'])({}, props, { url: url }))
+        );
+      }
+    }
+  }]);
   return Container;
 }(_react.Component);
 

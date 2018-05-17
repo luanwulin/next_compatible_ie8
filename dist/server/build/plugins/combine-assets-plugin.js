@@ -1,10 +1,16 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -18,31 +24,33 @@ var CombineAssetsPlugin = function () {
     this.output = output;
   }
 
-  CombineAssetsPlugin.prototype.apply = function apply(compiler) {
-    var _this = this;
+  (0, _createClass3['default'])(CombineAssetsPlugin, [{
+    key: 'apply',
+    value: function apply(compiler) {
+      var _this = this;
 
-    compiler.plugin('after-compile', function (compilation, callback) {
-      var newSource = '';
-      _this.input.forEach(function (name) {
-        var asset = compilation.assets[name];
-        if (!asset) return;
+      compiler.plugin('after-compile', function (compilation, callback) {
+        var newSource = '';
+        _this.input.forEach(function (name) {
+          var asset = compilation.assets[name];
+          if (!asset) return;
 
-        newSource += asset.source() + '\n';
+          newSource += asset.source() + '\n';
+        });
+
+        compilation.assets[_this.output] = {
+          source: function source() {
+            return newSource;
+          },
+          size: function size() {
+            return newSource.length;
+          }
+        };
+
+        callback();
       });
-
-      compilation.assets[_this.output] = {
-        source: function source() {
-          return newSource;
-        },
-        size: function size() {
-          return newSource.length;
-        }
-      };
-
-      callback();
-    });
-  };
-
+    }
+  }]);
   return CombineAssetsPlugin;
 }();
 
