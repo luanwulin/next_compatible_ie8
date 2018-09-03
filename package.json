@@ -1,6 +1,6 @@
 {
   "name": "next",
-  "version": "5.1.0",
+  "version": "1.0.0",
   "description": "Minimalistic framework for server-rendered React applications",
   "main": "./dist/server/next.js",
   "license": "MIT",
@@ -100,9 +100,9 @@
     "url": "0.11.0",
     "uuid": "3.1.0",
     "walk": "2.3.9",
-    "webpack": "^1.13.1",
-    "webpack-dev-middleware": "1.11.0",
-    "webpack-hot-middleware": "2.1.0",
+    "webpack": "3.10.0",
+    "webpack-dev-middleware": "1.12.0",
+    "webpack-hot-middleware": "2.19.1",
     "webpack-sources": "1.1.0",
     "write-file-webpack-plugin": "4.2.0"
   },
