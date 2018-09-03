@@ -27,7 +27,7 @@ var render = exports.render = function () {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            if (!props.err) {
+            if (!(props.err && !props.err.ignore)) {
               _context2.next = 4;
               break;
             }
@@ -217,16 +217,6 @@ var _pageLoader = require('../lib/page-loader');
 
 var _pageLoader2 = _interopRequireDefault(_pageLoader);
 
-var _asset = require('../lib/asset');
-
-var asset = _interopRequireWildcard(_asset);
-
-var _runtimeConfig = require('../lib/runtime-config');
-
-var envConfig = _interopRequireWildcard(_runtimeConfig);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Polyfill Promise globally
@@ -242,26 +232,13 @@ var _window = window,
     _window$__NEXT_DATA__ = _window.__NEXT_DATA__,
     props = _window$__NEXT_DATA__.props,
     err = _window$__NEXT_DATA__.err,
-    page = _window$__NEXT_DATA__.page,
     pathname = _window$__NEXT_DATA__.pathname,
     query = _window$__NEXT_DATA__.query,
     buildId = _window$__NEXT_DATA__.buildId,
     chunks = _window$__NEXT_DATA__.chunks,
     assetPrefix = _window$__NEXT_DATA__.assetPrefix,
-    runtimeConfig = _window$__NEXT_DATA__.runtimeConfig,
     location = _window.location;
 
-// With dynamic assetPrefix it's no longer possible to set assetPrefix at the build time
-// So, this is how we do it in the client side at runtime
-
-__webpack_public_path__ = assetPrefix + '/_next/webpack/'; //eslint-disable-line
-// Initialize next/asset with the assetPrefix
-asset.setAssetPrefix(assetPrefix);
-// Initialize next/config with the environment configuration
-envConfig.setConfig({
-  serverRuntimeConfig: {},
-  publicRuntimeConfig: runtimeConfig
-});
 
 var asPath = (0, _utils.getURL)();
 
@@ -378,7 +355,7 @@ exports.default = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.de
           exports.ErrorComponent = ErrorComponent = _context.sent;
           _context.prev = 31;
           _context.next = 34;
-          return pageLoader.loadPage(page);
+          return pageLoader.loadPage(pathname);
 
         case 34:
           Component = _context.sent;
@@ -427,8 +404,7 @@ exports.default = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.de
 
 var isInitialRender = true;
 function renderReactElement(reactEl, domEl) {
-  // The check for `.hydrate` is there to support React alternatives like preact
-  if (isInitialRender && typeof _reactDom2.default.hydrate === 'function') {
+  if (isInitialRender) {
     _reactDom2.default.hydrate(reactEl, domEl);
     isInitialRender = false;
   } else {

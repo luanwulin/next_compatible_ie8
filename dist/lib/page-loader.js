@@ -105,14 +105,14 @@ var PageLoader = function () {
       var _this2 = this;
 
       route = this.normalizeRoute(route);
-      var scriptRoute = route === '/' ? '/index.js' : route + '.js';
+      route = route === '/' ? '/index.js' : route + '.js';
 
       var script = document.createElement('script');
-      var url = this.assetPrefix + '/_next/' + encodeURIComponent(this.buildId) + '/page' + scriptRoute;
+      var url = this.assetPrefix + '/_next/' + encodeURIComponent(this.buildId) + '/page' + route;
       script.src = url;
+      script.type = 'text/javascript';
       script.onerror = function () {
         var error = new Error('Error when loading route: ' + route);
-        error.code = 'PAGE_LOAD_ERROR';
         _this2.pageRegisterEvents.emit(route, { error: error });
       };
 

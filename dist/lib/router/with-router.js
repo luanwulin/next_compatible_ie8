@@ -73,7 +73,7 @@ function withRouter(ComposedComponent) {
   WithRouteWrapper.contextTypes = {
     router: _propTypes2.default.object
   };
-  WithRouteWrapper.displayName = 'withRouter(' + displayName + ')';
+  WithRouteWrapper.displayName = 'withRoute(' + displayName + ')';
 
 
   return (0, _hoistNonReactStatics2.default)(WithRouteWrapper, ComposedComponent);

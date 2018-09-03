@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderScriptError = exports.renderError = exports.render = undefined;
+exports.renderScriptError = exports.renderScript = exports.renderError = exports.render = undefined;
 
 var _getIterator2 = require('babel-runtime/core-js/get-iterator');
 
@@ -95,11 +95,10 @@ var doRender = function () {
         err = _ref4.err,
         page = _ref4.page,
         buildId = _ref4.buildId,
+        buildStats = _ref4.buildStats,
         hotReloader = _ref4.hotReloader,
         assetPrefix = _ref4.assetPrefix,
-        runtimeConfig = _ref4.runtimeConfig,
         availableChunks = _ref4.availableChunks,
-        dist = _ref4.dist,
         _ref4$dir = _ref4.dir,
         dir = _ref4$dir === undefined ? process.cwd() : _ref4$dir,
         _ref4$dev = _ref4.dev,
@@ -109,7 +108,7 @@ var doRender = function () {
         _ref4$nextExport = _ref4.nextExport,
         nextExport = _ref4$nextExport === undefined ? false : _ref4$nextExport;
 
-    var documentPath, _ref5, _ref6, Component, Document, asPath, ctx, props, renderPage, docProps, doc;
+    var dist, _ref5, _ref6, Component, Document, asPath, ctx, props, renderPage, docProps, devBuildId, doc;
 
     return _regenerator2.default.wrap(function _callee3$(_context3) {
       while (1) {
@@ -117,20 +116,15 @@ var doRender = function () {
           case 0:
             page = page || pathname;
 
-            if (!hotReloader) {
-              _context3.next = 4;
-              break;
-            }
-
-            _context3.next = 4;
+            _context3.next = 3;
             return ensurePage(page, { dir: dir, hotReloader: hotReloader });
 
-          case 4:
-            documentPath = (0, _path.join)(dir, dist, 'dist', 'bundles', 'pages', '_document');
-            _context3.next = 7;
-            return _promise2.default.all([(0, _require2.default)(page, { dir: dir, dist: dist }), require(documentPath)]);
+          case 3:
+            dist = (0, _config2.default)(dir).distDir;
+            _context3.next = 6;
+            return _promise2.default.all([(0, _require2.default)((0, _path.join)(dir, dist, 'dist', 'pages', page)), (0, _require2.default)((0, _path.join)(dir, dist, 'dist', 'pages', '_document'))]);
 
-          case 7:
+          case 6:
             _ref5 = _context3.sent;
             _ref6 = (0, _slicedToArray3.default)(_ref5, 2);
             Component = _ref6[0];
@@ -140,20 +134,20 @@ var doRender = function () {
             Document = Document.default || Document;
             asPath = req.url;
             ctx = { err: err, req: req, res: res, pathname: pathname, query: query, asPath: asPath };
-            _context3.next = 17;
+            _context3.next = 16;
             return (0, _utils.loadGetInitialProps)(Component, ctx);
 
-          case 17:
+          case 16:
             props = _context3.sent;
 
-            if (!(0, _utils.isResSent)(res)) {
-              _context3.next = 20;
+            if (!res.finished) {
+              _context3.next = 19;
               break;
             }
 
             return _context3.abrupt('return');
 
-          case 20:
+          case 19:
             renderPage = function renderPage() {
               var enhancer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function (Page) {
                 return Page;
@@ -187,13 +181,19 @@ var doRender = function () {
               return { html: html, head: head, errorHtml: errorHtml, chunks: chunks };
             };
 
-            _context3.next = 23;
+            _context3.next = 22;
             return (0, _utils.loadGetInitialProps)(Document, (0, _extends3.default)({}, ctx, { renderPage: renderPage }));
 
-          case 23:
+          case 22:
             docProps = _context3.sent;
 
-            if (!(0, _utils.isResSent)(res)) {
+            // While developing, we should not cache any assets.
+            // So, we use a different buildId for each page load.
+            // With that we can ensure, we have unique URL for assets per every page load.
+            // So, it'll prevent issues like this: https://git.io/vHLtb
+            devBuildId = Date.now();
+
+            if (!res.finished) {
               _context3.next = 26;
               break;
             }
@@ -212,12 +212,11 @@ var doRender = function () {
             doc = (0, _react.createElement)(Document, (0, _extends3.default)({
               __NEXT_DATA__: {
                 props: props,
-                page: page, // the rendered page
-                pathname: pathname, // the requested path
+                pathname: pathname,
                 query: query,
-                buildId: buildId,
+                buildId: dev ? devBuildId : buildId,
+                buildStats: buildStats,
                 assetPrefix: assetPrefix,
-                runtimeConfig: runtimeConfig,
                 nextExport: nextExport,
                 err: err ? serializeError(dev, err) : null
               },
@@ -240,63 +239,85 @@ var doRender = function () {
   };
 }();
 
-var renderScriptError = exports.renderScriptError = function () {
-  var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(req, res, page, error) {
+var renderScript = exports.renderScript = function () {
+  var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(req, res, page, opts) {
+    var dist, path, realPath;
     return _regenerator2.default.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
-            // Asks CDNs and others to not to cache the errored page
-            res.setHeader('Cache-Control', 'no-store, must-revalidate');
+            _context4.prev = 0;
+            dist = (0, _config2.default)(opts.dir).distDir;
+            path = (0, _path.join)(opts.dir, dist, 'bundles', 'pages', page);
+            _context4.next = 5;
+            return (0, _resolve2.default)(path);
 
-            if (!(error.code === 'ENOENT')) {
-              _context4.next = 5;
+          case 5:
+            realPath = _context4.sent;
+            _context4.next = 8;
+            return serveStatic(req, res, realPath);
+
+          case 8:
+            _context4.next = 16;
+            break;
+
+          case 10:
+            _context4.prev = 10;
+            _context4.t0 = _context4['catch'](0);
+
+            if (!(_context4.t0.code === 'ENOENT')) {
+              _context4.next = 15;
               break;
             }
 
-            res.statusCode = 404;
-            res.end('404 - Not Found');
+            renderScriptError(req, res, page, _context4.t0, {}, opts);
             return _context4.abrupt('return');
 
-          case 5:
+          case 15:
+            throw _context4.t0;
 
-            logger.error(error.stack);
-            res.statusCode = 500;
-            res.end('500 - Internal Error');
-
-          case 8:
+          case 16:
           case 'end':
             return _context4.stop();
         }
       }
-    }, _callee4, this);
+    }, _callee4, this, [[0, 10]]);
   }));
 
-  return function renderScriptError(_x19, _x20, _x21, _x22) {
+  return function renderScript(_x19, _x20, _x21, _x22) {
     return _ref7.apply(this, arguments);
   };
 }();
 
-var ensurePage = function () {
-  var _ref10 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(page, _ref9) {
-    var dir = _ref9.dir,
-        hotReloader = _ref9.hotReloader;
+var renderScriptError = exports.renderScriptError = function () {
+  var _ref9 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(req, res, page, error, customFields, _ref8) {
+    var dev = _ref8.dev;
+    var errorJson;
     return _regenerator2.default.wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
-            if (!(page === '/_error')) {
-              _context5.next = 2;
+            // Asks CDNs and others to not to cache the errored page
+            res.setHeader('Cache-Control', 'no-store, must-revalidate');
+            // prevent XSS attacks by filtering the page before printing it.
+            page = _xssFilters2.default.uriInSingleQuotedAttr(page);
+            res.setHeader('Content-Type', 'text/javascript');
+
+            if (!(error.code === 'ENOENT')) {
+              _context5.next = 6;
               break;
             }
 
+            res.end('\n      window.__NEXT_REGISTER_PAGE(\'' + page + '\', function() {\n        var error = new Error(\'Page does not exist: ' + page + '\')\n        error.statusCode = 404\n\n        return { error: error }\n      })\n    ');
             return _context5.abrupt('return');
 
-          case 2:
-            _context5.next = 4;
-            return hotReloader.ensurePage(page);
+          case 6:
+            errorJson = (0, _extends3.default)({}, serializeError(dev, error), customFields);
 
-          case 4:
+
+            res.end('\n    window.__NEXT_REGISTER_PAGE(\'' + page + '\', function() {\n      var error = ' + (0, _stringify2.default)(errorJson) + '\n      return { error: error }\n    })\n  ');
+
+          case 8:
           case 'end':
             return _context5.stop();
         }
@@ -304,8 +325,48 @@ var ensurePage = function () {
     }, _callee5, this);
   }));
 
-  return function ensurePage(_x23, _x24) {
-    return _ref10.apply(this, arguments);
+  return function renderScriptError(_x23, _x24, _x25, _x26, _x27, _x28) {
+    return _ref9.apply(this, arguments);
+  };
+}();
+
+var ensurePage = function () {
+  var _ref12 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6(page, _ref11) {
+    var dir = _ref11.dir,
+        hotReloader = _ref11.hotReloader;
+    return _regenerator2.default.wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            if (hotReloader) {
+              _context6.next = 2;
+              break;
+            }
+
+            return _context6.abrupt('return');
+
+          case 2:
+            if (!(page === '_error' || page === '_document')) {
+              _context6.next = 4;
+              break;
+            }
+
+            return _context6.abrupt('return');
+
+          case 4:
+            _context6.next = 6;
+            return hotReloader.ensurePage(page);
+
+          case 6:
+          case 'end':
+            return _context6.stop();
+        }
+      }
+    }, _callee6, this);
+  }));
+
+  return function ensurePage(_x29, _x30) {
+    return _ref12.apply(this, arguments);
   };
 }();
 
@@ -316,6 +377,8 @@ exports.sendJSON = sendJSON;
 exports.serveStatic = serveStatic;
 
 var _path = require('path');
+
+var _fs = require('fs');
 
 var _react = require('react');
 
@@ -337,11 +400,17 @@ var _require = require('./require');
 
 var _require2 = _interopRequireDefault(_require);
 
+var _config = require('./config');
+
+var _config2 = _interopRequireDefault(_config);
+
+var _resolve = require('./resolve');
+
+var _resolve2 = _interopRequireDefault(_resolve);
+
 var _router = require('../lib/router');
 
 var _utils = require('../lib/utils');
-
-var _utils2 = require('./utils');
 
 var _head = require('../lib/head');
 
@@ -357,9 +426,11 @@ var _errorDebug2 = _interopRequireDefault(_errorDebug);
 
 var _dynamic = require('../lib/dynamic');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _xssFilters = require('xss-filters');
 
-var logger = console;
+var _xssFilters2 = _interopRequireDefault(_xssFilters);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function renderToHTML(req, res, pathname, query, opts) {
   return doRender(req, res, pathname, query, opts);
@@ -368,15 +439,14 @@ function renderToHTML(req, res, pathname, query, opts) {
 function renderErrorToHTML(err, req, res, pathname, query) {
   var opts = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : {};
 
-  return doRender(req, res, pathname, query, (0, _extends3.default)({}, opts, { err: err, page: '/_error' }));
+  return doRender(req, res, pathname, query, (0, _extends3.default)({}, opts, { err: err, page: '_error' }));
 }
 
-function sendHTML(req, res, html, method, _ref8) {
-  var dev = _ref8.dev,
-      generateEtags = _ref8.generateEtags;
+function sendHTML(req, res, html, method, _ref10) {
+  var dev = _ref10.dev;
 
-  if ((0, _utils.isResSent)(res)) return;
-  var etag = generateEtags && (0, _etag2.default)(html);
+  if (res.finished) return;
+  var etag = (0, _etag2.default)(html);
 
   if ((0, _fresh2.default)(req.headers, { etag: etag })) {
     res.statusCode = 304;
@@ -390,19 +460,14 @@ function sendHTML(req, res, html, method, _ref8) {
     res.setHeader('Cache-Control', 'no-store, must-revalidate');
   }
 
-  if (etag) {
-    res.setHeader('ETag', etag);
-  }
-
-  if (!res.getHeader('Content-Type')) {
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  }
+  res.setHeader('ETag', etag);
+  res.setHeader('Content-Type', 'text/html');
   res.setHeader('Content-Length', Buffer.byteLength(html));
   res.end(method === 'HEAD' ? null : html);
 }
 
 function sendJSON(res, obj, method) {
-  if ((0, _utils.isResSent)(res)) return;
+  if (res.finished) return;
 
   var json = (0, _stringify2.default)(obj);
   res.setHeader('Content-Type', 'application/json');
@@ -446,21 +511,14 @@ function serveStatic(req, res, path) {
   });
 }
 
-function loadChunks(_ref11) {
-  var dev = _ref11.dev,
-      dir = _ref11.dir,
-      dist = _ref11.dist,
-      availableChunks = _ref11.availableChunks;
+function loadChunks(_ref13) {
+  var dev = _ref13.dev,
+      dir = _ref13.dir,
+      dist = _ref13.dist,
+      availableChunks = _ref13.availableChunks;
 
   var flushedChunks = (0, _dynamic.flushChunks)();
-  var response = {
-    names: [],
-    filenames: []
-  };
-
-  if (dev) {
-    availableChunks = (0, _utils2.getAvailableChunks)(dir, dist);
-  }
+  var validChunks = [];
 
   var _iteratorNormalCompletion = true;
   var _didIteratorError = false;
@@ -470,10 +528,10 @@ function loadChunks(_ref11) {
     for (var _iterator = (0, _getIterator3.default)(flushedChunks), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
       var chunk = _step.value;
 
-      var filename = availableChunks[chunk];
-      if (filename) {
-        response.names.push(chunk);
-        response.filenames.push(filename);
+      var filename = (0, _path.join)(dir, dist, 'chunks', chunk);
+      var exists = dev ? (0, _fs.existsSync)(filename) : availableChunks[chunk];
+      if (exists) {
+        validChunks.push(chunk);
       }
     }
   } catch (err) {
@@ -491,5 +549,5 @@ function loadChunks(_ref11) {
     }
   }
 
-  return response;
+  return validChunks;
 }

@@ -122,10 +122,7 @@ var Link = function (_Component) {
       // straight up redirect
       _router2.default[changeMethod](href, as, { shallow: shallow }).then(function (success) {
         if (!success) return;
-        if (scroll) {
-          window.scrollTo(0, 0);
-          document.body.focus();
-        }
+        if (scroll) window.scrollTo(0, 0);
       }).catch(function (err) {
         if (_this2.props.onError) _this2.props.onError(err);
       });
@@ -227,7 +224,6 @@ exports.default = Link;
 function isLocal(href) {
   var url = (0, _url.parse)(href, false, true);
   var origin = (0, _url.parse)((0, _utils.getLocationOrigin)(), false, true);
-
   return !url.host || url.protocol === origin.protocol && url.host === origin.host;
 }
 

@@ -13,13 +13,13 @@ import {
 import webdriver from 'next-webdriver'
 import fetch from 'node-fetch'
 import dynamicImportTests from '../../basic/test/dynamic'
-import security from './security'
+import { readFileSync } from 'fs'
 
 const appDir = join(__dirname, '../')
 let appPort
 let server
 let app
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 60 * 5
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 40000
 
 const context = {}
 
@@ -74,6 +74,23 @@ describe('Production Usage', () => {
     })
   })
 
+  describe('With XSS Attacks', () => {
+    it('should prevent URI based attaks', async () => {
+      const browser = await webdriver(appPort, '/\',document.body.innerHTML="HACKED",\'')
+      // Wait 5 secs to make sure we load all the client side JS code
+      await waitFor(5000)
+
+      const bodyText = await browser
+        .elementByCss('body').text()
+
+      if (/HACKED/.test(bodyText)) {
+        throw new Error('Vulnerable to XSS attacks')
+      }
+
+      browser.close()
+    })
+  })
+
   describe('Misc', () => {
     it('should handle already finished responses', async () => {
       const res = {
@@ -95,53 +112,19 @@ describe('Production Usage', () => {
       expect(data).toBe('item')
     })
 
-    it('should reload the page on page script error', async () => {
-      const browser = await webdriver(appPort, '/counter')
-      const counter = await browser
-          .elementByCss('#increase').click().click()
-          .elementByCss('#counter').text()
-      expect(counter).toBe('Counter: 2')
+    it('should only access files inside .next directory', async () => {
+      const buildId = readFileSync(join(__dirname, '../.next/BUILD_ID'), 'utf8')
 
-      // When we go to the 404 page, it'll do a hard reload.
-      // So, it's possible for the front proxy to load a page from another zone.
-      // Since the page is reloaded, when we go back to the counter page again,
-      // previous counter value should be gone.
-      const counterAfter404Page = await browser
-        .elementByCss('#no-such-page').click()
-        .waitForElementByCss('h1')
-        .back()
-        .waitForElementByCss('#counter-page')
-        .elementByCss('#counter').text()
-      expect(counterAfter404Page).toBe('Counter: 0')
+      const pathsToCheck = [
+        `/_next/${buildId}/page/../../../info`,
+        `/_next/${buildId}/page/../../../info.js`,
+        `/_next/${buildId}/page/../../../info.json`
+      ]
 
-      browser.close()
-    })
-
-    it('should reload the page on page script error with prefetch', async () => {
-      const browser = await webdriver(appPort, '/counter')
-      const counter = await browser
-          .elementByCss('#increase').click().click()
-          .elementByCss('#counter').text()
-      expect(counter).toBe('Counter: 2')
-
-      // Let the browser to prefetch the page and error it on the console.
-      await waitFor(3000)
-      const browserLogs = await browser.log('browser')
-      expect(browserLogs[0].message).toMatch(/\/no-such-page.js - Failed to load resource/)
-
-      // When we go to the 404 page, it'll do a hard reload.
-      // So, it's possible for the front proxy to load a page from another zone.
-      // Since the page is reloaded, when we go back to the counter page again,
-      // previous counter value should be gone.
-      const counterAfter404Page = await browser
-        .elementByCss('#no-such-page-prefetch').click()
-        .waitForElementByCss('h1')
-        .back()
-        .waitForElementByCss('#counter-page')
-        .elementByCss('#counter').text()
-      expect(counterAfter404Page).toBe('Counter: 0')
-
-      browser.close()
+      for (const path of pathsToCheck) {
+        const data = await renderViaHTTP(appPort, path)
+        expect(data.includes('cool-version')).toBeFalsy()
+      }
     })
   })
 
@@ -150,9 +133,6 @@ describe('Production Usage', () => {
       const req = { url: '/stateless', headers: {} }
       const headers = {}
       const res = {
-        getHeader (key) {
-          return headers[key]
-        },
         setHeader (key, value) {
           headers[key] = value
         },
@@ -165,26 +145,21 @@ describe('Production Usage', () => {
 
     it('should not set it when poweredByHeader==false', async () => {
       const req = { url: '/stateless', headers: {} }
-      const originalConfigValue = app.nextConfig.poweredByHeader
-      app.nextConfig.poweredByHeader = false
+      const originalConfigValue = app.config.poweredByHeader
+      app.config.poweredByHeader = false
       const res = {
-        getHeader () {
-          return false
-        },
         setHeader (key, value) {
-          if (key === 'XPoweredBy') {
-            throw new Error('Should not set the XPoweredBy header')
+          if (key === 'X-Powered-By') {
+            throw new Error('Should not set the X-Powered-By header')
           }
         },
         end () {}
       }
 
       await app.render(req, res, req.url)
-      app.nextConfig.poweredByHeader = originalConfigValue
+      app.config.poweredByHeader = originalConfigValue
     })
   })
 
   dynamicImportTests(context, (p, q) => renderViaHTTP(context.appPort, p, q))
-
-  security(context)
 })

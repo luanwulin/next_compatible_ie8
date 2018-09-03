@@ -16,11 +16,9 @@ var _getIterator2 = require('babel-runtime/core-js/get-iterator');
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
-require('event-source-polyfill');
+var _webpackHmr = require('webpack-hot-middleware/client?overlay=false&reload=true&path=/_next/webpack-hmr');
 
-var _clientAutoConnectFalseOverlayFalseReloadTrue = require('webpack-hot-middleware/client?autoConnect=false&overlay=false&reload=true');
-
-var _clientAutoConnectFalseOverlayFalseReloadTrue2 = _interopRequireDefault(_clientAutoConnectFalseOverlayFalseReloadTrue);
+var _webpackHmr2 = _interopRequireDefault(_webpackHmr);
 
 var _router = require('../lib/router');
 
@@ -28,14 +26,7 @@ var _router2 = _interopRequireDefault(_router);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _window = window,
-    assetPrefix = _window.__NEXT_DATA__.assetPrefix;
-
 exports.default = function () {
-  _clientAutoConnectFalseOverlayFalseReloadTrue2.default.setOptionsAndConnect({
-    path: assetPrefix + '/_next/webpack-hmr'
-  });
-
   var handlers = {
     reload: function reload(route) {
       if (route === '/_error') {
@@ -109,7 +100,7 @@ exports.default = function () {
     }
   };
 
-  _clientAutoConnectFalseOverlayFalseReloadTrue2.default.subscribe(function (obj) {
+  _webpackHmr2.default.subscribe(function (obj) {
     var fn = handlers[obj.action];
     if (fn) {
       var data = obj.data || [];

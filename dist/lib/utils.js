@@ -38,16 +38,8 @@ var loadGetInitialProps = exports.loadGetInitialProps = function () {
           case 4:
             props = _context.sent;
 
-            if (!(ctx.res && isResSent(ctx.res))) {
-              _context.next = 7;
-              break;
-            }
-
-            return _context.abrupt('return', props);
-
-          case 7:
-            if (props) {
-              _context.next = 11;
+            if (!(!props && (!ctx.res || !ctx.res.finished))) {
+              _context.next = 9;
               break;
             }
 
@@ -55,10 +47,10 @@ var loadGetInitialProps = exports.loadGetInitialProps = function () {
             message = '"' + compName + '.getInitialProps()" should resolve to an object. But found "' + props + '" instead.';
             throw new Error(message);
 
-          case 11:
+          case 9:
             return _context.abrupt('return', props);
 
-          case 12:
+          case 10:
           case 'end':
             return _context.stop();
         }
@@ -76,7 +68,6 @@ exports.execOnce = execOnce;
 exports.deprecated = deprecated;
 exports.printAndExit = printAndExit;
 exports.getDisplayName = getDisplayName;
-exports.isResSent = isResSent;
 exports.getLocationOrigin = getLocationOrigin;
 exports.getURL = getURL;
 
@@ -141,10 +132,6 @@ function printAndExit(message) {
 
 function getDisplayName(Component) {
   return Component.displayName || Component.name || 'Unknown';
-}
-
-function isResSent(res) {
-  return res.finished || res.headersSent;
 }
 
 function getLocationOrigin() {

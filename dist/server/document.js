@@ -47,16 +47,6 @@ var _server2 = _interopRequireDefault(_server);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Fragment = _react2.default.Fragment || function Fragment(_ref) {
-  var children = _ref.children;
-
-  return _react2.default.createElement(
-    'div',
-    null,
-    children
-  );
-};
-
 var Document = function (_Component) {
   (0, _inherits3.default)(Document, _Component);
 
@@ -87,8 +77,8 @@ var Document = function (_Component) {
     }
   }], [{
     key: 'getInitialProps',
-    value: function getInitialProps(_ref2) {
-      var renderPage = _ref2.renderPage;
+    value: function getInitialProps(_ref) {
+      var renderPage = _ref.renderPage;
 
       var _renderPage = renderPage(),
           html = _renderPage.html,
@@ -120,10 +110,11 @@ var Head = exports.Head = function (_Component2) {
     key: 'getChunkPreloadLink',
     value: function getChunkPreloadLink(filename) {
       var __NEXT_DATA__ = this.context._documentProps.__NEXT_DATA__;
-      var assetPrefix = __NEXT_DATA__.assetPrefix,
+      var buildStats = __NEXT_DATA__.buildStats,
+          assetPrefix = __NEXT_DATA__.assetPrefix,
           buildId = __NEXT_DATA__.buildId;
 
-      var hash = buildId;
+      var hash = buildStats ? buildStats[filename].hash : buildId;
 
       return _react2.default.createElement('link', {
         key: filename,
@@ -138,11 +129,11 @@ var Head = exports.Head = function (_Component2) {
       var dev = this.context._documentProps.dev;
 
       if (dev) {
-        return [this.getChunkPreloadLink('manifest.js'), this.getChunkPreloadLink('main.js')];
+        return [this.getChunkPreloadLink('manifest.js'), this.getChunkPreloadLink('commons.js'), this.getChunkPreloadLink('main.js')];
       }
 
       // In the production mode, we have a single asset with all the JS content.
-      return [this.getChunkPreloadLink('main.js')];
+      return [this.getChunkPreloadLink('app.js')];
     }
   }, {
     key: 'getPreloadDynamicChunks',
@@ -150,13 +141,14 @@ var Head = exports.Head = function (_Component2) {
       var _context$_documentPro = this.context._documentProps,
           chunks = _context$_documentPro.chunks,
           __NEXT_DATA__ = _context$_documentPro.__NEXT_DATA__;
-      var assetPrefix = __NEXT_DATA__.assetPrefix;
+      var assetPrefix = __NEXT_DATA__.assetPrefix,
+          buildId = __NEXT_DATA__.buildId;
 
-      return chunks.filenames.map(function (chunk) {
+      return chunks.map(function (chunk) {
         return _react2.default.createElement('link', {
           key: chunk,
           rel: 'preload',
-          href: assetPrefix + '/_next/webpack/chunks/' + chunk,
+          href: assetPrefix + '/_next/' + buildId + '/webpack/chunks/' + chunk,
           as: 'script'
         });
       });
@@ -168,8 +160,7 @@ var Head = exports.Head = function (_Component2) {
           head = _context$_documentPro2.head,
           styles = _context$_documentPro2.styles,
           __NEXT_DATA__ = _context$_documentPro2.__NEXT_DATA__;
-      var page = __NEXT_DATA__.page,
-          pathname = __NEXT_DATA__.pathname,
+      var pathname = __NEXT_DATA__.pathname,
           buildId = __NEXT_DATA__.buildId,
           assetPrefix = __NEXT_DATA__.assetPrefix;
 
@@ -179,9 +170,9 @@ var Head = exports.Head = function (_Component2) {
         'head',
         this.props,
         (head || []).map(function (h, i) {
-          return _react2.default.cloneElement(h, { key: h.key || i });
+          return _react2.default.cloneElement(h, { key: i });
         }),
-        page !== '/_error' && _react2.default.createElement('link', { rel: 'preload', href: assetPrefix + '/_next/' + buildId + '/page' + pagePathname, as: 'script' }),
+        _react2.default.createElement('link', { rel: 'preload', href: assetPrefix + '/_next/' + buildId + '/page' + pagePathname, as: 'script' }),
         _react2.default.createElement('link', { rel: 'preload', href: assetPrefix + '/_next/' + buildId + '/page/_error.js', as: 'script' }),
         this.getPreloadDynamicChunks(),
         this.getPreloadMainLinks(),
@@ -211,10 +202,11 @@ var Main = exports.Main = function (_Component3) {
       var _context$_documentPro3 = this.context._documentProps,
           html = _context$_documentPro3.html,
           errorHtml = _context$_documentPro3.errorHtml;
+      var className = this.props.className;
 
       return _react2.default.createElement(
-        Fragment,
-        null,
+        'div',
+        { className: className },
         _react2.default.createElement('div', { id: '__next', dangerouslySetInnerHTML: { __html: html } }),
         _react2.default.createElement('div', { id: '__next-error', dangerouslySetInnerHTML: { __html: errorHtml } })
       );
@@ -223,6 +215,9 @@ var Main = exports.Main = function (_Component3) {
   return Main;
 }(_react.Component);
 
+Main.propTypes = {
+  className: _propTypes2.default.string
+};
 Main.contextTypes = {
   _documentProps: _propTypes2.default.any
 };
@@ -240,13 +235,15 @@ var NextScript = exports.NextScript = function (_Component4) {
     value: function getChunkScript(filename) {
       var additionalProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       var __NEXT_DATA__ = this.context._documentProps.__NEXT_DATA__;
-      var assetPrefix = __NEXT_DATA__.assetPrefix,
+      var buildStats = __NEXT_DATA__.buildStats,
+          assetPrefix = __NEXT_DATA__.assetPrefix,
           buildId = __NEXT_DATA__.buildId;
 
-      var hash = buildId;
+      var hash = buildStats ? buildStats[filename].hash : buildId;
 
       return _react2.default.createElement('script', (0, _extends3.default)({
         key: filename,
+        type: 'text/javascript',
         src: assetPrefix + '/_next/' + hash + '/' + filename
       }, additionalProps));
     }
@@ -256,12 +253,12 @@ var NextScript = exports.NextScript = function (_Component4) {
       var dev = this.context._documentProps.dev;
 
       if (dev) {
-        return [this.getChunkScript('manifest.js'), this.getChunkScript('main.js')];
+        return [this.getChunkScript('manifest.js'), this.getChunkScript('commons.js'), this.getChunkScript('main.js')];
       }
 
       // In the production mode, we have a single asset with all the JS content.
       // So, we can load the script with async
-      return [this.getChunkScript('main.js', { async: true })];
+      return [this.getChunkScript('app.js', { async: true })];
     }
   }, {
     key: 'getDynamicChunks',
@@ -269,16 +266,18 @@ var NextScript = exports.NextScript = function (_Component4) {
       var _context$_documentPro4 = this.context._documentProps,
           chunks = _context$_documentPro4.chunks,
           __NEXT_DATA__ = _context$_documentPro4.__NEXT_DATA__;
-      var assetPrefix = __NEXT_DATA__.assetPrefix;
+      var assetPrefix = __NEXT_DATA__.assetPrefix,
+          buildId = __NEXT_DATA__.buildId;
 
       return _react2.default.createElement(
-        Fragment,
+        'div',
         null,
-        chunks.filenames.map(function (chunk) {
+        chunks.map(function (chunk) {
           return _react2.default.createElement('script', {
             async: true,
             key: chunk,
-            src: assetPrefix + '/_next/webpack/chunks/' + chunk
+            type: 'text/javascript',
+            src: assetPrefix + '/_next/' + buildId + '/webpack/chunks/' + chunk
           });
         })
       );
@@ -290,23 +289,22 @@ var NextScript = exports.NextScript = function (_Component4) {
           staticMarkup = _context$_documentPro5.staticMarkup,
           __NEXT_DATA__ = _context$_documentPro5.__NEXT_DATA__,
           chunks = _context$_documentPro5.chunks;
-      var page = __NEXT_DATA__.page,
-          pathname = __NEXT_DATA__.pathname,
+      var pathname = __NEXT_DATA__.pathname,
           buildId = __NEXT_DATA__.buildId,
           assetPrefix = __NEXT_DATA__.assetPrefix;
 
       var pagePathname = getPagePathname(pathname);
 
-      __NEXT_DATA__.chunks = chunks.names;
+      __NEXT_DATA__.chunks = chunks;
 
       return _react2.default.createElement(
-        Fragment,
+        'div',
         null,
         staticMarkup ? null : _react2.default.createElement('script', { nonce: this.props.nonce, dangerouslySetInnerHTML: {
-            __html: '\n          __NEXT_DATA__ = ' + (0, _htmlescape2.default)(__NEXT_DATA__) + '\n          module={}\n          __NEXT_LOADED_PAGES__ = []\n          __NEXT_LOADED_CHUNKS__ = []\n\n          __NEXT_REGISTER_PAGE = function (route, fn) {\n            __NEXT_LOADED_PAGES__.push({ route: route, fn: fn })\n          }\n\n          __NEXT_REGISTER_CHUNK = function (chunkName, fn) {\n            __NEXT_LOADED_CHUNKS__.push({ chunkName: chunkName, fn: fn })\n          }\n\n          ' + (page === '_error' && '\n          __NEXT_REGISTER_PAGE(' + (0, _htmlescape2.default)(pathname) + ', function() {\n            var error = new Error(\'Page does not exist: ' + (0, _htmlescape2.default)(pathname) + '\')\n            error.statusCode = 404\n\n            return { error: error }\n          })\n          ') + '\n        '
+            __html: '\n          __NEXT_DATA__ = ' + (0, _htmlescape2.default)(__NEXT_DATA__) + '\n          module={}\n          __NEXT_LOADED_PAGES__ = []\n          __NEXT_LOADED_CHUNKS__ = []\n\n          __NEXT_REGISTER_PAGE = function (route, fn) {\n            __NEXT_LOADED_PAGES__.push({ route: route, fn: fn })\n          }\n\n          __NEXT_REGISTER_CHUNK = function (chunkName, fn) {\n            __NEXT_LOADED_CHUNKS__.push({ chunkName: chunkName, fn: fn })\n          }\n        '
           } }),
-        page !== '/_error' && _react2.default.createElement('script', { async: true, id: '__NEXT_PAGE__' + pathname, src: assetPrefix + '/_next/' + buildId + '/page' + pagePathname }),
-        _react2.default.createElement('script', { async: true, id: '__NEXT_PAGE__/_error', src: assetPrefix + '/_next/' + buildId + '/page/_error.js' }),
+        _react2.default.createElement('script', { async: true, id: '__NEXT_PAGE__' + pathname, type: 'text/javascript', src: assetPrefix + '/_next/' + buildId + '/page' + pagePathname }),
+        _react2.default.createElement('script', { async: true, id: '__NEXT_PAGE__/_error', type: 'text/javascript', src: assetPrefix + '/_next/' + buildId + '/page/_error.js' }),
         staticMarkup ? null : this.getDynamicChunks(),
         staticMarkup ? null : this.getScripts()
       );
