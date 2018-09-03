@@ -177,6 +177,8 @@ var Link = function (_Component) {
         );
       }
 
+      var test = NEXT_BASEROUTE;
+
       // This will return the first child, if multiple are provided it will throw an error
       var child = _react.Children.only(children);
       var props = {
