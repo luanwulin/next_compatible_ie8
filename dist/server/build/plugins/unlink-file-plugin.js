@@ -32,31 +32,33 @@ var _path = require('path');
 
 var _fs = require('mz/fs');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+var _utils = require('../../utils');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var UnlinkFilePlugin = function () {
   function UnlinkFilePlugin() {
-    (0, _classCallCheck3['default'])(this, UnlinkFilePlugin);
+    (0, _classCallCheck3.default)(this, UnlinkFilePlugin);
 
     this.prevAssets = {};
   }
 
-  (0, _createClass3['default'])(UnlinkFilePlugin, [{
+  (0, _createClass3.default)(UnlinkFilePlugin, [{
     key: 'apply',
     value: function apply(compiler) {
       var _this = this;
 
       compiler.plugin('after-emit', function (compilation, callback) {
-        var removed = (0, _keys2['default'])(_this.prevAssets).filter(function (a) {
-          return !compilation.assets[a];
+        var removed = (0, _keys2.default)(_this.prevAssets).filter(function (a) {
+          return _utils.IS_BUNDLED_PAGE.test(a) && !compilation.assets[a];
         });
 
         _this.prevAssets = compilation.assets;
 
-        _promise2['default'].all(removed.map(function () {
-          var _ref = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee(f) {
+        _promise2.default.all(removed.map(function () {
+          var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(f) {
             var path;
-            return _regenerator2['default'].wrap(function _callee$(_context) {
+            return _regenerator2.default.wrap(function _callee$(_context) {
               while (1) {
                 switch (_context.prev = _context.next) {
                   case 0:
@@ -103,4 +105,4 @@ var UnlinkFilePlugin = function () {
   return UnlinkFilePlugin;
 }();
 
-exports['default'] = UnlinkFilePlugin;
+exports.default = UnlinkFilePlugin;

@@ -5,14 +5,17 @@ import walk from 'walk'
 import { extname, resolve, join, dirname, sep } from 'path'
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import getConfig from './config'
+import {PHASE_EXPORT} from '../lib/constants'
 import { renderToHTML } from './render'
 import { getAvailableChunks } from './utils'
 import { printAndExit } from '../lib/utils'
+import { setAssetPrefix } from '../lib/asset'
+import * as envConfig from '../lib/runtime-config'
 
 export default async function (dir, options, configuration) {
   dir = resolve(dir)
-  const config = configuration || getConfig(dir)
-  const nextDir = join(dir, config.distDir)
+  const nextConfig = configuration || getConfig(PHASE_EXPORT, dir)
+  const nextDir = join(dir, nextConfig.distDir)
 
   log(`  using build directory: ${nextDir}`)
 
@@ -24,26 +27,34 @@ export default async function (dir, options, configuration) {
   }
 
   const buildId = readFileSync(join(nextDir, 'BUILD_ID'), 'utf8')
-  const buildStats = require(join(nextDir, 'build-stats.json'))
 
   // Initialize the output directory
   const outDir = options.outdir
   await del(join(outDir, '*'))
-  await mkdirp(join(outDir, '_next', buildStats['app.js'].hash))
   await mkdirp(join(outDir, '_next', buildId))
-
-  // Copy files
-  await cp(
-    join(nextDir, 'app.js'),
-    join(outDir, '_next', buildStats['app.js'].hash, 'app.js')
-  )
 
   // Copy static directory
   if (existsSync(join(dir, 'static'))) {
     log('  copying "static" directory')
     await cp(
       join(dir, 'static'),
-      join(outDir, 'static')
+      join(outDir, 'static'),
+      { expand: true }
+    )
+  }
+
+  // Copy main.js
+  await cp(
+    join(nextDir, 'main.js'),
+    join(outDir, '_next', buildId, 'main.js')
+  )
+
+  // Copy .next/static directory
+  if (existsSync(join(nextDir, 'static'))) {
+    log('  copying "static build" directory')
+    await cp(
+      join(nextDir, 'static'),
+      join(outDir, '_next', 'static')
     )
   }
 
@@ -51,38 +62,52 @@ export default async function (dir, options, configuration) {
   if (existsSync(join(nextDir, 'chunks'))) {
     log('  copying dynamic import chunks')
 
-    await mkdirp(join(outDir, '_next', buildId, 'webpack'))
+    await mkdirp(join(outDir, '_next', 'webpack'))
     await cp(
       join(nextDir, 'chunks'),
-      join(outDir, '_next', buildId, 'webpack', 'chunks')
+      join(outDir, '_next', 'webpack', 'chunks')
     )
   }
 
   await copyPages(nextDir, outDir, buildId)
 
   // Get the exportPathMap from the `next.config.js`
-  if (typeof config.exportPathMap !== 'function') {
+  if (typeof nextConfig.exportPathMap !== 'function') {
     printAndExit(
       '> Could not find "exportPathMap" function inside "next.config.js"\n' +
       '> "next export" uses that function to build html pages.'
     )
   }
 
-  const exportPathMap = await config.exportPathMap()
+  const exportPathMap = await nextConfig.exportPathMap()
   const exportPaths = Object.keys(exportPathMap)
 
   // Start the rendering process
   const renderOpts = {
     dir,
-    buildStats,
+    dist: nextConfig.distDir,
     buildId,
     nextExport: true,
-    assetPrefix: config.assetPrefix.replace(/\/$/, ''),
+    assetPrefix: nextConfig.assetPrefix.replace(/\/$/, ''),
     dev: false,
     staticMarkup: false,
     hotReloader: null,
-    availableChunks: getAvailableChunks(dir, config.distDir)
+    availableChunks: getAvailableChunks(dir, nextConfig.distDir)
   }
+
+  const {serverRuntimeConfig, publicRuntimeConfig} = nextConfig
+
+  if (publicRuntimeConfig) {
+    renderOpts.runtimeConfig = publicRuntimeConfig
+  }
+
+  envConfig.setConfig({
+    serverRuntimeConfig,
+    publicRuntimeConfig
+  })
+
+  // set the assetPrefix to use for 'next/asset'
+  setAssetPrefix(renderOpts.assetPrefix)
 
   // We need this for server rendering the Link component.
   global.__NEXT_DATA__ = {
@@ -91,6 +116,9 @@ export default async function (dir, options, configuration) {
 
   for (const path of exportPaths) {
     log(`  exporting path: ${path}`)
+    if (!path.startsWith('/')) {
+      throw new Error(`path "${path}" doesn't start with a backslash`)
+    }
 
     const { page, query = {} } = exportPathMap[path]
     const req = { url: path }
@@ -135,7 +163,7 @@ function copyPages (nextDir, outDir, buildId) {
 
       // We should not expose this page to the client side since
       // it has no use in the client side.
-      if (relativeFilePath === '/_document.js') {
+      if (relativeFilePath === `${sep}_document.js`) {
         next()
         return
       }

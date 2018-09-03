@@ -1,7 +1,18 @@
-import webpackHotMiddlewareClient from 'webpack-hot-middleware/client?overlay=false&reload=true&path=/_next/webpack-hmr'
+import 'event-source-polyfill'
+import webpackHotMiddlewareClient from 'webpack-hot-middleware/client?autoConnect=false&overlay=false&reload=true'
 import Router from '../lib/router'
 
+const {
+  __NEXT_DATA__: {
+    assetPrefix
+  }
+} = window
+
 export default () => {
+  webpackHotMiddlewareClient.setOptionsAndConnect({
+    path: `${assetPrefix}/_next/webpack-hmr`
+  })
+
   const handlers = {
     reload (route) {
       if (route === '/_error') {

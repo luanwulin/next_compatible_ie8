@@ -20,27 +20,27 @@ var _EventEmitter = require('./EventEmitter');
 
 var _EventEmitter2 = _interopRequireDefault(_EventEmitter);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var webpackModule = module;
+var webpackModule = module; /* global window, document */
 
 var PageLoader = function () {
   function PageLoader(buildId, assetPrefix) {
-    (0, _classCallCheck3['default'])(this, PageLoader);
+    (0, _classCallCheck3.default)(this, PageLoader);
 
     this.buildId = buildId;
     this.assetPrefix = assetPrefix;
 
     this.pageCache = {};
     this.pageLoadedHandlers = {};
-    this.pageRegisterEvents = new _EventEmitter2['default']();
+    this.pageRegisterEvents = new _EventEmitter2.default();
     this.loadingRoutes = {};
 
-    this.chunkRegisterEvents = new _EventEmitter2['default']();
+    this.chunkRegisterEvents = new _EventEmitter2.default();
     this.loadedChunks = {};
   }
 
-  (0, _createClass3['default'])(PageLoader, [{
+  (0, _createClass3.default)(PageLoader, [{
     key: 'normalizeRoute',
     value: function normalizeRoute(route) {
       if (route[0] !== '/') {
@@ -58,7 +58,7 @@ var PageLoader = function () {
 
       route = this.normalizeRoute(route);
 
-      return new _promise2['default'](function (resolve, reject) {
+      return new _promise2.default(function (resolve, reject) {
         var fire = function fire(_ref) {
           var error = _ref.error,
               page = _ref.page;
@@ -73,6 +73,7 @@ var PageLoader = function () {
           }
         };
 
+        // If there's a cached version of the page, let's use it.
         var cachedPage = _this.pageCache[route];
         if (cachedPage) {
           var error = cachedPage.error,
@@ -82,12 +83,16 @@ var PageLoader = function () {
           return;
         }
 
+        // Register a listener to get the page
         _this.pageRegisterEvents.on(route, fire);
 
+        // If the page is loading via SSR, we need to wait for it
+        // rather downloading it again.
         if (document.getElementById('__NEXT_PAGE__' + route)) {
           return;
         }
 
+        // Load the script if not asked to load yet.
         if (!_this.loadingRoutes[route]) {
           _this.loadScript(route);
           _this.loadingRoutes[route] = true;
@@ -100,19 +105,22 @@ var PageLoader = function () {
       var _this2 = this;
 
       route = this.normalizeRoute(route);
-      route = route === '/' ? '/index.js' : route + '.js';
+      var scriptRoute = route === '/' ? '/index.js' : route + '.js';
 
       var script = document.createElement('script');
-      var url = this.assetPrefix + '/_next/' + encodeURIComponent(this.buildId) + '/page' + route;
+      var url = this.assetPrefix + '/_next/' + encodeURIComponent(this.buildId) + '/page' + scriptRoute;
       script.src = url;
-      script.type = 'text/javascript';
       script.onerror = function () {
         var error = new Error('Error when loading route: ' + route);
+        error.code = 'PAGE_LOAD_ERROR';
         _this2.pageRegisterEvents.emit(route, { error: error });
       };
 
       document.body.appendChild(script);
     }
+
+    // This method if called by the route code.
+
   }, {
     key: 'registerPage',
     value: function registerPage(route, regFn) {
@@ -132,6 +140,8 @@ var PageLoader = function () {
         }
       };
 
+      // Wait for webpack to become idle if it's not.
+      // More info: https://github.com/zeit/next.js/pull/1511
       if (webpackModule && webpackModule.hot && webpackModule.hot.status() !== 'idle') {
         console.log('Waiting for webpack to become "idle" to initialize the page: "' + route + '"');
 
@@ -160,10 +170,10 @@ var PageLoader = function () {
 
       var loadedChunk = this.loadedChunks[chunkName];
       if (loadedChunk) {
-        return _promise2['default'].resolve(true);
+        return _promise2.default.resolve(true);
       }
 
-      return new _promise2['default'](function (resolve) {
+      return new _promise2.default(function (resolve) {
         var register = function register(chunk) {
           _this4.chunkRegisterEvents.off(chunkName, register);
           resolve(chunk);
@@ -188,4 +198,4 @@ var PageLoader = function () {
   return PageLoader;
 }();
 
-exports['default'] = PageLoader;
+exports.default = PageLoader;

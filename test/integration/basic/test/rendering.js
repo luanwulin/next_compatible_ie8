@@ -2,7 +2,7 @@
 
 import cheerio from 'cheerio'
 
-export default function ({ app }, suiteName, render) {
+export default function ({ app }, suiteName, render, fetch) {
   async function get$ (path, query) {
     const html = await render(path, query)
     return cheerio.load(html)
@@ -26,6 +26,28 @@ export default function ({ app }, suiteName, render) {
       expect(html.includes('<meta charSet="iso-8859-5" class="next-head"/>')).toBeTruthy()
       expect(html.includes('<meta content="my meta" class="next-head"/>')).toBeTruthy()
       expect(html.includes('I can haz meta tags')).toBeTruthy()
+    })
+
+    test('header helper dedupes tags', async () => {
+      const html = await (render('/head'))
+      expect(html).toContain('<meta charSet="iso-8859-5" class="next-head"/>')
+      expect(html).not.toContain('<meta charSet="utf-8" class="next-head"/>')
+      expect(html).toContain('<meta content="my meta" class="next-head"/>')
+      expect(html).toContain('<link rel="stylesheet" href="/dup-style.css" class="next-head"/><link rel="stylesheet" href="/dup-style.css" class="next-head"/>')
+      expect(html).toContain('<link rel="stylesheet" href="dedupe-style.css" class="next-head"/>')
+      expect(html).not.toContain('<link rel="stylesheet" href="dedupe-style.css" class="next-head"/><link rel="stylesheet" href="dedupe-style.css" class="next-head"/>')
+    })
+
+    test('header helper renders Fragment children', async () => {
+      const html = await (render('/head'))
+      expect(html).toContain('<title class="next-head">Fragment title</title>')
+      expect(html).toContain('<meta content="meta fragment" class="next-head"/>')
+    })
+
+    it('should render the page with custom extension', async () => {
+      const html = await render('/custom-extension')
+      expect(html).toContain('<div>Hello</div>')
+      expect(html).toContain('<div>World</div>')
     })
 
     test('renders styled jsx', async () => {
@@ -53,6 +75,16 @@ export default function ({ app }, suiteName, render) {
       expect($('pre').text().includes(expectedErrorMessage)).toBeTruthy()
     })
 
+    test('default Content-Type', async () => {
+      const res = await fetch('/stateless')
+      expect(res.headers.get('Content-Type')).toMatch('text/html; charset=utf-8')
+    })
+
+    test('setting Content-Type in getInitialProps', async () => {
+      const res = await fetch('/custom-encoding')
+      expect(res.headers.get('Content-Type')).toMatch('text/html; charset=iso-8859-2')
+    })
+
     test('allows to import .json files', async () => {
       const html = await render('/json')
       expect(html.includes('Zeit')).toBeTruthy()
@@ -64,9 +96,14 @@ export default function ({ app }, suiteName, render) {
       expect(pre.text()).toMatch(/The default export is not a React Component/)
     })
 
-    test('error', async () => {
-      const $ = await get$('/error')
+    test('error-inside-page', async () => {
+      const $ = await get$('/error-inside-page')
       expect($('pre').text()).toMatch(/This is an expected error/)
+    })
+
+    test('error-in-the-global-scope', async () => {
+      const $ = await get$('/error-in-the-global-scope')
+      expect($('pre').text()).toMatch(/aa is not defined/)
     })
 
     test('asPath', async () => {
@@ -74,10 +111,28 @@ export default function ({ app }, suiteName, render) {
       expect($('.as-path-content').text()).toBe('/nav/as-path?aa=10')
     })
 
-    test('error 404', async () => {
-      const $ = await get$('/non-existent')
-      expect($('h1').text()).toBe('404')
-      expect($('h2').text()).toBe('This page could not be found.')
+    describe('404', () => {
+      it('should 404 on not existent page', async () => {
+        const $ = await get$('/non-existent')
+        expect($('h1').text()).toBe('404')
+        expect($('h2').text()).toBe('This page could not be found.')
+      })
+
+      it('should 404 for <page>/', async () => {
+        const $ = await get$('/nav/about/')
+        expect($('h1').text()).toBe('404')
+        expect($('h2').text()).toBe('This page could not be found.')
+      })
+
+      it('should should not contain a page script in a 404 page', async () => {
+        const $ = await get$('/non-existent')
+        $('script[src]').each((index, element) => {
+          const src = $(element).attr('src')
+          if (src.includes('/non-existent')) {
+            throw new Error('Page includes page script')
+          }
+        })
+      })
     })
 
     describe('with the HOC based router', () => {

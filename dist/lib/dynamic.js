@@ -37,7 +37,7 @@ var _set = require('babel-runtime/core-js/set');
 
 var _set2 = _interopRequireDefault(_set);
 
-exports['default'] = dynamicComponent;
+exports.default = dynamicComponent;
 exports.registerChunk = registerChunk;
 exports.flushChunks = flushChunks;
 
@@ -47,9 +47,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _utils = require('./utils');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var currentChunks = new _set2['default']();
+var currentChunks = new _set2.default();
 
 function dynamicComponent(p, o) {
   var promise = void 0;
@@ -59,6 +59,7 @@ function dynamicComponent(p, o) {
     promise = p;
     options = o || {};
   } else {
+    // Now we are trying to use the modules and render fields in options to load modules.
     if (!p.modules || !p.render) {
       var errorMessage = '`next/dynamic` options should contain `modules` and `render` fields';
       throw new Error(errorMessage);
@@ -73,21 +74,21 @@ function dynamicComponent(p, o) {
   }
 
   return function (_React$Component) {
-    (0, _inherits3['default'])(DynamicComponent, _React$Component);
+    (0, _inherits3.default)(DynamicComponent, _React$Component);
 
     function DynamicComponent() {
       var _ref;
 
-      (0, _classCallCheck3['default'])(this, DynamicComponent);
+      (0, _classCallCheck3.default)(this, DynamicComponent);
 
       for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
 
-      var _this = (0, _possibleConstructorReturn3['default'])(this, (_ref = DynamicComponent.__proto__ || (0, _getPrototypeOf2['default'])(DynamicComponent)).call.apply(_ref, [this].concat(args)));
+      var _this = (0, _possibleConstructorReturn3.default)(this, (_ref = DynamicComponent.__proto__ || (0, _getPrototypeOf2.default)(DynamicComponent)).call.apply(_ref, [this].concat(args)));
 
       _this.LoadingComponent = options.loading ? options.loading : function () {
-        return _react2['default'].createElement(
+        return _react2.default.createElement(
           'p',
           null,
           'loading...'
@@ -98,8 +99,9 @@ function dynamicComponent(p, o) {
       _this.state = { AsyncComponent: null, asyncElement: null };
       _this.isServer = typeof window === 'undefined';
 
+      // This flag is used to load the bundle again, if needed
       _this.loadBundleAgain = null;
-
+      // This flag keeps track of the whether we are loading a bundle or not.
       _this.loadingBundle = false;
 
       if (_this.ssr) {
@@ -108,7 +110,7 @@ function dynamicComponent(p, o) {
       return _this;
     }
 
-    (0, _createClass3['default'])(DynamicComponent, [{
+    (0, _createClass3.default)(DynamicComponent, [{
       key: 'load',
       value: function load() {
         if (promise) {
@@ -123,8 +125,8 @@ function dynamicComponent(p, o) {
         var _this2 = this;
 
         promise.then(function (m) {
-          var AsyncComponent = m['default'] || m;
-
+          var AsyncComponent = m.default || m;
+          // Set a readable displayName for the wrapper component
           var asyncCompName = (0, _utils.getDisplayName)(AsyncComponent);
           if (asyncCompName) {
             DynamicComponent.displayName = 'DynamicComponent for ' + asyncCompName;
@@ -148,8 +150,9 @@ function dynamicComponent(p, o) {
         this.loadBundleAgain = null;
         this.loadingBundle = true;
 
+        // Run this for prop changes as well.
         var modulePromiseMap = options.modules(props);
-        var moduleNames = (0, _keys2['default'])(modulePromiseMap);
+        var moduleNames = (0, _keys2.default)(modulePromiseMap);
         var remainingPromises = moduleNames.length;
         var moduleMap = {};
 
@@ -172,7 +175,7 @@ function dynamicComponent(p, o) {
         var loadModule = function loadModule(name) {
           var promise = modulePromiseMap[name];
           promise.then(function (m) {
-            var Component = m['default'] || m;
+            var Component = m.default || m;
             if (_this3.isServer) {
               registerChunk(m.__webpackChunkName);
             }
@@ -218,13 +221,13 @@ function dynamicComponent(p, o) {
 
 
         if (asyncElement) return asyncElement;
-        if (AsyncComponent) return _react2['default'].createElement(AsyncComponent, this.props);
+        if (AsyncComponent) return _react2.default.createElement(AsyncComponent, this.props);
 
-        return _react2['default'].createElement(LoadingComponent, this.props);
+        return _react2.default.createElement(LoadingComponent, this.props);
       }
     }]);
     return DynamicComponent;
-  }(_react2['default'].Component);
+  }(_react2.default.Component);
 }
 
 function registerChunk(chunk) {
@@ -232,21 +235,31 @@ function registerChunk(chunk) {
 }
 
 function flushChunks() {
-  var chunks = (0, _from2['default'])(currentChunks);
+  var chunks = (0, _from2.default)(currentChunks);
   currentChunks.clear();
   return chunks;
 }
 
 var SameLoopPromise = exports.SameLoopPromise = function () {
+  (0, _createClass3.default)(SameLoopPromise, null, [{
+    key: 'resolve',
+    value: function resolve(value) {
+      var promise = new SameLoopPromise(function (done) {
+        return done(value);
+      });
+      return promise;
+    }
+  }]);
+
   function SameLoopPromise(cb) {
-    (0, _classCallCheck3['default'])(this, SameLoopPromise);
+    (0, _classCallCheck3.default)(this, SameLoopPromise);
 
     this.onResultCallbacks = [];
     this.onErrorCallbacks = [];
     this.cb = cb;
   }
 
-  (0, _createClass3['default'])(SameLoopPromise, [{
+  (0, _createClass3.default)(SameLoopPromise, [{
     key: 'setResult',
     value: function setResult(result) {
       this.gotResult = true;

@@ -18,9 +18,9 @@ var _assign = require('babel-runtime/core-js/object/assign');
 var _assign2 = _interopRequireDefault(_assign);
 
 var loadGetInitialProps = exports.loadGetInitialProps = function () {
-  var _ref = (0, _asyncToGenerator3['default'])(_regenerator2['default'].mark(function _callee(Component, ctx) {
+  var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(Component, ctx) {
     var props, compName, message;
-    return _regenerator2['default'].wrap(function _callee$(_context) {
+    return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
@@ -38,8 +38,16 @@ var loadGetInitialProps = exports.loadGetInitialProps = function () {
           case 4:
             props = _context.sent;
 
-            if (!(!props && (!ctx.res || !ctx.res.finished))) {
-              _context.next = 9;
+            if (!(ctx.res && isResSent(ctx.res))) {
+              _context.next = 7;
+              break;
+            }
+
+            return _context.abrupt('return', props);
+
+          case 7:
+            if (props) {
+              _context.next = 11;
               break;
             }
 
@@ -47,10 +55,10 @@ var loadGetInitialProps = exports.loadGetInitialProps = function () {
             message = '"' + compName + '.getInitialProps()" should resolve to an object. But found "' + props + '" instead.';
             throw new Error(message);
 
-          case 9:
+          case 11:
             return _context.abrupt('return', props);
 
-          case 10:
+          case 12:
           case 'end':
             return _context.stop();
         }
@@ -68,10 +76,11 @@ exports.execOnce = execOnce;
 exports.deprecated = deprecated;
 exports.printAndExit = printAndExit;
 exports.getDisplayName = getDisplayName;
+exports.isResSent = isResSent;
 exports.getLocationOrigin = getLocationOrigin;
 exports.getURL = getURL;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function warn(message) {
   if (process.env.NODE_ENV !== 'production') {
@@ -112,7 +121,8 @@ function deprecated(fn, message) {
     return fn.apply(this, args);
   };
 
-  (0, _assign2['default'])(newFn, fn);
+  // copy all properties
+  (0, _assign2.default)(newFn, fn);
 
   return newFn;
 }
@@ -131,6 +141,10 @@ function printAndExit(message) {
 
 function getDisplayName(Component) {
   return Component.displayName || Component.name || 'Unknown';
+}
+
+function isResSent(res) {
+  return res.finished || res.headersSent;
 }
 
 function getLocationOrigin() {

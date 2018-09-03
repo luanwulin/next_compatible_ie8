@@ -1,32 +1,19 @@
 {
   "presets": [
-    [
-      "env",
-      {
-        "targets": {
-          "browsers": [
-            "ie >= 7"
-          ]
-        }
-      }
-    ],
+    "env",
     "react"
   ],
   "plugins": [
     "transform-object-rest-spread",
     "transform-class-properties",
-    "transform-runtime",
-    "syntax-dynamic-import",
-    "transform-es3-property-literals",
-    "transform-es3-member-expression-literals"
+    "transform-runtime"
   ],
   "env": {
     "test": {
       "presets": [
         "es2015",
         "./babel"
-      ]
+       ]
     }
-  },
-  "comments": false
+  }
 }

@@ -3,6 +3,7 @@
 import { join } from 'path'
 import {
   renderViaHTTP,
+  fetchViaHTTP,
   findPort,
   launchApp,
   killApp
@@ -12,10 +13,12 @@ import {
 import rendering from './rendering'
 import clientNavigation from './client-navigation'
 import hmr from './hmr'
+import errorRecovery from './error-recovery'
 import dynamic from './dynamic'
+import asset from './asset'
 
 const context = {}
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 60 * 2
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 60 * 5
 
 describe('Basic Features', () => {
   beforeAll(async () => {
@@ -33,6 +36,7 @@ describe('Basic Features', () => {
       renderViaHTTP(context.appPort, '/link'),
       renderViaHTTP(context.appPort, '/stateful'),
       renderViaHTTP(context.appPort, '/stateless'),
+      renderViaHTTP(context.appPort, '/custom-extension'),
       renderViaHTTP(context.appPort, '/styled-jsx'),
       renderViaHTTP(context.appPort, '/with-cdm'),
 
@@ -55,8 +59,10 @@ describe('Basic Features', () => {
   })
   afterAll(() => killApp(context.server))
 
-  rendering(context, 'Rendering via HTTP', (p, q) => renderViaHTTP(context.appPort, p, q))
+  rendering(context, 'Rendering via HTTP', (p, q) => renderViaHTTP(context.appPort, p, q), (p, q) => fetchViaHTTP(context.appPort, p, q))
   clientNavigation(context, (p, q) => renderViaHTTP(context.appPort, p, q))
   dynamic(context, (p, q) => renderViaHTTP(context.appPort, p, q))
   hmr(context, (p, q) => renderViaHTTP(context.appPort, p, q))
+  errorRecovery(context, (p, q) => renderViaHTTP(context.appPort, p, q))
+  asset(context)
 })

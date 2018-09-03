@@ -16,15 +16,16 @@ var _map = require('babel-runtime/core-js/map');
 
 var _map2 = _interopRequireDefault(_map);
 
-exports['default'] = getConfig;
+exports.default = getConfig;
+exports.loadConfig = loadConfig;
 
-var _path = require('path');
+var _findUp = require('find-up');
 
-var _fs = require('fs');
+var _findUp2 = _interopRequireDefault(_findUp);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var cache = new _map2['default']();
+var cache = new _map2.default();
 
 var defaultConfig = {
   webpack: null,
@@ -33,29 +34,35 @@ var defaultConfig = {
   distDir: '.next',
   assetPrefix: '',
   configOrigin: 'default',
-  useFileSystemPublicRoutes: true
+  useFileSystemPublicRoutes: true,
+  generateEtags: true,
+  pageExtensions: ['jsx', 'js'] // jsx before js because otherwise regex matching will match js first
 };
 
-function getConfig(dir, customConfig) {
+function getConfig(phase, dir, customConfig) {
   if (!cache.has(dir)) {
-    cache.set(dir, loadConfig(dir, customConfig));
+    cache.set(dir, loadConfig(phase, dir, customConfig));
   }
   return cache.get(dir);
 }
 
-function loadConfig(dir, customConfig) {
-  if (customConfig && (typeof customConfig === 'undefined' ? 'undefined' : (0, _typeof3['default'])(customConfig)) === 'object') {
+function loadConfig(phase, dir, customConfig) {
+  if (customConfig && (typeof customConfig === 'undefined' ? 'undefined' : (0, _typeof3.default)(customConfig)) === 'object') {
     customConfig.configOrigin = 'server';
     return withDefaults(customConfig);
   }
-  var path = (0, _path.join)(dir, 'next.config.js');
+  var path = _findUp2.default.sync('next.config.js', {
+    cwd: dir
+  });
 
   var userConfig = {};
 
-  var userHasConfig = (0, _fs.existsSync)(path);
-  if (userHasConfig) {
+  if (path && path.length) {
     var userConfigModule = require(path);
-    userConfig = userConfigModule['default'] || userConfigModule;
+    userConfig = userConfigModule.default || userConfigModule;
+    if (typeof userConfigModule === 'function') {
+      userConfig = userConfigModule(phase, { defaultConfig: defaultConfig });
+    }
     userConfig.configOrigin = 'next.config.js';
   }
 
@@ -63,5 +70,5 @@ function loadConfig(dir, customConfig) {
 }
 
 function withDefaults(config) {
-  return (0, _assign2['default'])({}, defaultConfig, config);
+  return (0, _assign2.default)({}, defaultConfig, config);
 }

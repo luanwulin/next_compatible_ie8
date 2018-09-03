@@ -16,17 +16,26 @@ var _getIterator2 = require('babel-runtime/core-js/get-iterator');
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
-var _webpackHmr = require('webpack-hot-middleware/client?overlay=false&reload=true&path=/_next/webpack-hmr');
+require('event-source-polyfill');
 
-var _webpackHmr2 = _interopRequireDefault(_webpackHmr);
+var _clientAutoConnectFalseOverlayFalseReloadTrue = require('webpack-hot-middleware/client?autoConnect=false&overlay=false&reload=true');
+
+var _clientAutoConnectFalseOverlayFalseReloadTrue2 = _interopRequireDefault(_clientAutoConnectFalseOverlayFalseReloadTrue);
 
 var _router = require('../lib/router');
 
 var _router2 = _interopRequireDefault(_router);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports['default'] = function () {
+var _window = window,
+    assetPrefix = _window.__NEXT_DATA__.assetPrefix;
+
+exports.default = function () {
+  _clientAutoConnectFalseOverlayFalseReloadTrue2.default.setOptionsAndConnect({
+    path: assetPrefix + '/_next/webpack-hmr'
+  });
+
   var handlers = {
     reload: function reload(route) {
       if (route === '/_error') {
@@ -35,12 +44,14 @@ exports['default'] = function () {
         var _iteratorError = undefined;
 
         try {
-          for (var _iterator = (0, _getIterator3['default'])((0, _keys2['default'])(_router2['default'].components)), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          for (var _iterator = (0, _getIterator3.default)((0, _keys2.default)(_router2.default.components)), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var r = _step.value;
-            var err = _router2['default'].components[r].err;
+            var err = _router2.default.components[r].err;
 
             if (err) {
-              _router2['default'].reload(r);
+              // reload all error routes
+              // which are expected to be errors of '/_error' routes
+              _router2.default.reload(r);
             }
           }
         } catch (err) {
@@ -48,8 +59,8 @@ exports['default'] = function () {
           _iteratorError = err;
         } finally {
           try {
-            if (!_iteratorNormalCompletion && _iterator['return']) {
-              _iterator['return']();
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
             }
           } finally {
             if (_didIteratorError) {
@@ -66,7 +77,7 @@ exports['default'] = function () {
         return;
       }
 
-      _router2['default'].reload(route);
+      _router2.default.reload(route);
     },
     change: function change(route) {
       if (route === '/_document') {
@@ -74,30 +85,35 @@ exports['default'] = function () {
         return;
       }
 
-      var _ref = _router2['default'].components[route] || {},
+      var _ref = _router2.default.components[route] || {},
           err = _ref.err,
           Component = _ref.Component;
 
       if (err) {
-        _router2['default'].reload(route);
+        // reload to recover from runtime errors
+        _router2.default.reload(route);
       }
 
-      if (_router2['default'].route !== route) {
+      if (_router2.default.route !== route) {
+        // If this is a not a change for a currently viewing page.
+        // We don't need to worry about it.
         return;
       }
 
       if (!Component) {
+        // This only happens when we create a new page without a default export.
+        // If you removed a default export from a exising viewing page, this has no effect.
         console.log('Hard reloading due to no default component in page: ' + route);
         window.location.reload();
       }
     }
   };
 
-  _webpackHmr2['default'].subscribe(function (obj) {
+  _clientAutoConnectFalseOverlayFalseReloadTrue2.default.subscribe(function (obj) {
     var fn = handlers[obj.action];
     if (fn) {
       var data = obj.data || [];
-      fn.apply(undefined, (0, _toConsumableArray3['default'])(data));
+      fn.apply(undefined, (0, _toConsumableArray3.default)(data));
     } else {
       throw new Error('Unexpected action ' + obj.action);
     }

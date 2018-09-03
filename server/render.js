@@ -1,20 +1,19 @@
 import { join } from 'path'
-import { existsSync } from 'fs'
 import { createElement } from 'react'
 import { renderToString, renderToStaticMarkup } from 'react-dom/server'
 import send from 'send'
 import generateETag from 'etag'
 import fresh from 'fresh'
-import requireModule from './require'
-import getConfig from './config'
-import resolvePath from './resolve'
+import requirePage from './require'
 import { Router } from '../lib/router'
-import { loadGetInitialProps } from '../lib/utils'
+import { loadGetInitialProps, isResSent } from '../lib/utils'
+import { getAvailableChunks } from './utils'
 import Head, { defaultHead } from '../lib/head'
 import App from '../lib/app'
 import ErrorDebug from '../lib/error-debug'
 import { flushChunks } from '../lib/dynamic'
-import xssFilters from 'xss-filters'
+
+const logger = console
 
 export async function render (req, res, pathname, query, opts) {
   const html = await renderToHTML(req, res, pathname, query, opts)
@@ -31,17 +30,18 @@ export async function renderError (err, req, res, pathname, query, opts) {
 }
 
 export function renderErrorToHTML (err, req, res, pathname, query, opts = {}) {
-  return doRender(req, res, pathname, query, { ...opts, err, page: '_error' })
+  return doRender(req, res, pathname, query, { ...opts, err, page: '/_error' })
 }
 
 async function doRender (req, res, pathname, query, {
   err,
   page,
   buildId,
-  buildStats,
   hotReloader,
   assetPrefix,
+  runtimeConfig,
   availableChunks,
+  dist,
   dir = process.cwd(),
   dev = false,
   staticMarkup = false,
@@ -49,13 +49,15 @@ async function doRender (req, res, pathname, query, {
 } = {}) {
   page = page || pathname
 
-  await ensurePage(page, { dir, hotReloader })
+  if (hotReloader) { // In dev mode we use on demand entries to compile the page before rendering
+    await ensurePage(page, { dir, hotReloader })
+  }
 
-  const dist = getConfig(dir).distDir
+  const documentPath = join(dir, dist, 'dist', 'bundles', 'pages', '_document')
 
   let [Component, Document] = await Promise.all([
-    requireModule(join(dir, dist, 'dist', 'pages', page)),
-    requireModule(join(dir, dist, 'dist', 'pages', '_document'))
+    requirePage(page, {dir, dist}),
+    require(documentPath)
   ])
   Component = Component.default || Component
   Document = Document.default || Document
@@ -64,7 +66,7 @@ async function doRender (req, res, pathname, query, {
   const props = await loadGetInitialProps(Component, ctx)
 
   // the response might be finshed on the getinitialprops call
-  if (res.finished) return
+  if (isResSent(res)) return
 
   const renderPage = (enhancer = Page => Page) => {
     const app = createElement(App, {
@@ -96,23 +98,19 @@ async function doRender (req, res, pathname, query, {
   }
 
   const docProps = await loadGetInitialProps(Document, { ...ctx, renderPage })
-  // While developing, we should not cache any assets.
-  // So, we use a different buildId for each page load.
-  // With that we can ensure, we have unique URL for assets per every page load.
-  // So, it'll prevent issues like this: https://git.io/vHLtb
-  const devBuildId = Date.now()
 
-  if (res.finished) return
+  if (isResSent(res)) return
 
   if (!Document.prototype || !Document.prototype.isReactComponent) throw new Error('_document.js is not exporting a React element')
   const doc = createElement(Document, {
     __NEXT_DATA__: {
       props,
-      pathname,
+      page, // the rendered page
+      pathname, // the requested path
       query,
-      buildId: dev ? devBuildId : buildId,
-      buildStats,
+      buildId,
       assetPrefix,
+      runtimeConfig,
       nextExport,
       err: (err) ? serializeError(dev, err) : null
     },
@@ -125,57 +123,24 @@ async function doRender (req, res, pathname, query, {
   return '<!DOCTYPE html>' + renderToStaticMarkup(doc)
 }
 
-export async function renderScript (req, res, page, opts) {
-  try {
-    const dist = getConfig(opts.dir).distDir
-    const path = join(opts.dir, dist, 'bundles', 'pages', page)
-    const realPath = await resolvePath(path)
-    await serveStatic(req, res, realPath)
-  } catch (err) {
-    if (err.code === 'ENOENT') {
-      renderScriptError(req, res, page, err, {}, opts)
-      return
-    }
-
-    throw err
-  }
-}
-
-export async function renderScriptError (req, res, page, error, customFields, { dev }) {
+export async function renderScriptError (req, res, page, error) {
   // Asks CDNs and others to not to cache the errored page
   res.setHeader('Cache-Control', 'no-store, must-revalidate')
-  // prevent XSS attacks by filtering the page before printing it.
-  page = xssFilters.uriInSingleQuotedAttr(page)
-  res.setHeader('Content-Type', 'text/javascript')
 
   if (error.code === 'ENOENT') {
-    res.end(`
-      window.__NEXT_REGISTER_PAGE('${page}', function() {
-        var error = new Error('Page does not exist: ${page}')
-        error.statusCode = 404
-
-        return { error: error }
-      })
-    `)
+    res.statusCode = 404
+    res.end('404 - Not Found')
     return
   }
 
-  const errorJson = {
-    ...serializeError(dev, error),
-    ...customFields
-  }
-
-  res.end(`
-    window.__NEXT_REGISTER_PAGE('${page}', function() {
-      var error = ${JSON.stringify(errorJson)}
-      return { error: error }
-    })
-  `)
+  logger.error(error.stack)
+  res.statusCode = 500
+  res.end('500 - Internal Error')
 }
 
-export function sendHTML (req, res, html, method, { dev }) {
-  if (res.finished) return
-  const etag = generateETag(html)
+export function sendHTML (req, res, html, method, { dev, generateEtags }) {
+  if (isResSent(res)) return
+  const etag = generateEtags && generateETag(html)
 
   if (fresh(req.headers, { etag })) {
     res.statusCode = 304
@@ -189,14 +154,19 @@ export function sendHTML (req, res, html, method, { dev }) {
     res.setHeader('Cache-Control', 'no-store, must-revalidate')
   }
 
-  res.setHeader('ETag', etag)
-  res.setHeader('Content-Type', 'text/html')
+  if (etag) {
+    res.setHeader('ETag', etag)
+  }
+
+  if (!res.getHeader('Content-Type')) {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8')
+  }
   res.setHeader('Content-Length', Buffer.byteLength(html))
   res.end(method === 'HEAD' ? null : html)
 }
 
 export function sendJSON (res, obj, method) {
-  if (res.finished) return
+  if (isResSent(res)) return
 
   const json = JSON.stringify(obj)
   res.setHeader('Content-Type', 'application/json')
@@ -241,23 +211,29 @@ export function serveStatic (req, res, path) {
 }
 
 async function ensurePage (page, { dir, hotReloader }) {
-  if (!hotReloader) return
-  if (page === '_error' || page === '_document') return
+  if (page === '/_error') return
 
   await hotReloader.ensurePage(page)
 }
 
 function loadChunks ({ dev, dir, dist, availableChunks }) {
   const flushedChunks = flushChunks()
-  const validChunks = []
+  const response = {
+    names: [],
+    filenames: []
+  }
+
+  if (dev) {
+    availableChunks = getAvailableChunks(dir, dist)
+  }
 
   for (var chunk of flushedChunks) {
-    const filename = join(dir, dist, 'chunks', chunk)
-    const exists = dev ? existsSync(filename) : availableChunks[chunk]
-    if (exists) {
-      validChunks.push(chunk)
+    const filename = availableChunks[chunk]
+    if (filename) {
+      response.names.push(chunk)
+      response.filenames.push(filename)
     }
   }
 
-  return validChunks
+  return response
 }

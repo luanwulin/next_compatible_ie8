@@ -16,19 +16,19 @@ var _createClass2 = require("babel-runtime/helpers/createClass");
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var EventEmitter = function () {
   function EventEmitter() {
-    (0, _classCallCheck3["default"])(this, EventEmitter);
+    (0, _classCallCheck3.default)(this, EventEmitter);
     this.listeners = {};
   }
 
-  (0, _createClass3["default"])(EventEmitter, [{
+  (0, _createClass3.default)(EventEmitter, [{
     key: "on",
     value: function on(event, cb) {
       if (!this.listeners[event]) {
-        this.listeners[event] = new _set2["default"]();
+        this.listeners[event] = new _set2.default();
       }
 
       if (this.listeners[event].has(cb)) {
@@ -52,10 +52,10 @@ var EventEmitter = function () {
   }, {
     key: "off",
     value: function off(event, cb) {
-      this.listeners[event]["delete"](cb);
+      this.listeners[event].delete(cb);
     }
   }]);
   return EventEmitter;
 }();
 
-exports["default"] = EventEmitter;
+exports.default = EventEmitter;

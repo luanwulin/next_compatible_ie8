@@ -44,28 +44,28 @@ var _utils = require('./utils');
 
 var _router = require('./router');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = function (_Component) {
-  (0, _inherits3['default'])(App, _Component);
+  (0, _inherits3.default)(App, _Component);
 
   function App() {
     var _ref;
 
     var _temp, _this, _ret;
 
-    (0, _classCallCheck3['default'])(this, App);
+    (0, _classCallCheck3.default)(this, App);
 
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3['default'])(this, (_ref = App.__proto__ || (0, _getPrototypeOf2['default'])(App)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = App.__proto__ || (0, _getPrototypeOf2.default)(App)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       hasError: null
-    }, _temp), (0, _possibleConstructorReturn3['default'])(_this, _ret);
+    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
-  (0, _createClass3['default'])(App, [{
+  (0, _createClass3.default)(App, [{
     key: 'getChildContext',
     value: function getChildContext() {
       var headManager = this.props.headManager;
@@ -94,37 +94,34 @@ var App = function (_Component) {
           router = _props.router;
 
       var url = createUrl(router);
-
+      // If there no component exported we can't proceed.
+      // We'll tackle that here.
       if (typeof Component !== 'function') {
         throw new Error('The default export is not a React Component in page: "' + url.pathname + '"');
       }
       var containerProps = { Component: Component, props: props, hash: hash, router: router, url: url };
 
-      return _react2['default'].createElement(
-        'div',
-        null,
-        _react2['default'].createElement(Container, containerProps)
-      );
+      return _react2.default.createElement(Container, containerProps);
     }
   }]);
   return App;
 }(_react.Component);
 
 App.childContextTypes = {
-  headManager: _propTypes2['default'].object,
-  router: _propTypes2['default'].object
+  headManager: _propTypes2.default.object,
+  router: _propTypes2.default.object
 };
-exports['default'] = App;
+exports.default = App;
 
 var Container = function (_Component2) {
-  (0, _inherits3['default'])(Container, _Component2);
+  (0, _inherits3.default)(Container, _Component2);
 
   function Container() {
-    (0, _classCallCheck3['default'])(this, Container);
-    return (0, _possibleConstructorReturn3['default'])(this, (Container.__proto__ || (0, _getPrototypeOf2['default'])(Container)).apply(this, arguments));
+    (0, _classCallCheck3.default)(this, Container);
+    return (0, _possibleConstructorReturn3.default)(this, (Container.__proto__ || (0, _getPrototypeOf2.default)(Container)).apply(this, arguments));
   }
 
-  (0, _createClass3['default'])(Container, [{
+  (0, _createClass3.default)(Container, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.scrollToHash();
@@ -144,6 +141,8 @@ var Container = function (_Component2) {
       var el = document.getElementById(hash);
       if (!el) return;
 
+      // If we call scrollIntoView() in here without a setTimeout
+      // it won't scroll properly.
       setTimeout(function () {
         return el.scrollIntoView();
       }, 0);
@@ -151,7 +150,8 @@ var Container = function (_Component2) {
   }, {
     key: 'shouldComponentUpdate',
     value: function shouldComponentUpdate(nextProps) {
-      return !(0, _shallowEquals2['default'])(this.props, nextProps);
+      // need this check not to rerender component which has already thrown an error
+      return !(0, _shallowEquals2.default)(this.props, nextProps);
     }
   }, {
     key: 'render',
@@ -163,17 +163,21 @@ var Container = function (_Component2) {
 
 
       if (process.env.NODE_ENV === 'production') {
-        return _react2['default'].createElement(Component, (0, _extends3['default'])({}, props, { url: url }));
+        return _react2.default.createElement(Component, (0, _extends3.default)({}, props, { url: url }));
       } else {
-        var ErrorDebug = require('./error-debug')['default'];
+        var ErrorDebug = require('./error-debug').default;
 
         var _require = require('react-hot-loader'),
             AppContainer = _require.AppContainer;
 
-        return _react2['default'].createElement(
+        // includes AppContainer which bypasses shouldComponentUpdate method
+        // https://github.com/gaearon/react-hot-loader/issues/442
+
+
+        return _react2.default.createElement(
           AppContainer,
           { warnings: false, errorReporter: ErrorDebug },
-          _react2['default'].createElement(Component, (0, _extends3['default'])({}, props, { url: url }))
+          _react2.default.createElement(Component, (0, _extends3.default)({}, props, { url: url }))
         );
       }
     }
