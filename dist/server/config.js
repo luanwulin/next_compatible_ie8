@@ -32,6 +32,7 @@ var defaultConfig = {
   poweredByHeader: true,
   distDir: '.next',
   assetPrefix: '',
+  baseRoute: '',
   configOrigin: 'default',
   useFileSystemPublicRoutes: true
 };

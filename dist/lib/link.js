@@ -167,8 +167,10 @@ var Link = function (_Component) {
       var children = this.props.children;
       var href = this.href,
           as = this.as;
-      // Deprecated. Warning shown by propType check. If the childen provided is a string (<Link>example</Link>) we wrap it in an <a> tag
 
+      var baseRoute = NEXT_BASEROUTE;
+
+      // Deprecated. Warning shown by propType check. If the childen provided is a string (<Link>example</Link>) we wrap it in an <a> tag
       if (typeof children === 'string') {
         children = _react2.default.createElement(
           'a',
@@ -176,8 +178,6 @@ var Link = function (_Component) {
           children
         );
       }
-
-      var test = NEXT_BASEROUTE;
 
       // This will return the first child, if multiple are provided it will throw an error
       var child = _react.Children.only(children);
@@ -188,6 +188,10 @@ var Link = function (_Component) {
         // defined, we specify the current 'href', so that repetition is not needed by the user
       };if (this.props.passHref || child.type === 'a' && !('href' in child.props)) {
         props.href = as || href;
+      }
+
+      if (url && baseRoute) {
+        props.href = props.href.replace(baseRoute, '');
       }
 
       // Add the ending slash to the paths. So, we can serve the

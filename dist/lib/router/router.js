@@ -259,20 +259,26 @@ var Router = function () {
     key: 'change',
     value: function () {
       var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(method, _url, _as, options) {
-        var url, as, _parse, pathname, query, route, _options$shallow, shallow, routeInfo, _routeInfo, error, hash;
+        var baseRoute, url, as, _parse, pathname, query, route, _options$shallow, shallow, routeInfo, _routeInfo, error, hash;
 
         return _regenerator2.default.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
+                baseRoute = NEXT_BASEROUTE;
+
                 // If url and as provided as an object representation,
                 // we'll format them into the string version here.
+
                 url = (typeof _url === 'undefined' ? 'undefined' : (0, _typeof3.default)(_url)) === 'object' ? (0, _url2.format)(_url) : _url;
                 as = (typeof _as === 'undefined' ? 'undefined' : (0, _typeof3.default)(_as)) === 'object' ? (0, _url2.format)(_as) : _as;
 
+
+                if (url && baseRoute) {
+                  url = url.replace(this.config.baseRoute, '');
+                }
                 // Add the ending slash to the paths. So, we can serve the
                 // "<page>/index.html" directly for the SSR page.
-
                 if (__NEXT_DATA__.nextExport) {
                   as = (0, _._rewriteUrlForNextExport)(as);
                 }
@@ -284,7 +290,7 @@ var Router = function () {
                 // We should not proceed. We should only change the state.
 
                 if (!this.onlyAHashChange(as)) {
-                  _context3.next = 9;
+                  _context3.next = 11;
                   break;
                 }
 
@@ -292,7 +298,7 @@ var Router = function () {
                 this.scrollToHash(as);
                 return _context3.abrupt('return');
 
-              case 9:
+              case 11:
 
                 // If asked to change the current URL we should reload the current page
                 // (not location.reload() but reload getInitalProps and other Next.js stuffs)
@@ -314,32 +320,32 @@ var Router = function () {
                 // Because of this, getInitialProps would not run.
 
                 if (!(shallow && this.isShallowRoutingPossible(route))) {
-                  _context3.next = 18;
+                  _context3.next = 20;
                   break;
                 }
 
                 routeInfo = this.components[route];
-                _context3.next = 21;
+                _context3.next = 23;
                 break;
 
-              case 18:
-                _context3.next = 20;
+              case 20:
+                _context3.next = 22;
                 return this.getRouteInfo(route, pathname, query, as);
 
-              case 20:
+              case 22:
                 routeInfo = _context3.sent;
 
-              case 21:
+              case 23:
                 _routeInfo = routeInfo, error = _routeInfo.error;
 
                 if (!(error && error.cancelled)) {
-                  _context3.next = 24;
+                  _context3.next = 26;
                   break;
                 }
 
                 return _context3.abrupt('return', false);
 
-              case 24:
+              case 26:
 
                 this.events.emit('beforeHistoryChange', as);
                 this.changeState(method, url, as, options);
@@ -349,19 +355,19 @@ var Router = function () {
                 this.set(route, pathname, query, as, (0, _extends3.default)({}, routeInfo, { hash: hash }));
 
                 if (!error) {
-                  _context3.next = 31;
+                  _context3.next = 33;
                   break;
                 }
 
                 this.events.emit('routeChangeError', error, as);
                 throw error;
 
-              case 31:
+              case 33:
 
                 this.events.emit('routeChangeComplete', as);
                 return _context3.abrupt('return', true);
 
-              case 33:
+              case 35:
               case 'end':
                 return _context3.stop();
             }
