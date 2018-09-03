@@ -83,6 +83,10 @@ export default class Server {
   }
 
   handleRequest (req, res, parsedUrl) {
+    if (req && this.config.baseRoute) {
+      req.url = req.url.replace(this.config.baseRoute, '')
+    }
+
     // Parse url if parsedUrl not provided
     if (!parsedUrl || typeof parsedUrl !== 'object') {
       parsedUrl = parseUrl(req.url, true)

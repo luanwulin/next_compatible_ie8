@@ -159,6 +159,10 @@ var Server = function () {
     value: function handleRequest(req, res, parsedUrl) {
       var _this = this;
 
+      if (req && this.config.baseRoute) {
+        req.url = req.url.replace(this.config.baseRoute, '');
+      }
+
       // Parse url if parsedUrl not provided
       if (!parsedUrl || (typeof parsedUrl === 'undefined' ? 'undefined' : (0, _typeof3.default)(parsedUrl)) !== 'object') {
         parsedUrl = (0, _url.parse)(req.url, true);
