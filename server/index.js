@@ -322,7 +322,12 @@ export default class Server {
       }
     }
 
-    this.resourceMap = this.resourceMap ? this.resourceMap : this.readResource()
+    if (this.dev) {
+      this.resourceMap = this.readResource()
+    } else {
+      this.resourceMap = this.resourceMap ? this.resourceMap : this.readResource()
+    }
+
     this.renderOpts.resourceMap = this.resourceMap
 
     try {

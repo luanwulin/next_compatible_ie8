@@ -937,7 +937,12 @@ var Server = function () {
 
               case 7:
 
-                this.resourceMap = this.resourceMap ? this.resourceMap : this.readResource();
+                if (this.dev) {
+                  this.resourceMap = this.readResource();
+                } else {
+                  this.resourceMap = this.resourceMap ? this.resourceMap : this.readResource();
+                }
+
                 this.renderOpts.resourceMap = this.resourceMap;
 
                 _context18.prev = 9;
