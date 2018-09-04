@@ -24,7 +24,8 @@ const {
     query,
     buildId,
     chunks,
-    assetPrefix
+    assetPrefix,
+    resourceMap
   },
   location
 } = window

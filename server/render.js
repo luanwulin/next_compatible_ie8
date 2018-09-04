@@ -112,7 +112,6 @@ async function doRender (req, res, pathname, query, {
       pathname,
       query,
       buildId: dev ? devBuildId : buildId,
-      resourceMap,
       buildStats,
       assetPrefix,
       nextExport,
