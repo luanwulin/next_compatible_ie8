@@ -21,7 +21,7 @@ export default class GernerateResource {
                 // 页面名
                 const rule = /^bundles[/\\]pages[/\\].*[/\\]index\.js$/
                 if (rule.test(item)) {
-                    item = item.replace(/[/\\]index\.js$/, `.js`)
+                    item = item.replace(/^bundles[/\\]pages[/\\](.*)[/\\]index\.js$/, `$1.js`)
                 }
 
                 const pageName = item
