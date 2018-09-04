@@ -134,7 +134,6 @@ var Server = function () {
     }
     this.buildStats = !dev ? require((0, _path.join)(this.dir, this.dist, 'build-stats.json')) : null;
     this.buildId = !dev ? this.readBuildId() : '-';
-    this.resourceMap = this.readResource();
     this.renderOpts = {
       dev: dev,
       staticMarkup: staticMarkup,
@@ -142,7 +141,6 @@ var Server = function () {
       hotReloader: this.hotReloader,
       buildStats: this.buildStats,
       buildId: this.buildId,
-      resourceMap: this.resourceMap,
       assetPrefix: this.config.assetPrefix.replace(/\/$/, ''),
       availableChunks: dev ? {} : (0, _utils.getAvailableChunks)(this.dir, this.dist)
     };
@@ -938,36 +936,40 @@ var Server = function () {
                 return _context18.abrupt('return', this.renderErrorToHTML(compilationErr, req, res, pathname, query));
 
               case 7:
-                _context18.prev = 7;
-                _context18.next = 10;
+
+                this.resourceMap = this.resourceMap ? this.resourceMap : this.readResource();
+                this.renderOpts.resourceMap = this.resourceMap;
+
+                _context18.prev = 9;
+                _context18.next = 12;
                 return (0, _render.renderToHTML)(req, res, pathname, query, this.renderOpts);
 
-              case 10:
+              case 12:
                 return _context18.abrupt('return', _context18.sent);
 
-              case 13:
-                _context18.prev = 13;
-                _context18.t0 = _context18['catch'](7);
+              case 15:
+                _context18.prev = 15;
+                _context18.t0 = _context18['catch'](9);
 
                 if (!(_context18.t0.code === 'ENOENT')) {
-                  _context18.next = 20;
+                  _context18.next = 22;
                   break;
                 }
 
                 res.statusCode = 404;
                 return _context18.abrupt('return', this.renderErrorToHTML(null, req, res, pathname, query));
 
-              case 20:
+              case 22:
                 if (!this.quiet) console.error(_context18.t0);
                 res.statusCode = 500;
                 return _context18.abrupt('return', this.renderErrorToHTML(_context18.t0, req, res, pathname, query));
 
-              case 23:
+              case 25:
               case 'end':
                 return _context18.stop();
             }
           }
-        }, _callee18, this, [[7, 13]]);
+        }, _callee18, this, [[9, 15]]);
       }));
 
       function renderToHTML(_x49, _x50, _x51, _x52) {
@@ -1208,8 +1210,12 @@ var Server = function () {
     key: 'readResource',
     value: function readResource() {
       var resourceMapPath = (0, _path.join)(this.dir, this.dist, 'resource/resource.map.json');
-      var resourceMap = _fs2.default.readFileSync(resourceMapPath, 'utf8');
-      return resourceMap.trim();
+
+      try {
+        return _fs2.default.readFileSync(resourceMapPath, 'utf8');
+      } catch (e) {
+        return '';
+      }
     }
   }, {
     key: 'handleBuildId',
