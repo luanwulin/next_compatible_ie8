@@ -134,7 +134,7 @@ var doRender = function () {
             Component = Component.default || Component;
             Document = Document.default || Document;
             asPath = req.url;
-            ctx = { err: err, req: req, res: res, pathname: pathname, query: query, asPath: asPath };
+            ctx = { err: err, req: req, res: res, pathname: pathname, query: query, asPath: asPath, assetPrefix: assetPrefix, resourceMap: resourceMap, buildId: buildId };
             _context3.next = 16;
             return (0, _utils.loadGetInitialProps)(Component, ctx);
 
@@ -172,20 +172,7 @@ var doRender = function () {
                 } else if (err) {
                   errorHtml = render(app);
                 } else {
-                  html = render((0, _react.createElement)(app, {
-                    __NEXT_DATA__: {
-                      props: props,
-                      pathname: pathname,
-                      query: query,
-                      buildId: dev ? devBuildId : buildId,
-                      buildStats: buildStats,
-                      assetPrefix: assetPrefix,
-                      nextExport: nextExport,
-                      err: err ? serializeError(dev, err) : null
-                    },
-                    dev: dev,
-                    dir: dir
-                  }));
+                  html = render(app);
                 }
               } finally {
                 head = _head2.default.rewind() || (0, _head.defaultHead)();
@@ -229,6 +216,7 @@ var doRender = function () {
                 pathname: pathname,
                 query: query,
                 buildId: dev ? devBuildId : buildId,
+                resourceMap: resourceMap,
                 buildStats: buildStats,
                 assetPrefix: assetPrefix,
                 nextExport: nextExport,

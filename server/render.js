@@ -61,7 +61,7 @@ async function doRender (req, res, pathname, query, {
   Component = Component.default || Component
   Document = Document.default || Document
   const asPath = req.url
-  const ctx = { err, req, res, pathname, query, asPath }
+  const ctx = { err, req, res, pathname, query, asPath, assetPrefix, resourceMap, buildId }
   const props = await loadGetInitialProps(Component, ctx)
 
   // the response might be finshed on the getinitialprops call
@@ -86,20 +86,7 @@ async function doRender (req, res, pathname, query, {
       } else if (err) {
         errorHtml = render(app)
       } else {
-        html = render(createElement(app, {
-            __NEXT_DATA__: {
-                props,
-                pathname,
-                query,
-                buildId: dev ? devBuildId : buildId,
-                buildStats,
-                assetPrefix,
-                nextExport,
-                err: (err) ? serializeError(dev, err) : null
-            },
-            dev,
-            dir
-        }))
+        html = render(app)
       }
     } finally {
       head = Head.rewind() || defaultHead()
@@ -125,6 +112,7 @@ async function doRender (req, res, pathname, query, {
       pathname,
       query,
       buildId: dev ? devBuildId : buildId,
+      resourceMap,
       buildStats,
       assetPrefix,
       nextExport,
