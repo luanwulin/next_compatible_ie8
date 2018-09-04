@@ -134,6 +134,7 @@ var Server = function () {
     }
     this.buildStats = !dev ? require((0, _path.join)(this.dir, this.dist, 'build-stats.json')) : null;
     this.buildId = !dev ? this.readBuildId() : '-';
+    this.resourceMap = this.readResource();
     this.renderOpts = {
       dev: dev,
       staticMarkup: staticMarkup,
@@ -141,6 +142,7 @@ var Server = function () {
       hotReloader: this.hotReloader,
       buildStats: this.buildStats,
       buildId: this.buildId,
+      resourceMap: this.resourceMap,
       assetPrefix: this.config.assetPrefix.replace(/\/$/, ''),
       availableChunks: dev ? {} : (0, _utils.getAvailableChunks)(this.dir, this.dist)
     };
@@ -1201,6 +1203,13 @@ var Server = function () {
       var buildIdPath = (0, _path.join)(this.dir, this.dist, 'BUILD_ID');
       var buildId = _fs2.default.readFileSync(buildIdPath, 'utf8');
       return buildId.trim();
+    }
+  }, {
+    key: 'readResource',
+    value: function readResource() {
+      var resourceMapPath = (0, _path.join)(this.dir, this.dist, 'resource/resource.map.json');
+      var resourceMap = _fs2.default.readFileSync(resourceMapPath, 'utf8');
+      return resourceMap.trim();
     }
   }, {
     key: 'handleBuildId',
