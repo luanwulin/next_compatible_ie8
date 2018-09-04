@@ -172,7 +172,20 @@ var doRender = function () {
                 } else if (err) {
                   errorHtml = render(app);
                 } else {
-                  html = render(app);
+                  html = render((0, _react.createElement)(app, {
+                    __NEXT_DATA__: {
+                      props: props,
+                      pathname: pathname,
+                      query: query,
+                      buildId: dev ? devBuildId : buildId,
+                      buildStats: buildStats,
+                      assetPrefix: assetPrefix,
+                      nextExport: nextExport,
+                      err: err ? serializeError(dev, err) : null
+                    },
+                    dev: dev,
+                    dir: dir
+                  }));
                 }
               } finally {
                 head = _head2.default.rewind() || (0, _head.defaultHead)();
