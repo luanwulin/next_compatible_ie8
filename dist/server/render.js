@@ -216,7 +216,6 @@ var doRender = function () {
                 pathname: pathname,
                 query: query,
                 buildId: dev ? devBuildId : buildId,
-                resourceMap: resourceMap,
                 buildStats: buildStats,
                 assetPrefix: assetPrefix,
                 nextExport: nextExport,

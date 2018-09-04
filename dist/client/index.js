@@ -237,6 +237,7 @@ var _window = window,
     buildId = _window$__NEXT_DATA__.buildId,
     chunks = _window$__NEXT_DATA__.chunks,
     assetPrefix = _window$__NEXT_DATA__.assetPrefix,
+    resourceMap = _window$__NEXT_DATA__.resourceMap,
     location = _window.location;
 
 
