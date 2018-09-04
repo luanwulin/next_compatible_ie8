@@ -24,7 +24,7 @@ export default class GernerateResource {
           item = item.replace(/[/\\]index\.js$/, `.js`)
         }
 
-        item = item.replace(/bundles[/\\]pages[/\\]/, ``)
+        item = item.replace(/bundles[/\\]pages[/\\](.*)[/\\]?\.js/, `$1`)
 
         const pageName = item
 

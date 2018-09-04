@@ -51,7 +51,7 @@ var GernerateResource = function () {
             item = item.replace(/[/\\]index\.js$/, '.js');
           }
 
-          item = item.replace(/bundles[/\\]pages[/\\]/, '');
+          item = item.replace(/bundles[/\\]pages[/\\](.*)[/\\]?\.js/, '$1');
 
           var pageName = item;
 
