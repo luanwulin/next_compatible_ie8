@@ -63,7 +63,6 @@ export default class Server {
     }
     this.buildStats = !dev ? require(join(this.dir, this.dist, 'build-stats.json')) : null
     this.buildId = !dev ? this.readBuildId() : '-'
-    this.resourceMap = this.readResource()
     this.renderOpts = {
       dev,
       staticMarkup,
@@ -71,7 +70,6 @@ export default class Server {
       hotReloader: this.hotReloader,
       buildStats: this.buildStats,
       buildId: this.buildId,
-      resourceMap: this.resourceMap,
       assetPrefix: this.config.assetPrefix.replace(/\/$/, ''),
       availableChunks: dev ? {} : getAvailableChunks(this.dir, this.dist)
     }
@@ -324,6 +322,9 @@ export default class Server {
       }
     }
 
+    this.resourceMap = this.resourceMap ? this.resourceMap : this.readResource()
+    this.renderOpts.resourceMap = this.resourceMap
+
     try {
       return await renderToHTML(req, res, pathname, query, this.renderOpts)
     } catch (err) {
@@ -418,8 +419,12 @@ export default class Server {
 
   readResource () {
     const resourceMapPath = join(this.dir, this.dist, 'resource/resource.map.json')
-    const resourceMap = fs.readFileSync(resourceMapPath, 'utf8')
-    return resourceMap.trim()
+
+    try{
+        return fs.readFileSync(resourceMapPath, 'utf8')
+    } catch (e) {
+        return ('')
+    }
   }
 
   handleBuildId (buildId, res) {
