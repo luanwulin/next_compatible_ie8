@@ -86,7 +86,20 @@ async function doRender (req, res, pathname, query, {
       } else if (err) {
         errorHtml = render(app)
       } else {
-        html = render(app)
+        html = render(createElement(app, {
+            __NEXT_DATA__: {
+                props,
+                pathname,
+                query,
+                buildId: dev ? devBuildId : buildId,
+                buildStats,
+                assetPrefix,
+                nextExport,
+                err: (err) ? serializeError(dev, err) : null
+            },
+            dev,
+            dir
+        }))
       }
     } finally {
       head = Head.rewind() || defaultHead()
