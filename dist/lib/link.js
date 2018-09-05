@@ -94,10 +94,15 @@ var Link = function (_Component) {
       var href = this.href,
           as = this.as;
 
+      var baseRoute = NEXT_BASEROUTE;
 
       if (!isLocal(href)) {
         // ignore click if it's outside our scope
         return;
+      }
+
+      if (href && baseRoute) {
+        href = href.replace(baseRoute, '');
       }
 
       var pathname = window.location.pathname;
@@ -190,8 +195,10 @@ var Link = function (_Component) {
         props.href = as || href;
       }
 
-      if (url && baseRoute) {
-        props.href = props.href.replace(baseRoute, '');
+      if (props.href && baseRoute) {
+        var pathname = window.location.pathname;
+
+        props.href = (0, _url.resolve)(pathname, baseRoute, props.href);
       }
 
       // Add the ending slash to the paths. So, we can serve the
