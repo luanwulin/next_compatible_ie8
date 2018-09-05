@@ -2,7 +2,7 @@ import {mkdirp, writeJsonSync, removeSync} from 'fs-extra'
 import {extname, resolve, join} from 'path'
 
 export default class GernerateResource {
-  apply (compiler) {
+  apply(compiler) {
     // 数据处理 用于生成 webpackMap
     compiler.plugin('done', function (map) {
       const webpackMap = {},
@@ -46,24 +46,26 @@ export default class GernerateResource {
          * 根据资源类型，将其映射(map)到对应的数组中
          * @param assetsPath  资源路径
          */
-        function mapAsset(assetsPath) {
+        function mapAsset (assetsPath) {
           if (assetsPath) {
+            const truePath = (map.publicPath + assetsPath).replace(/([^\:])\/{2,}/g, '$1/')
+
             if (extname(assetsPath) === '.js') {
               // 绝对路径 = publicPath +  assetsPath
-              webpackMap[pageName].js.push(map.publicPath + assetsPath)
+              webpackMap[pageName].js.push(truePath)
             } else if (extname(assetsPath) === '.css') {
-              webpackMap[pageName].css.push(map.publicPath + assetsPath)
+              webpackMap[pageName].css.push(truePath)
             }
           }
         }
-      });
+      })
 
       mkdirp(destResourcePath);
 
       // webpackMap 写入 config.json
       writeJsonSync(
         join(destResourcePath, 'resource.map.json'),
-        webpackMap);
-    });
+        webpackMap)
+    })
   }
 }
