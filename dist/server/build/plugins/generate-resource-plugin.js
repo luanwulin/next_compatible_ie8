@@ -51,13 +51,11 @@ var GernerateResource = function () {
             item = item.replace(/[/\\]index\.js$/, '.js');
           }
 
-          item = item.replace(/bundles[/\\]pages[/\\](.*)[/\\]?\.js/, '$1');
+          var pageName = item.replace(/bundles[/\\]pages[/\\](.*)[/\\]?\.js/, '$1');
 
-          var pageName = item;
-
-          webpackMap[item] = {};
-          webpackMap[item].js = [];
-          webpackMap[item].css = [];
+          webpackMap[pageName] = {};
+          webpackMap[pageName].js = [];
+          webpackMap[pageName].css = [];
 
           // webpack资源 (映射) 处理
           [].concat(map.assetsByChunkName['manifest']).forEach(mapAsset);

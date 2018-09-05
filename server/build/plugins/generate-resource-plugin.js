@@ -24,13 +24,11 @@ export default class GernerateResource {
           item = item.replace(/[/\\]index\.js$/, `.js`)
         }
 
-        item = item.replace(/bundles[/\\]pages[/\\](.*)[/\\]?\.js/, `$1`)
+        const pageName = item.replace(/bundles[/\\]pages[/\\](.*)[/\\]?\.js/, `$1`)
 
-        const pageName = item
-
-        webpackMap[item] = {};
-        webpackMap[item].js = [];
-        webpackMap[item].css = [];
+        webpackMap[pageName] = {};
+        webpackMap[pageName].js = [];
+        webpackMap[pageName].css = [];
 
         // webpack资源 (映射) 处理
         [].concat(map.assetsByChunkName['manifest']).forEach(mapAsset);
@@ -52,9 +50,9 @@ export default class GernerateResource {
           if (assetsPath) {
             if (extname(assetsPath) === '.js') {
               // 绝对路径 = publicPath +  assetsPath
-              webpackMap[pageName].js.push(map.publicPath + assetsPath);
+              webpackMap[pageName].js.push(map.publicPath + assetsPath)
             } else if (extname(assetsPath) === '.css') {
-              webpackMap[pageName].css.push(map.publicPath + assetsPath);
+              webpackMap[pageName].css.push(map.publicPath + assetsPath)
             }
           }
         }
