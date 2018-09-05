@@ -24,7 +24,7 @@ export default class GernerateResource {
           item = item.replace(/[/\\]index\.js$/, `.js`)
         }
 
-        const pageName = item.replace(/bundles[/\\]pages[/\\](.*)[/\\]?\.js/, `$1`)
+        const pageName = item.replace(/bundles[/\\]pages([/\\].*)[/\\]?\.js/, `$1`)
 
         webpackMap[pageName] = {};
         webpackMap[pageName].js = [];

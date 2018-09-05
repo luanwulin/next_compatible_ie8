@@ -51,7 +51,7 @@ var GernerateResource = function () {
             item = item.replace(/[/\\]index\.js$/, '.js');
           }
 
-          var pageName = item.replace(/bundles[/\\]pages[/\\](.*)[/\\]?\.js/, '$1');
+          var pageName = item.replace(/bundles[/\\]pages([/\\].*)[/\\]?\.js/, '$1');
 
           webpackMap[pageName] = {};
           webpackMap[pageName].js = [];
