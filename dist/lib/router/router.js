@@ -275,7 +275,7 @@ var Router = function () {
 
 
                 if (as && baseRoute) {
-                  as = (0, _url2.resolve)(baseRoute, as);
+                  as = (baseRoute + as).replace(/([^\:])\/{2,}/g, '$1/');
                 }
                 // Add the ending slash to the paths. So, we can serve the
                 // "<page>/index.html" directly for the SSR page.

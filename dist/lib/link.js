@@ -109,6 +109,7 @@ var Link = function (_Component) {
 
       href = (0, _url.resolve)(pathname, href);
       as = as ? (0, _url.resolve)(pathname, as) : href;
+      as = baseRoute ? (baseRoute + as).replace(/([^\:])\/{2,}/g, '$1/') : as;
 
       e.preventDefault();
 
@@ -196,9 +197,7 @@ var Link = function (_Component) {
       }
 
       if (props.href && baseRoute) {
-        var pathname = window.location.pathname;
-
-        props.href = (0, _url.resolve)(pathname, baseRoute, props.href);
+        props.href = (baseRoute + props.href).replace(/([^\:])\/{2,}/g, '$1/');
       }
 
       // Add the ending slash to the paths. So, we can serve the
