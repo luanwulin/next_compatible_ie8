@@ -155,7 +155,7 @@ var doRender = function () {
             // fetch props if ErrorComponent was replaced with a page component by HMR
             _router = router, _pathname = _router.pathname, _query = _router.query, _asPath = _router.asPath;
             _context4.next = 4;
-            return (0, _utils.loadGetInitialProps)(Component, { err: err, pathname: _pathname, query: _query, asPath: _asPath });
+            return (0, _utils.loadGetInitialProps)(Component, { err: err, pathname: _pathname, query: _query, asPath: _asPath, assetPrefix: assetPrefix, resourceMap: resourceMap, buildId: buildId });
 
           case 4:
             props = _context4.sent;

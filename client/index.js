@@ -139,7 +139,7 @@ async function doRender ({ Component, props, hash, err, emitter: emitterProp = e
     lastAppProps.Component === ErrorComponent) {
     // fetch props if ErrorComponent was replaced with a page component by HMR
     const { pathname, query, asPath } = router
-    props = await loadGetInitialProps(Component, { err, pathname, query, asPath })
+    props = await loadGetInitialProps(Component, {err, pathname, query, asPath, assetPrefix, resourceMap, buildId})
   }
 
   Component = Component || lastAppProps.Component
