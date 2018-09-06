@@ -1,46 +1,45 @@
 import {mkdirp, writeJsonSync, removeSync} from 'fs-extra'
 import {extname, resolve, join} from 'path'
 
+import {
+  IS_BUNDLED_PAGE,
+  MATCH_ROUTE_NAME
+} from '../../utils'
+
 export default class GernerateResource {
   apply(compiler) {
     // 数据处理 用于生成 webpackMap
-    compiler.plugin('done', function (map) {
-      const webpackMap = {},
-        destPath = map.compilation.options.output.path,
-        destResourcePath = join(destPath, 'resource');
+    compiler.plugin('after-compile', function (compilation, callback) {
+      const pages = compilation
+        .chunks
+        .filter(chunk => IS_BUNDLED_PAGE.test(chunk.name))
 
-      // 调用 webpack map toJson 生成 jsonMap
-      map = map.toJson();
+      const webpackMap = {}
+      const destPath = compilation.options.output.path
+      const destResourcePath = join(destPath, 'resource')
 
-      Object.keys(map.entrypoints).forEach(function (item) {
+      pages.forEach((chunk) => {
+        let name = chunk.name
+
         // 如果入口路径不包含 / 则不输出 例如 入口  name == 'project'
-        if (item.indexOf('/') < 0) {
-          return;
+        if (name.indexOf('/') < 0) {
+          return
         }
 
         // 页面名
         const rule = /^bundles[/\\]pages[/\\].*[/\\]index\.js$/
-        if (rule.test(item)) {
-          item = item.replace(/[/\\]index\.js$/, `.js`)
+        if (rule.test(name)) {
+          name = name.replace(/[/\\]index\.js$/, `.js`)
         }
 
-        const pageName = item.replace(/bundles[/\\]pages[/\\](.*)[/\\]?\.js/, `$1`)
+        const pageName = name.replace(/bundles[/\\]pages[/\\](.*)[/\\]?\.js/, `$1`)
 
         webpackMap[pageName] = {};
         webpackMap[pageName].js = [];
         webpackMap[pageName].css = [];
 
-        // webpack资源 (映射) 处理
-        [].concat(map.assetsByChunkName['manifest']).forEach(mapAsset);
-
-        // 公共资源 (映射) 处理
-        [].concat(map.assetsByChunkName['common']).forEach(mapAsset);
-
-        // 项目公共资源 (映射) 处理
-        [].concat(map.assetsByChunkName['main']).forEach(mapAsset);
-
         // 页面级别资源 (映射) 处理
-        [].concat(map.assetsByChunkName[item]).forEach(mapAsset);
+        [].concat(chunk.files).forEach(mapAsset)
 
         /**
          * 根据资源类型，将其映射(map)到对应的数组中
@@ -48,7 +47,7 @@ export default class GernerateResource {
          */
         function mapAsset (assetsPath) {
           if (assetsPath) {
-            const truePath = (map.publicPath + assetsPath).replace(/([^\:])\/{2,}/g, '$1/')
+            const truePath = (compilation.options.output.publicPath + assetsPath).replace(/([^\:])\/{2,}/g, '$1/')
 
             if (extname(assetsPath) === '.js') {
               // 绝对路径 = publicPath +  assetsPath
@@ -58,14 +57,16 @@ export default class GernerateResource {
             }
           }
         }
+
+        const newContent = JSON.stringify(webpackMap)
+        // Replace the exisiting chunk with the new content
+        compilation.assets[join(destResourcePath, 'resource.map.json')] = {
+          source: () => newContent,
+          size: () => newContent.length
+        }
       })
 
-      mkdirp(destResourcePath);
-
-      // webpackMap 写入 config.json
-      writeJsonSync(
-        join(destResourcePath, 'resource.map.json'),
-        webpackMap)
+      callback()
     })
   }
 }

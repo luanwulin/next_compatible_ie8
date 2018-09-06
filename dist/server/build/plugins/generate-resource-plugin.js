@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _keys = require('babel-runtime/core-js/object/keys');
+var _stringify = require('babel-runtime/core-js/json/stringify');
 
-var _keys2 = _interopRequireDefault(_keys);
+var _stringify2 = _interopRequireDefault(_stringify);
 
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
@@ -20,6 +20,8 @@ var _fsExtra = require('fs-extra');
 
 var _path = require('path');
 
+var _utils = require('../../utils');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var GernerateResource = function () {
@@ -31,43 +33,37 @@ var GernerateResource = function () {
     key: 'apply',
     value: function apply(compiler) {
       // 数据处理 用于生成 webpackMap
-      compiler.plugin('done', function (map) {
-        var webpackMap = {},
-            destPath = map.compilation.options.output.path,
-            destResourcePath = (0, _path.join)(destPath, 'resource');
+      compiler.plugin('after-compile', function (compilation, callback) {
+        var pages = compilation.chunks.filter(function (chunk) {
+          return _utils.IS_BUNDLED_PAGE.test(chunk.name);
+        });
 
-        // 调用 webpack map toJson 生成 jsonMap
-        map = map.toJson();
+        var webpackMap = {};
+        var destPath = compilation.options.output.path;
+        var destResourcePath = (0, _path.join)(destPath, 'resource');
 
-        (0, _keys2.default)(map.entrypoints).forEach(function (item) {
+        pages.forEach(function (chunk) {
+          var name = chunk.name;
+
           // 如果入口路径不包含 / 则不输出 例如 入口  name == 'project'
-          if (item.indexOf('/') < 0) {
+          if (name.indexOf('/') < 0) {
             return;
           }
 
           // 页面名
           var rule = /^bundles[/\\]pages[/\\].*[/\\]index\.js$/;
-          if (rule.test(item)) {
-            item = item.replace(/[/\\]index\.js$/, '.js');
+          if (rule.test(name)) {
+            name = name.replace(/[/\\]index\.js$/, '.js');
           }
 
-          var pageName = item.replace(/bundles[/\\]pages[/\\](.*)[/\\]?\.js/, '$1');
+          var pageName = name.replace(/bundles[/\\]pages[/\\](.*)[/\\]?\.js/, '$1');
 
           webpackMap[pageName] = {};
           webpackMap[pageName].js = [];
           webpackMap[pageName].css = [];
 
-          // webpack资源 (映射) 处理
-          [].concat(map.assetsByChunkName['manifest']).forEach(mapAsset);
-
-          // 公共资源 (映射) 处理
-          [].concat(map.assetsByChunkName['common']).forEach(mapAsset);
-
-          // 项目公共资源 (映射) 处理
-          [].concat(map.assetsByChunkName['main']).forEach(mapAsset);
-
           // 页面级别资源 (映射) 处理
-          [].concat(map.assetsByChunkName[item]).forEach(mapAsset);
+          [].concat(chunk.files).forEach(mapAsset);
 
           /**
            * 根据资源类型，将其映射(map)到对应的数组中
@@ -75,7 +71,7 @@ var GernerateResource = function () {
            */
           function mapAsset(assetsPath) {
             if (assetsPath) {
-              var truePath = (map.publicPath + assetsPath).replace(/([^\:])\/{2,}/g, '$1/');
+              var truePath = (compilation.options.output.publicPath + assetsPath).replace(/([^\:])\/{2,}/g, '$1/');
 
               if ((0, _path.extname)(assetsPath) === '.js') {
                 // 绝对路径 = publicPath +  assetsPath
@@ -85,12 +81,20 @@ var GernerateResource = function () {
               }
             }
           }
+
+          var newContent = (0, _stringify2.default)(webpackMap);
+          // Replace the exisiting chunk with the new content
+          compilation.assets[(0, _path.join)(destResourcePath, 'resource.map.json')] = {
+            source: function source() {
+              return newContent;
+            },
+            size: function size() {
+              return newContent.length;
+            }
+          };
         });
 
-        (0, _fsExtra.mkdirp)(destResourcePath);
-
-        // webpackMap 写入 config.json
-        (0, _fsExtra.writeJsonSync)((0, _path.join)(destResourcePath, 'resource.map.json'), webpackMap);
+        callback();
       });
     }
   }]);
