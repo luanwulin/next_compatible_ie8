@@ -58,6 +58,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /* global __NEXT_DATA__ */
 
+var _window = window,
+    _window$__NEXT_DATA__ = _window.__NEXT_DATA__,
+    buildId = _window$__NEXT_DATA__.buildId,
+    assetPrefix = _window$__NEXT_DATA__.assetPrefix,
+    resourceMap = _window$__NEXT_DATA__.resourceMap;
+
 var Router = function () {
   function Router(pathname, query, as) {
     var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
@@ -421,7 +427,7 @@ var Router = function () {
 
               case 8:
                 _routeInfo2 = routeInfo, Component = _routeInfo2.Component;
-                ctx = { pathname: pathname, query: query, asPath: as };
+                ctx = { pathname: pathname, query: query, asPath: as, assetPrefix: assetPrefix, resourceMap: resourceMap, buildId: buildId };
                 _context4.next = 12;
                 return this.getInitialProps(Component, ctx);
 
@@ -468,7 +474,7 @@ var Router = function () {
                 _Component = this.ErrorComponent;
 
                 routeInfo = { Component: _Component, err: _context4.t1 };
-                _ctx = { err: _context4.t1, pathname: pathname, query: query };
+                _ctx = { err: _context4.t1, pathname: pathname, query: query, assetPrefix: assetPrefix, resourceMap: resourceMap, buildId: buildId };
                 _context4.next = 30;
                 return this.getInitialProps(_Component, _ctx);
 
