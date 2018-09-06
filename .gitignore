@@ -21,3 +21,11 @@ test/**/out
 .idea
 .idea/**/*
 .idea/**
+
+bench
+client
+lib
+pages
+server
+test
+*.yml
