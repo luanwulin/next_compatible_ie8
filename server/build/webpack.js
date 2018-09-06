@@ -9,7 +9,6 @@ import UnlinkFilePlugin from './plugins/unlink-file-plugin'
 import PagesPlugin from './plugins/pages-plugin'
 import DynamicChunksPlugin from './plugins/dynamic-chunks-plugin'
 import CombineAssetsPlugin from './plugins/combine-assets-plugin'
-import GernerateResourcePlugin from './plugins/generate-resource-plugin'
 import getConfig from '../config'
 import * as babelCore from 'babel-core'
 import findBabelConfig from './babel/find-config'
@@ -132,8 +131,7 @@ export default async function createCompiler (dir, { buildId, dev = false, quiet
     }),
     new PagesPlugin(),
     new DynamicChunksPlugin(),
-    new CaseSensitivePathPlugin(),
-    new GernerateResourcePlugin()
+    new CaseSensitivePathPlugin()
   ]
 
   if (dev) {

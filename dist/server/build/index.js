@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _keys = require('babel-runtime/core-js/object/keys');
+
+var _keys2 = _interopRequireDefault(_keys);
+
 var _stringify = require('babel-runtime/core-js/json/stringify');
 
 var _stringify2 = _interopRequireDefault(_stringify);
@@ -107,6 +111,8 @@ var _promise3 = require('md5-file/promise');
 
 var _promise4 = _interopRequireDefault(_promise3);
 
+var _fsExtra = require('fs-extra');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function () {
@@ -138,31 +144,32 @@ exports.default = function () {
             return writeBuildId(buildDir, buildId);
 
           case 13:
-            _context.next = 19;
+            writeResourceMap(buildDir, stats);
+            _context.next = 20;
             break;
 
-          case 15:
-            _context.prev = 15;
+          case 16:
+            _context.prev = 16;
             _context.t0 = _context['catch'](5);
 
             console.error('> Failed to build on ' + buildDir);
             throw _context.t0;
 
-          case 19:
-            _context.next = 21;
+          case 20:
+            _context.next = 22;
             return (0, _replace2.default)(dir, buildDir);
 
-          case 21:
+          case 22:
 
             // no need to wait
             (0, _del2.default)(buildDir, { force: true });
 
-          case 22:
+          case 23:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, this, [[5, 15]]);
+    }, _callee, this, [[5, 16]]);
   }));
 
   function build(_x2) {
@@ -189,4 +196,66 @@ function runCompiler(compiler) {
       resolve(jsonStats);
     });
   });
+}
+
+function writeResourceMap(dir, stats) {
+  var webpackMap = {};
+  var destPath = (0, _path.join)(dir, '.next');
+  var destResourcePath = (0, _path.join)(destPath, 'resource');
+
+  // 调用 webpack map toJson 生成 jsonMap
+  var map = stats.toJson();
+
+  (0, _keys2.default)(map.entrypoints).forEach(function (item) {
+    // 如果入口路径不包含 / 则不输出 例如 入口  name == 'project'
+    if (item.indexOf('/') < 0) {
+      return '';
+    }
+
+    // 页面名
+    var rule = /^bundles[/\\]pages[/\\].*[/\\]index\.js$/;
+    if (rule.test(item)) {
+      item = item.replace(/[/\\]index\.js$/, '.js');
+    }
+
+    var pageName = item.replace(/bundles[/\\]pages[/\\](.*)[/\\]?\.js/, '$1');
+
+    webpackMap[pageName] = {};
+    webpackMap[pageName].js = [];
+    webpackMap[pageName].css = [];
+
+    // webpack资源 (映射) 处理
+    [].concat(map.assetsByChunkName['manifest']).forEach(mapAsset);
+
+    // 公共资源 (映射) 处理
+    [].concat(map.assetsByChunkName['common']).forEach(mapAsset);
+
+    // 项目公共资源 (映射) 处理
+    [].concat(map.assetsByChunkName['main']).forEach(mapAsset);
+
+    // 页面级别资源 (映射) 处理
+    [].concat(map.assetsByChunkName[item]).forEach(mapAsset);
+
+    /**
+     * 根据资源类型，将其映射(map)到对应的数组中
+     * @param assetsPath  资源路径
+     */
+    function mapAsset(assetsPath) {
+      if (assetsPath) {
+        var truePath = (map.publicPath + assetsPath).replace(/([^\:])\/{2,}/g, '$1/');
+
+        if ((0, _path.extname)(assetsPath) === '.js') {
+          // 绝对路径 = publicPath +  assetsPath
+          webpackMap[pageName].js.push(truePath);
+        } else if ((0, _path.extname)(assetsPath) === '.css') {
+          webpackMap[pageName].css.push(truePath);
+        }
+      }
+    }
+  });
+
+  (0, _fsExtra.mkdirp)(destResourcePath);
+
+  // webpackMap 写入 config.json
+  (0, _fsExtra.writeJsonSync)((0, _path.join)(destResourcePath, 'resource.map.json'), webpackMap);
 }

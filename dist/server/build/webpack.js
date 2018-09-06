@@ -72,10 +72,6 @@ var _combineAssetsPlugin = require('./plugins/combine-assets-plugin');
 
 var _combineAssetsPlugin2 = _interopRequireDefault(_combineAssetsPlugin);
 
-var _generateResourcePlugin = require('./plugins/generate-resource-plugin');
-
-var _generateResourcePlugin2 = _interopRequireDefault(_generateResourcePlugin);
-
 var _config = require('../config');
 
 var _config2 = _interopRequireDefault(_config);
@@ -367,7 +363,7 @@ exports.default = function () {
             }), new _webpack2.default.DefinePlugin({
               'process.env.NODE_ENV': (0, _stringify2.default)(dev ? 'development' : 'production'),
               'NEXT_BASEROUTE': (0, _stringify2.default)(config.baseRoute)
-            }), new _pagesPlugin2.default(), new _dynamicChunksPlugin2.default(), new _caseSensitivePathsWebpackPlugin2.default(), new _generateResourcePlugin2.default()];
+            }), new _pagesPlugin2.default(), new _dynamicChunksPlugin2.default(), new _caseSensitivePathsWebpackPlugin2.default()];
 
 
             if (dev) {
