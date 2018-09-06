@@ -58,12 +58,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /* global __NEXT_DATA__ */
 
-var _window = window,
-    _window$__NEXT_DATA__ = _window.__NEXT_DATA__,
-    buildId = _window$__NEXT_DATA__.buildId,
-    assetPrefix = _window$__NEXT_DATA__.assetPrefix,
-    resourceMap = _window$__NEXT_DATA__.resourceMap;
-
 var Router = function () {
   function Router(pathname, query, as) {
     var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
@@ -400,59 +394,60 @@ var Router = function () {
     key: 'getRouteInfo',
     value: function () {
       var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(route, pathname, query, as) {
-        var routeInfo, _routeInfo2, Component, ctx, _Component, _ctx;
+        var routeInfo, _window, _window$__NEXT_DATA__, buildId, assetPrefix, resourceMap, _routeInfo2, Component, ctx, _Component, _ctx;
 
         return _regenerator2.default.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
                 routeInfo = null;
-                _context4.prev = 1;
+                _window = window, _window$__NEXT_DATA__ = _window.__NEXT_DATA__, buildId = _window$__NEXT_DATA__.buildId, assetPrefix = _window$__NEXT_DATA__.assetPrefix, resourceMap = _window$__NEXT_DATA__.resourceMap;
+                _context4.prev = 2;
 
                 routeInfo = this.components[route];
 
                 if (routeInfo) {
-                  _context4.next = 8;
+                  _context4.next = 9;
                   break;
                 }
 
-                _context4.next = 6;
+                _context4.next = 7;
                 return this.fetchComponent(route, as);
 
-              case 6:
+              case 7:
                 _context4.t0 = _context4.sent;
                 routeInfo = {
                   Component: _context4.t0
                 };
 
-              case 8:
+              case 9:
                 _routeInfo2 = routeInfo, Component = _routeInfo2.Component;
                 ctx = { pathname: pathname, query: query, asPath: as, assetPrefix: assetPrefix, resourceMap: resourceMap, buildId: buildId };
-                _context4.next = 12;
+                _context4.next = 13;
                 return this.getInitialProps(Component, ctx);
 
-              case 12:
+              case 13:
                 routeInfo.props = _context4.sent;
 
 
                 this.components[route] = routeInfo;
-                _context4.next = 32;
+                _context4.next = 33;
                 break;
 
-              case 16:
-                _context4.prev = 16;
-                _context4.t1 = _context4['catch'](1);
+              case 17:
+                _context4.prev = 17;
+                _context4.t1 = _context4['catch'](2);
 
                 if (!_context4.t1.cancelled) {
-                  _context4.next = 20;
+                  _context4.next = 21;
                   break;
                 }
 
                 return _context4.abrupt('return', { error: _context4.t1 });
 
-              case 20:
+              case 21:
                 if (!_context4.t1.buildIdMismatched) {
-                  _context4.next = 24;
+                  _context4.next = 25;
                   break;
                 }
 
@@ -463,7 +458,7 @@ var Router = function () {
                 _context4.t1.cancelled = true;
                 return _context4.abrupt('return', { error: _context4.t1 });
 
-              case 24:
+              case 25:
 
                 if (_context4.t1.statusCode === 404) {
                   // Indicate main error display logic to
@@ -475,24 +470,24 @@ var Router = function () {
 
                 routeInfo = { Component: _Component, err: _context4.t1 };
                 _ctx = { err: _context4.t1, pathname: pathname, query: query, assetPrefix: assetPrefix, resourceMap: resourceMap, buildId: buildId };
-                _context4.next = 30;
+                _context4.next = 31;
                 return this.getInitialProps(_Component, _ctx);
 
-              case 30:
+              case 31:
                 routeInfo.props = _context4.sent;
 
 
                 routeInfo.error = _context4.t1;
 
-              case 32:
+              case 33:
                 return _context4.abrupt('return', routeInfo);
 
-              case 33:
+              case 34:
               case 'end':
                 return _context4.stop();
             }
           }
-        }, _callee4, this, [[1, 16]]);
+        }, _callee4, this, [[2, 17]]);
       }));
 
       function getRouteInfo(_x13, _x14, _x15, _x16) {
