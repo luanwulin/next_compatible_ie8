@@ -392,7 +392,10 @@ exports.default = function () {
             });
             mainBabelOptions = {
               cacheDirectory: true,
-              presets: []
+              presets: [],
+              plugins: [['transform-define', {
+                'NEXT_BASEROUTE': (0, _stringify2.default)(config.baseRoute)
+              }]]
             };
             externalBabelConfig = (0, _findConfig2.default)(dir);
 

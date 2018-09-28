@@ -166,7 +166,12 @@ export default async function createCompiler (dir, { buildId, dev = false, quiet
 
   const mainBabelOptions = {
     cacheDirectory: true,
-    presets: []
+    presets: [],
+    plugins: [
+      ['transform-define', {
+        'NEXT_BASEROUTE': JSON.stringify(config.baseRoute)
+      }]
+    ]
   }
 
   const externalBabelConfig = findBabelConfig(dir)
