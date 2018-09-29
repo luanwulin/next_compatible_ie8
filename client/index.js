@@ -50,6 +50,8 @@ const headManager = new HeadManager()
 const appContainer = document.getElementById('__next')
 const errorContainer = document.getElementById('__next-error')
 
+const baseRoute = NEXT_BASEROUTE
+
 let lastAppProps
 export let router
 export let ErrorComponent
@@ -76,7 +78,7 @@ export default async ({ ErrorDebugComponent: passedDebugComponent, stripAnsi: pa
     Component = ErrorComponent
   }
 
-  router = createRouter(pathname, query, asPath, {
+  router = createRouter(pathname, query, asPath, baseRoute, {
     pageLoader,
     Component,
     ErrorComponent,
