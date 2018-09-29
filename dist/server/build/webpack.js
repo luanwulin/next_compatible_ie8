@@ -513,7 +513,10 @@ exports.default = function () {
               options: {
                 babelrc: false,
                 cacheDirectory: true,
-                presets: [require.resolve('./babel/preset')]
+                presets: [require.resolve('./babel/preset')],
+                plugins: [['transform-define', {
+                  'NEXT_BASEROUTE': (0, _stringify2.default)(config.baseRoute)
+                }]]
               }
             }, {
               test: /\.js(\?[^?]*)?$/,
