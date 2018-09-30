@@ -45,10 +45,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var route = (0, _pathMatch2.default)();
 
 var Router = function () {
-  function Router() {
+  function Router(conf) {
     (0, _classCallCheck3.default)(this, Router);
 
     this.routes = new _map2.default();
+    this.baseRoute = conf.baseRoute;
   }
 
   (0, _createClass3.default)(Router, [{
@@ -67,6 +68,8 @@ var Router = function () {
       if (!routes) return;
 
       var pathname = parsedUrl.pathname;
+
+      pathname = pathname.replace(this.baseRoute, '');
 
       var _loop = function _loop(r) {
         var params = r.match(pathname);

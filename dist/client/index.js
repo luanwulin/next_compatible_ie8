@@ -267,6 +267,8 @@ var headManager = new _headManager2.default();
 var appContainer = document.getElementById('__next');
 var errorContainer = document.getElementById('__next-error');
 
+var baseRoute = NEXT_BASEROUTE;
+
 var lastAppProps = void 0;
 var router = exports.router = void 0;
 var ErrorComponent = exports.ErrorComponent = void 0;
@@ -372,7 +374,7 @@ exports.default = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.de
 
         case 41:
 
-          exports.router = router = (0, _router2.createRouter)(pathname, query, asPath, {
+          exports.router = router = (0, _router2.createRouter)(pathname, query, asPath, baseRoute, {
             pageLoader: pageLoader,
             Component: Component,
             ErrorComponent: ErrorComponent,

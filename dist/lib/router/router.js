@@ -59,8 +59,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* global __NEXT_DATA__ */
 
 var Router = function () {
-  function Router(pathname, query, as) {
-    var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
+  function Router(pathname, query, as, baseRoute) {
+    var _ref = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {},
         pageLoader = _ref.pageLoader,
         Component = _ref.Component,
         ErrorComponent = _ref.ErrorComponent,
@@ -89,6 +89,7 @@ var Router = function () {
     this.pathname = pathname;
     this.query = query;
     this.asPath = as;
+    this.baseRoute = baseRoute;
     this.subscriptions = new _set2.default();
     this.componentLoadCancel = null;
     this.onPopState = this.onPopState.bind(this);
@@ -265,7 +266,7 @@ var Router = function () {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                baseRoute = NEXT_BASEROUTE;
+                baseRoute = this.baseRoute;
 
                 // If url and as provided as an object representation,
                 // we'll format them into the string version here.
