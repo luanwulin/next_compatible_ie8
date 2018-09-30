@@ -3,8 +3,9 @@ import pathMatch from 'path-match'
 const route = pathMatch()
 
 export default class Router {
-  constructor () {
+  constructor (conf) {
     this.routes = new Map()
+    this.baseRoute = conf.baseRoute
   }
 
   add (method, path, fn) {
@@ -17,7 +18,8 @@ export default class Router {
     const routes = this.routes.get(req.method)
     if (!routes) return
 
-    const { pathname } = parsedUrl
+    let { pathname } = parsedUrl
+    pathname = pathname.replace(this.baseRoute, '')
     for (const r of routes) {
       const params = r.match(pathname)
       if (params) {

@@ -123,11 +123,11 @@ var Server = function () {
     this.dir = (0, _path.resolve)(dir);
     this.dev = dev;
     this.quiet = quiet;
-    this.router = new _router2.default();
     this.hotReloader = dev ? this.getHotReloader(this.dir, { quiet: quiet, conf: conf }) : null;
     this.http = null;
     this.config = (0, _config2.default)(this.dir, conf);
     this.dist = this.config.distDir;
+    this.router = new _router2.default({ baseRoute: this.config.baseRoute });
     if (!dev && !_fs2.default.existsSync((0, _path.resolve)(dir, this.dist, 'BUILD_ID'))) {
       console.error('> Could not find a valid build in the \'' + this.dist + '\' directory! Try building your app with \'next build\' before starting the server.');
       process.exit(1);
