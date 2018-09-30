@@ -19,7 +19,6 @@ export default class Router {
     if (!routes) return
 
     let { pathname } = parsedUrl
-    pathname = pathname.replace(this.baseRoute, '')
     for (const r of routes) {
       const params = r.match(pathname)
       if (params) {

@@ -69,8 +69,6 @@ var Router = function () {
 
       var pathname = parsedUrl.pathname;
 
-      pathname = pathname.replace(this.baseRoute, '');
-
       var _loop = function _loop(r) {
         var params = r.match(pathname);
         if (params) {
