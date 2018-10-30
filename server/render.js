@@ -8,7 +8,7 @@ import fresh from 'fresh'
 import requireModule from './require'
 import getConfig from './config'
 import resolvePath from './resolve'
-import { Router } from '../lib/router'
+import {makePublicRouterInstance, Router} from '../lib/router'
 import { loadGetInitialProps } from '../lib/utils'
 import Head, { defaultHead } from '../lib/head'
 import App from '../lib/app'
@@ -69,10 +69,14 @@ async function doRender (req, res, pathname, query, {
   if (res.finished) return
 
   const renderPage = (enhancer = Page => Page) => {
+    const router = new Router(pathname, query, asPath, config.baseRoute)
+
+    makePublicRouterInstance(router)
+
     const app = createElement(App, {
       Component: enhancer(Component),
       props,
-      router: new Router(pathname, query, asPath, config.baseRoute)
+      router: router
     })
 
     const render = staticMarkup ? renderToStaticMarkup : renderToString

@@ -155,10 +155,14 @@ var doRender = function () {
                 return Page;
               };
 
+              var router = new _router.Router(pathname, query, asPath, config.baseRoute);
+
+              (0, _router.makePublicRouterInstance)(router);
+
               var app = (0, _react.createElement)(_app2.default, {
                 Component: enhancer(Component),
                 props: props,
-                router: new _router.Router(pathname, query, asPath, config.baseRoute)
+                router: router
               });
 
               var render = staticMarkup ? _server.renderToStaticMarkup : _server.renderToString;
