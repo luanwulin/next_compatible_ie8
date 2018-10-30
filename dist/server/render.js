@@ -109,7 +109,7 @@ var doRender = function () {
         _ref4$nextExport = _ref4.nextExport,
         nextExport = _ref4$nextExport === undefined ? false : _ref4$nextExport;
 
-    var dist, _ref5, _ref6, Component, Document, asPath, ctx, props, renderPage, docProps, devBuildId, doc;
+    var config, dist, _ref5, _ref6, Component, Document, asPath, ctx, props, renderPage, docProps, devBuildId, doc;
 
     return _regenerator2.default.wrap(function _callee3$(_context3) {
       while (1) {
@@ -121,11 +121,12 @@ var doRender = function () {
             return ensurePage(page, { dir: dir, hotReloader: hotReloader });
 
           case 3:
-            dist = (0, _config2.default)(dir).distDir;
-            _context3.next = 6;
+            config = (0, _config2.default)(dir);
+            dist = config.distDir;
+            _context3.next = 7;
             return _promise2.default.all([(0, _require2.default)((0, _path.join)(dir, dist, 'dist', 'pages', page)), (0, _require2.default)((0, _path.join)(dir, dist, 'dist', 'pages', '_document'))]);
 
-          case 6:
+          case 7:
             _ref5 = _context3.sent;
             _ref6 = (0, _slicedToArray3.default)(_ref5, 2);
             Component = _ref6[0];
@@ -135,20 +136,20 @@ var doRender = function () {
             Document = Document.default || Document;
             asPath = req.url;
             ctx = { err: err, req: req, res: res, pathname: pathname, query: query, asPath: asPath, assetPrefix: assetPrefix, resourceMap: resourceMap, buildId: buildId };
-            _context3.next = 16;
+            _context3.next = 17;
             return (0, _utils.loadGetInitialProps)(Component, ctx);
 
-          case 16:
+          case 17:
             props = _context3.sent;
 
             if (!res.finished) {
-              _context3.next = 19;
+              _context3.next = 20;
               break;
             }
 
             return _context3.abrupt('return');
 
-          case 19:
+          case 20:
             renderPage = function renderPage() {
               var enhancer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function (Page) {
                 return Page;
@@ -157,7 +158,7 @@ var doRender = function () {
               var app = (0, _react.createElement)(_app2.default, {
                 Component: enhancer(Component),
                 props: props,
-                router: new _router.Router(pathname, query, asPath)
+                router: new _router.Router(pathname, query, asPath, config.baseRoute)
               });
 
               var render = staticMarkup ? _server.renderToStaticMarkup : _server.renderToString;
@@ -182,10 +183,10 @@ var doRender = function () {
               return { html: html, head: head, errorHtml: errorHtml, chunks: chunks };
             };
 
-            _context3.next = 22;
+            _context3.next = 23;
             return (0, _utils.loadGetInitialProps)(Document, (0, _extends3.default)({}, ctx, { renderPage: renderPage }));
 
-          case 22:
+          case 23:
             docProps = _context3.sent;
 
             // While developing, we should not cache any assets.
@@ -195,21 +196,21 @@ var doRender = function () {
             devBuildId = Date.now();
 
             if (!res.finished) {
-              _context3.next = 26;
+              _context3.next = 27;
               break;
             }
 
             return _context3.abrupt('return');
 
-          case 26:
+          case 27:
             if (!(!Document.prototype || !Document.prototype.isReactComponent)) {
-              _context3.next = 28;
+              _context3.next = 29;
               break;
             }
 
             throw new Error('_document.js is not exporting a React element');
 
-          case 28:
+          case 29:
             doc = (0, _react.createElement)(Document, (0, _extends3.default)({
               __NEXT_DATA__: {
                 props: props,
@@ -228,7 +229,7 @@ var doRender = function () {
             }, docProps));
             return _context3.abrupt('return', '<!DOCTYPE html>' + (0, _server.renderToStaticMarkup)(doc));
 
-          case 30:
+          case 31:
           case 'end':
             return _context3.stop();
         }

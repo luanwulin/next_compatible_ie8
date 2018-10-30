@@ -34,6 +34,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var SingletonRouter = {
   router: null, // holds the actual router instance
   readyCallbacks: [],
+  baseRoute: NEXT_BASEROUTE,
   ready: function ready(cb) {
     if (this.router) return cb();
     if (typeof window !== 'undefined') {

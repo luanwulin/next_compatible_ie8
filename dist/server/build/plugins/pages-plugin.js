@@ -63,7 +63,7 @@ var PagesPlugin = function () {
           }
 
           var content = page.source();
-          var newContent = '\n          window.__NEXT_REGISTER_PAGE(\'' + routeName + '\', function() {\n            var comp = ' + content + '\n            return { page: comp.default }\n          })\n        ';
+          var newContent = '\n          window.__NEXT_REGISTER_PAGE(\'' + routeName + '\', function() {\n            var comp = ' + content + '\n            return { page: comp.default }\n          });\n          window.__NEXT_BASEROUTE=' + NEXT_BASEROUTE + '\n        ';
           // Replace the exisiting chunk with the new content
           compilation.assets[chunk.name] = {
             source: function source() {
