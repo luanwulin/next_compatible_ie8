@@ -44,7 +44,7 @@ var SingletonRouter = {
 
 // Create public properties and methods of the router in the SingletonRouter
 /* global window */
-var propertyFields = ['components', 'pathname', 'route', 'query', 'asPath'];
+var propertyFields = ['components', 'pathname', 'route', 'query', 'asPath', 'baseRoute'];
 var coreMethodFields = ['push', 'replace', 'reload', 'back', 'prefetch'];
 var routerEvents = ['routeChangeStart', 'beforeHistoryChange', 'routeChangeComplete', 'routeChangeError'];
 
