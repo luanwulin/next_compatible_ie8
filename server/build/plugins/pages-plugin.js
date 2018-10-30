@@ -44,7 +44,6 @@ export default class PagesPlugin {
             var comp = ${content}
             return { page: comp.default }
           });
-          window.__NEXT_BASEROUTE=${NEXT_BASEROUTE}
         `
         // Replace the exisiting chunk with the new content
         compilation.assets[chunk.name] = {
