@@ -94,7 +94,7 @@ var Link = function (_Component) {
       var href = this.href,
           as = this.as;
 
-      var baseRoute = _router2.default.baseRoute;
+      var baseRoute = _router2.default.router.baseRoute;
 
       if (!isLocal(href)) {
         // ignore click if it's outside our scope
@@ -174,7 +174,7 @@ var Link = function (_Component) {
       var href = this.href,
           as = this.as;
 
-      var baseRoute = _router2.default.baseRoute;
+      var baseRoute = _router2.default.router.baseRoute;
 
       // Deprecated. Warning shown by propType check. If the childen provided is a string (<Link>example</Link>) we wrap it in an <a> tag
       if (typeof children === 'string') {
