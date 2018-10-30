@@ -52,7 +52,8 @@ async function doRender (req, res, pathname, query, {
 
   await ensurePage(page, { dir, hotReloader })
 
-  const dist = getConfig(dir).distDir
+  const config = getConfig(dir)
+  const dist = config.distDir
 
   let [Component, Document] = await Promise.all([
     requireModule(join(dir, dist, 'dist', 'pages', page)),
@@ -71,7 +72,7 @@ async function doRender (req, res, pathname, query, {
     const app = createElement(App, {
       Component: enhancer(Component),
       props,
-      router: new Router(pathname, query, asPath, NEXT_BASEROUTE)
+      router: new Router(pathname, query, asPath, config.baseRoute)
     })
 
     const render = staticMarkup ? renderToStaticMarkup : renderToString
