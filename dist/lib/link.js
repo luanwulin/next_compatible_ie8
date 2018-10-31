@@ -106,12 +106,10 @@ var Link = function (_Component) {
 
       if (baseRoute) {
         href = href.replace(baseRoute, '');
-        pathname = pathname.replace(baseRoute, '');
       }
 
       href = (0, _url.resolve)(pathname, href);
       as = as ? (0, _url.resolve)(pathname, as) : href;
-      as = baseRoute ? (baseRoute + as).replace(/([^\:])\/{2,}/g, '$1/') : as;
 
       e.preventDefault();
 
