@@ -101,18 +101,17 @@ var Link = function (_Component) {
         return;
       }
 
-      if (href && baseRoute) {
-        href = href.replace(baseRoute, '');
-      }
-
       var pathname = window.location.pathname;
+
+
+      if (baseRoute) {
+        href = href.replace(baseRoute, '');
+        pathname = pathname.replace(baseRoute, '');
+      }
 
       href = (0, _url.resolve)(pathname, href);
       as = as ? (0, _url.resolve)(pathname, as) : href;
       as = baseRoute ? (baseRoute + as).replace(/([^\:])\/{2,}/g, '$1/') : as;
-
-      alert(as);
-      alert(href);
 
       e.preventDefault();
 
