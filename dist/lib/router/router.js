@@ -107,7 +107,7 @@ var Router = function () {
     key: 'onPopState',
     value: function () {
       var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(e) {
-        var pathname, query, _e$state, url, as, options;
+        var pathname, query, baseRoute, _e$state, url, as, options;
 
         return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
@@ -133,11 +133,18 @@ var Router = function () {
                 return _context.abrupt('return');
 
               case 4:
+                baseRoute = this.baseRoute;
                 _e$state = e.state, url = _e$state.url, as = _e$state.as, options = _e$state.options;
+
+
+                if (baseRoute) {
+                  url = url.replace(baseRoute, '');
+                  as = as.replace(baseRoute, '');
+                }
 
                 this.replace(url, as, options);
 
-              case 6:
+              case 8:
               case 'end':
                 return _context.stop();
             }
