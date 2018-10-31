@@ -106,6 +106,7 @@ var Link = function (_Component) {
 
       if (baseRoute) {
         href = href.replace(baseRoute, '');
+        pathname = pathname.replace(baseRoute, '');
       }
 
       href = (0, _url.resolve)(pathname, href);
