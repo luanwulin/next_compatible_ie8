@@ -155,9 +155,7 @@ var doRender = function () {
                 return Page;
               };
 
-              var router = new _router.Router(pathname, query, asPath, config.baseRoute);
-
-              (0, _router.makePublicRouterInstance)(router);
+              var router = (0, _router.createRouter)(pathname, query, asPath, config.baseRoute);
 
               var app = (0, _react.createElement)(_app2.default, {
                 Component: enhancer(Component),
