@@ -111,6 +111,9 @@ var Link = function (_Component) {
       as = as ? (0, _url.resolve)(pathname, as) : href;
       as = baseRoute ? (baseRoute + as).replace(/([^\:])\/{2,}/g, '$1/') : as;
 
+      alert(as);
+      alert(href);
+
       e.preventDefault();
 
       //  avoid scroll for urls with anchor refs
