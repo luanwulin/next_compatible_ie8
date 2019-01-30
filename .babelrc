@@ -1,7 +1,20 @@
 {
   "presets": [
-    "env",
-    "react"
+    [
+      "env",
+      {
+        "loose": true,
+        "useBuiltIns": "entry",
+        "targets": {
+          "browsers": [
+            "ie >= 7"
+          ]
+        },
+        "modules": "commonjs"
+      }
+    ],
+    "react",
+    "stage-0"
   ],
   "plugins": [
     "transform-object-rest-spread",
@@ -13,7 +26,7 @@
       "presets": [
         "es2015",
         "./babel"
-       ]
+      ]
     }
   }
 }
