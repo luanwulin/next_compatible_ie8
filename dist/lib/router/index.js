@@ -19,7 +19,7 @@ var _withRouter = require('./with-router');
 
 var _withRouter2 = _interopRequireDefault(_withRouter);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 /* global window */
 var SingletonRouter = {
@@ -43,7 +43,7 @@ propertyFields.forEach(function (field) {
   // the property assigned to the actual router
   // The value might get changed as we change routes and this is the
   // proper way to access it
-  (0, _defineProperty2.default)(SingletonRouter, field, {
+  (0, _defineProperty2['default'])(SingletonRouter, field, {
     value: SingletonRouter.router[field]
   });
 });
@@ -81,11 +81,11 @@ function throwIfNoRouter() {
 }
 
 // Export the SingletonRouter and this is the public API.
-exports.default = SingletonRouter;
+exports['default'] = SingletonRouter;
 
 // Reexport the withRoute HOC
 
-exports.withRouter = _withRouter2.default;
+exports.withRouter = _withRouter2['default'];
 
 // INTERNAL APIS
 // -------------
@@ -100,7 +100,7 @@ var createRouter = exports.createRouter = function createRouter() {
     args[_key] = arguments[_key];
   }
 
-  SingletonRouter.router = new (Function.prototype.bind.apply(_router2.default, [null].concat(args)))();
+  SingletonRouter.router = new (Function.prototype.bind.apply(_router2['default'], [null].concat(args)))();
   SingletonRouter.readyCallbacks.forEach(function (cb) {
     return cb();
   });
@@ -110,7 +110,7 @@ var createRouter = exports.createRouter = function createRouter() {
 };
 
 // Export the actual Router class, which is usually used inside the server
-var Router = exports.Router = _router2.default;
+var Router = exports.Router = _router2['default'];
 
 function _notifyBuildIdMismatch(nextRoute) {
   if (SingletonRouter.onAppUpdated) {
@@ -158,7 +158,7 @@ function makePublicRouterInstance(router) {
     // the property assigned to the actual router
     // The value might get changed as we change routes and this is the
     // proper way to access it
-    (0, _defineProperty2.default)(instance, field, {
+    (0, _defineProperty2['default'])(instance, field, {
       value: router[field]
     });
   });

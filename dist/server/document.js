@@ -35,14 +35,14 @@ var _server = require('styled-jsx/server');
 
 var _server2 = _interopRequireDefault(_server);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var Document = function (_Component) {
-  (0, _inherits3.default)(Document, _Component);
+  (0, _inherits3['default'])(Document, _Component);
 
   function Document() {
-    (0, _classCallCheck3.default)(this, Document);
-    return (0, _possibleConstructorReturn3.default)(this, _Component.apply(this, arguments));
+    (0, _classCallCheck3['default'])(this, Document);
+    return (0, _possibleConstructorReturn3['default'])(this, _Component.apply(this, arguments));
   }
 
   Document.getInitialProps = function getInitialProps(_ref) {
@@ -54,7 +54,7 @@ var Document = function (_Component) {
         errorHtml = _renderPage.errorHtml,
         chunks = _renderPage.chunks;
 
-    var styles = (0, _server2.default)();
+    var styles = (0, _server2['default'])();
     return { html: html, head: head, errorHtml: errorHtml, chunks: chunks, styles: styles };
   };
 
@@ -63,15 +63,15 @@ var Document = function (_Component) {
   };
 
   Document.prototype.render = function render() {
-    return _react2.default.createElement(
+    return _react2['default'].createElement(
       'html',
       null,
-      _react2.default.createElement(Head, null),
-      _react2.default.createElement(
+      _react2['default'].createElement(Head, null),
+      _react2['default'].createElement(
         'body',
         null,
-        _react2.default.createElement(Main, null),
-        _react2.default.createElement(NextScript, null)
+        _react2['default'].createElement(Main, null),
+        _react2['default'].createElement(NextScript, null)
       )
     );
   };
@@ -80,16 +80,16 @@ var Document = function (_Component) {
 }(_react.Component);
 
 Document.childContextTypes = {
-  _documentProps: _propTypes2.default.any
+  _documentProps: _propTypes2['default'].any
 };
-exports.default = Document;
+exports['default'] = Document;
 
 var Head = exports.Head = function (_Component2) {
-  (0, _inherits3.default)(Head, _Component2);
+  (0, _inherits3['default'])(Head, _Component2);
 
   function Head() {
-    (0, _classCallCheck3.default)(this, Head);
-    return (0, _possibleConstructorReturn3.default)(this, _Component2.apply(this, arguments));
+    (0, _classCallCheck3['default'])(this, Head);
+    return (0, _possibleConstructorReturn3['default'])(this, _Component2.apply(this, arguments));
   }
 
   Head.prototype.getChunkPreloadLink = function getChunkPreloadLink(filename) {
@@ -100,7 +100,7 @@ var Head = exports.Head = function (_Component2) {
 
     var hash = buildStats ? buildStats[filename].hash : buildId;
 
-    return _react2.default.createElement('link', {
+    return _react2['default'].createElement('link', {
       key: filename,
       rel: 'preload',
       href: assetPrefix + '/_next/' + hash + '/' + filename,
@@ -127,7 +127,7 @@ var Head = exports.Head = function (_Component2) {
         buildId = __NEXT_DATA__.buildId;
 
     return chunks.map(function (chunk) {
-      return _react2.default.createElement('link', {
+      return _react2['default'].createElement('link', {
         key: chunk,
         rel: 'preload',
         href: assetPrefix + '/_next/' + buildId + '/webpack/chunks/' + chunk,
@@ -147,14 +147,14 @@ var Head = exports.Head = function (_Component2) {
 
     var pagePathname = getPagePathname(pathname);
 
-    return _react2.default.createElement(
+    return _react2['default'].createElement(
       'head',
       this.props,
       (head || []).map(function (h, i) {
-        return _react2.default.cloneElement(h, { key: i });
+        return _react2['default'].cloneElement(h, { key: i });
       }),
-      _react2.default.createElement('link', { rel: 'preload', href: assetPrefix + '/_next/' + buildId + '/page' + pagePathname, as: 'script' }),
-      _react2.default.createElement('link', { rel: 'preload', href: assetPrefix + '/_next/' + buildId + '/page/_error.js', as: 'script' }),
+      _react2['default'].createElement('link', { rel: 'preload', href: assetPrefix + '/_next/' + buildId + '/page' + pagePathname, as: 'script' }),
+      _react2['default'].createElement('link', { rel: 'preload', href: assetPrefix + '/_next/' + buildId + '/page/_error.js', as: 'script' }),
       this.getPreloadDynamicChunks(),
       this.getPreloadMainLinks(),
       styles || null,
@@ -166,15 +166,15 @@ var Head = exports.Head = function (_Component2) {
 }(_react.Component);
 
 Head.contextTypes = {
-  _documentProps: _propTypes2.default.any
+  _documentProps: _propTypes2['default'].any
 };
 
 var Main = exports.Main = function (_Component3) {
-  (0, _inherits3.default)(Main, _Component3);
+  (0, _inherits3['default'])(Main, _Component3);
 
   function Main() {
-    (0, _classCallCheck3.default)(this, Main);
-    return (0, _possibleConstructorReturn3.default)(this, _Component3.apply(this, arguments));
+    (0, _classCallCheck3['default'])(this, Main);
+    return (0, _possibleConstructorReturn3['default'])(this, _Component3.apply(this, arguments));
   }
 
   Main.prototype.render = function render() {
@@ -183,11 +183,11 @@ var Main = exports.Main = function (_Component3) {
         errorHtml = _context$_documentPro3.errorHtml;
     var className = this.props.className;
 
-    return _react2.default.createElement(
+    return _react2['default'].createElement(
       'div',
       { className: className },
-      _react2.default.createElement('div', { id: '__next', dangerouslySetInnerHTML: { __html: html } }),
-      _react2.default.createElement('div', { id: '__next-error', dangerouslySetInnerHTML: { __html: errorHtml } })
+      _react2['default'].createElement('div', { id: '__next', dangerouslySetInnerHTML: { __html: html } }),
+      _react2['default'].createElement('div', { id: '__next-error', dangerouslySetInnerHTML: { __html: errorHtml } })
     );
   };
 
@@ -195,18 +195,18 @@ var Main = exports.Main = function (_Component3) {
 }(_react.Component);
 
 Main.propTypes = {
-  className: _propTypes2.default.string
+  className: _propTypes2['default'].string
 };
 Main.contextTypes = {
-  _documentProps: _propTypes2.default.any
+  _documentProps: _propTypes2['default'].any
 };
 
 var NextScript = exports.NextScript = function (_Component4) {
-  (0, _inherits3.default)(NextScript, _Component4);
+  (0, _inherits3['default'])(NextScript, _Component4);
 
   function NextScript() {
-    (0, _classCallCheck3.default)(this, NextScript);
-    return (0, _possibleConstructorReturn3.default)(this, _Component4.apply(this, arguments));
+    (0, _classCallCheck3['default'])(this, NextScript);
+    return (0, _possibleConstructorReturn3['default'])(this, _Component4.apply(this, arguments));
   }
 
   NextScript.prototype.getChunkScript = function getChunkScript(filename) {
@@ -218,7 +218,7 @@ var NextScript = exports.NextScript = function (_Component4) {
 
     var hash = buildStats ? buildStats[filename].hash : buildId;
 
-    return _react2.default.createElement('script', (0, _extends3.default)({
+    return _react2['default'].createElement('script', (0, _extends3['default'])({
       key: filename,
       type: 'text/javascript',
       src: assetPrefix + '/_next/' + hash + '/' + filename
@@ -244,11 +244,11 @@ var NextScript = exports.NextScript = function (_Component4) {
     var assetPrefix = __NEXT_DATA__.assetPrefix,
         buildId = __NEXT_DATA__.buildId;
 
-    return _react2.default.createElement(
+    return _react2['default'].createElement(
       'div',
       null,
       chunks.map(function (chunk) {
-        return _react2.default.createElement('script', {
+        return _react2['default'].createElement('script', {
           async: true,
           key: chunk,
           type: 'text/javascript',
@@ -271,14 +271,14 @@ var NextScript = exports.NextScript = function (_Component4) {
 
     __NEXT_DATA__.chunks = chunks;
 
-    return _react2.default.createElement(
+    return _react2['default'].createElement(
       'div',
       null,
-      staticMarkup ? null : _react2.default.createElement('script', { nonce: this.props.nonce, dangerouslySetInnerHTML: {
-          __html: '\n          __NEXT_DATA__ = ' + (0, _htmlescape2.default)(__NEXT_DATA__) + '\n          module={}\n          __NEXT_LOADED_PAGES__ = []\n          __NEXT_LOADED_CHUNKS__ = []\n\n          __NEXT_REGISTER_PAGE = function (route, fn) {\n            __NEXT_LOADED_PAGES__.push({ route: route, fn: fn })\n          }\n\n          __NEXT_REGISTER_CHUNK = function (chunkName, fn) {\n            __NEXT_LOADED_CHUNKS__.push({ chunkName: chunkName, fn: fn })\n          }\n        '
+      staticMarkup ? null : _react2['default'].createElement('script', { nonce: this.props.nonce, dangerouslySetInnerHTML: {
+          __html: '\n          __NEXT_DATA__ = ' + (0, _htmlescape2['default'])(__NEXT_DATA__) + '\n          module={}\n          __NEXT_LOADED_PAGES__ = []\n          __NEXT_LOADED_CHUNKS__ = []\n\n          __NEXT_REGISTER_PAGE = function (route, fn) {\n            __NEXT_LOADED_PAGES__.push({ route: route, fn: fn })\n          }\n\n          __NEXT_REGISTER_CHUNK = function (chunkName, fn) {\n            __NEXT_LOADED_CHUNKS__.push({ chunkName: chunkName, fn: fn })\n          }\n        '
         } }),
-      _react2.default.createElement('script', { async: true, id: '__NEXT_PAGE__' + pathname, type: 'text/javascript', src: assetPrefix + '/_next/' + buildId + '/page' + pagePathname }),
-      _react2.default.createElement('script', { async: true, id: '__NEXT_PAGE__/_error', type: 'text/javascript', src: assetPrefix + '/_next/' + buildId + '/page/_error.js' }),
+      _react2['default'].createElement('script', { async: true, id: '__NEXT_PAGE__' + pathname, type: 'text/javascript', src: assetPrefix + '/_next/' + buildId + '/page' + pagePathname }),
+      _react2['default'].createElement('script', { async: true, id: '__NEXT_PAGE__/_error', type: 'text/javascript', src: assetPrefix + '/_next/' + buildId + '/page/_error.js' }),
       staticMarkup ? null : this.getDynamicChunks(),
       staticMarkup ? null : this.getScripts()
     );
@@ -288,10 +288,10 @@ var NextScript = exports.NextScript = function (_Component4) {
 }(_react.Component);
 
 NextScript.propTypes = {
-  nonce: _propTypes2.default.string
+  nonce: _propTypes2['default'].string
 };
 NextScript.contextTypes = {
-  _documentProps: _propTypes2.default.any
+  _documentProps: _propTypes2['default'].any
 };
 
 

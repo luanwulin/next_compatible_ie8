@@ -18,7 +18,7 @@ var _set = require('babel-runtime/core-js/set');
 
 var _set2 = _interopRequireDefault(_set);
 
-exports.default = withSideEffect;
+exports['default'] = withSideEffect;
 
 var _react = require('react');
 
@@ -26,7 +26,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _utils = require('./utils');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 function withSideEffect(reduceComponentsToState, handleStateChangeOnClient, mapStateOnServer) {
   if (typeof reduceComponentsToState !== 'function') {
@@ -46,7 +46,7 @@ function withSideEffect(reduceComponentsToState, handleStateChangeOnClient, mapS
       throw new Error('Expected WrappedComponent to be a React component.');
     }
 
-    var mountedInstances = new _set2.default();
+    var mountedInstances = new _set2['default']();
     var state = void 0;
 
     function emitChange(component) {
@@ -60,11 +60,11 @@ function withSideEffect(reduceComponentsToState, handleStateChangeOnClient, mapS
     }
 
     var SideEffect = function (_Component) {
-      (0, _inherits3.default)(SideEffect, _Component);
+      (0, _inherits3['default'])(SideEffect, _Component);
 
       function SideEffect() {
-        (0, _classCallCheck3.default)(this, SideEffect);
-        return (0, _possibleConstructorReturn3.default)(this, _Component.apply(this, arguments));
+        (0, _classCallCheck3['default'])(this, SideEffect);
+        return (0, _possibleConstructorReturn3['default'])(this, _Component.apply(this, arguments));
       }
 
       SideEffect.peek = function peek() {
@@ -97,12 +97,12 @@ function withSideEffect(reduceComponentsToState, handleStateChangeOnClient, mapS
       };
 
       SideEffect.prototype.componentWillUnmount = function componentWillUnmount() {
-        mountedInstances.delete(this);
+        mountedInstances['delete'](this);
         emitChange(this);
       };
 
       SideEffect.prototype.render = function render() {
-        return _react2.default.createElement(
+        return _react2['default'].createElement(
           WrappedComponent,
           null,
           this.props.children

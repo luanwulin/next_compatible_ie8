@@ -14,29 +14,29 @@ var _head = require('./head');
 
 var _head2 = _interopRequireDefault(_head);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-exports.default = function (_ref) {
+exports['default'] = function (_ref) {
   var error = _ref.error,
       _ref$error = _ref.error,
       name = _ref$error.name,
       message = _ref$error.message,
       module = _ref$error.module;
-  return _react2.default.createElement(
+  return _react2['default'].createElement(
     'div',
     { style: styles.errorDebug },
-    _react2.default.createElement(
-      _head2.default,
+    _react2['default'].createElement(
+      _head2['default'],
       null,
-      _react2.default.createElement('meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0' })
+      _react2['default'].createElement('meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0' })
     ),
-    module ? _react2.default.createElement(
+    module ? _react2['default'].createElement(
       'h1',
       { style: styles.heading },
       'Error in ',
       module.rawRequest
     ) : null,
-    name === 'ModuleBuildError' ? _react2.default.createElement('pre', { style: styles.stack, dangerouslySetInnerHTML: { __html: (0, _ansiHtml2.default)(encodeHtml(message)) } }) : _react2.default.createElement(StackTrace, { error: error })
+    name === 'ModuleBuildError' ? _react2['default'].createElement('pre', { style: styles.stack, dangerouslySetInnerHTML: { __html: (0, _ansiHtml2['default'])(encodeHtml(message)) } }) : _react2['default'].createElement(StackTrace, { error: error })
   );
 };
 
@@ -45,15 +45,15 @@ var StackTrace = function StackTrace(_ref2) {
       name = _ref2$error.name,
       message = _ref2$error.message,
       stack = _ref2$error.stack;
-  return _react2.default.createElement(
+  return _react2['default'].createElement(
     'div',
     null,
-    _react2.default.createElement(
+    _react2['default'].createElement(
       'div',
       { style: styles.heading },
       message || name
     ),
-    _react2.default.createElement(
+    _react2['default'].createElement(
       'pre',
       { style: styles.stack },
       stack
@@ -104,7 +104,7 @@ var encodeHtml = function encodeHtml(str) {
 // see color definitions of babel-code-frame:
 // https://github.com/babel/babel/blob/master/packages/babel-code-frame/src/index.js
 
-_ansiHtml2.default.setColors({
+_ansiHtml2['default'].setColors({
   reset: ['6F6767', '0e0d0d'],
   darkgrey: '6F6767',
   yellow: '6F6767',

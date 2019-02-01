@@ -42,21 +42,21 @@ var _router2 = _interopRequireDefault(_router);
 
 var _utils = require('./utils');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 /* global __NEXT_DATA__ */
 
 var Link = function (_Component) {
-  (0, _inherits3.default)(Link, _Component);
+  (0, _inherits3['default'])(Link, _Component);
 
   function Link(props) {
-    (0, _classCallCheck3.default)(this, Link);
+    (0, _classCallCheck3['default'])(this, Link);
 
     for (var _len = arguments.length, rest = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
       rest[_key - 1] = arguments[_key];
     }
 
-    var _this = (0, _possibleConstructorReturn3.default)(this, _Component.call.apply(_Component, [this, props].concat(rest)));
+    var _this = (0, _possibleConstructorReturn3['default'])(this, _Component.call.apply(_Component, [this, props].concat(rest)));
 
     _this.linkClicked = _this.linkClicked.bind(_this);
     _this.formatUrls(props);
@@ -79,7 +79,7 @@ var Link = function (_Component) {
     var href = this.href,
         as = this.as;
 
-    var baseRoute = _router2.default.router ? _router2.default.router.baseRoute : '';
+    var baseRoute = _router2['default'].router ? _router2['default'].router.baseRoute : '';
 
     if (!isLocal(href)) {
       // ignore click if it's outside our scope
@@ -112,10 +112,10 @@ var Link = function (_Component) {
     var changeMethod = replace ? 'replace' : 'push';
 
     // straight up redirect
-    _router2.default[changeMethod](href, as, { shallow: shallow }).then(function (success) {
+    _router2['default'][changeMethod](href, as, { shallow: shallow }).then(function (success) {
       if (!success) return;
       if (scroll) window.scrollTo(0, 0);
-    }).catch(function (err) {
+    })['catch'](function (err) {
       if (_this2.props.onError) _this2.props.onError(err);
     });
   };
@@ -128,7 +128,7 @@ var Link = function (_Component) {
     var pathname = window.location.pathname;
 
     var href = (0, _url.resolve)(pathname, this.href);
-    _router2.default.prefetch(href);
+    _router2['default'].prefetch(href);
   };
 
   Link.prototype.componentDidMount = function componentDidMount() {
@@ -136,7 +136,7 @@ var Link = function (_Component) {
   };
 
   Link.prototype.componentDidUpdate = function componentDidUpdate(prevProps) {
-    if ((0, _stringify2.default)(this.props.href) !== (0, _stringify2.default)(prevProps.href)) {
+    if ((0, _stringify2['default'])(this.props.href) !== (0, _stringify2['default'])(prevProps.href)) {
       this.prefetch();
     }
   };
@@ -146,8 +146,8 @@ var Link = function (_Component) {
 
 
   Link.prototype.formatUrls = function formatUrls(props) {
-    this.href = props.href && (0, _typeof3.default)(props.href) === 'object' ? (0, _url.format)(props.href) : props.href;
-    this.as = props.as && (0, _typeof3.default)(props.as) === 'object' ? (0, _url.format)(props.as) : props.as;
+    this.href = props.href && (0, _typeof3['default'])(props.href) === 'object' ? (0, _url.format)(props.href) : props.href;
+    this.as = props.as && (0, _typeof3['default'])(props.as) === 'object' ? (0, _url.format)(props.as) : props.as;
   };
 
   Link.prototype.render = function render() {
@@ -155,11 +155,11 @@ var Link = function (_Component) {
     var href = this.href,
         as = this.as;
 
-    var baseRoute = _router2.default.router ? _router2.default.router.baseRoute : '';
+    var baseRoute = _router2['default'].router ? _router2['default'].router.baseRoute : '';
 
     // Deprecated. Warning shown by propType check. If the childen provided is a string (<Link>example</Link>) we wrap it in an <a> tag
     if (typeof children === 'string') {
-      children = _react2.default.createElement(
+      children = _react2['default'].createElement(
         'a',
         null,
         children
@@ -187,21 +187,21 @@ var Link = function (_Component) {
       props.href = (0, _router._rewriteUrlForNextExport)(props.href);
     }
 
-    return _react2.default.cloneElement(child, props);
+    return _react2['default'].cloneElement(child, props);
   };
 
   return Link;
 }(_react.Component);
 
-Link.propTypes = (0, _propTypesExact2.default)({
-  href: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.object]).isRequired,
-  as: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.object]),
-  prefetch: _propTypes2.default.bool,
-  replace: _propTypes2.default.bool,
-  shallow: _propTypes2.default.bool,
-  passHref: _propTypes2.default.bool,
-  scroll: _propTypes2.default.bool,
-  children: _propTypes2.default.oneOfType([_propTypes2.default.element, function (props, propName) {
+Link.propTypes = (0, _propTypesExact2['default'])({
+  href: _propTypes2['default'].oneOfType([_propTypes2['default'].string, _propTypes2['default'].object]).isRequired,
+  as: _propTypes2['default'].oneOfType([_propTypes2['default'].string, _propTypes2['default'].object]),
+  prefetch: _propTypes2['default'].bool,
+  replace: _propTypes2['default'].bool,
+  shallow: _propTypes2['default'].bool,
+  passHref: _propTypes2['default'].bool,
+  scroll: _propTypes2['default'].bool,
+  children: _propTypes2['default'].oneOfType([_propTypes2['default'].element, function (props, propName) {
     var value = props[propName];
 
     if (typeof value === 'string') {
@@ -211,7 +211,7 @@ Link.propTypes = (0, _propTypesExact2.default)({
     return null;
   }]).isRequired
 });
-exports.default = Link;
+exports['default'] = Link;
 
 
 function isLocal(href) {

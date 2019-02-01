@@ -44,7 +44,7 @@ var _utils = require('../utils');
 
 var _ = require('./');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 /* global __NEXT_DATA__ */
 
@@ -56,7 +56,7 @@ var Router = function () {
         ErrorComponent = _ref.ErrorComponent,
         err = _ref.err;
 
-    (0, _classCallCheck3.default)(this, Router);
+    (0, _classCallCheck3['default'])(this, Router);
 
     // represents the current component key
     this.route = toRoute(pathname);
@@ -71,16 +71,16 @@ var Router = function () {
     }
 
     // Handling Router Events
-    this.events = new _EventEmitter2.default();
+    this.events = new _EventEmitter2['default']();
 
     this.pageLoader = pageLoader;
-    this.prefetchQueue = new _pQueue2.default({ concurrency: 2 });
+    this.prefetchQueue = new _pQueue2['default']({ concurrency: 2 });
     this.ErrorComponent = ErrorComponent;
     this.pathname = pathname;
     this.query = query;
     this.asPath = as;
     this.baseRoute = baseRoute;
-    this.subscriptions = new _set2.default();
+    this.subscriptions = new _set2['default']();
     this.componentLoadCancel = null;
     this.onPopState = this.onPopState.bind(this);
 
@@ -94,10 +94,10 @@ var Router = function () {
   }
 
   Router.prototype.onPopState = function () {
-    var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(e) {
+    var _ref2 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee(e) {
       var pathname, query, baseRoute, _e$state, url, as, options;
 
-      return _regenerator2.default.wrap(function _callee$(_context) {
+      return _regenerator2['default'].wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
@@ -153,7 +153,7 @@ var Router = function () {
       throw new Error('Cannot update unavailable route: ' + route);
     }
 
-    var newData = (0, _extends3.default)({}, data, { Component: Component });
+    var newData = (0, _extends3['default'])({}, data, { Component: Component });
     this.components[route] = newData;
 
     if (route === this.route) {
@@ -162,9 +162,9 @@ var Router = function () {
   };
 
   Router.prototype.reload = function () {
-    var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(route) {
+    var _ref3 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee2(route) {
       var pathname, query, url, routeInfo, error;
-      return _regenerator2.default.wrap(function _callee2$(_context2) {
+      return _regenerator2['default'].wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
@@ -248,10 +248,10 @@ var Router = function () {
   };
 
   Router.prototype.change = function () {
-    var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(method, _url, _as, options) {
+    var _ref4 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee3(method, _url, _as, options) {
       var baseRoute, url, as, _parse, pathname, query, route, _options$shallow, shallow, routeInfo, _routeInfo, error, hash;
 
-      return _regenerator2.default.wrap(function _callee3$(_context3) {
+      return _regenerator2['default'].wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
@@ -260,8 +260,8 @@ var Router = function () {
               // If url and as provided as an object representation,
               // we'll format them into the string version here.
 
-              url = (typeof _url === 'undefined' ? 'undefined' : (0, _typeof3.default)(_url)) === 'object' ? (0, _url2.format)(_url) : _url;
-              as = (typeof _as === 'undefined' ? 'undefined' : (0, _typeof3.default)(_as)) === 'object' ? (0, _url2.format)(_as) : _as;
+              url = (typeof _url === 'undefined' ? 'undefined' : (0, _typeof3['default'])(_url)) === 'object' ? (0, _url2.format)(_url) : _url;
+              as = (typeof _as === 'undefined' ? 'undefined' : (0, _typeof3['default'])(_as)) === 'object' ? (0, _url2.format)(_as) : _as;
 
 
               if (as && baseRoute) {
@@ -342,7 +342,7 @@ var Router = function () {
               hash = window.location.hash.substring(1);
 
 
-              this.set(route, pathname, query, as, (0, _extends3.default)({}, routeInfo, { hash: hash }));
+              this.set(route, pathname, query, as, (0, _extends3['default'])({}, routeInfo, { hash: hash }));
 
               if (!error) {
                 _context3.next = 33;
@@ -381,10 +381,10 @@ var Router = function () {
   };
 
   Router.prototype.getRouteInfo = function () {
-    var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(route, pathname, query, as) {
+    var _ref5 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee4(route, pathname, query, as) {
       var routeInfo, _window, _window$__NEXT_DATA__, buildId, assetPrefix, resourceMap, _routeInfo2, Component, ctx, _Component, _ctx;
 
-      return _regenerator2.default.wrap(function _callee4$(_context4) {
+      return _regenerator2['default'].wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
@@ -529,7 +529,7 @@ var Router = function () {
   };
 
   Router.prototype.urlIsNew = function urlIsNew(pathname, query) {
-    return this.pathname !== pathname || !(0, _shallowEquals2.default)(query, this.query);
+    return this.pathname !== pathname || !(0, _shallowEquals2['default'])(query, this.query);
   };
 
   Router.prototype.isShallowRoutingPossible = function isShallowRoutingPossible(route) {
@@ -542,12 +542,12 @@ var Router = function () {
   };
 
   Router.prototype.prefetch = function () {
-    var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(url) {
+    var _ref6 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee5(url) {
       var _this = this;
 
       var _parse2, pathname, route;
 
-      return _regenerator2.default.wrap(function _callee5$(_context5) {
+      return _regenerator2['default'].wrap(function _callee5$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
@@ -581,9 +581,9 @@ var Router = function () {
   }();
 
   Router.prototype.fetchComponent = function () {
-    var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6(route, as) {
+    var _ref7 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee6(route, as) {
       var cancelled, cancel, Component, error;
-      return _regenerator2.default.wrap(function _callee6$(_context6) {
+      return _regenerator2['default'].wrap(function _callee6$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
@@ -646,9 +646,9 @@ var Router = function () {
   }();
 
   Router.prototype.getInitialProps = function () {
-    var _ref8 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee7(Component, ctx) {
+    var _ref8 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee7(Component, ctx) {
       var cancelled, cancel, props, err;
-      return _regenerator2.default.wrap(function _callee7$(_context7) {
+      return _regenerator2['default'].wrap(function _callee7$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
@@ -700,8 +700,8 @@ var Router = function () {
   }();
 
   Router.prototype.fetchRoute = function () {
-    var _ref9 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee8(route) {
-      return _regenerator2.default.wrap(function _callee8$(_context8) {
+    var _ref9 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee8(route) {
+      return _regenerator2['default'].wrap(function _callee8$(_context8) {
         while (1) {
           switch (_context8.prev = _context8.next) {
             case 0:
@@ -745,14 +745,14 @@ var Router = function () {
 
     this.subscriptions.add(fn);
     return function () {
-      return _this2.subscriptions.delete(fn);
+      return _this2.subscriptions['delete'](fn);
     };
   };
 
   return Router;
 }();
 
-exports.default = Router;
+exports['default'] = Router;
 
 
 function toRoute(path) {

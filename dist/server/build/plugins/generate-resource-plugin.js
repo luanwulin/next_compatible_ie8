@@ -16,11 +16,11 @@ var _path = require('path');
 
 var _utils = require('../../utils');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var GernerateResource = function () {
   function GernerateResource() {
-    (0, _classCallCheck3.default)(this, GernerateResource);
+    (0, _classCallCheck3['default'])(this, GernerateResource);
   }
 
   GernerateResource.prototype.apply = function apply(compiler) {
@@ -74,7 +74,7 @@ var GernerateResource = function () {
           }
         }
 
-        var newContent = (0, _stringify2.default)(webpackMap);
+        var newContent = (0, _stringify2['default'])(webpackMap);
         // Replace the exisiting chunk with the new content
         compilation.assets[(0, _path.join)(destResourcePath, 'resource.map.json')] = {
           source: function source() {
@@ -93,4 +93,4 @@ var GernerateResource = function () {
   return GernerateResource;
 }();
 
-exports.default = GernerateResource;
+exports['default'] = GernerateResource;

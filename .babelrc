@@ -19,7 +19,9 @@
   "plugins": [
     "transform-object-rest-spread",
     "transform-class-properties",
-    "transform-runtime"
+    "transform-runtime",
+    "transform-es3-property-literals",
+    "transform-es3-member-expression-literals"
   ],
   "env": {
     "test": {

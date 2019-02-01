@@ -70,6 +70,10 @@ var _generateResourcePlugin = require('./plugins/generate-resource-plugin');
 
 var _generateResourcePlugin2 = _interopRequireDefault(_generateResourcePlugin);
 
+var _es3ifyWebpackPlugin = require('es3ify-webpack-plugin');
+
+var _es3ifyWebpackPlugin2 = _interopRequireDefault(_es3ifyWebpackPlugin);
+
 var _config = require('../config');
 
 var _config2 = _interopRequireDefault(_config);
@@ -86,22 +90,22 @@ var _rootModuleRelativePath = require('./root-module-relative-path');
 
 var _rootModuleRelativePath2 = _interopRequireDefault(_rootModuleRelativePath);
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var documentPage = (0, _path.join)('pages', '_document.js');
 var defaultPages = ['_error.js', '_document.js'];
 var nextPagesDir = (0, _path.join)(__dirname, '..', '..', 'pages');
 var nextNodeModulesDir = (0, _path.join)(__dirname, '..', '..', '..', 'node_modules');
-var interpolateNames = new _map2.default(defaultPages.map(function (p) {
+var interpolateNames = new _map2['default'](defaultPages.map(function (p) {
   return [(0, _path.join)(nextPagesDir, p), 'dist/pages/' + p];
 }));
 
-var relativeResolve = (0, _rootModuleRelativePath2.default)(require);
+var relativeResolve = (0, _rootModuleRelativePath2['default'])(require);
 
-exports.default = function () {
-  var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(dir) {
+exports['default'] = function () {
+  var _ref = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee2(dir) {
     var _this = this;
 
     var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
@@ -115,21 +119,21 @@ exports.default = function () {
         conf = _ref2$conf === undefined ? null : _ref2$conf;
 
     var config, defaultEntries, mainJS, totalPages, entry, plugins, nodePathList, mainBabelOptions, externalBabelConfig, options, rules, webpackConfig;
-    return _regenerator2.default.wrap(function _callee2$(_context2) {
+    return _regenerator2['default'].wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             dir = (0, _path.resolve)(dir);
-            config = (0, _config2.default)(dir, conf);
+            config = (0, _config2['default'])(dir, conf);
             defaultEntries = dev ? [(0, _path.join)(__dirname, '..', '..', 'client', 'webpack-hot-middleware-client'), (0, _path.join)(__dirname, '..', '..', 'client', 'on-demand-entries-client')] : [];
             mainJS = dev ? require.resolve('../../client/next-dev') : require.resolve('../../client/next');
             totalPages = void 0;
 
             entry = function () {
-              var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+              var _ref3 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee() {
                 var entries, pages, devPages, _iterator, _isArray, _i, _ref4, p, _iterator2, _isArray2, _i2, _ref5, _p, _iterator3, _isArray3, _i3, _ref6, _p2, entryName;
 
-                return _regenerator2.default.wrap(function _callee$(_context) {
+                return _regenerator2['default'].wrap(function _callee$(_context) {
                   while (1) {
                     switch (_context.prev = _context.next) {
                       case 0:
@@ -137,7 +141,7 @@ exports.default = function () {
                           'main.js': [].concat(defaultEntries, config.clientBootstrap || [], [mainJS])
                         };
                         _context.next = 3;
-                        return (0, _globPromise2.default)('pages/**/*.js', { cwd: dir });
+                        return (0, _globPromise2['default'])('pages/**/*.js', { cwd: dir });
 
                       case 3:
                         pages = _context.sent;
@@ -153,7 +157,7 @@ exports.default = function () {
                           break;
                         }
 
-                        _iterator = devPages, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);
+                        _iterator = devPages, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3['default'])(_iterator);
 
                       case 7:
                         if (!_isArray) {
@@ -200,7 +204,7 @@ exports.default = function () {
                         break;
 
                       case 23:
-                        _iterator2 = pages, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : (0, _getIterator3.default)(_iterator2);
+                        _iterator2 = pages, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : (0, _getIterator3['default'])(_iterator2);
 
                       case 24:
                         if (!_isArray2) {
@@ -243,7 +247,7 @@ exports.default = function () {
                         break;
 
                       case 38:
-                        _iterator3 = defaultPages, _isArray3 = Array.isArray(_iterator3), _i3 = 0, _iterator3 = _isArray3 ? _iterator3 : (0, _getIterator3.default)(_iterator3);
+                        _iterator3 = defaultPages, _isArray3 = Array.isArray(_iterator3), _i3 = 0, _iterator3 = _isArray3 ? _iterator3 : (0, _getIterator3['default'])(_iterator3);
 
                       case 39:
                         if (!_isArray3) {
@@ -309,19 +313,19 @@ exports.default = function () {
               };
             }();
 
-            plugins = [new _webpack2.default.IgnorePlugin(/(precomputed)/, /node_modules.+(elliptic)/), new _webpack2.default.LoaderOptionsPlugin({
+            plugins = [new _webpack2['default'].IgnorePlugin(/(precomputed)/, /node_modules.+(elliptic)/), new _webpack2['default'].LoaderOptionsPlugin({
               options: {
                 context: dir,
                 customInterpolateName: function customInterpolateName(url, name, opts) {
                   return interpolateNames.get(this.resourcePath) || url;
                 }
               }
-            }), new _writeFileWebpackPlugin2.default({
+            }), new _writeFileWebpackPlugin2['default']({
               exitOnErrors: false,
               log: false,
               // required not to cache removed files
               useHashIndex: false
-            }), new _webpack2.default.optimize.CommonsChunkPlugin({
+            }), new _webpack2['default'].optimize.CommonsChunkPlugin({
               name: 'commons',
               filename: 'commons.js',
               minChunks: function minChunks(module, count) {
@@ -351,30 +355,30 @@ exports.default = function () {
             // This chunk contains all the webpack related code. So, all the changes
             // related to that happens to this chunk.
             // It won't touch commons.js and that gives us much better re-build perf.
-            new _webpack2.default.optimize.CommonsChunkPlugin({
+            new _webpack2['default'].optimize.CommonsChunkPlugin({
               name: 'manifest',
               filename: 'manifest.js'
-            }), new _webpack2.default.DefinePlugin({
-              'process.env.NODE_ENV': (0, _stringify2.default)(dev ? 'development' : 'production'),
-              'NEXT_BASEROUTE': (0, _stringify2.default)(config.baseRoute)
-            }), new _pagesPlugin2.default(), new _dynamicChunksPlugin2.default(), new _caseSensitivePathsWebpackPlugin2.default(), new _generateResourcePlugin2.default()];
+            }), new _webpack2['default'].DefinePlugin({
+              'process.env.NODE_ENV': (0, _stringify2['default'])(dev ? 'development' : 'production'),
+              'NEXT_BASEROUTE': (0, _stringify2['default'])(config.baseRoute)
+            }), new _pagesPlugin2['default'](), new _dynamicChunksPlugin2['default'](), new _caseSensitivePathsWebpackPlugin2['default'](), new _generateResourcePlugin2['default'](), new _es3ifyWebpackPlugin2['default']()];
 
 
             if (dev) {
-              plugins.push(new _webpack2.default.HotModuleReplacementPlugin(), new _webpack2.default.NoEmitOnErrorsPlugin(), new _unlinkFilePlugin2.default());
+              plugins.push(new _webpack2['default'].HotModuleReplacementPlugin(), new _webpack2['default'].NoEmitOnErrorsPlugin(), new _unlinkFilePlugin2['default']());
               if (!quiet) {
-                plugins.push(new _friendlyErrorsWebpackPlugin2.default());
+                plugins.push(new _friendlyErrorsWebpackPlugin2['default']());
               }
             } else {
-              plugins.push(new _webpack2.default.IgnorePlugin(/react-hot-loader/));
-              plugins.push(new _combineAssetsPlugin2.default({
+              plugins.push(new _webpack2['default'].IgnorePlugin(/react-hot-loader/));
+              plugins.push(new _combineAssetsPlugin2['default']({
                 input: ['manifest.js', 'commons.js', 'main.js'],
                 output: 'app.js'
-              }), new _webpack2.default.optimize.UglifyJsPlugin({
+              }), new _webpack2['default'].optimize.UglifyJsPlugin({
                 compress: { warnings: false },
                 sourceMap: false
               }));
-              plugins.push(new _webpack2.default.optimize.ModuleConcatenationPlugin());
+              plugins.push(new _webpack2['default'].optimize.ModuleConcatenationPlugin());
             }
 
             nodePathList = (process.env.NODE_PATH || '').split(process.platform === 'win32' ? ';' : ':').filter(function (p) {
@@ -384,10 +388,10 @@ exports.default = function () {
               cacheDirectory: true,
               presets: [],
               plugins: [['transform-define', {
-                'NEXT_BASEROUTE': (0, _stringify2.default)(config.baseRoute)
+                'NEXT_BASEROUTE': (0, _stringify2['default'])(config.baseRoute)
               }]]
             };
-            externalBabelConfig = (0, _findConfig2.default)(dir);
+            externalBabelConfig = (0, _findConfig2['default'])(dir);
 
             if (externalBabelConfig) {
               console.log('> Using external babel configuration');
@@ -473,7 +477,7 @@ exports.default = function () {
                   var output = transpiled.code;
 
                   if (map) {
-                    var nodeMap = (0, _assign2.default)({}, map);
+                    var nodeMap = (0, _assign2['default'])({}, map);
                     nodeMap.sources = nodeMap.sources.map(function (source) {
                       return source.replace(/\?entry/, '');
                     });
@@ -482,7 +486,7 @@ exports.default = function () {
                     // Output explicit inline source map that source-map-support can pickup via requireHook mode.
                     // Since these are not formal chunks, the devtool infrastructure in webpack does not output
                     // a source map for these files.
-                    var sourceMapUrl = new Buffer((0, _stringify2.default)(nodeMap), 'utf-8').toString('base64');
+                    var sourceMapUrl = new Buffer((0, _stringify2['default'])(nodeMap), 'utf-8').toString('base64');
                     output = output + '\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,' + sourceMapUrl;
                   }
 
@@ -505,7 +509,7 @@ exports.default = function () {
                 cacheDirectory: true,
                 presets: [require.resolve('./babel/preset')],
                 plugins: [['transform-define', {
-                  'NEXT_BASEROUTE': (0, _stringify2.default)(config.baseRoute)
+                  'NEXT_BASEROUTE': (0, _stringify2['default'])(config.baseRoute)
                 }]]
               }
             }, {
@@ -569,7 +573,7 @@ exports.default = function () {
             webpackConfig = _context2.sent;
 
           case 20:
-            return _context2.abrupt('return', (0, _webpack2.default)(webpackConfig));
+            return _context2.abrupt('return', (0, _webpack2['default'])(webpackConfig));
 
           case 21:
           case 'end':

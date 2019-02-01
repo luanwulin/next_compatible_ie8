@@ -6,7 +6,7 @@ var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 // This plugin combines a set of assets into a single asset
 // This should be only used with text assets,
@@ -15,7 +15,7 @@ var CombineAssetsPlugin = function () {
   function CombineAssetsPlugin(_ref) {
     var input = _ref.input,
         output = _ref.output;
-    (0, _classCallCheck3.default)(this, CombineAssetsPlugin);
+    (0, _classCallCheck3['default'])(this, CombineAssetsPlugin);
 
     this.input = input;
     this.output = output;
@@ -51,4 +51,4 @@ var CombineAssetsPlugin = function () {
   return CombineAssetsPlugin;
 }();
 
-exports.default = CombineAssetsPlugin;
+exports['default'] = CombineAssetsPlugin;

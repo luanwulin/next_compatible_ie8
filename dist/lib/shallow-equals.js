@@ -1,7 +1,7 @@
 "use strict";
 
 exports.__esModule = true;
-exports.default = shallowEquals;
+exports["default"] = shallowEquals;
 function shallowEquals(a, b) {
   for (var i in a) {
     if (b[i] !== a[i]) return false;

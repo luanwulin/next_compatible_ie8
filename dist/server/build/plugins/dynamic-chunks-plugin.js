@@ -10,11 +10,11 @@ var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var PagesPlugin = function () {
   function PagesPlugin() {
-    (0, _classCallCheck3.default)(this, PagesPlugin);
+    (0, _classCallCheck3['default'])(this, PagesPlugin);
   }
 
   PagesPlugin.prototype.apply = function apply(compiler) {
@@ -22,7 +22,7 @@ var PagesPlugin = function () {
     var matchChunkName = /^chunks[/\\](.*)$/;
 
     compiler.plugin('after-compile', function (compilation, callback) {
-      var chunks = (0, _keys2.default)(compilation.namedChunks).map(function (key) {
+      var chunks = (0, _keys2['default'])(compilation.namedChunks).map(function (key) {
         return compilation.namedChunks[key];
       }).filter(function (chunk) {
         return isImportChunk.test(chunk.name);
@@ -62,4 +62,4 @@ var PagesPlugin = function () {
   return PagesPlugin;
 }();
 
-exports.default = PagesPlugin;
+exports['default'] = PagesPlugin;

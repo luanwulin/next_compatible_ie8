@@ -15,16 +15,16 @@ var _export2 = _interopRequireDefault(_export);
 
 var _utils = require('../lib/utils');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var argv = (0, _minimist2.default)(process.argv.slice(2), {
+var argv = (0, _minimist2['default'])(process.argv.slice(2), {
   alias: {
     h: 'help',
     s: 'silent',
     o: 'outdir'
   },
   boolean: ['h'],
-  default: {
+  'default': {
     s: false,
     o: null
   }
@@ -55,7 +55,7 @@ var options = {
   outdir: argv.outdir ? (0, _path.resolve)(argv.outdir) : (0, _path.resolve)(dir, 'out')
 };
 
-(0, _export2.default)(dir, options).catch(function (err) {
+(0, _export2['default'])(dir, options)['catch'](function (err) {
   console.error(err);
   process.exit(1);
 });

@@ -18,14 +18,14 @@ var _createClass2 = require('babel-runtime/helpers/createClass');
 
 var _createClass3 = _interopRequireDefault(_createClass2);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 // based on https://github.com/sindresorhus/p-queue (MIT)
 // modified for browser support
 
 var Queue = function () {
   function Queue() {
-    (0, _classCallCheck3.default)(this, Queue);
+    (0, _classCallCheck3['default'])(this, Queue);
 
     this._queue = [];
   }
@@ -38,7 +38,7 @@ var Queue = function () {
     return this._queue.shift();
   };
 
-  (0, _createClass3.default)(Queue, [{
+  (0, _createClass3['default'])(Queue, [{
     key: 'size',
     get: function get() {
       return this._queue.length;
@@ -49,9 +49,9 @@ var Queue = function () {
 
 var PQueue = function () {
   function PQueue(opts) {
-    (0, _classCallCheck3.default)(this, PQueue);
+    (0, _classCallCheck3['default'])(this, PQueue);
 
-    opts = (0, _assign2.default)({
+    opts = (0, _assign2['default'])({
       concurrency: Infinity,
       queueClass: Queue
     }, opts);
@@ -79,7 +79,7 @@ var PQueue = function () {
   PQueue.prototype.add = function add(fn, opts) {
     var _this = this;
 
-    return new _promise2.default(function (resolve, reject) {
+    return new _promise2['default'](function (resolve, reject) {
       var run = function run() {
         _this._pendingCount++;
 
@@ -103,7 +103,7 @@ var PQueue = function () {
   PQueue.prototype.onEmpty = function onEmpty() {
     var _this2 = this;
 
-    return new _promise2.default(function (resolve) {
+    return new _promise2['default'](function (resolve) {
       var existingResolve = _this2._resolveEmpty;
       _this2._resolveEmpty = function () {
         existingResolve();
@@ -112,7 +112,7 @@ var PQueue = function () {
     });
   };
 
-  (0, _createClass3.default)(PQueue, [{
+  (0, _createClass3['default'])(PQueue, [{
     key: 'size',
     get: function get() {
       return this.queue.size;
@@ -126,4 +126,4 @@ var PQueue = function () {
   return PQueue;
 }();
 
-exports.default = PQueue;
+exports['default'] = PQueue;
