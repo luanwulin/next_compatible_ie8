@@ -44,16 +44,21 @@ propertyFields.forEach(function (field) {
   // The value might get changed as we change routes and this is the
   // proper way to access it
   (0, _defineProperty2['default'])(SingletonRouter, field, {
-    value: SingletonRouter.router[field]
+    value: function value() {
+      var _SingletonRouter$rout;
+
+      throwIfNoRouter();
+      return (_SingletonRouter$rout = SingletonRouter.router)[field].apply(_SingletonRouter$rout, arguments);
+    }
   });
 });
 
 coreMethodFields.forEach(function (field) {
   SingletonRouter[field] = function () {
-    var _SingletonRouter$rout;
+    var _SingletonRouter$rout2;
 
     throwIfNoRouter();
-    return (_SingletonRouter$rout = SingletonRouter.router)[field].apply(_SingletonRouter$rout, arguments);
+    return (_SingletonRouter$rout2 = SingletonRouter.router)[field].apply(_SingletonRouter$rout2, arguments);
   };
 });
 
@@ -159,7 +164,9 @@ function makePublicRouterInstance(router) {
     // The value might get changed as we change routes and this is the
     // proper way to access it
     (0, _defineProperty2['default'])(instance, field, {
-      value: router[field]
+      value: function value() {
+        return router[field].apply(router, arguments);
+      }
     });
   });
 
