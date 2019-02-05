@@ -34,23 +34,23 @@ var _utils = require('./utils');
 
 var _router = require('./router');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = function (_Component) {
-  (0, _inherits3['default'])(App, _Component);
+  (0, _inherits3.default)(App, _Component);
 
   function App() {
     var _temp, _this, _ret;
 
-    (0, _classCallCheck3['default'])(this, App);
+    (0, _classCallCheck3.default)(this, App);
 
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3['default'])(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.state = {
       hasError: null
-    }, _temp), (0, _possibleConstructorReturn3['default'])(_this, _ret);
+    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
   App.prototype.getChildContext = function getChildContext() {
@@ -85,10 +85,10 @@ var App = function (_Component) {
     }
     var containerProps = { Component: Component, props: props, hash: hash, router: router, url: url };
 
-    return _react2['default'].createElement(
+    return _react2.default.createElement(
       'div',
       null,
-      _react2['default'].createElement(Container, containerProps)
+      _react2.default.createElement(Container, containerProps)
     );
   };
 
@@ -96,17 +96,17 @@ var App = function (_Component) {
 }(_react.Component);
 
 App.childContextTypes = {
-  headManager: _propTypes2['default'].object,
-  router: _propTypes2['default'].object
+  headManager: _propTypes2.default.object,
+  router: _propTypes2.default.object
 };
-exports['default'] = App;
+exports.default = App;
 
 var Container = function (_Component2) {
-  (0, _inherits3['default'])(Container, _Component2);
+  (0, _inherits3.default)(Container, _Component2);
 
   function Container() {
-    (0, _classCallCheck3['default'])(this, Container);
-    return (0, _possibleConstructorReturn3['default'])(this, _Component2.apply(this, arguments));
+    (0, _classCallCheck3.default)(this, Container);
+    return (0, _possibleConstructorReturn3.default)(this, _Component2.apply(this, arguments));
   }
 
   Container.prototype.componentDidMount = function componentDidMount() {
@@ -134,7 +134,7 @@ var Container = function (_Component2) {
 
   Container.prototype.shouldComponentUpdate = function shouldComponentUpdate(nextProps) {
     // need this check not to rerender component which has already thrown an error
-    return !(0, _shallowEquals2['default'])(this.props, nextProps);
+    return !(0, _shallowEquals2.default)(this.props, nextProps);
   };
 
   Container.prototype.render = function render() {
@@ -145,9 +145,9 @@ var Container = function (_Component2) {
 
 
     if (process.env.NODE_ENV === 'production') {
-      return _react2['default'].createElement(Component, (0, _extends3['default'])({}, props, { url: url }));
+      return _react2.default.createElement(Component, (0, _extends3.default)({}, props, { url: url }));
     } else {
-      var ErrorDebug = require('./error-debug')['default'];
+      var ErrorDebug = require('./error-debug').default;
 
       var _require = require('react-hot-loader'),
           AppContainer = _require.AppContainer;
@@ -156,10 +156,10 @@ var Container = function (_Component2) {
       // https://github.com/gaearon/react-hot-loader/issues/442
 
 
-      return _react2['default'].createElement(
+      return _react2.default.createElement(
         AppContainer,
         { warnings: false, errorReporter: ErrorDebug },
-        _react2['default'].createElement(Component, (0, _extends3['default'])({}, props, { url: url }))
+        _react2.default.createElement(Component, (0, _extends3.default)({}, props, { url: url }))
       );
     }
   };

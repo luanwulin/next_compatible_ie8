@@ -14,7 +14,7 @@ var RELATIVE_START = 'node_modules' + _path.sep;
 // This function returns paths relative to the top-level 'node_modules'
 // directory found in the path. If none is found, returns the complete path.
 
-exports['default'] = function (moduleRequire) {
+exports.default = function (moduleRequire) {
   return function (path) {
     // package.json removed because babel-runtime is resolved as
     // "babel-runtime/package"

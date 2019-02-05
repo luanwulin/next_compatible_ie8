@@ -18,13 +18,13 @@ var _router = require('../lib/router');
 
 var _router2 = _interopRequireDefault(_router);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports['default'] = function () {
+exports.default = function () {
   var handlers = {
     reload: function reload(route) {
       if (route === '/_error') {
-        for (var _iterator = (0, _keys2['default'])(_router2['default'].components), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3['default'])(_iterator);;) {
+        for (var _iterator = (0, _keys2.default)(_router2.default.components), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);;) {
           var _ref;
 
           if (_isArray) {
@@ -37,12 +37,12 @@ exports['default'] = function () {
           }
 
           var r = _ref;
-          var err = _router2['default'].components[r].err;
+          var err = _router2.default.components[r].err;
 
           if (err) {
             // reload all error routes
             // which are expected to be errors of '/_error' routes
-            _router2['default'].reload(r);
+            _router2.default.reload(r);
           }
         }
         return;
@@ -53,7 +53,7 @@ exports['default'] = function () {
         return;
       }
 
-      _router2['default'].reload(route);
+      _router2.default.reload(route);
     },
     change: function change(route) {
       if (route === '/_document') {
@@ -61,16 +61,16 @@ exports['default'] = function () {
         return;
       }
 
-      var _ref2 = _router2['default'].components[route] || {},
+      var _ref2 = _router2.default.components[route] || {},
           err = _ref2.err,
           Component = _ref2.Component;
 
       if (err) {
         // reload to recover from runtime errors
-        _router2['default'].reload(route);
+        _router2.default.reload(route);
       }
 
-      if (_router2['default'].route !== route) {
+      if (_router2.default.route !== route) {
         // If this is a not a change for a currently viewing page.
         // We don't need to worry about it.
         return;
@@ -85,7 +85,7 @@ exports['default'] = function () {
     }
   };
 
-  _webpackHmr2['default'].subscribe(function (obj) {
+  _webpackHmr2.default.subscribe(function (obj) {
     var fn = handlers[obj.action];
     if (fn) {
       var data = obj.data || [];
