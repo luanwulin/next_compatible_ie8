@@ -1,15 +1,35 @@
 'use strict';
 
+<<<<<<< HEAD
 exports.__esModule = true;
+=======
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+>>>>>>> parent of b9f85a6... 又兼容了一把
 
 var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
+<<<<<<< HEAD
+=======
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+>>>>>>> parent of b9f85a6... 又兼容了一把
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
+<<<<<<< HEAD
+=======
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+>>>>>>> parent of b9f85a6... 又兼容了一把
 var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
@@ -56,6 +76,7 @@ var LinkPrefetch = function (_React$Component) {
 
   function LinkPrefetch() {
     (0, _classCallCheck3.default)(this, LinkPrefetch);
+<<<<<<< HEAD
     return (0, _possibleConstructorReturn3.default)(this, _React$Component.apply(this, arguments));
   }
 
@@ -68,6 +89,22 @@ var LinkPrefetch = function (_React$Component) {
     return _react2.default.createElement(_link2.default, props);
   };
 
+=======
+    return (0, _possibleConstructorReturn3.default)(this, (LinkPrefetch.__proto__ || (0, _getPrototypeOf2.default)(LinkPrefetch)).apply(this, arguments));
+  }
+
+  (0, _createClass3.default)(LinkPrefetch, [{
+    key: 'render',
+    value: function render() {
+      wantLinkPrefetch();
+      var props = (0, _extends3.default)({}, this.props, {
+        prefetch: this.props.prefetch !== false
+      });
+
+      return _react2.default.createElement(_link2.default, props);
+    }
+  }]);
+>>>>>>> parent of b9f85a6... 又兼容了一把
   return LinkPrefetch;
 }(_react2.default.Component);
 

@@ -1,11 +1,24 @@
 'use strict';
 
+<<<<<<< HEAD
 exports.__esModule = true;
+=======
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+>>>>>>> parent of b9f85a6... 又兼容了一把
 
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
+<<<<<<< HEAD
+=======
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+>>>>>>> parent of b9f85a6... 又兼容了一把
 var _stringify = require('babel-runtime/core-js/json/stringify');
 
 var _stringify2 = _interopRequireDefault(_stringify);
@@ -18,6 +31,13 @@ var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
+<<<<<<< HEAD
+=======
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
+>>>>>>> parent of b9f85a6... 又兼容了一把
 var _promise = require('babel-runtime/core-js/promise');
 
 var _promise2 = _interopRequireDefault(_promise);
@@ -112,7 +132,11 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
     }).map(function (e) {
       return e.module.chunks;
     }).reduce(function (a, b) {
+<<<<<<< HEAD
       return [].concat(a, b);
+=======
+      return [].concat((0, _toConsumableArray3.default)(a), (0, _toConsumableArray3.default)(b));
+>>>>>>> parent of b9f85a6... 又兼容了一把
     }, []).map(function (c) {
       var pageName = _utils.MATCH_ROUTE_NAME.exec(c.name)[1];
       return normalizePage('/' + pageName);
@@ -177,17 +201,26 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
         });
       });
     },
+<<<<<<< HEAD
     ensurePage: function ensurePage(page) {
       var _this2 = this;
 
       return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+=======
+    ensurePage: function () {
+      var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(page) {
+>>>>>>> parent of b9f85a6... 又兼容了一把
         var pagePath, pathname, name, entry;
         return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
+<<<<<<< HEAD
                 return _this2.waitUntilReloaded();
+=======
+                return this.waitUntilReloaded();
+>>>>>>> parent of b9f85a6... 又兼容了一把
 
               case 2:
                 page = normalizePage(page);
@@ -234,11 +267,25 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
                 return _context.stop();
             }
           }
+<<<<<<< HEAD
         }, _callee, _this2);
       }))();
     },
     middleware: function middleware() {
       var _this3 = this;
+=======
+        }, _callee, this);
+      }));
+
+      function ensurePage(_x) {
+        return _ref2.apply(this, arguments);
+      }
+
+      return ensurePage;
+    }(),
+    middleware: function middleware() {
+      var _this2 = this;
+>>>>>>> parent of b9f85a6... 又兼容了一把
 
       return function (req, res, next) {
         if (stopped) {
@@ -251,7 +298,11 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
           // Webpack config is reloading. So, we need to wait until it's done and
           // reload user's browser.
           // So the user could connect to the new handler and webpack setup.
+<<<<<<< HEAD
           _this3.waitUntilReloaded().then(function () {
+=======
+          _this2.waitUntilReloaded().then(function () {
+>>>>>>> parent of b9f85a6... 又兼容了一把
             res.statusCode = 302;
             res.setHeader('Location', req.url);
             res.end('302');
@@ -359,6 +410,7 @@ var Invalidator = function () {
     this.rebuildAgain = false;
   }
 
+<<<<<<< HEAD
   Invalidator.prototype.invalidate = function invalidate() {
     // If there's a current build is processing, we won't abort it by invalidating.
     // (If aborted, it'll cause a client side hard reload)
@@ -385,5 +437,37 @@ var Invalidator = function () {
     }
   };
 
+=======
+  (0, _createClass3.default)(Invalidator, [{
+    key: 'invalidate',
+    value: function invalidate() {
+      // If there's a current build is processing, we won't abort it by invalidating.
+      // (If aborted, it'll cause a client side hard reload)
+      // But let it to invalidate just after the completion.
+      // So, it can re-build the queued pages at once.
+      if (this.building) {
+        this.rebuildAgain = true;
+        return;
+      }
+
+      this.building = true;
+      this.devMiddleware.invalidate();
+    }
+  }, {
+    key: 'startBuilding',
+    value: function startBuilding() {
+      this.building = true;
+    }
+  }, {
+    key: 'doneBuilding',
+    value: function doneBuilding() {
+      this.building = false;
+      if (this.rebuildAgain) {
+        this.rebuildAgain = false;
+        this.invalidate();
+      }
+    }
+  }]);
+>>>>>>> parent of b9f85a6... 又兼容了一把
   return Invalidator;
 }();

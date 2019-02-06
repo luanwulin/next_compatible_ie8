@@ -1,11 +1,28 @@
 'use strict';
 
+<<<<<<< HEAD
 exports.__esModule = true;
+=======
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+>>>>>>> parent of b9f85a6... 又兼容了一把
 
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
+<<<<<<< HEAD
+=======
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+>>>>>>> parent of b9f85a6... 又兼容了一把
 var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
@@ -14,6 +31,13 @@ var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
+<<<<<<< HEAD
+=======
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
+>>>>>>> parent of b9f85a6... 又兼容了一把
 var _set = require('babel-runtime/core-js/set');
 
 var _set2 = _interopRequireDefault(_set);
@@ -50,7 +74,11 @@ function withSideEffect(reduceComponentsToState, handleStateChangeOnClient, mapS
     var state = void 0;
 
     function emitChange(component) {
+<<<<<<< HEAD
       state = reduceComponentsToState([].concat(mountedInstances));
+=======
+      state = reduceComponentsToState([].concat((0, _toConsumableArray3.default)(mountedInstances)));
+>>>>>>> parent of b9f85a6... 又兼容了一把
 
       if (SideEffect.canUseDOM) {
         handleStateChangeOnClient.call(component, state);
@@ -64,6 +92,7 @@ function withSideEffect(reduceComponentsToState, handleStateChangeOnClient, mapS
 
       function SideEffect() {
         (0, _classCallCheck3.default)(this, SideEffect);
+<<<<<<< HEAD
         return (0, _possibleConstructorReturn3.default)(this, _Component.apply(this, arguments));
       }
 
@@ -109,6 +138,60 @@ function withSideEffect(reduceComponentsToState, handleStateChangeOnClient, mapS
         );
       };
 
+=======
+        return (0, _possibleConstructorReturn3.default)(this, (SideEffect.__proto__ || (0, _getPrototypeOf2.default)(SideEffect)).apply(this, arguments));
+      }
+
+      (0, _createClass3.default)(SideEffect, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+          mountedInstances.add(this);
+          emitChange(this);
+        }
+      }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+          emitChange(this);
+        }
+      }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+          mountedInstances.delete(this);
+          emitChange(this);
+        }
+      }, {
+        key: 'render',
+        value: function render() {
+          return _react2.default.createElement(
+            WrappedComponent,
+            null,
+            this.props.children
+          );
+        }
+      }], [{
+        key: 'peek',
+        value: function peek() {
+          return state;
+        }
+
+        // Expose canUseDOM so tests can monkeypatch it
+
+        // Try to use displayName of wrapped component
+
+      }, {
+        key: 'rewind',
+        value: function rewind() {
+          if (SideEffect.canUseDOM) {
+            throw new Error('You may only call rewind() on the server. Call peek() to read the current state.');
+          }
+
+          var recordedState = state;
+          state = undefined;
+          mountedInstances.clear();
+          return recordedState;
+        }
+      }]);
+>>>>>>> parent of b9f85a6... 又兼容了一把
       return SideEffect;
     }(_react.Component);
 

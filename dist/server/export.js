@@ -1,6 +1,12 @@
 'use strict';
 
+<<<<<<< HEAD
 exports.__esModule = true;
+=======
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+>>>>>>> parent of b9f85a6... 又兼容了一把
 
 var _promise = require('babel-runtime/core-js/promise');
 
@@ -56,7 +62,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = function () {
   var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(dir, options, configuration) {
+<<<<<<< HEAD
     var config, nextDir, buildId, buildStats, outDir, exportPathMap, exportPaths, renderOpts, _iterator, _isArray, _i, _ref2, path, _exportPathMap$path, page, _exportPathMap$path$q, query, req, res, htmlFilename, baseDir, htmlFilepath, html, log;
+=======
+    var config, nextDir, buildId, buildStats, outDir, exportPathMap, exportPaths, renderOpts, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, path, _exportPathMap$path, page, _exportPathMap$path$q, query, req, res, htmlFilename, baseDir, htmlFilepath, html, log;
+>>>>>>> parent of b9f85a6... 又兼容了一把
 
     return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
@@ -162,6 +172,7 @@ exports.default = function () {
               nextExport: true
             };
 
+<<<<<<< HEAD
             _iterator = exportPaths, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);
 
           case 37:
@@ -197,6 +208,21 @@ exports.default = function () {
 
           case 47:
             path = _ref2;
+=======
+            _iteratorNormalCompletion = true;
+            _didIteratorError = false;
+            _iteratorError = undefined;
+            _context.prev = 39;
+            _iterator = (0, _getIterator3.default)(exportPaths);
+
+          case 41:
+            if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
+              _context.next = 60;
+              break;
+            }
+
+            path = _step.value;
+>>>>>>> parent of b9f85a6... 又兼容了一把
 
             log('  exporting path: ' + path);
 
@@ -214,6 +240,7 @@ exports.default = function () {
             }
             baseDir = (0, _path.join)(outDir, (0, _path.dirname)(htmlFilename));
             htmlFilepath = (0, _path.join)(outDir, htmlFilename);
+<<<<<<< HEAD
             _context.next = 58;
             return (0, _mkdirpThen2.default)(baseDir);
 
@@ -222,25 +249,86 @@ exports.default = function () {
             return (0, _render.renderToHTML)(req, res, page, query, renderOpts);
 
           case 60:
+=======
+            _context.next = 53;
+            return (0, _mkdirpThen2.default)(baseDir);
+
+          case 53:
+            _context.next = 55;
+            return (0, _render.renderToHTML)(req, res, page, query, renderOpts);
+
+          case 55:
+>>>>>>> parent of b9f85a6... 又兼容了一把
             html = _context.sent;
 
             (0, _fs.writeFileSync)(htmlFilepath, html, 'utf8');
 
+<<<<<<< HEAD
           case 62:
             _context.next = 37;
             break;
 
           case 64:
+=======
+          case 57:
+            _iteratorNormalCompletion = true;
+            _context.next = 41;
+            break;
+
+          case 60:
+            _context.next = 66;
+            break;
+
+          case 62:
+            _context.prev = 62;
+            _context.t0 = _context['catch'](39);
+            _didIteratorError = true;
+            _iteratorError = _context.t0;
+
+          case 66:
+            _context.prev = 66;
+            _context.prev = 67;
+
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+
+          case 69:
+            _context.prev = 69;
+
+            if (!_didIteratorError) {
+              _context.next = 72;
+              break;
+            }
+
+            throw _iteratorError;
+
+          case 72:
+            return _context.finish(69);
+
+          case 73:
+            return _context.finish(66);
+
+          case 74:
+>>>>>>> parent of b9f85a6... 又兼容了一把
 
             // Add an empty line to the console for the better readability.
             log('');
 
+<<<<<<< HEAD
           case 65:
+=======
+          case 75:
+>>>>>>> parent of b9f85a6... 又兼容了一把
           case 'end':
             return _context.stop();
         }
       }
+<<<<<<< HEAD
     }, _callee, this);
+=======
+    }, _callee, this, [[39, 62, 66, 74], [67,, 69, 73]]);
+>>>>>>> parent of b9f85a6... 又兼容了一把
   }));
 
   return function (_x, _x2, _x3) {

@@ -1,6 +1,12 @@
 'use strict';
 
+<<<<<<< HEAD
 exports.__esModule = true;
+=======
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+>>>>>>> parent of b9f85a6... 又兼容了一把
 
 var _promise = require('babel-runtime/core-js/promise');
 
@@ -30,6 +36,7 @@ var Queue = function () {
     this._queue = [];
   }
 
+<<<<<<< HEAD
   Queue.prototype.enqueue = function enqueue(run) {
     this._queue.push(run);
   };
@@ -39,6 +46,19 @@ var Queue = function () {
   };
 
   (0, _createClass3.default)(Queue, [{
+=======
+  (0, _createClass3.default)(Queue, [{
+    key: 'enqueue',
+    value: function enqueue(run) {
+      this._queue.push(run);
+    }
+  }, {
+    key: 'dequeue',
+    value: function dequeue() {
+      return this._queue.shift();
+    }
+  }, {
+>>>>>>> parent of b9f85a6... 又兼容了一把
     key: 'size',
     get: function get() {
       return this._queue.length;
@@ -66,6 +86,7 @@ var PQueue = function () {
     this._resolveEmpty = function () {};
   }
 
+<<<<<<< HEAD
   PQueue.prototype._next = function _next() {
     this._pendingCount--;
 
@@ -113,6 +134,58 @@ var PQueue = function () {
   };
 
   (0, _createClass3.default)(PQueue, [{
+=======
+  (0, _createClass3.default)(PQueue, [{
+    key: '_next',
+    value: function _next() {
+      this._pendingCount--;
+
+      if (this.queue.size > 0) {
+        this.queue.dequeue()();
+      } else {
+        this._resolveEmpty();
+      }
+    }
+  }, {
+    key: 'add',
+    value: function add(fn, opts) {
+      var _this = this;
+
+      return new _promise2.default(function (resolve, reject) {
+        var run = function run() {
+          _this._pendingCount++;
+
+          fn().then(function (val) {
+            resolve(val);
+            _this._next();
+          }, function (err) {
+            reject(err);
+            _this._next();
+          });
+        };
+
+        if (_this._pendingCount < _this._concurrency) {
+          run();
+        } else {
+          _this.queue.enqueue(run, opts);
+        }
+      });
+    }
+  }, {
+    key: 'onEmpty',
+    value: function onEmpty() {
+      var _this2 = this;
+
+      return new _promise2.default(function (resolve) {
+        var existingResolve = _this2._resolveEmpty;
+        _this2._resolveEmpty = function () {
+          existingResolve();
+          resolve();
+        };
+      });
+    }
+  }, {
+>>>>>>> parent of b9f85a6... 又兼容了一把
     key: 'size',
     get: function get() {
       return this.queue.size;

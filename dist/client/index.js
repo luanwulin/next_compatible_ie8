@@ -1,6 +1,12 @@
 'use strict';
 
+<<<<<<< HEAD
 exports.__esModule = true;
+=======
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+>>>>>>> parent of b9f85a6... 又兼容了一把
 exports.renderError = exports.render = exports.emitter = exports.ErrorComponent = exports.router = undefined;
 
 var _regenerator = require('babel-runtime/regenerator');
@@ -20,7 +26,11 @@ var _promise = require('babel-runtime/core-js/promise');
 var _promise2 = _interopRequireDefault(_promise);
 
 var render = exports.render = function () {
+<<<<<<< HEAD
   var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(props) {
+=======
+  var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(props) {
+>>>>>>> parent of b9f85a6... 又兼容了一把
     return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -69,7 +79,11 @@ var render = exports.render = function () {
   }));
 
   return function render(_x2) {
+<<<<<<< HEAD
     return _ref7.apply(this, arguments);
+=======
+    return _ref6.apply(this, arguments);
+>>>>>>> parent of b9f85a6... 又兼容了一把
   };
 }();
 
@@ -79,7 +93,11 @@ var render = exports.render = function () {
 
 
 var renderError = exports.renderError = function () {
+<<<<<<< HEAD
   var _ref8 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(error) {
+=======
+  var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(error) {
+>>>>>>> parent of b9f85a6... 又兼容了一把
     var prod, errorMessage, initProps, _props;
 
     return _regenerator2.default.wrap(function _callee3$(_context3) {
@@ -126,11 +144,16 @@ var renderError = exports.renderError = function () {
   }));
 
   return function renderError(_x3) {
+<<<<<<< HEAD
     return _ref8.apply(this, arguments);
+=======
+    return _ref7.apply(this, arguments);
+>>>>>>> parent of b9f85a6... 又兼容了一把
   };
 }();
 
 var doRender = function () {
+<<<<<<< HEAD
   var _ref9 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(_ref10) {
     var Component = _ref10.Component,
         props = _ref10.props,
@@ -138,6 +161,15 @@ var doRender = function () {
         err = _ref10.err,
         _ref10$emitter = _ref10.emitter,
         emitterProp = _ref10$emitter === undefined ? emitter : _ref10$emitter;
+=======
+  var _ref9 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(_ref8) {
+    var Component = _ref8.Component,
+        props = _ref8.props,
+        hash = _ref8.hash,
+        err = _ref8.err,
+        _ref8$emitter = _ref8.emitter,
+        emitterProp = _ref8$emitter === undefined ? emitter : _ref8$emitter;
+>>>>>>> parent of b9f85a6... 又兼容了一把
 
     var _router, _pathname, _query, _asPath, appProps;
 
@@ -278,6 +310,7 @@ var stripAnsi = function stripAnsi(s) {
 
 var emitter = exports.emitter = new _EventEmitter2.default();
 
+<<<<<<< HEAD
 exports.default = function () {
   var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
     var _ref4 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
@@ -393,6 +426,132 @@ exports.default = function () {
     return _ref3.apply(this, arguments);
   };
 }();
+=======
+exports.default = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+  var _ref4 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      passedDebugComponent = _ref4.ErrorDebugComponent,
+      passedStripAnsi = _ref4.stripAnsi;
+
+  var _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, chunkName, hash;
+
+  return _regenerator2.default.wrap(function _callee$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          // Wait for all the dynamic chunks to get loaded
+          _iteratorNormalCompletion = true;
+          _didIteratorError = false;
+          _iteratorError = undefined;
+          _context.prev = 3;
+          _iterator = (0, _getIterator3.default)(chunks);
+
+        case 5:
+          if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
+            _context.next = 12;
+            break;
+          }
+
+          chunkName = _step.value;
+          _context.next = 9;
+          return pageLoader.waitForChunk(chunkName);
+
+        case 9:
+          _iteratorNormalCompletion = true;
+          _context.next = 5;
+          break;
+
+        case 12:
+          _context.next = 18;
+          break;
+
+        case 14:
+          _context.prev = 14;
+          _context.t0 = _context['catch'](3);
+          _didIteratorError = true;
+          _iteratorError = _context.t0;
+
+        case 18:
+          _context.prev = 18;
+          _context.prev = 19;
+
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+
+        case 21:
+          _context.prev = 21;
+
+          if (!_didIteratorError) {
+            _context.next = 24;
+            break;
+          }
+
+          throw _iteratorError;
+
+        case 24:
+          return _context.finish(21);
+
+        case 25:
+          return _context.finish(18);
+
+        case 26:
+
+          stripAnsi = passedStripAnsi || stripAnsi;
+          ErrorDebugComponent = passedDebugComponent;
+          _context.next = 30;
+          return pageLoader.loadPage('/_error');
+
+        case 30:
+          exports.ErrorComponent = ErrorComponent = _context.sent;
+          _context.prev = 31;
+          _context.next = 34;
+          return pageLoader.loadPage(pathname);
+
+        case 34:
+          Component = _context.sent;
+          _context.next = 41;
+          break;
+
+        case 37:
+          _context.prev = 37;
+          _context.t1 = _context['catch'](31);
+
+          console.error(stripAnsi(_context.t1.message + '\n' + _context.t1.stack));
+          Component = ErrorComponent;
+
+        case 41:
+
+          exports.router = router = (0, _router2.createRouter)(pathname, query, asPath, baseRoute, {
+            pageLoader: pageLoader,
+            Component: Component,
+            ErrorComponent: ErrorComponent,
+            err: err
+          });
+
+          router.subscribe(function (_ref5) {
+            var Component = _ref5.Component,
+                props = _ref5.props,
+                hash = _ref5.hash,
+                err = _ref5.err;
+
+            render({ Component: Component, props: props, err: err, hash: hash, emitter: emitter });
+          });
+
+          hash = location.hash.substring(1);
+
+          render({ Component: Component, props: props, hash: hash, err: err, emitter: emitter });
+
+          return _context.abrupt('return', emitter);
+
+        case 46:
+        case 'end':
+          return _context.stop();
+      }
+    }
+  }, _callee, undefined, [[3, 14, 18, 26], [19,, 21, 25], [31, 37]]);
+}));
+
+>>>>>>> parent of b9f85a6... 又兼容了一把
 
 var isInitialRender = true;
 function renderReactElement(reactEl, domEl) {

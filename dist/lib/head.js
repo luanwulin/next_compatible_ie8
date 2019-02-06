@@ -1,15 +1,39 @@
 'use strict';
 
+<<<<<<< HEAD
 exports.__esModule = true;
+=======
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+>>>>>>> parent of b9f85a6... 又兼容了一把
 
 var _set = require('babel-runtime/core-js/set');
 
 var _set2 = _interopRequireDefault(_set);
 
+<<<<<<< HEAD
+=======
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+>>>>>>> parent of b9f85a6... 又兼容了一把
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
+<<<<<<< HEAD
+=======
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+>>>>>>> parent of b9f85a6... 又兼容了一把
 var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
@@ -39,6 +63,7 @@ var Head = function (_React$Component) {
 
   function Head() {
     (0, _classCallCheck3.default)(this, Head);
+<<<<<<< HEAD
     return (0, _possibleConstructorReturn3.default)(this, _React$Component.apply(this, arguments));
   }
 
@@ -46,6 +71,17 @@ var Head = function (_React$Component) {
     return null;
   };
 
+=======
+    return (0, _possibleConstructorReturn3.default)(this, (Head.__proto__ || (0, _getPrototypeOf2.default)(Head)).apply(this, arguments));
+  }
+
+  (0, _createClass3.default)(Head, [{
+    key: 'render',
+    value: function render() {
+      return null;
+    }
+  }]);
+>>>>>>> parent of b9f85a6... 又兼容了一把
   return Head;
 }(_react2.default.Component);
 
@@ -65,7 +101,11 @@ function reduceComponents(components) {
     return _react2.default.Children.toArray(children);
   }).reduce(function (a, b) {
     return a.concat(b);
+<<<<<<< HEAD
   }, []).reverse()).concat.apply(_components$map$map$r, defaultHead()).filter(function (c) {
+=======
+  }, []).reverse()).concat.apply(_components$map$map$r, (0, _toConsumableArray3.default)(defaultHead())).filter(function (c) {
+>>>>>>> parent of b9f85a6... 又兼容了一把
     return !!c;
   }).filter(unique()).reverse().map(function (c) {
     var className = (c.className ? c.className + ' ' : '') + 'next-head';

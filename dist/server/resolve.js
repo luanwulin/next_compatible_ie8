@@ -1,6 +1,12 @@
 'use strict';
 
+<<<<<<< HEAD
 exports.__esModule = true;
+=======
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+>>>>>>> parent of b9f85a6... 又兼容了一把
 
 var _set = require('babel-runtime/core-js/set');
 
@@ -19,7 +25,11 @@ var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 var isFile = function () {
+<<<<<<< HEAD
   var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(p) {
+=======
+  var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(p) {
+>>>>>>> parent of b9f85a6... 又兼容了一把
     var stat, realpath;
     return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
@@ -75,7 +85,11 @@ var isFile = function () {
   }));
 
   return function isFile(_x2) {
+<<<<<<< HEAD
     return _ref4.apply(this, arguments);
+=======
+    return _ref2.apply(this, arguments);
+>>>>>>> parent of b9f85a6... 又兼容了一把
   };
 }();
 
@@ -84,7 +98,11 @@ var isFile = function () {
 
 
 var getTrueFilePath = function () {
+<<<<<<< HEAD
   var _ref5 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(p) {
+=======
+  var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(p) {
+>>>>>>> parent of b9f85a6... 又兼容了一把
     var fsPathNormalized, pathRoot, noDrivePath, result;
     return _regenerator2.default.wrap(function _callee3$(_context3) {
       while (1) {
@@ -124,7 +142,11 @@ var getTrueFilePath = function () {
   }));
 
   return function getTrueFilePath(_x3) {
+<<<<<<< HEAD
     return _ref5.apply(this, arguments);
+=======
+    return _ref3.apply(this, arguments);
+>>>>>>> parent of b9f85a6... 又兼容了一把
   };
 }();
 
@@ -144,13 +166,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = function () {
   var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(id) {
+<<<<<<< HEAD
     var paths, _iterator, _isArray, _i, _ref2, p, err;
+=======
+    var paths, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, p, err;
+>>>>>>> parent of b9f85a6... 又兼容了一把
 
     return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             paths = getPaths(id);
+<<<<<<< HEAD
             _iterator = paths, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);
 
           case 2:
@@ -202,17 +229,91 @@ exports.default = function () {
             break;
 
           case 19:
+=======
+            _iteratorNormalCompletion = true;
+            _didIteratorError = false;
+            _iteratorError = undefined;
+            _context.prev = 4;
+            _iterator = (0, _getIterator3.default)(paths);
+
+          case 6:
+            if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
+              _context.next = 15;
+              break;
+            }
+
+            p = _step.value;
+            _context.next = 10;
+            return isFile(p);
+
+          case 10:
+            if (!_context.sent) {
+              _context.next = 12;
+              break;
+            }
+
+            return _context.abrupt('return', p);
+
+          case 12:
+            _iteratorNormalCompletion = true;
+            _context.next = 6;
+            break;
+
+          case 15:
+            _context.next = 21;
+            break;
+
+          case 17:
+            _context.prev = 17;
+            _context.t0 = _context['catch'](4);
+            _didIteratorError = true;
+            _iteratorError = _context.t0;
+
+          case 21:
+            _context.prev = 21;
+            _context.prev = 22;
+
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
+            }
+
+          case 24:
+            _context.prev = 24;
+
+            if (!_didIteratorError) {
+              _context.next = 27;
+              break;
+            }
+
+            throw _iteratorError;
+
+          case 27:
+            return _context.finish(24);
+
+          case 28:
+            return _context.finish(21);
+
+          case 29:
+>>>>>>> parent of b9f85a6... 又兼容了一把
             err = new Error('Cannot find module ' + id);
 
             err.code = 'ENOENT';
             throw err;
 
+<<<<<<< HEAD
           case 22:
+=======
+          case 32:
+>>>>>>> parent of b9f85a6... 又兼容了一把
           case 'end':
             return _context.stop();
         }
       }
+<<<<<<< HEAD
     }, _callee, this);
+=======
+    }, _callee, this, [[4, 17, 21, 29], [22,, 24, 28]]);
+>>>>>>> parent of b9f85a6... 又兼容了一把
   }));
 
   function resolve(_x) {
@@ -225,6 +326,7 @@ exports.default = function () {
 function resolveFromList(id, files) {
   var paths = getPaths(id);
   var set = new _set2.default(files);
+<<<<<<< HEAD
   for (var _iterator2 = paths, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : (0, _getIterator3.default)(_iterator2);;) {
     var _ref3;
 
@@ -240,6 +342,31 @@ function resolveFromList(id, files) {
     var p = _ref3;
 
     if (set.has(p)) return p;
+=======
+  var _iteratorNormalCompletion2 = true;
+  var _didIteratorError2 = false;
+  var _iteratorError2 = undefined;
+
+  try {
+    for (var _iterator2 = (0, _getIterator3.default)(paths), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+      var p = _step2.value;
+
+      if (set.has(p)) return p;
+    }
+  } catch (err) {
+    _didIteratorError2 = true;
+    _iteratorError2 = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion2 && _iterator2.return) {
+        _iterator2.return();
+      }
+    } finally {
+      if (_didIteratorError2) {
+        throw _iteratorError2;
+      }
+    }
+>>>>>>> parent of b9f85a6... 又兼容了一把
   }
 }
 

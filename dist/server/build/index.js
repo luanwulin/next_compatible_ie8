@@ -1,6 +1,12 @@
 'use strict';
 
+<<<<<<< HEAD
 exports.__esModule = true;
+=======
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+>>>>>>> parent of b9f85a6... 又兼容了一把
 
 var _stringify = require('babel-runtime/core-js/json/stringify');
 
@@ -165,7 +171,11 @@ exports.default = function () {
     }, _callee, this, [[5, 15]]);
   }));
 
+<<<<<<< HEAD
   function build(_x) {
+=======
+  function build(_x2) {
+>>>>>>> parent of b9f85a6... 又兼容了一把
     return _ref.apply(this, arguments);
   }
 

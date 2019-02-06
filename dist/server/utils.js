@@ -1,6 +1,12 @@
 'use strict';
 
+<<<<<<< HEAD
 exports.__esModule = true;
+=======
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+>>>>>>> parent of b9f85a6... 又兼容了一把
 exports.MATCH_ROUTE_NAME = exports.IS_BUNDLED_PAGE = undefined;
 exports.getAvailableChunks = getAvailableChunks;
 
