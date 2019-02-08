@@ -1,35 +1,15 @@
 'use strict';
 
-<<<<<<< HEAD
 exports.__esModule = true;
-=======
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
->>>>>>> parent of b9f85a6... 又兼容了一把
 
 var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-<<<<<<< HEAD
-=======
-var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
-
-var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
-
->>>>>>> parent of b9f85a6... 又兼容了一把
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-<<<<<<< HEAD
-=======
-var _createClass2 = require('babel-runtime/helpers/createClass');
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
->>>>>>> parent of b9f85a6... 又兼容了一把
 var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
@@ -38,7 +18,7 @@ var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
 
-exports.default = withRouter;
+exports['default'] = withRouter;
 
 var _react = require('react');
 
@@ -54,51 +34,35 @@ var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
 
 var _utils = require('../utils');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 function withRouter(ComposedComponent) {
   var displayName = (0, _utils.getDisplayName)(ComposedComponent);
 
   var WithRouteWrapper = function (_Component) {
-    (0, _inherits3.default)(WithRouteWrapper, _Component);
+    (0, _inherits3['default'])(WithRouteWrapper, _Component);
 
     function WithRouteWrapper() {
-      (0, _classCallCheck3.default)(this, WithRouteWrapper);
-<<<<<<< HEAD
-      return (0, _possibleConstructorReturn3.default)(this, _Component.apply(this, arguments));
+      (0, _classCallCheck3['default'])(this, WithRouteWrapper);
+      return (0, _possibleConstructorReturn3['default'])(this, _Component.apply(this, arguments));
     }
 
     WithRouteWrapper.prototype.render = function render() {
-      var props = (0, _extends3.default)({
+      var props = (0, _extends3['default'])({
         router: this.context.router
       }, this.props);
 
-      return _react2.default.createElement(ComposedComponent, props);
+      return _react2['default'].createElement(ComposedComponent, props);
     };
 
-=======
-      return (0, _possibleConstructorReturn3.default)(this, (WithRouteWrapper.__proto__ || (0, _getPrototypeOf2.default)(WithRouteWrapper)).apply(this, arguments));
-    }
-
-    (0, _createClass3.default)(WithRouteWrapper, [{
-      key: 'render',
-      value: function render() {
-        var props = (0, _extends3.default)({
-          router: this.context.router
-        }, this.props);
-
-        return _react2.default.createElement(ComposedComponent, props);
-      }
-    }]);
->>>>>>> parent of b9f85a6... 又兼容了一把
     return WithRouteWrapper;
   }(_react.Component);
 
   WithRouteWrapper.contextTypes = {
-    router: _propTypes2.default.object
+    router: _propTypes2['default'].object
   };
   WithRouteWrapper.displayName = 'withRoute(' + displayName + ')';
 
 
-  return (0, _hoistNonReactStatics2.default)(WithRouteWrapper, ComposedComponent);
+  return (0, _hoistNonReactStatics2['default'])(WithRouteWrapper, ComposedComponent);
 }

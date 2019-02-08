@@ -1,12 +1,6 @@
 'use strict';
 
-<<<<<<< HEAD
 exports.__esModule = true;
-=======
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
->>>>>>> parent of b9f85a6... 又兼容了一把
 
 var _assign = require('babel-runtime/core-js/object/assign');
 
@@ -24,13 +18,6 @@ var _getIterator2 = require('babel-runtime/core-js/get-iterator');
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
-<<<<<<< HEAD
-=======
-var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
-
-var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
->>>>>>> parent of b9f85a6... 又兼容了一把
 var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
@@ -83,13 +70,10 @@ var _generateResourcePlugin = require('./plugins/generate-resource-plugin');
 
 var _generateResourcePlugin2 = _interopRequireDefault(_generateResourcePlugin);
 
-<<<<<<< HEAD
 var _es3ifyWebpackPlugin = require('es3ify-webpack-plugin');
 
 var _es3ifyWebpackPlugin2 = _interopRequireDefault(_es3ifyWebpackPlugin);
 
-=======
->>>>>>> parent of b9f85a6... 又兼容了一把
 var _config = require('../config');
 
 var _config2 = _interopRequireDefault(_config);
@@ -106,22 +90,22 @@ var _rootModuleRelativePath = require('./root-module-relative-path');
 
 var _rootModuleRelativePath2 = _interopRequireDefault(_rootModuleRelativePath);
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var documentPage = (0, _path.join)('pages', '_document.js');
 var defaultPages = ['_error.js', '_document.js'];
 var nextPagesDir = (0, _path.join)(__dirname, '..', '..', 'pages');
 var nextNodeModulesDir = (0, _path.join)(__dirname, '..', '..', '..', 'node_modules');
-var interpolateNames = new _map2.default(defaultPages.map(function (p) {
+var interpolateNames = new _map2['default'](defaultPages.map(function (p) {
   return [(0, _path.join)(nextPagesDir, p), 'dist/pages/' + p];
 }));
 
-var relativeResolve = (0, _rootModuleRelativePath2.default)(require);
+var relativeResolve = (0, _rootModuleRelativePath2['default'])(require);
 
-exports.default = function () {
-  var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(dir) {
+exports['default'] = function () {
+  var _ref = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee2(dir) {
     var _this = this;
 
     var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
@@ -135,37 +119,29 @@ exports.default = function () {
         conf = _ref2$conf === undefined ? null : _ref2$conf;
 
     var config, defaultEntries, mainJS, totalPages, entry, plugins, nodePathList, mainBabelOptions, externalBabelConfig, options, rules, webpackConfig;
-    return _regenerator2.default.wrap(function _callee2$(_context2) {
+    return _regenerator2['default'].wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             dir = (0, _path.resolve)(dir);
-            config = (0, _config2.default)(dir, conf);
+            config = (0, _config2['default'])(dir, conf);
             defaultEntries = dev ? [(0, _path.join)(__dirname, '..', '..', 'client', 'webpack-hot-middleware-client'), (0, _path.join)(__dirname, '..', '..', 'client', 'on-demand-entries-client')] : [];
             mainJS = dev ? require.resolve('../../client/next-dev') : require.resolve('../../client/next');
             totalPages = void 0;
 
             entry = function () {
-              var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
-<<<<<<< HEAD
+              var _ref3 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee() {
                 var entries, pages, devPages, _iterator, _isArray, _i, _ref4, p, _iterator2, _isArray2, _i2, _ref5, _p, _iterator3, _isArray3, _i3, _ref6, _p2, entryName;
-=======
-                var entries, pages, devPages, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, p, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, _p, _iteratorNormalCompletion3, _didIteratorError3, _iteratorError3, _iterator3, _step3, _p2, entryName;
->>>>>>> parent of b9f85a6... 又兼容了一把
 
-                return _regenerator2.default.wrap(function _callee$(_context) {
+                return _regenerator2['default'].wrap(function _callee$(_context) {
                   while (1) {
                     switch (_context.prev = _context.next) {
                       case 0:
                         entries = {
-<<<<<<< HEAD
                           'main.js': [].concat(defaultEntries, config.clientBootstrap || [], [mainJS])
-=======
-                          'main.js': [].concat(defaultEntries, (0, _toConsumableArray3.default)(config.clientBootstrap || []), [mainJS])
->>>>>>> parent of b9f85a6... 又兼容了一把
                         };
                         _context.next = 3;
-                        return (0, _globPromise2.default)('pages/**/*.js', { cwd: dir });
+                        return (0, _globPromise2['default'])('pages/**/*.js', { cwd: dir });
 
                       case 3:
                         pages = _context.sent;
@@ -177,12 +153,11 @@ exports.default = function () {
                         // managing pages.
 
                         if (!dev) {
-<<<<<<< HEAD
                           _context.next = 23;
                           break;
                         }
 
-                        _iterator = devPages, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);
+                        _iterator = devPages, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3['default'])(_iterator);
 
                       case 7:
                         if (!_isArray) {
@@ -199,27 +174,10 @@ exports.default = function () {
 
                       case 10:
                         _ref4 = _iterator[_i++];
-=======
-                          _context.next = 27;
-                          break;
-                        }
-
-                        _iteratorNormalCompletion = true;
-                        _didIteratorError = false;
-                        _iteratorError = undefined;
-                        _context.prev = 9;
-
-                        for (_iterator = (0, _getIterator3.default)(devPages); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                          p = _step.value;
-
-                          entries[(0, _path.join)('bundles', p)] = ['./' + p + '?entry'];
-                        }
->>>>>>> parent of b9f85a6... 又兼容了一把
                         _context.next = 17;
                         break;
 
                       case 13:
-<<<<<<< HEAD
                         _i = _iterator.next();
 
                         if (!_i.done) {
@@ -246,7 +204,7 @@ exports.default = function () {
                         break;
 
                       case 23:
-                        _iterator2 = pages, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : (0, _getIterator3.default)(_iterator2);
+                        _iterator2 = pages, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : (0, _getIterator3['default'])(_iterator2);
 
                       case 24:
                         if (!_isArray2) {
@@ -289,7 +247,7 @@ exports.default = function () {
                         break;
 
                       case 38:
-                        _iterator3 = defaultPages, _isArray3 = Array.isArray(_iterator3), _i3 = 0, _iterator3 = _isArray3 ? _iterator3 : (0, _getIterator3.default)(_iterator3);
+                        _iterator3 = defaultPages, _isArray3 = Array.isArray(_iterator3), _i3 = 0, _iterator3 = _isArray3 ? _iterator3 : (0, _getIterator3['default'])(_iterator3);
 
                       case 39:
                         if (!_isArray3) {
@@ -336,155 +294,18 @@ exports.default = function () {
 
                       case 54:
 
-=======
-                        _context.prev = 13;
-                        _context.t0 = _context['catch'](9);
-                        _didIteratorError = true;
-                        _iteratorError = _context.t0;
-
-                      case 17:
-                        _context.prev = 17;
-                        _context.prev = 18;
-
-                        if (!_iteratorNormalCompletion && _iterator.return) {
-                          _iterator.return();
-                        }
-
-                      case 20:
-                        _context.prev = 20;
-
-                        if (!_didIteratorError) {
-                          _context.next = 23;
-                          break;
-                        }
-
-                        throw _iteratorError;
-
-                      case 23:
-                        return _context.finish(20);
-
-                      case 24:
-                        return _context.finish(17);
-
-                      case 25:
-                        _context.next = 46;
-                        break;
-
-                      case 27:
-                        _iteratorNormalCompletion2 = true;
-                        _didIteratorError2 = false;
-                        _iteratorError2 = undefined;
-                        _context.prev = 30;
-
-                        for (_iterator2 = (0, _getIterator3.default)(pages); !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                          _p = _step2.value;
-
-                          entries[(0, _path.join)('bundles', _p)] = ['./' + _p + '?entry'];
-                        }
-                        _context.next = 38;
-                        break;
-
-                      case 34:
-                        _context.prev = 34;
-                        _context.t1 = _context['catch'](30);
-                        _didIteratorError2 = true;
-                        _iteratorError2 = _context.t1;
-
-                      case 38:
-                        _context.prev = 38;
-                        _context.prev = 39;
-
-                        if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                          _iterator2.return();
-                        }
-
-                      case 41:
-                        _context.prev = 41;
-
-                        if (!_didIteratorError2) {
-                          _context.next = 44;
-                          break;
-                        }
-
-                        throw _iteratorError2;
-
-                      case 44:
-                        return _context.finish(41);
-
-                      case 45:
-                        return _context.finish(38);
-
-                      case 46:
-                        _iteratorNormalCompletion3 = true;
-                        _didIteratorError3 = false;
-                        _iteratorError3 = undefined;
-                        _context.prev = 49;
-
-
-                        for (_iterator3 = (0, _getIterator3.default)(defaultPages); !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                          _p2 = _step3.value;
-                          entryName = (0, _path.join)('bundles', 'pages', _p2);
-
-                          if (!entries[entryName]) {
-                            entries[entryName] = [(0, _path.join)(nextPagesDir, _p2) + '?entry'];
-                          }
-                        }
-
-                        _context.next = 57;
-                        break;
-
-                      case 53:
-                        _context.prev = 53;
-                        _context.t2 = _context['catch'](49);
-                        _didIteratorError3 = true;
-                        _iteratorError3 = _context.t2;
-
-                      case 57:
-                        _context.prev = 57;
-                        _context.prev = 58;
-
-                        if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                          _iterator3.return();
-                        }
-
-                      case 60:
-                        _context.prev = 60;
-
-                        if (!_didIteratorError3) {
-                          _context.next = 63;
-                          break;
-                        }
-
-                        throw _iteratorError3;
-
-                      case 63:
-                        return _context.finish(60);
-
-                      case 64:
-                        return _context.finish(57);
-
-                      case 65:
->>>>>>> parent of b9f85a6... 又兼容了一把
                         totalPages = pages.filter(function (p) {
                           return p !== documentPage;
                         }).length;
 
                         return _context.abrupt('return', entries);
 
-<<<<<<< HEAD
                       case 56:
-=======
-                      case 67:
->>>>>>> parent of b9f85a6... 又兼容了一把
                       case 'end':
                         return _context.stop();
                     }
                   }
-<<<<<<< HEAD
                 }, _callee, _this);
-=======
-                }, _callee, _this, [[9, 13, 17, 25], [18,, 20, 24], [30, 34, 38, 46], [39,, 41, 45], [49, 53, 57, 65], [58,, 60, 64]]);
->>>>>>> parent of b9f85a6... 又兼容了一把
               }));
 
               return function entry() {
@@ -492,19 +313,19 @@ exports.default = function () {
               };
             }();
 
-            plugins = [new _webpack2.default.IgnorePlugin(/(precomputed)/, /node_modules.+(elliptic)/), new _webpack2.default.LoaderOptionsPlugin({
+            plugins = [new _webpack2['default'].IgnorePlugin(/(precomputed)/, /node_modules.+(elliptic)/), new _webpack2['default'].LoaderOptionsPlugin({
               options: {
                 context: dir,
                 customInterpolateName: function customInterpolateName(url, name, opts) {
                   return interpolateNames.get(this.resourcePath) || url;
                 }
               }
-            }), new _writeFileWebpackPlugin2.default({
+            }), new _writeFileWebpackPlugin2['default']({
               exitOnErrors: false,
               log: false,
               // required not to cache removed files
               useHashIndex: false
-            }), new _webpack2.default.optimize.CommonsChunkPlugin({
+            }), new _webpack2['default'].optimize.CommonsChunkPlugin({
               name: 'commons',
               filename: 'commons.js',
               minChunks: function minChunks(module, count) {
@@ -534,30 +355,30 @@ exports.default = function () {
             // This chunk contains all the webpack related code. So, all the changes
             // related to that happens to this chunk.
             // It won't touch commons.js and that gives us much better re-build perf.
-            new _webpack2.default.optimize.CommonsChunkPlugin({
+            new _webpack2['default'].optimize.CommonsChunkPlugin({
               name: 'manifest',
               filename: 'manifest.js'
-            }), new _webpack2.default.DefinePlugin({
-              'process.env.NODE_ENV': (0, _stringify2.default)(dev ? 'development' : 'production'),
-              'NEXT_BASEROUTE': (0, _stringify2.default)(config.baseRoute)
-            }), new _pagesPlugin2.default(), new _dynamicChunksPlugin2.default(), new _caseSensitivePathsWebpackPlugin2.default(), new _generateResourcePlugin2.default()];
+            }), new _webpack2['default'].DefinePlugin({
+              'process.env.NODE_ENV': (0, _stringify2['default'])(dev ? 'development' : 'production'),
+              'NEXT_BASEROUTE': (0, _stringify2['default'])(config.baseRoute)
+            }), new _pagesPlugin2['default'](), new _dynamicChunksPlugin2['default'](), new _caseSensitivePathsWebpackPlugin2['default'](), new _generateResourcePlugin2['default'](), new _es3ifyWebpackPlugin2['default']()];
 
 
             if (dev) {
-              plugins.push(new _webpack2.default.HotModuleReplacementPlugin(), new _webpack2.default.NoEmitOnErrorsPlugin(), new _unlinkFilePlugin2.default());
+              plugins.push(new _webpack2['default'].HotModuleReplacementPlugin(), new _webpack2['default'].NoEmitOnErrorsPlugin(), new _unlinkFilePlugin2['default']());
               if (!quiet) {
-                plugins.push(new _friendlyErrorsWebpackPlugin2.default());
+                plugins.push(new _friendlyErrorsWebpackPlugin2['default']());
               }
             } else {
-              plugins.push(new _webpack2.default.IgnorePlugin(/react-hot-loader/));
-              plugins.push(new _combineAssetsPlugin2.default({
+              plugins.push(new _webpack2['default'].IgnorePlugin(/react-hot-loader/));
+              plugins.push(new _combineAssetsPlugin2['default']({
                 input: ['manifest.js', 'commons.js', 'main.js'],
                 output: 'app.js'
-              }), new _webpack2.default.optimize.UglifyJsPlugin({
+              }), new _webpack2['default'].optimize.UglifyJsPlugin({
                 compress: { warnings: false },
                 sourceMap: false
               }));
-              plugins.push(new _webpack2.default.optimize.ModuleConcatenationPlugin());
+              plugins.push(new _webpack2['default'].optimize.ModuleConcatenationPlugin());
             }
 
             nodePathList = (process.env.NODE_PATH || '').split(process.platform === 'win32' ? ';' : ':').filter(function (p) {
@@ -567,10 +388,10 @@ exports.default = function () {
               cacheDirectory: true,
               presets: [],
               plugins: [['transform-define', {
-                'NEXT_BASEROUTE': (0, _stringify2.default)(config.baseRoute)
+                'NEXT_BASEROUTE': (0, _stringify2['default'])(config.baseRoute)
               }]]
             };
-            externalBabelConfig = (0, _findConfig2.default)(dir);
+            externalBabelConfig = (0, _findConfig2['default'])(dir);
 
             if (externalBabelConfig) {
               console.log('> Using external babel configuration');
@@ -615,17 +436,10 @@ exports.default = function () {
                 // By default, our babel config does not transpile ES2015 module syntax because
                 // webpack knows how to handle them. (That's how it can do tree-shaking)
                 // But Node.js doesn't know how to handle them. So, we have to transpile them here.
-<<<<<<< HEAD
                 transform: function transform(_ref7) {
                   var content = _ref7.content,
                       sourceMap = _ref7.sourceMap,
                       interpolatedName = _ref7.interpolatedName;
-=======
-                transform: function transform(_ref4) {
-                  var content = _ref4.content,
-                      sourceMap = _ref4.sourceMap,
-                      interpolatedName = _ref4.interpolatedName;
->>>>>>> parent of b9f85a6... 又兼容了一把
 
                   // Only handle .js files
                   if (!/\.js$/.test(interpolatedName)) {
@@ -663,7 +477,7 @@ exports.default = function () {
                   var output = transpiled.code;
 
                   if (map) {
-                    var nodeMap = (0, _assign2.default)({}, map);
+                    var nodeMap = (0, _assign2['default'])({}, map);
                     nodeMap.sources = nodeMap.sources.map(function (source) {
                       return source.replace(/\?entry/, '');
                     });
@@ -672,7 +486,7 @@ exports.default = function () {
                     // Output explicit inline source map that source-map-support can pickup via requireHook mode.
                     // Since these are not formal chunks, the devtool infrastructure in webpack does not output
                     // a source map for these files.
-                    var sourceMapUrl = new Buffer((0, _stringify2.default)(nodeMap), 'utf-8').toString('base64');
+                    var sourceMapUrl = new Buffer((0, _stringify2['default'])(nodeMap), 'utf-8').toString('base64');
                     output = output + '\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,' + sourceMapUrl;
                   }
 
@@ -695,7 +509,7 @@ exports.default = function () {
                 cacheDirectory: true,
                 presets: [require.resolve('./babel/preset')],
                 plugins: [['transform-define', {
-                  'NEXT_BASEROUTE': (0, _stringify2.default)(config.baseRoute)
+                  'NEXT_BASEROUTE': (0, _stringify2['default'])(config.baseRoute)
                 }]]
               }
             }, {
@@ -718,13 +532,8 @@ exports.default = function () {
                 libraryTarget: 'commonjs2',
                 publicPath: '/_next/' + buildId + '/webpack/',
                 strictModuleExceptionHandling: true,
-<<<<<<< HEAD
                 devtoolModuleFilenameTemplate: function devtoolModuleFilenameTemplate(_ref8) {
                   var resourcePath = _ref8.resourcePath;
-=======
-                devtoolModuleFilenameTemplate: function devtoolModuleFilenameTemplate(_ref5) {
-                  var resourcePath = _ref5.resourcePath;
->>>>>>> parent of b9f85a6... 又兼容了一把
 
                   var hash = (0, _crypto.createHash)('sha1');
                   hash.update(Date.now() + '');
@@ -738,17 +547,10 @@ exports.default = function () {
                 chunkFilename: '[name]'
               },
               resolve: {
-<<<<<<< HEAD
                 modules: [nextNodeModulesDir, 'node_modules'].concat(nodePathList)
               },
               resolveLoader: {
                 modules: [nextNodeModulesDir, 'node_modules', (0, _path.join)(__dirname, 'loaders')].concat(nodePathList)
-=======
-                modules: [nextNodeModulesDir, 'node_modules'].concat((0, _toConsumableArray3.default)(nodePathList))
-              },
-              resolveLoader: {
-                modules: [nextNodeModulesDir, 'node_modules', (0, _path.join)(__dirname, 'loaders')].concat((0, _toConsumableArray3.default)(nodePathList))
->>>>>>> parent of b9f85a6... 又兼容了一把
               },
               plugins: plugins,
               module: {
@@ -771,7 +573,7 @@ exports.default = function () {
             webpackConfig = _context2.sent;
 
           case 20:
-            return _context2.abrupt('return', (0, _webpack2.default)(webpackConfig));
+            return _context2.abrupt('return', (0, _webpack2['default'])(webpackConfig));
 
           case 21:
           case 'end':
@@ -781,11 +583,7 @@ exports.default = function () {
     }, _callee2, this);
   }));
 
-<<<<<<< HEAD
   function createCompiler(_x) {
-=======
-  function createCompiler(_x2) {
->>>>>>> parent of b9f85a6... 又兼容了一把
     return _ref.apply(this, arguments);
   }
 

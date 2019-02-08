@@ -1,12 +1,6 @@
 'use strict';
 
-<<<<<<< HEAD
 exports.__esModule = true;
-=======
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
->>>>>>> parent of b9f85a6... 又兼容了一把
 exports.getModulePath = getModulePath;
 
 var _babelTemplate = require('babel-template');
@@ -23,14 +17,14 @@ var _crypto = require('crypto');
 
 var _crypto2 = _interopRequireDefault(_crypto);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 // Based on https://github.com/airbnb/babel-plugin-dynamic-import-webpack
 // We've added support for SSR with this version
 var TYPE_IMPORT = 'Import';
 
 var buildImport = function buildImport(args) {
-  return (0, _babelTemplate2.default)('\n  (\n    typeof window === \'undefined\' ?\n      new (require(\'next/dynamic\').SameLoopPromise)((resolve, reject) => {\n        eval(\'require.ensure = function (deps, callback) { callback(require) }\')\n        require.ensure([], (require) => {\n          let m = require(SOURCE)\n          m.__webpackChunkName = \'' + args.name + '.js\'\n          resolve(m);\n        }, \'chunks/' + args.name + '.js\');\n      })\n      :\n      new (require(\'next/dynamic\').SameLoopPromise)((resolve, reject) => {\n        const weakId = require.resolveWeak(SOURCE)\n        try {\n          const weakModule = __webpack_require__(weakId)\n          return resolve(weakModule)\n        } catch (err) {}\n\n        require.ensure([], (require) => {\n          try {\n            let m = require(SOURCE)\n            resolve(m)\n          } catch(error) {\n            reject(error)\n          }\n        }, \'chunks/' + args.name + '.js\');\n      })\n  )\n');
+  return (0, _babelTemplate2['default'])('\n  (\n    typeof window === \'undefined\' ?\n      new (require(\'next/dynamic\').SameLoopPromise)((resolve, reject) => {\n        eval(\'require.ensure = function (deps, callback) { callback(require) }\')\n        require.ensure([], (require) => {\n          let m = require(SOURCE)\n          m.__webpackChunkName = \'' + args.name + '.js\'\n          resolve(m);\n        }, \'chunks/' + args.name + '.js\');\n      })\n      :\n      new (require(\'next/dynamic\').SameLoopPromise)((resolve, reject) => {\n        const weakId = require.resolveWeak(SOURCE)\n        try {\n          const weakModule = __webpack_require__(weakId)\n          return resolve(weakModule)\n        } catch (err) {}\n\n        require.ensure([], (require) => {\n          try {\n            let m = require(SOURCE)\n            resolve(m)\n          } catch(error) {\n            reject(error)\n          }\n        }, \'chunks/' + args.name + '.js\');\n      })\n  )\n');
 };
 
 function getModulePath(sourceFilename, moduleName) {
@@ -43,9 +37,9 @@ function getModulePath(sourceFilename, moduleName) {
   return cleanedModulePath;
 }
 
-exports.default = function () {
+exports['default'] = function () {
   return {
-    inherits: _babelPluginSyntaxDynamicImport2.default,
+    inherits: _babelPluginSyntaxDynamicImport2['default'],
 
     visitor: {
       CallExpression: function CallExpression(path, state) {
@@ -54,7 +48,7 @@ exports.default = function () {
           var sourceFilename = state.file.opts.filename;
 
           var modulePath = getModulePath(sourceFilename, moduleName);
-          var modulePathHash = _crypto2.default.createHash('md5').update(modulePath).digest('hex');
+          var modulePathHash = _crypto2['default'].createHash('md5').update(modulePath).digest('hex');
 
           var relativeModulePath = modulePath.replace('' + process.cwd() + _path.sep, '');
           var name = relativeModulePath.replace(/[^\w]/g, '_') + '_' + modulePathHash;

@@ -1,12 +1,6 @@
 'use strict';
 
-<<<<<<< HEAD
 exports.__esModule = true;
-=======
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
->>>>>>> parent of b9f85a6... 又兼容了一把
 exports.renderScriptError = exports.renderScript = exports.renderError = exports.render = undefined;
 
 var _getIterator2 = require('babel-runtime/core-js/get-iterator');
@@ -21,13 +15,6 @@ var _promise = require('babel-runtime/core-js/promise');
 
 var _promise2 = _interopRequireDefault(_promise);
 
-<<<<<<< HEAD
-=======
-var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
-
-var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
-
->>>>>>> parent of b9f85a6... 又兼容了一把
 var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
@@ -41,9 +28,9 @@ var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 var render = exports.render = function () {
-  var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(req, res, pathname, query, opts) {
+  var _ref = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee(req, res, pathname, query, opts) {
     var html;
-    return _regenerator2.default.wrap(function _callee$(_context) {
+    return _regenerator2['default'].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
@@ -69,9 +56,9 @@ var render = exports.render = function () {
 }();
 
 var renderError = exports.renderError = function () {
-  var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(err, req, res, pathname, query, opts) {
+  var _ref2 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee2(err, req, res, pathname, query, opts) {
     var html;
-    return _regenerator2.default.wrap(function _callee2$(_context2) {
+    return _regenerator2['default'].wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
@@ -97,7 +84,7 @@ var renderError = exports.renderError = function () {
 }();
 
 var doRender = function () {
-  var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(req, res, pathname, query) {
+  var _ref3 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee3(req, res, pathname, query) {
     var _ref4 = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {},
         err = _ref4.err,
         page = _ref4.page,
@@ -116,13 +103,9 @@ var doRender = function () {
         _ref4$nextExport = _ref4.nextExport,
         nextExport = _ref4$nextExport === undefined ? false : _ref4$nextExport;
 
-<<<<<<< HEAD
     var config, dist, _ref5, Component, Document, asPath, ctx, props, renderPage, docProps, devBuildId, doc;
-=======
-    var config, dist, _ref5, _ref6, Component, Document, asPath, ctx, props, renderPage, docProps, devBuildId, doc;
->>>>>>> parent of b9f85a6... 又兼容了一把
 
-    return _regenerator2.default.wrap(function _callee3$(_context3) {
+    return _regenerator2['default'].wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
@@ -132,27 +115,20 @@ var doRender = function () {
             return ensurePage(page, { dir: dir, hotReloader: hotReloader });
 
           case 3:
-            config = (0, _config2.default)(dir);
+            config = (0, _config2['default'])(dir);
             dist = config.distDir;
             _context3.next = 7;
-            return _promise2.default.all([(0, _require2.default)((0, _path.join)(dir, dist, 'dist', 'pages', page)), (0, _require2.default)((0, _path.join)(dir, dist, 'dist', 'pages', '_document'))]);
+            return _promise2['default'].all([(0, _require2['default'])((0, _path.join)(dir, dist, 'dist', 'pages', page)), (0, _require2['default'])((0, _path.join)(dir, dist, 'dist', 'pages', '_document'))]);
 
           case 7:
             _ref5 = _context3.sent;
-<<<<<<< HEAD
             Component = _ref5[0];
             Document = _ref5[1];
-=======
-            _ref6 = (0, _slicedToArray3.default)(_ref5, 2);
-            Component = _ref6[0];
-            Document = _ref6[1];
->>>>>>> parent of b9f85a6... 又兼容了一把
 
-            Component = Component.default || Component;
-            Document = Document.default || Document;
+            Component = Component['default'] || Component;
+            Document = Document['default'] || Document;
             asPath = req.url;
             ctx = { err: err, req: req, res: res, pathname: pathname, query: query, asPath: asPath, assetPrefix: assetPrefix, resourceMap: resourceMap, buildId: buildId };
-<<<<<<< HEAD
             _context3.next = 16;
             return (0, _utils.loadGetInitialProps)(Component, ctx);
 
@@ -161,26 +137,12 @@ var doRender = function () {
 
             if (!res.finished) {
               _context3.next = 19;
-=======
-            _context3.next = 17;
-            return (0, _utils.loadGetInitialProps)(Component, ctx);
-
-          case 17:
-            props = _context3.sent;
-
-            if (!res.finished) {
-              _context3.next = 20;
->>>>>>> parent of b9f85a6... 又兼容了一把
               break;
             }
 
             return _context3.abrupt('return');
 
-<<<<<<< HEAD
           case 19:
-=======
-          case 20:
->>>>>>> parent of b9f85a6... 又兼容了一把
             renderPage = function renderPage() {
               var enhancer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function (Page) {
                 return Page;
@@ -188,7 +150,7 @@ var doRender = function () {
 
               var router = (0, _router.createRouter)(pathname, query, asPath, config.baseRoute);
 
-              var app = (0, _react.createElement)(_app2.default, {
+              var app = (0, _react.createElement)(_app2['default'], {
                 Component: enhancer(Component),
                 props: props,
                 router: router
@@ -202,31 +164,24 @@ var doRender = function () {
 
               try {
                 if (err && dev) {
-                  errorHtml = render((0, _react.createElement)(_errorDebug2.default, { error: err }));
+                  errorHtml = render((0, _react.createElement)(_errorDebug2['default'], { error: err }));
                 } else if (err) {
                   errorHtml = render(app);
                 } else {
                   html = render(app);
                 }
               } finally {
-                head = _head2.default.rewind() || (0, _head.defaultHead)();
+                head = _head2['default'].rewind() || (0, _head.defaultHead)();
               }
               var chunks = loadChunks({ dev: dev, dir: dir, dist: dist, availableChunks: availableChunks });
 
               return { html: html, head: head, errorHtml: errorHtml, chunks: chunks };
             };
 
-<<<<<<< HEAD
             _context3.next = 22;
-            return (0, _utils.loadGetInitialProps)(Document, (0, _extends3.default)({}, ctx, { renderPage: renderPage }));
+            return (0, _utils.loadGetInitialProps)(Document, (0, _extends3['default'])({}, ctx, { renderPage: renderPage }));
 
           case 22:
-=======
-            _context3.next = 23;
-            return (0, _utils.loadGetInitialProps)(Document, (0, _extends3.default)({}, ctx, { renderPage: renderPage }));
-
-          case 23:
->>>>>>> parent of b9f85a6... 又兼容了一把
             docProps = _context3.sent;
 
             // While developing, we should not cache any assets.
@@ -236,36 +191,22 @@ var doRender = function () {
             devBuildId = Date.now();
 
             if (!res.finished) {
-<<<<<<< HEAD
               _context3.next = 26;
-=======
-              _context3.next = 27;
->>>>>>> parent of b9f85a6... 又兼容了一把
               break;
             }
 
             return _context3.abrupt('return');
 
-<<<<<<< HEAD
           case 26:
             if (!(!Document.prototype || !Document.prototype.isReactComponent)) {
               _context3.next = 28;
-=======
-          case 27:
-            if (!(!Document.prototype || !Document.prototype.isReactComponent)) {
-              _context3.next = 29;
->>>>>>> parent of b9f85a6... 又兼容了一把
               break;
             }
 
             throw new Error('_document.js is not exporting a React element');
 
-<<<<<<< HEAD
           case 28:
-=======
-          case 29:
->>>>>>> parent of b9f85a6... 又兼容了一把
-            doc = (0, _react.createElement)(Document, (0, _extends3.default)({
+            doc = (0, _react.createElement)(Document, (0, _extends3['default'])({
               __NEXT_DATA__: {
                 props: props,
                 pathname: pathname,
@@ -283,11 +224,7 @@ var doRender = function () {
             }, docProps));
             return _context3.abrupt('return', '<!DOCTYPE html>' + (0, _server.renderToStaticMarkup)(doc));
 
-<<<<<<< HEAD
           case 30:
-=======
-          case 31:
->>>>>>> parent of b9f85a6... 又兼容了一把
           case 'end':
             return _context3.stop();
         }
@@ -295,31 +232,23 @@ var doRender = function () {
     }, _callee3, this);
   }));
 
-<<<<<<< HEAD
   return function doRender(_x13, _x14, _x15, _x16) {
-=======
-  return function doRender(_x14, _x15, _x16, _x17) {
->>>>>>> parent of b9f85a6... 又兼容了一把
     return _ref3.apply(this, arguments);
   };
 }();
 
 var renderScript = exports.renderScript = function () {
-<<<<<<< HEAD
-  var _ref6 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(req, res, page, opts) {
-=======
-  var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(req, res, page, opts) {
->>>>>>> parent of b9f85a6... 又兼容了一把
+  var _ref6 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee4(req, res, page, opts) {
     var dist, path, realPath;
-    return _regenerator2.default.wrap(function _callee4$(_context4) {
+    return _regenerator2['default'].wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
             _context4.prev = 0;
-            dist = (0, _config2.default)(opts.dir).distDir;
+            dist = (0, _config2['default'])(opts.dir).distDir;
             path = (0, _path.join)(opts.dir, dist, 'bundles', 'pages', page);
             _context4.next = 5;
-            return (0, _resolve2.default)(path);
+            return (0, _resolve2['default'])(path);
 
           case 5:
             realPath = _context4.sent;
@@ -354,30 +283,22 @@ var renderScript = exports.renderScript = function () {
   }));
 
   return function renderScript(_x19, _x20, _x21, _x22) {
-<<<<<<< HEAD
     return _ref6.apply(this, arguments);
-=======
-    return _ref7.apply(this, arguments);
->>>>>>> parent of b9f85a6... 又兼容了一把
   };
 }();
 
 var renderScriptError = exports.renderScriptError = function () {
-<<<<<<< HEAD
-  var _ref7 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(req, res, page, error, customFields, _ref8) {
-=======
-  var _ref9 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(req, res, page, error, customFields, _ref8) {
->>>>>>> parent of b9f85a6... 又兼容了一把
+  var _ref7 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee5(req, res, page, error, customFields, _ref8) {
     var dev = _ref8.dev;
     var errorJson;
-    return _regenerator2.default.wrap(function _callee5$(_context5) {
+    return _regenerator2['default'].wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
             // Asks CDNs and others to not to cache the errored page
             res.setHeader('Cache-Control', 'no-store, must-revalidate');
             // prevent XSS attacks by filtering the page before printing it.
-            page = _xssFilters2.default.uriInSingleQuotedAttr(page);
+            page = _xssFilters2['default'].uriInSingleQuotedAttr(page);
             res.setHeader('Content-Type', 'text/javascript');
 
             if (!(error.code === 'ENOENT')) {
@@ -389,10 +310,10 @@ var renderScriptError = exports.renderScriptError = function () {
             return _context5.abrupt('return');
 
           case 6:
-            errorJson = (0, _extends3.default)({}, serializeError(dev, error), customFields);
+            errorJson = (0, _extends3['default'])({}, serializeError(dev, error), customFields);
 
 
-            res.end('\n    window.__NEXT_REGISTER_PAGE(\'' + page + '\', function() {\n      var error = ' + (0, _stringify2.default)(errorJson) + '\n      return { error: error }\n    })\n  ');
+            res.end('\n    window.__NEXT_REGISTER_PAGE(\'' + page + '\', function() {\n      var error = ' + (0, _stringify2['default'])(errorJson) + '\n      return { error: error }\n    })\n  ');
 
           case 8:
           case 'end':
@@ -403,23 +324,15 @@ var renderScriptError = exports.renderScriptError = function () {
   }));
 
   return function renderScriptError(_x23, _x24, _x25, _x26, _x27, _x28) {
-<<<<<<< HEAD
     return _ref7.apply(this, arguments);
-=======
-    return _ref9.apply(this, arguments);
->>>>>>> parent of b9f85a6... 又兼容了一把
   };
 }();
 
 var ensurePage = function () {
-<<<<<<< HEAD
-  var _ref10 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6(page, _ref11) {
-=======
-  var _ref12 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee6(page, _ref11) {
->>>>>>> parent of b9f85a6... 又兼容了一把
+  var _ref10 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee6(page, _ref11) {
     var dir = _ref11.dir,
         hotReloader = _ref11.hotReloader;
-    return _regenerator2.default.wrap(function _callee6$(_context6) {
+    return _regenerator2['default'].wrap(function _callee6$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
           case 0:
@@ -451,11 +364,7 @@ var ensurePage = function () {
   }));
 
   return function ensurePage(_x29, _x30) {
-<<<<<<< HEAD
     return _ref10.apply(this, arguments);
-=======
-    return _ref12.apply(this, arguments);
->>>>>>> parent of b9f85a6... 又兼容了一把
   };
 }();
 
@@ -519,7 +428,7 @@ var _xssFilters = require('xss-filters');
 
 var _xssFilters2 = _interopRequireDefault(_xssFilters);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 function renderToHTML(req, res, pathname, query, opts) {
   return doRender(req, res, pathname, query, opts);
@@ -528,21 +437,16 @@ function renderToHTML(req, res, pathname, query, opts) {
 function renderErrorToHTML(err, req, res, pathname, query) {
   var opts = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : {};
 
-  return doRender(req, res, pathname, query, (0, _extends3.default)({}, opts, { err: err, page: '_error' }));
+  return doRender(req, res, pathname, query, (0, _extends3['default'])({}, opts, { err: err, page: '_error' }));
 }
 
-<<<<<<< HEAD
 function sendHTML(req, res, html, method, _ref9) {
   var dev = _ref9.dev;
-=======
-function sendHTML(req, res, html, method, _ref10) {
-  var dev = _ref10.dev;
->>>>>>> parent of b9f85a6... 又兼容了一把
 
   if (res.finished) return;
-  var etag = (0, _etag2.default)(html);
+  var etag = (0, _etag2['default'])(html);
 
-  if ((0, _fresh2.default)(req.headers, { etag: etag })) {
+  if ((0, _fresh2['default'])(req.headers, { etag: etag })) {
     res.statusCode = 304;
     res.end();
     return;
@@ -563,7 +467,7 @@ function sendHTML(req, res, html, method, _ref10) {
 function sendJSON(res, obj, method) {
   if (res.finished) return;
 
-  var json = (0, _stringify2.default)(obj);
+  var json = (0, _stringify2['default'])(obj);
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Content-Length', Buffer.byteLength(json));
   res.end(method === 'HEAD' ? null : json);
@@ -595,8 +499,8 @@ function serializeError(dev, err) {
 }
 
 function serveStatic(req, res, path) {
-  return new _promise2.default(function (resolve, reject) {
-    (0, _send2.default)(req, path).on('directory', function () {
+  return new _promise2['default'](function (resolve, reject) {
+    (0, _send2['default'])(req, path).on('directory', function () {
       // We don't allow directories to be read.
       var err = new Error('No directory access');
       err.code = 'ENOENT';
@@ -605,25 +509,16 @@ function serveStatic(req, res, path) {
   });
 }
 
-<<<<<<< HEAD
 function loadChunks(_ref12) {
   var dev = _ref12.dev,
       dir = _ref12.dir,
       dist = _ref12.dist,
       availableChunks = _ref12.availableChunks;
-=======
-function loadChunks(_ref13) {
-  var dev = _ref13.dev,
-      dir = _ref13.dir,
-      dist = _ref13.dist,
-      availableChunks = _ref13.availableChunks;
->>>>>>> parent of b9f85a6... 又兼容了一把
 
   var flushedChunks = (0, _dynamic.flushChunks)();
   var validChunks = [];
 
-<<<<<<< HEAD
-  for (var _iterator = flushedChunks, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);;) {
+  for (var _iterator = flushedChunks, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3['default'])(_iterator);;) {
     var _ref13;
 
     if (_isArray) {
@@ -641,34 +536,6 @@ function loadChunks(_ref13) {
     var exists = dev ? (0, _fs.existsSync)(filename) : availableChunks[chunk];
     if (exists) {
       validChunks.push(chunk);
-=======
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
-
-  try {
-    for (var _iterator = (0, _getIterator3.default)(flushedChunks), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-      var chunk = _step.value;
-
-      var filename = (0, _path.join)(dir, dist, 'chunks', chunk);
-      var exists = dev ? (0, _fs.existsSync)(filename) : availableChunks[chunk];
-      if (exists) {
-        validChunks.push(chunk);
-      }
-    }
-  } catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion && _iterator.return) {
-        _iterator.return();
-      }
-    } finally {
-      if (_didIteratorError) {
-        throw _iteratorError;
-      }
->>>>>>> parent of b9f85a6... 又兼容了一把
     }
   }
 

@@ -1,12 +1,6 @@
 'use strict';
 
-<<<<<<< HEAD
 exports.__esModule = true;
-=======
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
->>>>>>> parent of b9f85a6... 又兼容了一把
 
 var _stringify = require('babel-runtime/core-js/json/stringify');
 
@@ -25,14 +19,14 @@ var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 var writeBuildStats = function () {
-  var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(dir, stats) {
+  var _ref2 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee2(dir, stats) {
     var assetHashMap, buildStatsPath;
-    return _regenerator2.default.wrap(function _callee2$(_context2) {
+    return _regenerator2['default'].wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.next = 2;
-            return (0, _promise4.default)((0, _path.join)(dir, '.next', 'app.js'));
+            return (0, _promise4['default'])((0, _path.join)(dir, '.next', 'app.js'));
 
           case 2:
             _context2.t0 = _context2.sent;
@@ -44,7 +38,7 @@ var writeBuildStats = function () {
             };
             buildStatsPath = (0, _path.join)(dir, '.next', 'build-stats.json');
             _context2.next = 8;
-            return _fs2.default.writeFile(buildStatsPath, (0, _stringify2.default)(assetHashMap), 'utf8');
+            return _fs2['default'].writeFile(buildStatsPath, (0, _stringify2['default'])(assetHashMap), 'utf8');
 
           case 8:
           case 'end':
@@ -60,15 +54,15 @@ var writeBuildStats = function () {
 }();
 
 var writeBuildId = function () {
-  var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(dir, buildId) {
+  var _ref3 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee3(dir, buildId) {
     var buildIdPath;
-    return _regenerator2.default.wrap(function _callee3$(_context3) {
+    return _regenerator2['default'].wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
             buildIdPath = (0, _path.join)(dir, '.next', 'BUILD_ID');
             _context3.next = 3;
-            return _fs2.default.writeFile(buildIdPath, buildId, 'utf8');
+            return _fs2['default'].writeFile(buildIdPath, buildId, 'utf8');
 
           case 3:
           case 'end':
@@ -113,20 +107,20 @@ var _promise4 = _interopRequireDefault(_promise3);
 
 var _fsExtra = require('fs-extra');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-exports.default = function () {
-  var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(dir) {
+exports['default'] = function () {
+  var _ref = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee(dir) {
     var conf = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
     var buildId, buildDir, compiler, stats;
-    return _regenerator2.default.wrap(function _callee$(_context) {
+    return _regenerator2['default'].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            buildId = _uuid2.default.v4();
-            buildDir = (0, _path.join)((0, _os.tmpdir)(), _uuid2.default.v4());
+            buildId = _uuid2['default'].v4();
+            buildDir = (0, _path.join)((0, _os.tmpdir)(), _uuid2['default'].v4());
             _context.next = 4;
-            return (0, _webpack2.default)(dir, { buildId: buildId, buildDir: buildDir, conf: conf });
+            return (0, _webpack2['default'])(dir, { buildId: buildId, buildDir: buildDir, conf: conf });
 
           case 4:
             compiler = _context.sent;
@@ -156,12 +150,12 @@ exports.default = function () {
 
           case 19:
             _context.next = 21;
-            return (0, _replace2.default)(dir, buildDir);
+            return (0, _replace2['default'])(dir, buildDir);
 
           case 21:
 
             // no need to wait
-            (0, _del2.default)(buildDir, { force: true });
+            (0, _del2['default'])(buildDir, { force: true });
 
           case 22:
           case 'end':
@@ -171,11 +165,7 @@ exports.default = function () {
     }, _callee, this, [[5, 15]]);
   }));
 
-<<<<<<< HEAD
   function build(_x) {
-=======
-  function build(_x2) {
->>>>>>> parent of b9f85a6... 又兼容了一把
     return _ref.apply(this, arguments);
   }
 
@@ -183,7 +173,7 @@ exports.default = function () {
 }();
 
 function runCompiler(compiler) {
-  return new _promise2.default(function (resolve, reject) {
+  return new _promise2['default'](function (resolve, reject) {
     compiler.run(function (err, stats) {
       if (err) return reject(err);
 

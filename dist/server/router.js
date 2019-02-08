@@ -1,12 +1,6 @@
 'use strict';
 
-<<<<<<< HEAD
 exports.__esModule = true;
-=======
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
->>>>>>> parent of b9f85a6... 又兼容了一把
 
 var _typeof2 = require('babel-runtime/helpers/typeof');
 
@@ -36,32 +30,24 @@ var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-<<<<<<< HEAD
-=======
-var _createClass2 = require('babel-runtime/helpers/createClass');
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
->>>>>>> parent of b9f85a6... 又兼容了一把
 var _pathMatch = require('path-match');
 
 var _pathMatch2 = _interopRequireDefault(_pathMatch);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var route = (0, _pathMatch2.default)();
+var route = (0, _pathMatch2['default'])();
 
 var Router = function () {
   function Router(conf) {
-    (0, _classCallCheck3.default)(this, Router);
+    (0, _classCallCheck3['default'])(this, Router);
 
-    this.routes = new _map2.default();
+    this.routes = new _map2['default']();
     this.baseRoute = conf.baseRoute;
   }
 
-<<<<<<< HEAD
   Router.prototype.add = function add(method, path, fn) {
-    var routes = this.routes.get(method) || new _set2.default();
+    var routes = this.routes.get(method) || new _set2['default']();
     routes.add({ match: route(path), fn: fn });
     this.routes.set(method, routes);
   };
@@ -79,8 +65,8 @@ var Router = function () {
       if (params) {
         return {
           v: function () {
-            var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
-              return _regenerator2.default.wrap(function _callee$(_context) {
+            var _ref2 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee() {
+              return _regenerator2['default'].wrap(function _callee$(_context) {
                 while (1) {
                   switch (_context.prev = _context.next) {
                     case 0:
@@ -102,7 +88,7 @@ var Router = function () {
       }
     };
 
-    for (var _iterator = routes, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);;) {
+    for (var _iterator = routes, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3['default'])(_iterator);;) {
       var _ref;
 
       if (_isArray) {
@@ -118,88 +104,11 @@ var Router = function () {
 
       var _ret = _loop(r);
 
-      if ((typeof _ret === 'undefined' ? 'undefined' : (0, _typeof3.default)(_ret)) === "object") return _ret.v;
+      if ((typeof _ret === 'undefined' ? 'undefined' : (0, _typeof3['default'])(_ret)) === "object") return _ret.v;
     }
   };
 
-=======
-  (0, _createClass3.default)(Router, [{
-    key: 'add',
-    value: function add(method, path, fn) {
-      var routes = this.routes.get(method) || new _set2.default();
-      routes.add({ match: route(path), fn: fn });
-      this.routes.set(method, routes);
-    }
-  }, {
-    key: 'match',
-    value: function match(req, res, parsedUrl) {
-      var _this = this;
-
-      var routes = this.routes.get(req.method);
-      if (!routes) return;
-
-      var pathname = parsedUrl.pathname;
-
-      var _loop = function _loop(r) {
-        var params = r.match(pathname);
-        if (params) {
-          return {
-            v: function () {
-              var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
-                return _regenerator2.default.wrap(function _callee$(_context) {
-                  while (1) {
-                    switch (_context.prev = _context.next) {
-                      case 0:
-                        return _context.abrupt('return', r.fn(req, res, params, parsedUrl));
-
-                      case 1:
-                      case 'end':
-                        return _context.stop();
-                    }
-                  }
-                }, _callee, _this);
-              }));
-
-              function v() {
-                return _ref.apply(this, arguments);
-              }
-
-              return v;
-            }()
-          };
-        }
-      };
-
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        for (var _iterator = (0, _getIterator3.default)(routes), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var r = _step.value;
-
-          var _ret = _loop(r);
-
-          if ((typeof _ret === 'undefined' ? 'undefined' : (0, _typeof3.default)(_ret)) === "object") return _ret.v;
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-    }
-  }]);
->>>>>>> parent of b9f85a6... 又兼容了一把
   return Router;
 }();
 
-exports.default = Router;
+exports['default'] = Router;

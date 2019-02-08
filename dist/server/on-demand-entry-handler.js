@@ -1,24 +1,11 @@
 'use strict';
 
-<<<<<<< HEAD
 exports.__esModule = true;
-=======
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
->>>>>>> parent of b9f85a6... 又兼容了一把
 
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-<<<<<<< HEAD
-=======
-var _createClass2 = require('babel-runtime/helpers/createClass');
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
->>>>>>> parent of b9f85a6... 又兼容了一把
 var _stringify = require('babel-runtime/core-js/json/stringify');
 
 var _stringify2 = _interopRequireDefault(_stringify);
@@ -31,13 +18,6 @@ var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-<<<<<<< HEAD
-=======
-var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
-
-var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
->>>>>>> parent of b9f85a6... 又兼容了一把
 var _promise = require('babel-runtime/core-js/promise');
 
 var _promise2 = _interopRequireDefault(_promise);
@@ -50,7 +30,7 @@ var _symbol = require('babel-runtime/core-js/symbol');
 
 var _symbol2 = _interopRequireDefault(_symbol);
 
-exports.default = onDemandEntryHandler;
+exports['default'] = onDemandEntryHandler;
 
 var _DynamicEntryPlugin = require('webpack/lib/DynamicEntryPlugin');
 
@@ -72,11 +52,11 @@ var _touch2 = _interopRequireDefault(_touch);
 
 var _utils = require('./utils');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var ADDED = (0, _symbol2.default)('added');
-var BUILDING = (0, _symbol2.default)('building');
-var BUILT = (0, _symbol2.default)('built');
+var ADDED = (0, _symbol2['default'])('added');
+var BUILDING = (0, _symbol2['default'])('building');
+var BUILT = (0, _symbol2['default'])('built');
 
 function onDemandEntryHandler(devMiddleware, compiler, _ref) {
   var dir = _ref.dir,
@@ -101,7 +81,7 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
 
     invalidator.startBuilding();
 
-    var allEntries = (0, _keys2.default)(entries).map(function (page) {
+    var allEntries = (0, _keys2['default'])(entries).map(function (page) {
       var _entries$page = entries[page],
           name = _entries$page.name,
           entry = _entries$page.entry;
@@ -110,9 +90,9 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
       return addEntry(compilation, _this.context, name, entry);
     });
 
-    _promise2.default.all(allEntries).then(function () {
+    _promise2['default'].all(allEntries).then(function () {
       return done();
-    }).catch(done);
+    })['catch'](done);
   });
 
   compiler.plugin('done', function (stats) {
@@ -132,18 +112,14 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
     }).map(function (e) {
       return e.module.chunks;
     }).reduce(function (a, b) {
-<<<<<<< HEAD
       return [].concat(a, b);
-=======
-      return [].concat((0, _toConsumableArray3.default)(a), (0, _toConsumableArray3.default)(b));
->>>>>>> parent of b9f85a6... 又兼容了一把
     }, []).map(function (c) {
       var pageName = _utils.MATCH_ROUTE_NAME.exec(c.name)[1];
       return normalizePage('/' + pageName);
     });
 
     // Call all the doneCallbacks
-    (0, _keys2.default)(entries).forEach(function (page) {
+    (0, _keys2['default'])(entries).forEach(function (page) {
       var entryInfo = entries[page];
       if (entryInfo.status !== BUILDING) return;
 
@@ -153,7 +129,7 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
       // That'll reduce the page building time significantly.
       if (!touchedAPage) {
         setTimeout(function () {
-          _touch2.default.sync(entryInfo.pathname);
+          _touch2['default'].sync(entryInfo.pathname);
         }, 1000);
         touchedAPage = true;
       }
@@ -172,7 +148,7 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
         console.log('> Webpack reloaded.');
         reloadCallbacks.emit('done');
         stop();
-      }).catch(function (err) {
+      })['catch'](function (err) {
         console.error('> Webpack reloading failed: ' + err.message);
         console.error(err.stack);
         process.exit(1);
@@ -194,47 +170,38 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
 
   return {
     waitUntilReloaded: function waitUntilReloaded() {
-      if (!reloading) return _promise2.default.resolve(true);
-      return new _promise2.default(function (resolve) {
+      if (!reloading) return _promise2['default'].resolve(true);
+      return new _promise2['default'](function (resolve) {
         reloadCallbacks.once('done', function () {
           resolve();
         });
       });
     },
-<<<<<<< HEAD
     ensurePage: function ensurePage(page) {
       var _this2 = this;
 
-      return (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
-=======
-    ensurePage: function () {
-      var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(page) {
->>>>>>> parent of b9f85a6... 又兼容了一把
+      return (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee() {
         var pagePath, pathname, name, entry;
-        return _regenerator2.default.wrap(function _callee$(_context) {
+        return _regenerator2['default'].wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-<<<<<<< HEAD
                 return _this2.waitUntilReloaded();
-=======
-                return this.waitUntilReloaded();
->>>>>>> parent of b9f85a6... 又兼容了一把
 
               case 2:
                 page = normalizePage(page);
 
                 pagePath = (0, _path.join)(dir, 'pages', page);
                 _context.next = 6;
-                return (0, _resolve2.default)(pagePath);
+                return (0, _resolve2['default'])(pagePath);
 
               case 6:
                 pathname = _context.sent;
                 name = (0, _path.join)('bundles', pathname.substring(dir.length));
                 entry = [pathname + '?entry'];
                 _context.next = 11;
-                return new _promise2.default(function (resolve, reject) {
+                return new _promise2['default'](function (resolve, reject) {
                   var entryInfo = entries[page];
 
                   if (entryInfo) {
@@ -267,25 +234,11 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
                 return _context.stop();
             }
           }
-<<<<<<< HEAD
         }, _callee, _this2);
       }))();
     },
     middleware: function middleware() {
       var _this3 = this;
-=======
-        }, _callee, this);
-      }));
-
-      function ensurePage(_x) {
-        return _ref2.apply(this, arguments);
-      }
-
-      return ensurePage;
-    }(),
-    middleware: function middleware() {
-      var _this2 = this;
->>>>>>> parent of b9f85a6... 又兼容了一把
 
       return function (req, res, next) {
         if (stopped) {
@@ -298,11 +251,7 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
           // Webpack config is reloading. So, we need to wait until it's done and
           // reload user's browser.
           // So the user could connect to the new handler and webpack setup.
-<<<<<<< HEAD
           _this3.waitUntilReloaded().then(function () {
-=======
-          _this2.waitUntilReloaded().then(function () {
->>>>>>> parent of b9f85a6... 又兼容了一把
             res.statusCode = 302;
             res.setHeader('Location', req.url);
             res.end('302');
@@ -345,8 +294,8 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
 }
 
 function addEntry(compilation, context, name, entry) {
-  return new _promise2.default(function (resolve, reject) {
-    var dep = _DynamicEntryPlugin2.default.createDependency(entry, name);
+  return new _promise2['default'](function (resolve, reject) {
+    var dep = _DynamicEntryPlugin2['default'].createDependency(entry, name);
     compilation.addEntry(context, dep, name, function (err) {
       if (err) return reject(err);
       resolve();
@@ -357,7 +306,7 @@ function addEntry(compilation, context, name, entry) {
 function disposeInactiveEntries(devMiddleware, entries, lastAccessPages, maxInactiveAge) {
   var disposingPages = [];
 
-  (0, _keys2.default)(entries).forEach(function (page) {
+  (0, _keys2['default'])(entries).forEach(function (page) {
     var _entries$page2 = entries[page],
         lastActiveTime = _entries$page2.lastActiveTime,
         status = _entries$page2.status;
@@ -395,7 +344,7 @@ function normalizePage(page) {
 function sendJson(res, payload) {
   res.setHeader('Content-Type', 'application/json');
   res.status = 200;
-  res.end((0, _stringify2.default)(payload));
+  res.end((0, _stringify2['default'])(payload));
 }
 
 // Make sure only one invalidation happens at a time
@@ -403,14 +352,13 @@ function sendJson(res, payload) {
 
 var Invalidator = function () {
   function Invalidator(devMiddleware) {
-    (0, _classCallCheck3.default)(this, Invalidator);
+    (0, _classCallCheck3['default'])(this, Invalidator);
 
     this.devMiddleware = devMiddleware;
     this.building = false;
     this.rebuildAgain = false;
   }
 
-<<<<<<< HEAD
   Invalidator.prototype.invalidate = function invalidate() {
     // If there's a current build is processing, we won't abort it by invalidating.
     // (If aborted, it'll cause a client side hard reload)
@@ -437,37 +385,5 @@ var Invalidator = function () {
     }
   };
 
-=======
-  (0, _createClass3.default)(Invalidator, [{
-    key: 'invalidate',
-    value: function invalidate() {
-      // If there's a current build is processing, we won't abort it by invalidating.
-      // (If aborted, it'll cause a client side hard reload)
-      // But let it to invalidate just after the completion.
-      // So, it can re-build the queued pages at once.
-      if (this.building) {
-        this.rebuildAgain = true;
-        return;
-      }
-
-      this.building = true;
-      this.devMiddleware.invalidate();
-    }
-  }, {
-    key: 'startBuilding',
-    value: function startBuilding() {
-      this.building = true;
-    }
-  }, {
-    key: 'doneBuilding',
-    value: function doneBuilding() {
-      this.building = false;
-      if (this.rebuildAgain) {
-        this.rebuildAgain = false;
-        this.invalidate();
-      }
-    }
-  }]);
->>>>>>> parent of b9f85a6... 又兼容了一把
   return Invalidator;
 }();

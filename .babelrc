@@ -1,19 +1,34 @@
 {
   "presets": [
-    "env",
-    "react"
+    [
+      "env",
+      {
+        "loose": true,
+        "useBuiltIns": "entry",
+        "targets": {
+          "browsers": [
+            "ie >= 7"
+          ]
+        },
+        "modules": "commonjs"
+      }
+    ],
+    "react",
+    "stage-0"
   ],
   "plugins": [
     "transform-object-rest-spread",
     "transform-class-properties",
-    "transform-runtime"
+    "transform-runtime",
+    "transform-es3-property-literals",
+    "transform-es3-member-expression-literals"
   ],
   "env": {
     "test": {
       "presets": [
         "es2015",
         "./babel"
-       ]
+      ]
     }
   }
 }
