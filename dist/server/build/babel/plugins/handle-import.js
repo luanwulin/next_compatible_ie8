@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.getModulePath = getModulePath;
 
 var _babelTemplate = require('babel-template');

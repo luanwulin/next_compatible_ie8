@@ -1,10 +1,20 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
 
 var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
 
@@ -13,6 +23,10 @@ var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorRet
 var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
 var _set = require('babel-runtime/core-js/set');
 
@@ -50,7 +64,7 @@ function withSideEffect(reduceComponentsToState, handleStateChangeOnClient, mapS
     var state = void 0;
 
     function emitChange(component) {
-      state = reduceComponentsToState([].concat(mountedInstances));
+      state = reduceComponentsToState([].concat((0, _toConsumableArray3['default'])(mountedInstances)));
 
       if (SideEffect.canUseDOM) {
         handleStateChangeOnClient.call(component, state);
@@ -64,51 +78,58 @@ function withSideEffect(reduceComponentsToState, handleStateChangeOnClient, mapS
 
       function SideEffect() {
         (0, _classCallCheck3['default'])(this, SideEffect);
-        return (0, _possibleConstructorReturn3['default'])(this, _Component.apply(this, arguments));
+        return (0, _possibleConstructorReturn3['default'])(this, (SideEffect.__proto__ || (0, _getPrototypeOf2['default'])(SideEffect)).apply(this, arguments));
       }
 
-      SideEffect.peek = function peek() {
-        return state;
-      };
-
-      // Expose canUseDOM so tests can monkeypatch it
-
-      // Try to use displayName of wrapped component
-
-
-      SideEffect.rewind = function rewind() {
-        if (SideEffect.canUseDOM) {
-          throw new Error('You may only call rewind() on the server. Call peek() to read the current state.');
+      (0, _createClass3['default'])(SideEffect, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+          mountedInstances.add(this);
+          emitChange(this);
+        }
+      }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+          emitChange(this);
+        }
+      }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+          mountedInstances['delete'](this);
+          emitChange(this);
+        }
+      }, {
+        key: 'render',
+        value: function render() {
+          return _react2['default'].createElement(
+            WrappedComponent,
+            null,
+            this.props.children
+          );
+        }
+      }], [{
+        key: 'peek',
+        value: function peek() {
+          return state;
         }
 
-        var recordedState = state;
-        state = undefined;
-        mountedInstances.clear();
-        return recordedState;
-      };
+        // Expose canUseDOM so tests can monkeypatch it
 
-      SideEffect.prototype.componentWillMount = function componentWillMount() {
-        mountedInstances.add(this);
-        emitChange(this);
-      };
+        // Try to use displayName of wrapped component
 
-      SideEffect.prototype.componentDidUpdate = function componentDidUpdate() {
-        emitChange(this);
-      };
+      }, {
+        key: 'rewind',
+        value: function rewind() {
+          if (SideEffect.canUseDOM) {
+            throw new Error('You may only call rewind() on the server. Call peek() to read the current state.');
+          }
 
-      SideEffect.prototype.componentWillUnmount = function componentWillUnmount() {
-        mountedInstances['delete'](this);
-        emitChange(this);
-      };
-
-      SideEffect.prototype.render = function render() {
-        return _react2['default'].createElement(
-          WrappedComponent,
-          null,
-          this.props.children
-        );
-      };
-
+          var recordedState = state;
+          state = undefined;
+          mountedInstances.clear();
+          return recordedState;
+        }
+      }]);
       return SideEffect;
     }(_react.Component);
 

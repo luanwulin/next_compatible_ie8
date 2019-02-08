@@ -1,11 +1,13 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.Router = exports.createRouter = exports.withRouter = undefined;
 
-var _defineProperty = require('babel-runtime/core-js/object/define-property');
+var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
 
-var _defineProperty2 = _interopRequireDefault(_defineProperty);
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
 
 exports._notifyBuildIdMismatch = _notifyBuildIdMismatch;
 exports._rewriteUrlForNextExport = _rewriteUrlForNextExport;
@@ -15,9 +17,9 @@ var _router = require('./router');
 
 var _router2 = _interopRequireDefault(_router);
 
-var _withRouter = require('./with-router');
+var _withRouter2 = require('./with-router');
 
-var _withRouter2 = _interopRequireDefault(_withRouter);
+var _withRouter3 = _interopRequireDefault(_withRouter2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -43,14 +45,12 @@ propertyFields.forEach(function (field) {
   // the property assigned to the actual router
   // The value might get changed as we change routes and this is the
   // proper way to access it
-  (0, _defineProperty2['default'])(SingletonRouter, field, {
-    value: function value() {
-      var _SingletonRouter$rout;
+  SingletonRouter[field] = function () {
+    var _SingletonRouter$rout;
 
-      throwIfNoRouter();
-      return (_SingletonRouter$rout = SingletonRouter.router)[field].apply(_SingletonRouter$rout, arguments);
-    }
-  });
+    throwIfNoRouter();
+    return (_SingletonRouter$rout = SingletonRouter.router)[field].apply(_SingletonRouter$rout, arguments);
+  };
 });
 
 coreMethodFields.forEach(function (field) {
@@ -90,7 +90,7 @@ exports['default'] = SingletonRouter;
 
 // Reexport the withRoute HOC
 
-exports.withRouter = _withRouter2['default'];
+var withRouter = exports.withRouter = _withRouter3['default'];
 
 // INTERNAL APIS
 // -------------
@@ -99,7 +99,6 @@ exports.withRouter = _withRouter2['default'];
 // Create a router and assign it as the singleton instance.
 // This is used in client side when we are initilizing the app.
 // This should **not** use inside the server.
-
 var createRouter = exports.createRouter = function createRouter() {
   for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
     args[_key] = arguments[_key];
@@ -128,13 +127,15 @@ function _notifyBuildIdMismatch(nextRoute) {
 
 function _rewriteUrlForNextExport(url) {
   var _url$split = url.split('#'),
-      hash = _url$split[1];
+      _url$split2 = (0, _slicedToArray3['default'])(_url$split, 2),
+      hash = _url$split2[1];
 
   url = url.replace(/#.*/, '');
 
-  var _url$split2 = url.split('?'),
-      path = _url$split2[0],
-      qs = _url$split2[1];
+  var _url$split3 = url.split('?'),
+      _url$split4 = (0, _slicedToArray3['default'])(_url$split3, 2),
+      path = _url$split4[0],
+      qs = _url$split4[1];
 
   path = path.replace(/\/$/, '');
 
@@ -163,11 +164,9 @@ function makePublicRouterInstance(router) {
     // the property assigned to the actual router
     // The value might get changed as we change routes and this is the
     // proper way to access it
-    (0, _defineProperty2['default'])(instance, field, {
-      value: function value() {
-        return router[field].apply(router, arguments);
-      }
-    });
+    instance[field] = function () {
+      return router[field].apply(router, arguments);
+    };
   });
 
   coreMethodFields.forEach(function (field) {
