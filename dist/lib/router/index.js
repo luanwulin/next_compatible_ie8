@@ -9,6 +9,10 @@ var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
 
 var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
 
+var _defineProperty = require('babel-runtime/core-js/object/define-property');
+
+var _defineProperty2 = _interopRequireDefault(_defineProperty);
+
 exports._notifyBuildIdMismatch = _notifyBuildIdMismatch;
 exports._rewriteUrlForNextExport = _rewriteUrlForNextExport;
 exports.makePublicRouterInstance = makePublicRouterInstance;
@@ -45,20 +49,20 @@ propertyFields.forEach(function (field) {
   // the property assigned to the actual router
   // The value might get changed as we change routes and this is the
   // proper way to access it
+  (0, _defineProperty2['default'])(SingletonRouter, field, {
+    get: function get() {
+      throwIfNoRouter();
+      return SingletonRouter.router[field];
+    }
+  });
+});
+
+coreMethodFields.forEach(function (field) {
   SingletonRouter[field] = function () {
     var _SingletonRouter$rout;
 
     throwIfNoRouter();
     return (_SingletonRouter$rout = SingletonRouter.router)[field].apply(_SingletonRouter$rout, arguments);
-  };
-});
-
-coreMethodFields.forEach(function (field) {
-  SingletonRouter[field] = function () {
-    var _SingletonRouter$rout2;
-
-    throwIfNoRouter();
-    return (_SingletonRouter$rout2 = SingletonRouter.router)[field].apply(_SingletonRouter$rout2, arguments);
   };
 });
 
@@ -164,9 +168,11 @@ function makePublicRouterInstance(router) {
     // the property assigned to the actual router
     // The value might get changed as we change routes and this is the
     // proper way to access it
-    instance[field] = function () {
-      return router[field].apply(router, arguments);
-    };
+    (0, _defineProperty2['default'])(instance, field, {
+      get: function get() {
+        return router[field];
+      }
+    });
   });
 
   coreMethodFields.forEach(function (field) {
