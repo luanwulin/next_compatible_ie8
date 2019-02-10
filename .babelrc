@@ -1,17 +1,6 @@
 {
   "presets": [
-    [
-      "env",
-      {
-        "useBuiltIns": "entry",
-        "targets": {
-          "browsers": [
-            "ie >= 7"
-          ]
-        },
-        "modules": "commonjs"
-      }
-    ],
+    "es2015-loose",
     "react",
     "stage-0"
   ],
@@ -20,7 +9,14 @@
     "transform-class-properties",
     "transform-runtime",
     "transform-es3-property-literals",
-    "transform-es3-member-expression-literals"
+    "transform-es3-member-expression-literals",
+    "transform-class-properties",
+    [
+      "transform-es2015-classes",
+      {
+        "loose": true
+      }
+    ]
   ],
   "env": {
     "test": {
