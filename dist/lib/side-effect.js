@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
@@ -13,6 +15,10 @@ var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorRet
 var _inherits2 = require('babel-runtime/helpers/inherits');
 
 var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
 var _set = require('babel-runtime/core-js/set');
 
@@ -50,7 +56,7 @@ function withSideEffect(reduceComponentsToState, handleStateChangeOnClient, mapS
     var state = void 0;
 
     function emitChange(component) {
-      state = reduceComponentsToState([].concat(mountedInstances));
+      state = reduceComponentsToState([].concat((0, _toConsumableArray3['default'])(mountedInstances)));
 
       if (SideEffect.canUseDOM) {
         handleStateChangeOnClient.call(component, state);

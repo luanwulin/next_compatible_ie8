@@ -1,6 +1,12 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
+
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
 
 var _typeof2 = require('babel-runtime/helpers/typeof');
 
@@ -497,12 +503,14 @@ var Router = function () {
     if (!this.asPath) return false;
 
     var _asPath$split = this.asPath.split('#'),
-        oldUrlNoHash = _asPath$split[0],
-        oldHash = _asPath$split[1];
+        _asPath$split2 = (0, _slicedToArray3['default'])(_asPath$split, 2),
+        oldUrlNoHash = _asPath$split2[0],
+        oldHash = _asPath$split2[1];
 
     var _as$split = as.split('#'),
-        newUrlNoHash = _as$split[0],
-        newHash = _as$split[1];
+        _as$split2 = (0, _slicedToArray3['default'])(_as$split, 2),
+        newUrlNoHash = _as$split2[0],
+        newHash = _as$split2[1];
 
     // If the urls are change, there's more than a hash change
 
@@ -519,8 +527,9 @@ var Router = function () {
   };
 
   Router.prototype.scrollToHash = function scrollToHash(as) {
-    var _as$split2 = as.split('#'),
-        hash = _as$split2[1];
+    var _as$split3 = as.split('#'),
+        _as$split4 = (0, _slicedToArray3['default'])(_as$split3, 2),
+        hash = _as$split4[1];
 
     var el = document.getElementById(hash);
     if (el) {

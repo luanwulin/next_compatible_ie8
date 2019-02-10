@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.SameLoopPromise = undefined;
 
 var _from = require('babel-runtime/core-js/array/from');

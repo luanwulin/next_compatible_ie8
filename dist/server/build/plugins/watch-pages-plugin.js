@@ -1,6 +1,12 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
@@ -31,7 +37,7 @@ var WatchPagesPlugin = function () {
 
     compiler.plugin('emit', function (compilation, callback) {
       // watch the pages directory
-      compilation.contextDependencies = [].concat(compilation.contextDependencies, [_this.dir]);
+      compilation.contextDependencies = [].concat((0, _toConsumableArray3['default'])(compilation.contextDependencies), [_this.dir]);
       callback();
     });
   };

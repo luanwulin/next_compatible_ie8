@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
@@ -17,6 +19,10 @@ var _regenerator2 = _interopRequireDefault(_regenerator);
 var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
 var _promise = require('babel-runtime/core-js/promise');
 
@@ -112,7 +118,7 @@ function onDemandEntryHandler(devMiddleware, compiler, _ref) {
     }).map(function (e) {
       return e.module.chunks;
     }).reduce(function (a, b) {
-      return [].concat(a, b);
+      return [].concat((0, _toConsumableArray3['default'])(a), (0, _toConsumableArray3['default'])(b));
     }, []).map(function (c) {
       var pageName = _utils.MATCH_ROUTE_NAME.exec(c.name)[1];
       return normalizePage('/' + pageName);

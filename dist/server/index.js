@@ -1,18 +1,24 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _from = require('babel-runtime/core-js/array/from');
 
 var _from2 = _interopRequireDefault(_from);
 
+var _keys = require('babel-runtime/core-js/object/keys');
+
+var _keys2 = _interopRequireDefault(_keys);
+
 var _getIterator2 = require('babel-runtime/core-js/get-iterator');
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
-var _keys = require('babel-runtime/core-js/object/keys');
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
 
-var _keys2 = _interopRequireDefault(_keys);
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
 var _promise = require('babel-runtime/core-js/promise');
 
@@ -602,7 +608,7 @@ var Server = function () {
             while (1) {
               switch (_context12.prev = _context12.next) {
                 case 0:
-                  p = _path.join.apply(undefined, [__dirname, '..', 'client'].concat(params.path || []));
+                  p = _path.join.apply(undefined, [__dirname, '..', 'client'].concat((0, _toConsumableArray3['default'])(params.path || [])));
                   _context12.next = 3;
                   return _this3.serveStatic(req, res, p);
 
@@ -630,7 +636,7 @@ var Server = function () {
             while (1) {
               switch (_context13.prev = _context13.next) {
                 case 0:
-                  p = _path.join.apply(undefined, [_this3.dir, 'static'].concat(params.path || []));
+                  p = _path.join.apply(undefined, [_this3.dir, 'static'].concat((0, _toConsumableArray3['default'])(params.path || [])));
                   _context13.next = 3;
                   return _this3.serveStatic(req, res, p);
 
@@ -676,28 +682,35 @@ var Server = function () {
 
     var _arr = ['GET', 'HEAD'];
     for (var _i = 0; _i < _arr.length; _i++) {
-      var method = _arr[_i];
-      for (var _iterator = (0, _keys2['default'])(routes), _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : (0, _getIterator3['default'])(_iterator);;) {
-        var _ref16;
+      var method = _arr[_i];var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
 
-        if (_isArray) {
-          if (_i2 >= _iterator.length) break;
-          _ref16 = _iterator[_i2++];
-        } else {
-          _i2 = _iterator.next();
-          if (_i2.done) break;
-          _ref16 = _i2.value;
+      try {
+        for (var _iterator = (0, _getIterator3['default'])((0, _keys2['default'])(routes)), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var p = _step.value;
+
+          this.router.add(method, p, routes[p]);
         }
-
-        var p = _ref16;
-
-        this.router.add(method, p, routes[p]);
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator['return']) {
+            _iterator['return']();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
       }
     }
   };
 
   Server.prototype.start = function () {
-    var _ref17 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee15(port, hostname) {
+    var _ref16 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee15(port, hostname) {
       var _this4 = this;
 
       return _regenerator2['default'].wrap(function _callee15$(_context15) {
@@ -728,14 +741,14 @@ var Server = function () {
     }));
 
     function start(_x39, _x40) {
-      return _ref17.apply(this, arguments);
+      return _ref16.apply(this, arguments);
     }
 
     return start;
   }();
 
   Server.prototype.run = function () {
-    var _ref18 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee16(req, res, parsedUrl) {
+    var _ref17 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee16(req, res, parsedUrl) {
       var fn;
       return _regenerator2['default'].wrap(function _callee16$(_context16) {
         while (1) {
@@ -789,14 +802,14 @@ var Server = function () {
     }));
 
     function run(_x41, _x42, _x43) {
-      return _ref18.apply(this, arguments);
+      return _ref17.apply(this, arguments);
     }
 
     return run;
   }();
 
   Server.prototype.render = function () {
-    var _ref19 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee17(req, res, pathname, query, parsedUrl) {
+    var _ref18 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee17(req, res, pathname, query, parsedUrl) {
       var html;
       return _regenerator2['default'].wrap(function _callee17$(_context17) {
         while (1) {
@@ -842,14 +855,14 @@ var Server = function () {
     }));
 
     function render(_x44, _x45, _x46, _x47, _x48) {
-      return _ref19.apply(this, arguments);
+      return _ref18.apply(this, arguments);
     }
 
     return render;
   }();
 
   Server.prototype.renderToHTML = function () {
-    var _ref20 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee18(req, res, pathname, query) {
+    var _ref19 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee18(req, res, pathname, query) {
       var compilationErr;
       return _regenerator2['default'].wrap(function _callee18$(_context18) {
         while (1) {
@@ -917,14 +930,14 @@ var Server = function () {
     }));
 
     function renderToHTML(_x49, _x50, _x51, _x52) {
-      return _ref20.apply(this, arguments);
+      return _ref19.apply(this, arguments);
     }
 
     return renderToHTML;
   }();
 
   Server.prototype.renderError = function () {
-    var _ref21 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee19(err, req, res, pathname, query) {
+    var _ref20 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee19(err, req, res, pathname, query) {
       var html;
       return _regenerator2['default'].wrap(function _callee19$(_context19) {
         while (1) {
@@ -946,14 +959,14 @@ var Server = function () {
     }));
 
     function renderError(_x53, _x54, _x55, _x56, _x57) {
-      return _ref21.apply(this, arguments);
+      return _ref20.apply(this, arguments);
     }
 
     return renderError;
   }();
 
   Server.prototype.renderErrorToHTML = function () {
-    var _ref22 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee20(err, req, res, pathname, query) {
+    var _ref21 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee20(err, req, res, pathname, query) {
       var compilationErr;
       return _regenerator2['default'].wrap(function _callee20$(_context20) {
         while (1) {
@@ -1011,14 +1024,14 @@ var Server = function () {
     }));
 
     function renderErrorToHTML(_x58, _x59, _x60, _x61, _x62) {
-      return _ref22.apply(this, arguments);
+      return _ref21.apply(this, arguments);
     }
 
     return renderErrorToHTML;
   }();
 
   Server.prototype.render404 = function () {
-    var _ref23 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee21(req, res) {
+    var _ref22 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee21(req, res) {
       var parsedUrl = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : (0, _url.parse)(req.url, true);
       var pathname, query;
       return _regenerator2['default'].wrap(function _callee21$(_context21) {
@@ -1039,14 +1052,14 @@ var Server = function () {
     }));
 
     function render404(_x63, _x64) {
-      return _ref23.apply(this, arguments);
+      return _ref22.apply(this, arguments);
     }
 
     return render404;
   }();
 
   Server.prototype.serveStatic = function () {
-    var _ref24 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee22(req, res, path) {
+    var _ref23 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee22(req, res, path) {
       return _regenerator2['default'].wrap(function _callee22$(_context22) {
         while (1) {
           switch (_context22.prev = _context22.next) {
@@ -1091,7 +1104,7 @@ var Server = function () {
     }));
 
     function serveStatic(_x66, _x67, _x68) {
-      return _ref24.apply(this, arguments);
+      return _ref23.apply(this, arguments);
     }
 
     return serveStatic;
@@ -1108,22 +1121,30 @@ var Server = function () {
   };
 
   Server.prototype.isInternalUrl = function isInternalUrl(req) {
-    for (var _iterator2 = internalPrefixes, _isArray2 = Array.isArray(_iterator2), _i3 = 0, _iterator2 = _isArray2 ? _iterator2 : (0, _getIterator3['default'])(_iterator2);;) {
-      var _ref25;
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
 
-      if (_isArray2) {
-        if (_i3 >= _iterator2.length) break;
-        _ref25 = _iterator2[_i3++];
-      } else {
-        _i3 = _iterator2.next();
-        if (_i3.done) break;
-        _ref25 = _i3.value;
+    try {
+      for (var _iterator2 = (0, _getIterator3['default'])(internalPrefixes), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        var prefix = _step2.value;
+
+        if (prefix.test(req.url)) {
+          return true;
+        }
       }
-
-      var prefix = _ref25;
-
-      if (prefix.test(req.url)) {
-        return true;
+    } catch (err) {
+      _didIteratorError2 = true;
+      _iteratorError2 = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion2 && _iterator2['return']) {
+          _iterator2['return']();
+        }
+      } finally {
+        if (_didIteratorError2) {
+          throw _iteratorError2;
+        }
       }
     }
 
@@ -1157,7 +1178,7 @@ var Server = function () {
   };
 
   Server.prototype.getCompilationError = function () {
-    var _ref26 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee23() {
+    var _ref24 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee23() {
       var errors;
       return _regenerator2['default'].wrap(function _callee23$(_context23) {
         while (1) {
@@ -1196,7 +1217,7 @@ var Server = function () {
     }));
 
     function getCompilationError() {
-      return _ref26.apply(this, arguments);
+      return _ref24.apply(this, arguments);
     }
 
     return getCompilationError;

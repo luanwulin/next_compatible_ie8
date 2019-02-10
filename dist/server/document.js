@@ -1,6 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.NextScript = exports.Main = exports.Head = undefined;
 
 var _extends2 = require('babel-runtime/helpers/extends');

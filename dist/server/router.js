@@ -1,14 +1,8 @@
 'use strict';
 
-exports.__esModule = true;
-
-var _regenerator = require('babel-runtime/regenerator');
-
-var _regenerator2 = _interopRequireDefault(_regenerator);
-
-var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
-
-var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _typeof2 = require('babel-runtime/helpers/typeof');
 
@@ -17,6 +11,14 @@ var _typeof3 = _interopRequireDefault(_typeof2);
 var _getIterator2 = require('babel-runtime/core-js/get-iterator');
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
+
+var _regenerator = require('babel-runtime/regenerator');
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 var _set = require('babel-runtime/core-js/set');
 
@@ -60,23 +62,12 @@ var Router = function () {
 
     var pathname = parsedUrl.pathname;
 
-    var _loop = function _loop() {
-      if (_isArray) {
-        if (_i >= _iterator.length) return 'break';
-        _ref = _iterator[_i++];
-      } else {
-        _i = _iterator.next();
-        if (_i.done) return 'break';
-        _ref = _i.value;
-      }
-
-      var r = _ref;
-
+    var _loop = function _loop(r) {
       var params = r.match(pathname);
       if (params) {
         return {
           v: function () {
-            var _ref2 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee() {
+            var _ref = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee() {
               return _regenerator2['default'].wrap(function _callee$(_context) {
                 while (1) {
                   switch (_context.prev = _context.next) {
@@ -92,24 +83,37 @@ var Router = function () {
             }));
 
             return function v() {
-              return _ref2.apply(this, arguments);
+              return _ref.apply(this, arguments);
             };
           }()
         };
       }
     };
 
-    _loop2: for (var _iterator = routes, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3['default'])(_iterator);;) {
-      var _ref;
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
 
-      var _ret = _loop();
+    try {
+      for (var _iterator = (0, _getIterator3['default'])(routes), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var r = _step.value;
 
-      switch (_ret) {
-        case 'break':
-          break _loop2;
+        var _ret = _loop(r);
 
-        default:
-          if ((typeof _ret === 'undefined' ? 'undefined' : (0, _typeof3['default'])(_ret)) === "object") return _ret.v;
+        if ((typeof _ret === 'undefined' ? 'undefined' : (0, _typeof3['default'])(_ret)) === "object") return _ret.v;
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator['return']) {
+          _iterator['return']();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
       }
     }
   };

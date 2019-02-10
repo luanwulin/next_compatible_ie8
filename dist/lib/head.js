@@ -1,10 +1,16 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _set = require('babel-runtime/core-js/set');
 
 var _set2 = _interopRequireDefault(_set);
+
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
@@ -65,7 +71,7 @@ function reduceComponents(components) {
     return _react2['default'].Children.toArray(children);
   }).reduce(function (a, b) {
     return a.concat(b);
-  }, []).reverse()).concat.apply(_components$map$map$r, defaultHead()).filter(function (c) {
+  }, []).reverse()).concat.apply(_components$map$map$r, (0, _toConsumableArray3['default'])(defaultHead())).filter(function (c) {
     return !!c;
   }).filter(unique()).reverse().map(function (c) {
     var className = (c.className ? c.className + ' ' : '') + 'next-head';

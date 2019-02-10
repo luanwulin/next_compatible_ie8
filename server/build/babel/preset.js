@@ -38,8 +38,17 @@ const plugins = envPlugins[process.env.NODE_ENV] || envPlugins['development']
 
 module.exports = (context, opts = {}) => ({
   presets: [
-    require.resolve('babel-preset-react'),
-    require.resolve('babel-preset-es2015-loose')
+    [require.resolve('babel-preset-env'), {
+      'useBuiltIns': 'entry',
+      'targets': {
+        'browsers': [
+          'ie >= 8'
+        ]
+      },
+      'modules': 'commonjs',
+      ...opts['preset-env']
+    }],
+    require.resolve('babel-preset-react')
   ],
   plugins: [
     require.resolve('babel-plugin-react-require'),
