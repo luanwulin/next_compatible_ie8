@@ -38,6 +38,16 @@ var _router = require('./router');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+var Fragment = _react2['default'].Fragment || function Fragment(_ref) {
+  var children = _ref.children;
+
+  return _react2['default'].createElement(
+    'div',
+    null,
+    children
+  );
+};
+
 var App = function (_Component) {
   (0, _inherits3['default'])(App, _Component);
 
@@ -88,7 +98,7 @@ var App = function (_Component) {
     var containerProps = { Component: Component, props: props, hash: hash, router: router, url: url };
 
     return _react2['default'].createElement(
-      'div',
+      Fragment,
       null,
       _react2['default'].createElement(Container, containerProps)
     );
