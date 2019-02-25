@@ -195,7 +195,7 @@ require('es5-shim');
 
 require('object-create-ie8');
 
-require('object-defineproperty-ie8');
+require('object-defineproperty-ie');
 
 require('console-polyfill');
 
