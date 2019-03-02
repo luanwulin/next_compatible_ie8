@@ -154,8 +154,11 @@ var Server = function () {
   Server.prototype.handleRequest = function handleRequest(req, res, parsedUrl) {
     var _this = this;
 
+    var baseRoute = this.config.baseRoute;
+
+
     if (baseRoute) {
-      req.url = req.url.replace(this.config.baseRoute, '');
+      req.url = req.url.replace(baseRoute, '');
     }
 
     // Parse url if parsedUrl not provided
