@@ -97,8 +97,6 @@ var blockedPages = {
   '/_error': true
 };
 
-var baseRoute = NEXT_BASEROUTE; //eslint-disable-line
-
 var Server = function () {
   function Server() {
     var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
@@ -157,7 +155,7 @@ var Server = function () {
     var _this = this;
 
     if (baseRoute) {
-      req.url = req.url.replace(baseRoute, '');
+      req.url = req.url.replace(this.config.baseRoute, '');
     }
 
     // Parse url if parsedUrl not provided
