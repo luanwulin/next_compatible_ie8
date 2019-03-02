@@ -283,8 +283,10 @@ var NextScript = exports.NextScript = function (_Component4) {
       staticMarkup ? null : _react2['default'].createElement('script', { nonce: this.props.nonce, dangerouslySetInnerHTML: {
           __html: '\n          __NEXT_DATA__ = ' + (0, _htmlescape2['default'])(__NEXT_DATA__) + '\n          module={}\n          __NEXT_LOADED_PAGES__ = []\n          __NEXT_LOADED_CHUNKS__ = []\n\n          __NEXT_REGISTER_PAGE = function (route, fn) {\n            __NEXT_LOADED_PAGES__.push({ route: route, fn: fn })\n          }\n\n          __NEXT_REGISTER_CHUNK = function (chunkName, fn) {\n            __NEXT_LOADED_CHUNKS__.push({ chunkName: chunkName, fn: fn })\n          }\n        '
         } }),
-      _react2['default'].createElement('script', { async: true, id: '__NEXT_PAGE__' + pathname, type: 'text/javascript', src: assetPrefix + '/_next/' + buildId + '/page' + pagePathname }),
-      _react2['default'].createElement('script', { async: true, id: '__NEXT_PAGE__/_error', type: 'text/javascript', src: assetPrefix + '/_next/' + buildId + '/page/_error.js' }),
+      _react2['default'].createElement('script', { async: true, id: '__NEXT_PAGE__' + pathname, type: 'text/javascript',
+        src: assetPrefix + '/_next/' + buildId + '/page' + pagePathname }),
+      _react2['default'].createElement('script', { async: true, id: '__NEXT_PAGE__/_error', type: 'text/javascript',
+        src: assetPrefix + '/_next/' + buildId + '/page/_error.js' }),
       staticMarkup ? null : this.getDynamicChunks(),
       staticMarkup ? null : this.getScripts()
     );

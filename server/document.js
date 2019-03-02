@@ -24,11 +24,11 @@ export default class Document extends Component {
 
   render () {
     return <html>
-      <Head />
-      <body>
-        <Main />
-        <NextScript />
-      </body>
+    <Head/>
+    <body>
+    <Main/>
+    <NextScript/>
+    </body>
     </html>
   }
 }
@@ -89,8 +89,8 @@ export class Head extends Component {
 
     return <head {...this.props}>
       {(head || []).map((h, i) => React.cloneElement(h, { key: h.key || i }))}
-      <link rel='preload' href={`${assetPrefix}/_next/${buildId}/page${pagePathname}`} as='script' />
-      <link rel='preload' href={`${assetPrefix}/_next/${buildId}/page/_error.js`} as='script' />
+      <link rel='preload' href={`${assetPrefix}/_next/${buildId}/page${pagePathname}`} as='script'/>
+      <link rel='preload' href={`${assetPrefix}/_next/${buildId}/page/_error.js`} as='script'/>
       {this.getPreloadDynamicChunks()}
       {this.getPreloadMainLinks()}
       {styles || null}
@@ -108,8 +108,8 @@ export class Main extends Component {
     const { html, errorHtml } = this.context._documentProps
     return (
       <Fragment>
-        <div id='__next' dangerouslySetInnerHTML={{ __html: html }} />
-        <div id='__next-error' dangerouslySetInnerHTML={{ __html: errorHtml }} />
+        <div id='__next' dangerouslySetInnerHTML={{ __html: html }}/>
+        <div id='__next-error' dangerouslySetInnerHTML={{ __html: errorHtml }}/>
       </Fragment>
     )
   }
@@ -194,9 +194,11 @@ export class NextScript extends Component {
             __NEXT_LOADED_CHUNKS__.push({ chunkName: chunkName, fn: fn })
           }
         `
-      }} />}
-      <script async id={`__NEXT_PAGE__${pathname}`} type='text/javascript' src={`${assetPrefix}/_next/${buildId}/page${pagePathname}`} />
-      <script async id={`__NEXT_PAGE__/_error`} type='text/javascript' src={`${assetPrefix}/_next/${buildId}/page/_error.js`} />
+      }}/>}
+      <script async id={`__NEXT_PAGE__${pathname}`} type='text/javascript'
+              src={`${assetPrefix}/_next/${buildId}/page${pagePathname}`}/>
+      <script async id={`__NEXT_PAGE__/_error`} type='text/javascript'
+              src={`${assetPrefix}/_next/${buildId}/page/_error.js`}/>
       {staticMarkup ? null : this.getDynamicChunks()}
       {staticMarkup ? null : this.getScripts()}
     </Fragment>

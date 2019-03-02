@@ -26,6 +26,8 @@ const blockedPages = {
   '/_error': true
 }
 
+const baseRoute = NEXT_BASEROUTE; //eslint-disable-line
+
 export default class Server {
   constructor ({ dir = '.', dev = false, staticMarkup = false, quiet = false, conf = null } = {}) {
     this.dir = resolve(dir)
@@ -67,6 +69,10 @@ export default class Server {
   }
 
   handleRequest (req, res, parsedUrl) {
+    if (baseRoute) {
+      req.url = req.url.replace(baseRoute, '')
+    }
+
     // Parse url if parsedUrl not provided
     if (!parsedUrl || typeof parsedUrl !== 'object') {
       parsedUrl = parseUrl(req.url, true)
