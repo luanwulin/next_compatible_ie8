@@ -3,15 +3,15 @@ import PropTypes from 'prop-types'
 import htmlescape from 'htmlescape'
 import flush from 'styled-jsx/server'
 
-const Fragment = React.Fragment || function Fragment ({ children }) {
+const Fragment = React.Fragment || function Fragment ({children}) {
   return <div>{children}</div>
 }
 
 export default class Document extends Component {
-  static getInitialProps ({ renderPage }) {
-    const { html, head, errorHtml, chunks } = renderPage()
+  static getInitialProps ({renderPage}) {
+    const {html, head, errorHtml, chunks} = renderPage()
     const styles = flush()
-    return { html, head, errorHtml, chunks, styles }
+    return {html, head, errorHtml, chunks, styles}
   }
 
   static childContextTypes = {
@@ -19,16 +19,16 @@ export default class Document extends Component {
   }
 
   getChildContext () {
-    return { _documentProps: this.props }
+    return {_documentProps: this.props}
   }
 
   render () {
     return <html>
-    <Head/>
-    <body>
-    <Main/>
-    <NextScript/>
-    </body>
+      <Head />
+      <body>
+        <Main />
+        <NextScript />
+      </body>
     </html>
   }
 }
@@ -39,8 +39,8 @@ export class Head extends Component {
   }
 
   getChunkPreloadLink (filename) {
-    const { __NEXT_DATA__ } = this.context._documentProps
-    let { buildStats, assetPrefix, buildId } = __NEXT_DATA__
+    const {__NEXT_DATA__} = this.context._documentProps
+    let {buildStats, assetPrefix, buildId} = __NEXT_DATA__
     const hash = buildStats ? buildStats[filename].hash : buildId
 
     return (
@@ -54,7 +54,7 @@ export class Head extends Component {
   }
 
   getPreloadMainLinks () {
-    const { dev } = this.context._documentProps
+    const {dev} = this.context._documentProps
     if (dev) {
       return [
         this.getChunkPreloadLink('manifest.js'),
@@ -70,8 +70,8 @@ export class Head extends Component {
   }
 
   getPreloadDynamicChunks () {
-    const { chunks, __NEXT_DATA__ } = this.context._documentProps
-    let { assetPrefix } = __NEXT_DATA__
+    const {chunks, __NEXT_DATA__} = this.context._documentProps
+    let {assetPrefix} = __NEXT_DATA__
     return chunks.filenames.map((chunk) => (
       <link
         key={chunk}
@@ -82,18 +82,39 @@ export class Head extends Component {
     ))
   }
 
+  getPolyfillScripts () {
+    const polyfills = [
+      '//cdn.liruan.cn/nwmatcher/1.3.6/nwmatcher.min.js',
+      '//cdn.liruan.cn/selectivizr/1.0.2/selectivizr-min.js',
+      '//cdn.jsdelivr.net/gh/RubyLouvre/object-create-ie8/index.js',
+      '//cdn.jsdelivr.net/gh/ambit-tsai/object-defineproperty-ie/dist/object-defineproperty-ie.js',
+      '//cdn.jsdelivr.net/gh/paulmillr/console-polyfill/index.js'
+    ]
+
+    return (
+      <Fragment>
+        {/* [if lt IE 9] */}
+        {polyfills.map((chunk) => (
+          <script type='text/javascript' src={chunk} />
+        ))}
+        {/* [endif] */}
+      </Fragment>
+    )
+  }
+
   render () {
-    const { head, styles, __NEXT_DATA__ } = this.context._documentProps
-    const { pathname, buildId, assetPrefix } = __NEXT_DATA__
+    const {head, styles, __NEXT_DATA__} = this.context._documentProps
+    const {pathname, buildId, assetPrefix} = __NEXT_DATA__
     const pagePathname = getPagePathname(pathname)
 
     return <head {...this.props}>
-      {(head || []).map((h, i) => React.cloneElement(h, { key: h.key || i }))}
-      <link rel='preload' href={`${assetPrefix}/_next/${buildId}/page${pagePathname}`} as='script'/>
-      <link rel='preload' href={`${assetPrefix}/_next/${buildId}/page/_error.js`} as='script'/>
+      {(head || []).map((h, i) => React.cloneElement(h, {key: h.key || i}))}
+      <link rel='preload' href={`${assetPrefix}/_next/${buildId}/page${pagePathname}`} as='script' />
+      <link rel='preload' href={`${assetPrefix}/_next/${buildId}/page/_error.js`} as='script' />
       {this.getPreloadDynamicChunks()}
       {this.getPreloadMainLinks()}
       {styles || null}
+      {this.getPolyfillScripts}
       {this.props.children}
     </head>
   }
@@ -105,11 +126,11 @@ export class Main extends Component {
   }
 
   render () {
-    const { html, errorHtml } = this.context._documentProps
+    const {html, errorHtml} = this.context._documentProps
     return (
       <Fragment>
-        <div id='__next' dangerouslySetInnerHTML={{ __html: html }}/>
-        <div id='__next-error' dangerouslySetInnerHTML={{ __html: errorHtml }}/>
+        <div id='__next' dangerouslySetInnerHTML={{__html: html}}/>
+        <div id='__next-error' dangerouslySetInnerHTML={{__html: errorHtml}}/>
       </Fragment>
     )
   }
@@ -125,8 +146,8 @@ export class NextScript extends Component {
   }
 
   getChunkScript (filename, additionalProps = {}) {
-    const { __NEXT_DATA__ } = this.context._documentProps
-    let { buildStats, assetPrefix, buildId } = __NEXT_DATA__
+    const {__NEXT_DATA__} = this.context._documentProps
+    let {buildStats, assetPrefix, buildId} = __NEXT_DATA__
     const hash = buildStats ? buildStats[filename].hash : buildId
 
     return (
@@ -140,7 +161,7 @@ export class NextScript extends Component {
   }
 
   getScripts () {
-    const { dev } = this.context._documentProps
+    const {dev} = this.context._documentProps
     if (dev) {
       return [
         this.getChunkScript('manifest.js'),
@@ -151,12 +172,12 @@ export class NextScript extends Component {
 
     // In the production mode, we have a single asset with all the JS content.
     // So, we can load the script with async
-    return [this.getChunkScript('app.js', { async: true })]
+    return [this.getChunkScript('app.js', {async: true})]
   }
 
   getDynamicChunks () {
-    const { chunks, __NEXT_DATA__ } = this.context._documentProps
-    let { assetPrefix } = __NEXT_DATA__
+    const {chunks, __NEXT_DATA__} = this.context._documentProps
+    let {assetPrefix} = __NEXT_DATA__
     return (
       <Fragment>
         {chunks.filenames.map((chunk) => (
@@ -172,8 +193,8 @@ export class NextScript extends Component {
   }
 
   render () {
-    const { staticMarkup, __NEXT_DATA__, chunks } = this.context._documentProps
-    const { pathname, buildId, assetPrefix } = __NEXT_DATA__
+    const {staticMarkup, __NEXT_DATA__, chunks} = this.context._documentProps
+    const {pathname, buildId, assetPrefix} = __NEXT_DATA__
     const pagePathname = getPagePathname(pathname)
 
     __NEXT_DATA__.chunks = chunks.names
@@ -194,11 +215,11 @@ export class NextScript extends Component {
             __NEXT_LOADED_CHUNKS__.push({ chunkName: chunkName, fn: fn })
           }
         `
-      }}/>}
+      }} />}
       <script async id={`__NEXT_PAGE__${pathname}`} type='text/javascript'
-              src={`${assetPrefix}/_next/${buildId}/page${pagePathname}`}/>
+              src={`${assetPrefix}/_next/${buildId}/page${pagePathname}`} />
       <script async id={`__NEXT_PAGE__/_error`} type='text/javascript'
-              src={`${assetPrefix}/_next/${buildId}/page/_error.js`}/>
+              src={`${assetPrefix}/_next/${buildId}/page/_error.js`} />
       {staticMarkup ? null : this.getDynamicChunks()}
       {staticMarkup ? null : this.getScripts()}
     </Fragment>

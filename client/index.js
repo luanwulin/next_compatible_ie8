@@ -1,7 +1,3 @@
-import 'es5-shim' // IE8 ^4.5.10
-import 'object-create-ie8'
-import 'object-defineproperty-ie'
-import 'console-polyfill'
 import { createElement } from 'react'
 import ReactDOM from 'react-dom'
 import HeadManager from './head-manager'
