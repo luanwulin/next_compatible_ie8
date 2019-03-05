@@ -114,7 +114,7 @@ export class Head extends Component {
       {this.getPreloadDynamicChunks()}
       {this.getPreloadMainLinks()}
       {styles || null}
-      {this.getPolyfillScripts}
+      {this.getPolyfillScripts()}
       {this.props.children}
     </head>
   }
