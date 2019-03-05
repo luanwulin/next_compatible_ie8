@@ -191,14 +191,6 @@ var doRender = function () {
   };
 }();
 
-require('es5-shim');
-
-require('object-create-ie8');
-
-require('object-defineproperty-ie');
-
-require('console-polyfill');
-
 var _react = require('react');
 
 var _reactDom = require('react-dom');
@@ -238,7 +230,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 // depends on Promise.
 // So, we need to polyfill it.
 // See: https://github.com/webpack/webpack/issues/4254
-// IE8 ^4.5.10
 if (!window.Promise) {
   window.Promise = _promise2['default'];
 }

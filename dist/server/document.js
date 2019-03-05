@@ -147,6 +147,18 @@ var Head = exports.Head = function (_Component2) {
     });
   };
 
+  Head.prototype.getPolyfillScripts = function getPolyfillScripts() {
+    var polyfills = ['//cdn.liruan.cn/nwmatcher/1.3.6/nwmatcher.min.js', '//cdn.liruan.cn/selectivizr/1.0.2/selectivizr-min.js', '//cdn.jsdelivr.net/gh/RubyLouvre/object-create-ie8/index.js', '//cdn.jsdelivr.net/gh/ambit-tsai/object-defineproperty-ie/dist/object-defineproperty-ie.js', '//cdn.jsdelivr.net/gh/paulmillr/console-polyfill/index.js'];
+
+    return _react2['default'].createElement(
+      Fragment,
+      null,
+      polyfills.map(function (chunk) {
+        return _react2['default'].createElement('script', { type: 'text/javascript', src: chunk });
+      })
+    );
+  };
+
   Head.prototype.render = function render() {
     var _context$_documentPro2 = this.context._documentProps,
         head = _context$_documentPro2.head,
@@ -169,6 +181,7 @@ var Head = exports.Head = function (_Component2) {
       this.getPreloadDynamicChunks(),
       this.getPreloadMainLinks(),
       styles || null,
+      this.getPolyfillScripts,
       this.props.children
     );
   };
