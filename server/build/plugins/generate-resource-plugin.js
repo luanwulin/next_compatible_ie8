@@ -45,13 +45,11 @@ export default class GernerateResource {
          */
         function mapAsset (assetsPath) {
           if (assetsPath) {
-            const truePath = (compilation.options.output.publicPath + assetsPath).replace(/([^:])\/{2,}/g, '$1/')
-
             if (extname(assetsPath) === '.js') {
               // 绝对路径 = publicPath +  assetsPath
-              webpackMap[pageName].js.push(truePath)
+              webpackMap[pageName].js.push(assetsPath)
             } else if (extname(assetsPath) === '.css') {
-              webpackMap[pageName].css.push(truePath)
+              webpackMap[pageName].css.push(assetsPath)
             }
           }
         }
