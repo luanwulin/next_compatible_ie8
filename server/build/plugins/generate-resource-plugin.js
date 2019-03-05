@@ -7,7 +7,7 @@ import {
 export default class GernerateResource {
   apply (compiler) {
     // 数据处理 用于生成 webpackMap
-    compiler.plugin('after-compile', function (compilation, callback) {
+    compiler.plugin('after-compile', function (compilation) {
       const pages = compilation
         .chunks
         .filter(chunk => IS_BUNDLED_PAGE.test(chunk.name))
@@ -61,8 +61,6 @@ export default class GernerateResource {
           size: () => newContent.length
         }
       })
-
-      callback()
     })
   }
 }

@@ -130,7 +130,10 @@ export class Head extends Component {
     ))
 
     return (
-      <meta name='react-comment-hack' dangerouslySetInnerHTML={{ __html: `<!--[if lte IE 8]>${scripts}<![endif]-->` }} />
+      <meta name='react-comment-hack' dangerouslySetInnerHTML={{
+        __html: `<!--[if lte IE 8]>
+                    ${scripts}
+                 <![endif]-->` }} />
     )
   }
 
