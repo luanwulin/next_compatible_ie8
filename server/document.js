@@ -1,10 +1,42 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'
 import htmlescape from 'htmlescape'
 import flush from 'styled-jsx/server'
 
 const Fragment = React.Fragment || function Fragment ({children}) {
   return <div>{children}</div>
+}
+
+class Comment extends Component {
+  static propTypes = {
+    text: PropTypes.string,
+    trim: PropTypes.bool
+  }
+
+  static defaultProps = {
+    trim: true
+  }
+
+  componentDidMount () {
+    let el = ReactDOM.findDOMNode(this)
+    ReactDOM.unmountComponentAtNode(el)
+    el.outerHTML = this.createComment()
+  }
+
+  createComment () {
+    let text = this.props.text
+
+    if (this.props.trim) {
+      text = text.trim()
+    }
+
+    return `<!-- ${text} -->`
+  }
+
+  render () {
+    return <Fragment />
+  }
 }
 
 export default class Document extends Component {
@@ -93,11 +125,11 @@ export class Head extends Component {
 
     return (
       <Fragment>
-        <Fragment dangerouslySetInnerHTML={{ __html: '<!-- [if lt IE 9] -->' }} />
+        <Comment text='[if lt IE 9]' />
         {polyfills.map((chunk) => (
           <script type='text/javascript' src={chunk} />
         ))}
-        <Fragment dangerouslySetInnerHTML={{ __html: '<!-- [endif] -->' }} />
+        <Comment text='[endif]' />
       </Fragment>
     )
   }

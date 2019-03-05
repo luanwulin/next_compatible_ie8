@@ -25,6 +25,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
 var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -49,12 +53,51 @@ var Fragment = _react2['default'].Fragment || function Fragment(_ref) {
   );
 };
 
-var Document = function (_Component) {
-  (0, _inherits3['default'])(Document, _Component);
+var Comment = function (_Component) {
+  (0, _inherits3['default'])(Comment, _Component);
+
+  function Comment() {
+    (0, _classCallCheck3['default'])(this, Comment);
+    return (0, _possibleConstructorReturn3['default'])(this, _Component.apply(this, arguments));
+  }
+
+  Comment.prototype.componentDidMount = function componentDidMount() {
+    var el = _reactDom2['default'].findDOMNode(this);
+    _reactDom2['default'].unmountComponentAtNode(el);
+    el.outerHTML = this.createComment();
+  };
+
+  Comment.prototype.createComment = function createComment() {
+    var text = this.props.text;
+
+    if (this.props.trim) {
+      text = text.trim();
+    }
+
+    return '<!-- ' + text + ' -->';
+  };
+
+  Comment.prototype.render = function render() {
+    return _react2['default'].createElement(Fragment, null);
+  };
+
+  return Comment;
+}(_react.Component);
+
+Comment.propTypes = {
+  text: _propTypes2['default'].string,
+  trim: _propTypes2['default'].bool
+};
+Comment.defaultProps = {
+  trim: true
+};
+
+var Document = function (_Component2) {
+  (0, _inherits3['default'])(Document, _Component2);
 
   function Document() {
     (0, _classCallCheck3['default'])(this, Document);
-    return (0, _possibleConstructorReturn3['default'])(this, _Component.apply(this, arguments));
+    return (0, _possibleConstructorReturn3['default'])(this, _Component2.apply(this, arguments));
   }
 
   Document.getInitialProps = function getInitialProps(_ref2) {
@@ -96,12 +139,12 @@ Document.childContextTypes = {
 };
 exports['default'] = Document;
 
-var Head = exports.Head = function (_Component2) {
-  (0, _inherits3['default'])(Head, _Component2);
+var Head = exports.Head = function (_Component3) {
+  (0, _inherits3['default'])(Head, _Component3);
 
   function Head() {
     (0, _classCallCheck3['default'])(this, Head);
-    return (0, _possibleConstructorReturn3['default'])(this, _Component2.apply(this, arguments));
+    return (0, _possibleConstructorReturn3['default'])(this, _Component3.apply(this, arguments));
   }
 
   Head.prototype.getChunkPreloadLink = function getChunkPreloadLink(filename) {
@@ -153,11 +196,11 @@ var Head = exports.Head = function (_Component2) {
     return _react2['default'].createElement(
       Fragment,
       null,
-      _react2['default'].createElement(Fragment, { dangerouslySetInnerHTML: { __html: '<!-- [if lt IE 9] -->' } }),
+      _react2['default'].createElement(Comment, { text: '[if lt IE 9]' }),
       polyfills.map(function (chunk) {
         return _react2['default'].createElement('script', { type: 'text/javascript', src: chunk });
       }),
-      _react2['default'].createElement(Fragment, { dangerouslySetInnerHTML: { __html: '<!-- [endif] -->' } })
+      _react2['default'].createElement(Comment, { text: '[endif]' })
     );
   };
 
@@ -195,12 +238,12 @@ Head.contextTypes = {
   _documentProps: _propTypes2['default'].any
 };
 
-var Main = exports.Main = function (_Component3) {
-  (0, _inherits3['default'])(Main, _Component3);
+var Main = exports.Main = function (_Component4) {
+  (0, _inherits3['default'])(Main, _Component4);
 
   function Main() {
     (0, _classCallCheck3['default'])(this, Main);
-    return (0, _possibleConstructorReturn3['default'])(this, _Component3.apply(this, arguments));
+    return (0, _possibleConstructorReturn3['default'])(this, _Component4.apply(this, arguments));
   }
 
   Main.prototype.render = function render() {
@@ -223,12 +266,12 @@ Main.contextTypes = {
   _documentProps: _propTypes2['default'].any
 };
 
-var NextScript = exports.NextScript = function (_Component4) {
-  (0, _inherits3['default'])(NextScript, _Component4);
+var NextScript = exports.NextScript = function (_Component5) {
+  (0, _inherits3['default'])(NextScript, _Component5);
 
   function NextScript() {
     (0, _classCallCheck3['default'])(this, NextScript);
-    return (0, _possibleConstructorReturn3['default'])(this, _Component4.apply(this, arguments));
+    return (0, _possibleConstructorReturn3['default'])(this, _Component5.apply(this, arguments));
   }
 
   NextScript.prototype.getChunkScript = function getChunkScript(filename) {
