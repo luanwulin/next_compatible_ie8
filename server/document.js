@@ -35,7 +35,7 @@ class Comment extends Component {
   }
 
   render () {
-    return <Fragment />
+    return <div />
   }
 }
 

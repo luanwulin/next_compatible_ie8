@@ -78,7 +78,7 @@ var Comment = function (_Component) {
   };
 
   Comment.prototype.render = function render() {
-    return _react2['default'].createElement(Fragment, null);
+    return _react2['default'].createElement('div', null);
   };
 
   return Comment;
