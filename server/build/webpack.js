@@ -11,6 +11,7 @@ import PagesPlugin from './plugins/pages-plugin'
 import NextJsSsrImportPlugin from './plugins/nextjs-ssr-import'
 import DynamicChunksPlugin from './plugins/dynamic-chunks-plugin'
 import UnlinkFilePlugin from './plugins/unlink-file-plugin'
+import GernerateResourcePlugin from './plugins/generate-resource-plugin'
 import findBabelConfig from './babel/find-config'
 
 const nextDir = path.join(__dirname, '..', '..', '..')
@@ -174,6 +175,7 @@ export default async function getBaseWebpackConfig (dir, {dev = false, isServer 
       ].filter(Boolean)
     },
     plugins: [
+      new GernerateResourcePlugin(),
       new webpack.IgnorePlugin(/(precomputed)/, /node_modules.+(elliptic)/),
       dev && new webpack.NoEmitOnErrorsPlugin(),
       dev && !isServer && new FriendlyErrorsWebpackPlugin(),

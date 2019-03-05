@@ -1,13 +1,11 @@
-import {mkdirp, writeJsonSync, removeSync} from 'fs-extra'
-import {extname, resolve, join} from 'path'
+import { extname, join } from 'path'
 
 import {
-  IS_BUNDLED_PAGE,
-  MATCH_ROUTE_NAME
+  IS_BUNDLED_PAGE
 } from '../../utils'
 
 export default class GernerateResource {
-  apply(compiler) {
+  apply (compiler) {
     // 数据处理 用于生成 webpackMap
     compiler.plugin('after-compile', function (compilation, callback) {
       const pages = compilation
@@ -34,8 +32,8 @@ export default class GernerateResource {
 
         const pageName = name.replace(/bundles[/\\]pages[/\\](.*)[/\\]?\.js/, `$1`)
 
-        webpackMap[pageName] = {};
-        webpackMap[pageName].js = [];
+        webpackMap[pageName] = {}
+        webpackMap[pageName].js = []
         webpackMap[pageName].css = [];
 
         // 页面级别资源 (映射) 处理
@@ -47,7 +45,7 @@ export default class GernerateResource {
          */
         function mapAsset (assetsPath) {
           if (assetsPath) {
-            const truePath = (compilation.options.output.publicPath + assetsPath).replace(/([^\:])\/{2,}/g, '$1/')
+            const truePath = (compilation.options.output.publicPath + assetsPath).replace(/([^:])\/{2,}/g, '$1/')
 
             if (extname(assetsPath) === '.js') {
               // 绝对路径 = publicPath +  assetsPath
