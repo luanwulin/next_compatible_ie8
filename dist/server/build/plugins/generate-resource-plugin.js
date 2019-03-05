@@ -25,7 +25,7 @@ var GernerateResource = function () {
 
   GernerateResource.prototype.apply = function apply(compiler) {
     // 数据处理 用于生成 webpackMap
-    compiler.plugin('after-compile', function (compilation) {
+    compiler.plugin('emit', function (compilation) {
       var pages = compilation.chunks.filter(function (chunk) {
         return _utils.IS_BUNDLED_PAGE.test(chunk.name);
       });

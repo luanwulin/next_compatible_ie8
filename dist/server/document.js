@@ -199,8 +199,7 @@ var Head = exports.Head = function (_Component3) {
       return scripts += '<script type=\'text/javascript\' src=' + chunk + ' />\n';
     });
 
-    return _react2['default'].createElement('meta', { name: 'react-comment-hack', dangerouslySetInnerHTML: {
-        __html: '<!--[if lte IE 8]>\n                    ' + scripts + '\n                 <![endif]-->' } });
+    return _react2['default'].createElement('meta', { name: 'react-comment-hack', dangerouslySetInnerHTML: { __html: '<!--[if lte IE 8]>' + scripts + '<![endif]-->' } });
   };
 
   Head.prototype.render = function render() {
