@@ -82,6 +82,10 @@ var _unlinkFilePlugin = require('./plugins/unlink-file-plugin');
 
 var _unlinkFilePlugin2 = _interopRequireDefault(_unlinkFilePlugin);
 
+var _generateResourcePlugin = require('./plugins/generate-resource-plugin');
+
+var _generateResourcePlugin2 = _interopRequireDefault(_generateResourcePlugin);
+
 var _findConfig = require('./babel/find-config');
 
 var _findConfig2 = _interopRequireDefault(_findConfig);
@@ -259,7 +263,7 @@ exports['default'] = function () {
                   use: defaultLoaders.babel
                 }].filter(Boolean)
               },
-              plugins: [new _webpack2['default'].IgnorePlugin(/(precomputed)/, /node_modules.+(elliptic)/), dev && new _webpack2['default'].NoEmitOnErrorsPlugin(), dev && !isServer && new _friendlyErrorsWebpackPlugin2['default'](), dev && new _webpack2['default'].NamedModulesPlugin(), dev && !isServer && new _webpack2['default'].HotModuleReplacementPlugin(), // Hot module replacement
+              plugins: [new _generateResourcePlugin2['default'](), new _webpack2['default'].IgnorePlugin(/(precomputed)/, /node_modules.+(elliptic)/), dev && new _webpack2['default'].NoEmitOnErrorsPlugin(), dev && !isServer && new _friendlyErrorsWebpackPlugin2['default'](), dev && new _webpack2['default'].NamedModulesPlugin(), dev && !isServer && new _webpack2['default'].HotModuleReplacementPlugin(), // Hot module replacement
               dev && new _unlinkFilePlugin2['default'](), dev && new _caseSensitivePathsWebpackPlugin2['default'](), // Since on macOS the filesystem is case-insensitive this will make sure your path are case-sensitive
               dev && new _webpack2['default'].LoaderOptionsPlugin({
                 options: {

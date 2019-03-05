@@ -12,8 +12,6 @@ var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _fsExtra = require('fs-extra');
-
 var _path = require('path');
 
 var _utils = require('../../utils');
@@ -65,7 +63,7 @@ var GernerateResource = function () {
          */
         function mapAsset(assetsPath) {
           if (assetsPath) {
-            var truePath = (compilation.options.output.publicPath + assetsPath).replace(/([^\:])\/{2,}/g, '$1/');
+            var truePath = (compilation.options.output.publicPath + assetsPath).replace(/([^:])\/{2,}/g, '$1/');
 
             if ((0, _path.extname)(assetsPath) === '.js') {
               // 绝对路径 = publicPath +  assetsPath

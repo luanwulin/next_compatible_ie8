@@ -106,7 +106,9 @@ var doRender = function () {
         _ref4$staticMarkup = _ref4.staticMarkup,
         staticMarkup = _ref4$staticMarkup === undefined ? false : _ref4$staticMarkup,
         _ref4$nextExport = _ref4.nextExport,
-        nextExport = _ref4$nextExport === undefined ? false : _ref4$nextExport;
+        nextExport = _ref4$nextExport === undefined ? false : _ref4$nextExport,
+        _ref4$resourceMap = _ref4.resourceMap,
+        resourceMap = _ref4$resourceMap === undefined ? {} : _ref4$resourceMap;
 
     var dist, pagePath, documentPath, _ref5, _ref6, Component, Document, asPath, ctx, props, renderPage, docProps, doc;
 
@@ -135,7 +137,7 @@ var doRender = function () {
             Component = Component['default'] || Component;
             Document = Document['default'] || Document;
             asPath = req.url;
-            ctx = { err: err, req: req, res: res, pathname: pathname, query: query, asPath: asPath };
+            ctx = { err: err, req: req, res: res, pathname: pathname, query: query, asPath: asPath, assetPrefix: assetPrefix, resourceMap: resourceMap, buildId: buildId };
             _context3.next = 18;
             return (0, _utils.loadGetInitialProps)(Component, ctx);
 
@@ -213,6 +215,7 @@ var doRender = function () {
                 buildId: buildId,
                 buildStats: buildStats,
                 assetPrefix: assetPrefix,
+                resourceMap: resourceMap,
                 nextExport: nextExport,
                 err: err ? serializeError(dev, err) : null
               },
