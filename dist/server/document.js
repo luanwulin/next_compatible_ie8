@@ -153,9 +153,11 @@ var Head = exports.Head = function (_Component2) {
     return _react2['default'].createElement(
       Fragment,
       null,
+      _react2['default'].createElement(Fragment, { dangerouslySetInnerHTML: { __html: '<!-- [if lt IE 9] -->' } }),
       polyfills.map(function (chunk) {
         return _react2['default'].createElement('script', { type: 'text/javascript', src: chunk });
-      })
+      }),
+      _react2['default'].createElement(Fragment, { dangerouslySetInnerHTML: { __html: '<!-- [endif] -->' } })
     );
   };
 

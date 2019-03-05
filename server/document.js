@@ -93,11 +93,11 @@ export class Head extends Component {
 
     return (
       <Fragment>
-        {/* [if lt IE 9] */}
+        <Fragment dangerouslySetInnerHTML={{ __html: '<!-- [if lt IE 9] -->' }} />
         {polyfills.map((chunk) => (
           <script type='text/javascript' src={chunk} />
         ))}
-        {/* [endif] */}
+        <Fragment dangerouslySetInnerHTML={{ __html: '<!-- [endif] -->' }} />
       </Fragment>
     )
   }
