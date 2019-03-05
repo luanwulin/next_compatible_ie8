@@ -11,7 +11,6 @@ import PagesPlugin from './plugins/pages-plugin'
 import NextJsSsrImportPlugin from './plugins/nextjs-ssr-import'
 import DynamicChunksPlugin from './plugins/dynamic-chunks-plugin'
 import UnlinkFilePlugin from './plugins/unlink-file-plugin'
-import Es3ifyPlugin from 'es3ify-webpack-plugin'
 import findBabelConfig from './babel/find-config'
 
 const nextDir = path.join(__dirname, '..', '..', '..')
@@ -233,7 +232,6 @@ export default async function getBaseWebpackConfig (dir, {dev = false, isServer 
           }
         }
       }),
-      !isServer && new Es3ifyPlugin(),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(dev ? 'development' : 'production'),
         'NEXT_BASEROUTE': JSON.stringify(config.baseRoute)

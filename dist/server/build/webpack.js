@@ -82,10 +82,6 @@ var _unlinkFilePlugin = require('./plugins/unlink-file-plugin');
 
 var _unlinkFilePlugin2 = _interopRequireDefault(_unlinkFilePlugin);
 
-var _es3ifyWebpackPlugin = require('es3ify-webpack-plugin');
-
-var _es3ifyWebpackPlugin2 = _interopRequireDefault(_es3ifyWebpackPlugin);
-
 var _findConfig = require('./babel/find-config');
 
 var _findConfig2 = _interopRequireDefault(_findConfig);
@@ -312,7 +308,7 @@ exports['default'] = function () {
                     evaluate: false
                   }
                 }
-              }), !isServer && new _es3ifyWebpackPlugin2['default'](), new _webpack2['default'].DefinePlugin({
+              }), new _webpack2['default'].DefinePlugin({
                 'process.env.NODE_ENV': (0, _stringify2['default'])(dev ? 'development' : 'production'),
                 'NEXT_BASEROUTE': (0, _stringify2['default'])(config.baseRoute)
               }), !isServer && new _combineAssetsPlugin2['default']({
