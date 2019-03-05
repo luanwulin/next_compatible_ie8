@@ -123,14 +123,14 @@ export class Head extends Component {
       '//cdn.jsdelivr.net/gh/paulmillr/console-polyfill/index.js'
     ]
 
+    let scripts = ''
+
+    polyfills.forEach((chunk) => (
+      scripts += `<script type='text/javascript' src=${chunk} />\n`
+    ))
+
     return (
-      <Fragment>
-        <Comment text='[if lt IE 9]' />
-        {polyfills.map((chunk) => (
-          <script type='text/javascript' src={chunk} />
-        ))}
-        <Comment text='[endif]' />
-      </Fragment>
+      <meta name='react-comment-hack' dangerouslySetInnerHTML={{ __html: `<!--[if lte IE 8]>${scripts}<![endif]-->` }} />
     )
   }
 

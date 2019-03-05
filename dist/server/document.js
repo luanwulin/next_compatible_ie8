@@ -193,15 +193,13 @@ var Head = exports.Head = function (_Component3) {
   Head.prototype.getPolyfillScripts = function getPolyfillScripts() {
     var polyfills = ['//cdn.liruan.cn/nwmatcher/1.3.6/nwmatcher.min.js', '//cdn.liruan.cn/selectivizr/1.0.2/selectivizr-min.js', '//cdn.jsdelivr.net/gh/RubyLouvre/object-create-ie8/index.js', '//cdn.jsdelivr.net/gh/ambit-tsai/object-defineproperty-ie/dist/object-defineproperty-ie.js', '//cdn.jsdelivr.net/gh/paulmillr/console-polyfill/index.js'];
 
-    return _react2['default'].createElement(
-      Fragment,
-      null,
-      _react2['default'].createElement(Comment, { text: '[if lt IE 9]' }),
-      polyfills.map(function (chunk) {
-        return _react2['default'].createElement('script', { type: 'text/javascript', src: chunk });
-      }),
-      _react2['default'].createElement(Comment, { text: '[endif]' })
-    );
+    var scripts = '';
+
+    polyfills.forEach(function (chunk) {
+      return scripts += '<script type=\'text/javascript\' src=' + chunk + ' />\n';
+    });
+
+    return _react2['default'].createElement('meta', { name: 'react-comment-hack', dangerouslySetInnerHTML: { __html: '<!--[if lte IE 8]>' + scripts + '<![endif]-->' } });
   };
 
   Head.prototype.render = function render() {
