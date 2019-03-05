@@ -8,15 +8,15 @@ export default class GernerateResource {
   apply (compiler) {
     // 数据处理 用于生成 webpackMap
     compiler.plugin('compilation', function (compilation) {
-      compilation.plugin('optimize-chunk-assets', function (chunks, callback) {
-        const pages = chunks
+      compilation.plugin('additional-chunk-assets', function (chunks) {
+        chunks = chunks
           .filter(chunk => IS_BUNDLED_PAGE.test(chunk.name))
 
         const webpackMap = {}
         const destPath = compilation.options.output.path
         const destResourcePath = join(destPath, 'resource')
 
-        pages.forEach((chunk) => {
+        chunks.forEach((chunk) => {
           let name = chunk.name
 
           // 如果入口路径不包含 / 则不输出 例如 入口  name == 'project'
@@ -61,8 +61,6 @@ export default class GernerateResource {
             size: () => newContent.length
           }
         })
-
-        callback()
       })
     })
   }

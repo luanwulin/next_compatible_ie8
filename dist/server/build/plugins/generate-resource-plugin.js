@@ -26,8 +26,8 @@ var GernerateResource = function () {
   GernerateResource.prototype.apply = function apply(compiler) {
     // 数据处理 用于生成 webpackMap
     compiler.plugin('compilation', function (compilation) {
-      compilation.plugin('optimize-chunk-assets', function (chunks, callback) {
-        var pages = chunks.filter(function (chunk) {
+      compilation.plugin('additional-chunk-assets', function (chunks) {
+        chunks = chunks.filter(function (chunk) {
           return _utils.IS_BUNDLED_PAGE.test(chunk.name);
         });
 
@@ -35,7 +35,7 @@ var GernerateResource = function () {
         var destPath = compilation.options.output.path;
         var destResourcePath = (0, _path.join)(destPath, 'resource');
 
-        pages.forEach(function (chunk) {
+        chunks.forEach(function (chunk) {
           var name = chunk.name;
 
           // 如果入口路径不包含 / 则不输出 例如 入口  name == 'project'
@@ -84,8 +84,6 @@ var GernerateResource = function () {
             }
           };
         });
-
-        callback();
       });
     });
   };
