@@ -21,14 +21,14 @@ var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 var writeBuildStats = function () {
-  var _ref3 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee3(dir, config) {
+  var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(dir, config) {
     var assetHashMap, buildStatsPath;
-    return _regenerator2['default'].wrap(function _callee3$(_context3) {
+    return _regenerator2.default.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
             _context3.next = 2;
-            return (0, _promise4['default'])((0, _path.join)(dir, config.distDir, 'app.js'));
+            return (0, _promise4.default)((0, _path.join)(dir, config.distDir, 'app.js'));
 
           case 2:
             _context3.t0 = _context3.sent;
@@ -40,7 +40,7 @@ var writeBuildStats = function () {
             };
             buildStatsPath = (0, _path.join)(dir, config.distDir, 'build-stats.json');
             _context3.next = 8;
-            return _fs2['default'].writeFile(buildStatsPath, (0, _stringify2['default'])(assetHashMap), 'utf8');
+            return _fs2.default.writeFile(buildStatsPath, (0, _stringify2.default)(assetHashMap), 'utf8');
 
           case 8:
           case 'end':
@@ -56,15 +56,15 @@ var writeBuildStats = function () {
 }();
 
 var writeBuildId = function () {
-  var _ref4 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee4(dir, buildId, config) {
+  var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(dir, buildId, config) {
     var buildIdPath;
-    return _regenerator2['default'].wrap(function _callee4$(_context4) {
+    return _regenerator2.default.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
             buildIdPath = (0, _path.join)(dir, config.distDir, 'BUILD_ID');
             _context4.next = 3;
-            return _fs2['default'].writeFile(buildIdPath, buildId, 'utf8');
+            return _fs2.default.writeFile(buildIdPath, buildId, 'utf8');
 
           case 3:
           case 'end':
@@ -105,21 +105,21 @@ var _promise3 = require('md5-file/promise');
 
 var _promise4 = _interopRequireDefault(_promise3);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports['default'] = function () {
-  var _ref = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee(dir) {
+exports.default = function () {
+  var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(dir) {
     var conf = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
     var config, buildId, configs;
-    return _regenerator2['default'].wrap(function _callee$(_context) {
+    return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            config = (0, _config2['default'])(dir, conf);
-            buildId = _uuid2['default'].v4();
+            config = (0, _config2.default)(dir, conf);
+            buildId = _uuid2.default.v4();
             _context.prev = 2;
             _context.next = 5;
-            return _fs2['default'].access(dir, _fs2['default'].constants.W_OK);
+            return _fs2.default.access(dir, _fs2.default.constants.W_OK);
 
           case 5:
             _context.next = 11;
@@ -135,7 +135,7 @@ exports['default'] = function () {
           case 11:
             _context.prev = 11;
             _context.next = 14;
-            return _promise2['default'].all([(0, _webpack4['default'])(dir, { buildId: buildId, isServer: false, config: config }), (0, _webpack4['default'])(dir, { buildId: buildId, isServer: true, config: config })]);
+            return _promise2.default.all([(0, _webpack4.default)(dir, { buildId: buildId, isServer: false, config: config }), (0, _webpack4.default)(dir, { buildId: buildId, isServer: true, config: config })]);
 
           case 14:
             configs = _context.sent;
@@ -169,7 +169,7 @@ exports['default'] = function () {
     }, _callee, this, [[2, 7], [11, 23]]);
   }));
 
-  function build(_x) {
+  function build(_x2) {
     return _ref.apply(this, arguments);
   }
 
@@ -179,14 +179,14 @@ exports['default'] = function () {
 function runCompiler(compiler) {
   var _this = this;
 
-  return new _promise2['default'](function () {
-    var _ref2 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee2(resolve, reject) {
+  return new _promise2.default(function () {
+    var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(resolve, reject) {
       var webpackCompiler;
-      return _regenerator2['default'].wrap(function _callee2$(_context2) {
+      return _regenerator2.default.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              _context2.t0 = _webpack2['default'];
+              _context2.t0 = _webpack2.default;
               _context2.next = 3;
               return compiler;
 

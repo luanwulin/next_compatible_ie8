@@ -86,14 +86,14 @@ var _findConfig = require('./babel/find-config');
 
 var _findConfig2 = _interopRequireDefault(_findConfig);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var nextDir = _path2['default'].join(__dirname, '..', '..', '..');
-var nextNodeModulesDir = _path2['default'].join(nextDir, 'node_modules');
-var nextPagesDir = _path2['default'].join(nextDir, 'pages');
+var nextDir = _path2.default.join(__dirname, '..', '..', '..');
+var nextNodeModulesDir = _path2.default.join(nextDir, 'node_modules');
+var nextPagesDir = _path2.default.join(nextDir, 'pages');
 var defaultPages = ['_error.js', '_document.js'];
-var interpolateNames = new _map2['default'](defaultPages.map(function (p) {
-  return [_path2['default'].join(nextPagesDir, p), 'dist/bundles/pages/' + p];
+var interpolateNames = new _map2.default(defaultPages.map(function (p) {
+  return [_path2.default.join(nextPagesDir, p), 'dist/bundles/pages/' + p];
 }));
 
 function babelConfig(dir, _ref) {
@@ -106,7 +106,7 @@ function babelConfig(dir, _ref) {
     plugins: [dev && !isServer && require.resolve('react-hot-loader/babel')].filter(Boolean)
   };
 
-  var externalBabelConfig = (0, _findConfig2['default'])(dir);
+  var externalBabelConfig = (0, _findConfig2.default)(dir);
   if (externalBabelConfig) {
     // Log it out once
     if (!isServer) {
@@ -139,7 +139,7 @@ function externalsConfig(dir, isServer) {
   }
 
   externals.push(function (context, request, callback) {
-    (0, _resolve2['default'])(request, { basedir: dir, preserveSymlinks: true }, function (err, res) {
+    (0, _resolve2.default)(request, { basedir: dir, preserveSymlinks: true }, function (err, res) {
       if (err) {
         return callback();
       }
@@ -156,18 +156,18 @@ function externalsConfig(dir, isServer) {
   return externals;
 }
 
-exports['default'] = function () {
-  var _ref2 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee2(dir, _ref3) {
+exports.default = function () {
+  var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(dir, _ref2) {
     var _this = this;
 
-    var _ref3$dev = _ref3.dev,
-        dev = _ref3$dev === undefined ? false : _ref3$dev,
-        _ref3$isServer = _ref3.isServer,
-        isServer = _ref3$isServer === undefined ? false : _ref3$isServer,
-        buildId = _ref3.buildId,
-        config = _ref3.config;
+    var _ref2$dev = _ref2.dev,
+        dev = _ref2$dev === undefined ? false : _ref2$dev,
+        _ref2$isServer = _ref2.isServer,
+        isServer = _ref2$isServer === undefined ? false : _ref2$isServer,
+        buildId = _ref2.buildId,
+        config = _ref2.config;
     var babelLoaderOptions, defaultLoaders, nodePathList, totalPages, webpackConfig;
-    return _regenerator2['default'].wrap(function _callee2$(_context2) {
+    return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
@@ -192,9 +192,9 @@ exports['default'] = function () {
               externals: externalsConfig(dir, isServer),
               context: dir,
               entry: function () {
-                var _ref4 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee() {
+                var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
                   var pages, mainJS, clientConfig;
-                  return _regenerator2['default'].wrap(function _callee$(_context) {
+                  return _regenerator2.default.wrap(function _callee$(_context) {
                     while (1) {
                       switch (_context.prev = _context.next) {
                         case 0:
@@ -204,12 +204,12 @@ exports['default'] = function () {
                         case 2:
                           pages = _context.sent;
 
-                          totalPages = (0, _keys2['default'])(pages).length;
+                          totalPages = (0, _keys2.default)(pages).length;
                           mainJS = require.resolve('../../client/next' + (dev ? '-dev' : ''));
                           clientConfig = !isServer ? {
-                            'main.js': [dev && !isServer && _path2['default'].join(__dirname, '..', '..', 'client', 'webpack-hot-middleware-client'), dev && !isServer && _path2['default'].join(__dirname, '..', '..', 'client', 'on-demand-entries-client'), mainJS].filter(Boolean)
+                            'main.js': [dev && !isServer && _path2.default.join(__dirname, '..', '..', 'client', 'webpack-hot-middleware-client'), dev && !isServer && _path2.default.join(__dirname, '..', '..', 'client', 'on-demand-entries-client'), mainJS].filter(Boolean)
                           } : {};
-                          return _context.abrupt('return', (0, _extends3['default'])({}, clientConfig, pages));
+                          return _context.abrupt('return', (0, _extends3.default)({}, clientConfig, pages));
 
                         case 7:
                         case 'end':
@@ -219,12 +219,14 @@ exports['default'] = function () {
                   }, _callee, _this);
                 }));
 
-                return function entry() {
+                function entry() {
                   return _ref4.apply(this, arguments);
-                };
+                }
+
+                return entry;
               }(),
               output: {
-                path: _path2['default'].join(dir, config.distDir, isServer ? 'dist' : ''), // server compilation goes to `.next/dist`
+                path: _path2.default.join(dir, config.distDir, isServer ? 'dist' : ''), // server compilation goes to `.next/dist`
                 filename: '[name]',
                 libraryTarget: 'commonjs2',
                 // This saves chunks with the name given via require.ensure()
@@ -235,7 +237,7 @@ exports['default'] = function () {
               performance: { hints: false },
               resolve: {
                 extensions: ['.js', '.jsx', '.json'],
-                modules: [nextNodeModulesDir, 'node_modules'].concat((0, _toConsumableArray3['default'])(nodePathList)),
+                modules: [nextNodeModulesDir, 'node_modules'].concat((0, _toConsumableArray3.default)(nodePathList)),
                 alias: {
                   next: nextDir,
                   // This bypasses React's check for production mode. Since we know it is in production this way.
@@ -245,13 +247,13 @@ exports['default'] = function () {
                 }
               },
               resolveLoader: {
-                modules: [nextNodeModulesDir, 'node_modules', _path2['default'].join(__dirname, 'loaders')].concat((0, _toConsumableArray3['default'])(nodePathList))
+                modules: [nextNodeModulesDir, 'node_modules', _path2.default.join(__dirname, 'loaders')].concat((0, _toConsumableArray3.default)(nodePathList))
               },
               module: {
                 rules: [dev && !isServer && {
                   test: /\.(js|jsx)(\?[^?]*)?$/,
                   loader: 'hot-self-accept-loader',
-                  include: [_path2['default'].join(dir, 'pages'), nextPagesDir]
+                  include: [_path2.default.join(dir, 'pages'), nextPagesDir]
                 }, {
                   test: /\.+(js|jsx)$/,
                   include: [dir],
@@ -259,21 +261,21 @@ exports['default'] = function () {
                   use: defaultLoaders.babel
                 }].filter(Boolean)
               },
-              plugins: [new _webpack2['default'].IgnorePlugin(/(precomputed)/, /node_modules.+(elliptic)/), dev && new _webpack2['default'].NoEmitOnErrorsPlugin(), dev && !isServer && new _friendlyErrorsWebpackPlugin2['default'](), dev && new _webpack2['default'].NamedModulesPlugin(), dev && !isServer && new _webpack2['default'].HotModuleReplacementPlugin(), // Hot module replacement
-              dev && new _unlinkFilePlugin2['default'](), dev && new _caseSensitivePathsWebpackPlugin2['default'](), // Since on macOS the filesystem is case-insensitive this will make sure your path are case-sensitive
-              dev && new _webpack2['default'].LoaderOptionsPlugin({
+              plugins: [new _webpack2.default.IgnorePlugin(/(precomputed)/, /node_modules.+(elliptic)/), dev && new _webpack2.default.NoEmitOnErrorsPlugin(), dev && !isServer && new _friendlyErrorsWebpackPlugin2.default(), dev && new _webpack2.default.NamedModulesPlugin(), dev && !isServer && new _webpack2.default.HotModuleReplacementPlugin(), // Hot module replacement
+              dev && new _unlinkFilePlugin2.default(), dev && new _caseSensitivePathsWebpackPlugin2.default(), // Since on macOS the filesystem is case-insensitive this will make sure your path are case-sensitive
+              dev && new _webpack2.default.LoaderOptionsPlugin({
                 options: {
                   context: dir,
                   customInterpolateName: function customInterpolateName(url, name, opts) {
                     return interpolateNames.get(this.resourcePath) || url;
                   }
                 }
-              }), dev && new _writeFileWebpackPlugin2['default']({
+              }), dev && new _writeFileWebpackPlugin2.default({
                 exitOnErrors: false,
                 log: false,
                 // required not to cache removed files
                 useHashIndex: false
-              }), !dev && new _webpack2['default'].IgnorePlugin(/react-hot-loader/), !isServer && !dev && new _uglifyjsWebpackPlugin2['default']({
+              }), !dev && new _webpack2.default.IgnorePlugin(/react-hot-loader/), !isServer && !dev && new _uglifyjsWebpackPlugin2.default({
                 exclude: /react\.js/,
                 parallel: true,
                 sourceMap: false,
@@ -308,13 +310,13 @@ exports['default'] = function () {
                     evaluate: false
                   }
                 }
-              }), new _webpack2['default'].DefinePlugin({
-                'process.env.NODE_ENV': (0, _stringify2['default'])(dev ? 'development' : 'production'),
-                'NEXT_BASEROUTE': (0, _stringify2['default'])(config.baseRoute)
-              }), !isServer && new _combineAssetsPlugin2['default']({
+              }), new _webpack2.default.DefinePlugin({
+                'process.env.NODE_ENV': (0, _stringify2.default)(dev ? 'development' : 'production'),
+                'NEXT_BASEROUTE': (0, _stringify2.default)(config.baseRoute)
+              }), !isServer && new _combineAssetsPlugin2.default({
                 input: ['manifest.js', 'react.js', 'commons.js', 'main.js'],
                 output: 'app.js'
-              }), !dev && new _webpack2['default'].optimize.ModuleConcatenationPlugin(), !isServer && new _pagesPlugin2['default'](), !isServer && new _dynamicChunksPlugin2['default'](), isServer && new _nextjsSsrImport2['default']({ dir: dir, dist: config.distDir }), !isServer && new _webpack2['default'].optimize.CommonsChunkPlugin({
+              }), !dev && new _webpack2.default.optimize.ModuleConcatenationPlugin(), !isServer && new _pagesPlugin2.default(), !isServer && new _dynamicChunksPlugin2.default(), isServer && new _nextjsSsrImport2.default({ dir: dir, dist: config.distDir }), !isServer && new _webpack2.default.optimize.CommonsChunkPlugin({
                 name: 'commons',
                 filename: 'commons.js',
                 minChunks: function minChunks(module, count) {
@@ -344,7 +346,7 @@ exports['default'] = function () {
                   }
                   return count >= totalPages * 0.5;
                 }
-              }), !isServer && new _webpack2['default'].optimize.CommonsChunkPlugin({
+              }), !isServer && new _webpack2.default.optimize.CommonsChunkPlugin({
                 name: 'react',
                 filename: 'react.js',
                 minChunks: function minChunks(module, count) {
@@ -362,7 +364,7 @@ exports['default'] = function () {
 
                   return false;
                 }
-              }), !isServer && new _webpack2['default'].optimize.CommonsChunkPlugin({
+              }), !isServer && new _webpack2.default.optimize.CommonsChunkPlugin({
                 name: 'manifest',
                 filename: 'manifest.js'
               })].filter(Boolean)
@@ -384,7 +386,7 @@ exports['default'] = function () {
   }));
 
   function getBaseWebpackConfig(_x, _x2) {
-    return _ref2.apply(this, arguments);
+    return _ref3.apply(this, arguments);
   }
 
   return getBaseWebpackConfig;

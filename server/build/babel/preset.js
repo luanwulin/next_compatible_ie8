@@ -37,13 +37,7 @@ const plugins = envPlugins[process.env.NODE_ENV] || envPlugins['development']
 module.exports = (context, opts = {}) => ({
   presets: [
     [require.resolve('babel-preset-env'), {
-      'useBuiltIns': 'entry',
-      'targets': {
-        'browsers': [
-          'ie >= 8'
-        ]
-      },
-      'modules': 'commonjs',
+      modules: false,
       ...opts['preset-env']
     }],
     require.resolve('babel-preset-react')
@@ -53,19 +47,11 @@ module.exports = (context, opts = {}) => ({
     require.resolve('./plugins/handle-import'),
     require.resolve('babel-plugin-transform-object-rest-spread'),
     require.resolve('babel-plugin-transform-class-properties'),
-    require.resolve('babel-plugin-transform-es3-property-literals'),
-    require.resolve('babel-plugin-transform-es3-member-expression-literals'),
     [require.resolve('babel-plugin-transform-runtime'), opts['transform-runtime'] || {
       helpers: false,
       polyfill: false,
       regenerator: true
     }],
-    [
-      require.resolve('babel-plugin-transform-es2015-classes'),
-      {
-        loose: true
-      }
-    ],
     [require.resolve('styled-jsx/babel'), styledJsxOptions(opts['styled-jsx'])],
     ...plugins
   ]

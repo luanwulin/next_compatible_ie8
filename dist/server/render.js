@@ -34,9 +34,9 @@ var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 var render = exports.render = function () {
-  var _ref = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee(req, res, pathname, query, opts) {
+  var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(req, res, pathname, query, opts) {
     var html;
-    return _regenerator2['default'].wrap(function _callee$(_context) {
+    return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
@@ -62,9 +62,9 @@ var render = exports.render = function () {
 }();
 
 var renderError = exports.renderError = function () {
-  var _ref2 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee2(err, req, res, pathname, query, opts) {
+  var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(err, req, res, pathname, query, opts) {
     var html;
-    return _regenerator2['default'].wrap(function _callee2$(_context2) {
+    return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
@@ -90,7 +90,7 @@ var renderError = exports.renderError = function () {
 }();
 
 var doRender = function () {
-  var _ref3 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee3(req, res, pathname, query) {
+  var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(req, res, pathname, query) {
     var _ref4 = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {},
         err = _ref4.err,
         page = _ref4.page,
@@ -108,9 +108,9 @@ var doRender = function () {
         _ref4$nextExport = _ref4.nextExport,
         nextExport = _ref4$nextExport === undefined ? false : _ref4$nextExport;
 
-    var dist, resourceMap, pagePath, documentPath, _ref5, _ref6, Component, Document, asPath, ctx, props, renderPage, docProps, doc;
+    var dist, pagePath, documentPath, _ref5, _ref6, Component, Document, asPath, ctx, props, renderPage, docProps, doc;
 
-    return _regenerator2['default'].wrap(function _callee3$(_context3) {
+    return _regenerator2.default.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
@@ -120,43 +120,42 @@ var doRender = function () {
             return ensurePage(page, { dir: dir, hotReloader: hotReloader });
 
           case 3:
-            dist = (0, _config2['default'])(dir).distDir;
-            resourceMap = (0, _resource2['default'])(dir, dev);
+            dist = (0, _config2.default)(dir).distDir;
             pagePath = (0, _path.join)(dir, dist, 'dist', 'bundles', 'pages', page);
             documentPath = (0, _path.join)(dir, dist, 'dist', 'bundles', 'pages', '_document');
-            _context3.next = 9;
-            return _promise2['default'].all([(0, _require2['default'])(pagePath), (0, _require2['default'])(documentPath)]);
+            _context3.next = 8;
+            return _promise2.default.all([(0, _require2.default)(pagePath), (0, _require2.default)(documentPath)]);
 
-          case 9:
+          case 8:
             _ref5 = _context3.sent;
-            _ref6 = (0, _slicedToArray3['default'])(_ref5, 2);
+            _ref6 = (0, _slicedToArray3.default)(_ref5, 2);
             Component = _ref6[0];
             Document = _ref6[1];
 
-            Component = Component['default'] || Component;
-            Document = Document['default'] || Document;
+            Component = Component.default || Component;
+            Document = Document.default || Document;
             asPath = req.url;
-            ctx = { err: err, req: req, res: res, pathname: pathname, query: query, asPath: asPath, assetPrefix: assetPrefix, resourceMap: resourceMap, buildId: buildId };
-            _context3.next = 19;
+            ctx = { err: err, req: req, res: res, pathname: pathname, query: query, asPath: asPath, assetPrefix: assetPrefix, buildId: buildId };
+            _context3.next = 18;
             return (0, _utils.loadGetInitialProps)(Component, ctx);
 
-          case 19:
+          case 18:
             props = _context3.sent;
 
             if (!(0, _utils.isResSent)(res)) {
-              _context3.next = 22;
+              _context3.next = 21;
               break;
             }
 
             return _context3.abrupt('return');
 
-          case 22:
+          case 21:
             renderPage = function renderPage() {
               var enhancer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function (Page) {
                 return Page;
               };
 
-              var app = (0, _react.createElement)(_app2['default'], {
+              var app = (0, _react.createElement)(_app2.default, {
                 Component: enhancer(Component),
                 props: props,
                 router: new _router.Router(pathname, query, asPath)
@@ -170,43 +169,43 @@ var doRender = function () {
 
               try {
                 if (err && dev) {
-                  errorHtml = render((0, _react.createElement)(_errorDebug2['default'], { error: err }));
+                  errorHtml = render((0, _react.createElement)(_errorDebug2.default, { error: err }));
                 } else if (err) {
                   errorHtml = render(app);
                 } else {
                   html = render(app);
                 }
               } finally {
-                head = _head2['default'].rewind() || (0, _head.defaultHead)();
+                head = _head2.default.rewind() || (0, _head.defaultHead)();
               }
               var chunks = loadChunks({ dev: dev, dir: dir, dist: dist, availableChunks: availableChunks });
 
               return { html: html, head: head, errorHtml: errorHtml, chunks: chunks };
             };
 
-            _context3.next = 25;
-            return (0, _utils.loadGetInitialProps)(Document, (0, _extends3['default'])({}, ctx, { renderPage: renderPage }));
+            _context3.next = 24;
+            return (0, _utils.loadGetInitialProps)(Document, (0, _extends3.default)({}, ctx, { renderPage: renderPage }));
 
-          case 25:
+          case 24:
             docProps = _context3.sent;
 
             if (!(0, _utils.isResSent)(res)) {
-              _context3.next = 28;
+              _context3.next = 27;
               break;
             }
 
             return _context3.abrupt('return');
 
-          case 28:
+          case 27:
             if (!(!Document.prototype || !Document.prototype.isReactComponent)) {
-              _context3.next = 30;
+              _context3.next = 29;
               break;
             }
 
             throw new Error('_document.js is not exporting a React element');
 
-          case 30:
-            doc = (0, _react.createElement)(Document, (0, _extends3['default'])({
+          case 29:
+            doc = (0, _react.createElement)(Document, (0, _extends3.default)({
               __NEXT_DATA__: {
                 props: props,
                 pathname: pathname,
@@ -214,7 +213,6 @@ var doRender = function () {
                 buildId: buildId,
                 buildStats: buildStats,
                 assetPrefix: assetPrefix,
-                resourceMap: resourceMap,
                 nextExport: nextExport,
                 err: err ? serializeError(dev, err) : null
               },
@@ -224,7 +222,7 @@ var doRender = function () {
             }, docProps));
             return _context3.abrupt('return', '<!DOCTYPE html>' + (0, _server.renderToStaticMarkup)(doc));
 
-          case 32:
+          case 31:
           case 'end':
             return _context3.stop();
         }
@@ -232,23 +230,23 @@ var doRender = function () {
     }, _callee3, this);
   }));
 
-  return function doRender(_x13, _x14, _x15, _x16) {
+  return function doRender(_x14, _x15, _x16, _x17) {
     return _ref3.apply(this, arguments);
   };
 }();
 
 var renderScriptError = exports.renderScriptError = function () {
-  var _ref7 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee4(req, res, page, error, customFields, _ref8) {
-    var dev = _ref8.dev;
+  var _ref8 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(req, res, page, error, customFields, _ref7) {
+    var dev = _ref7.dev;
     var errorJson;
-    return _regenerator2['default'].wrap(function _callee4$(_context4) {
+    return _regenerator2.default.wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
             // Asks CDNs and others to not to cache the errored page
             res.setHeader('Cache-Control', 'no-store, must-revalidate');
             // prevent XSS attacks by filtering the page before printing it.
-            page = _xssFilters2['default'].uriInSingleQuotedAttr(page);
+            page = _xssFilters2.default.uriInSingleQuotedAttr(page);
             res.setHeader('Content-Type', 'text/javascript');
 
             if (!(error.code === 'ENOENT')) {
@@ -260,10 +258,10 @@ var renderScriptError = exports.renderScriptError = function () {
             return _context4.abrupt('return');
 
           case 6:
-            errorJson = (0, _extends3['default'])({}, serializeError(dev, error), customFields);
+            errorJson = (0, _extends3.default)({}, serializeError(dev, error), customFields);
 
 
-            res.end('\n    window.__NEXT_REGISTER_PAGE(\'' + page + '\', function() {\n      var error = ' + (0, _stringify2['default'])(errorJson) + '\n      return { error: error }\n    })\n  ');
+            res.end('\n    window.__NEXT_REGISTER_PAGE(\'' + page + '\', function() {\n      var error = ' + (0, _stringify2.default)(errorJson) + '\n      return { error: error }\n    })\n  ');
 
           case 8:
           case 'end':
@@ -274,15 +272,15 @@ var renderScriptError = exports.renderScriptError = function () {
   }));
 
   return function renderScriptError(_x19, _x20, _x21, _x22, _x23, _x24) {
-    return _ref7.apply(this, arguments);
+    return _ref8.apply(this, arguments);
   };
 }();
 
 var ensurePage = function () {
-  var _ref10 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee5(page, _ref11) {
-    var dir = _ref11.dir,
-        hotReloader = _ref11.hotReloader;
-    return _regenerator2['default'].wrap(function _callee5$(_context5) {
+  var _ref11 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee5(page, _ref10) {
+    var dir = _ref10.dir,
+        hotReloader = _ref10.hotReloader;
+    return _regenerator2.default.wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
@@ -314,7 +312,7 @@ var ensurePage = function () {
   }));
 
   return function ensurePage(_x25, _x26) {
-    return _ref10.apply(this, arguments);
+    return _ref11.apply(this, arguments);
   };
 }();
 
@@ -350,10 +348,6 @@ var _config = require('./config');
 
 var _config2 = _interopRequireDefault(_config);
 
-var _resource = require('./resource');
-
-var _resource2 = _interopRequireDefault(_resource);
-
 var _router = require('../lib/router');
 
 var _utils = require('../lib/utils');
@@ -378,7 +372,7 @@ var _xssFilters = require('xss-filters');
 
 var _xssFilters2 = _interopRequireDefault(_xssFilters);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function renderToHTML(req, res, pathname, query, opts) {
   return doRender(req, res, pathname, query, opts);
@@ -387,16 +381,16 @@ function renderToHTML(req, res, pathname, query, opts) {
 function renderErrorToHTML(err, req, res, pathname, query) {
   var opts = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : {};
 
-  return doRender(req, res, pathname, query, (0, _extends3['default'])({}, opts, { err: err, page: '_error' }));
+  return doRender(req, res, pathname, query, (0, _extends3.default)({}, opts, { err: err, page: '_error' }));
 }
 
 function sendHTML(req, res, html, method, _ref9) {
   var dev = _ref9.dev;
 
   if ((0, _utils.isResSent)(res)) return;
-  var etag = (0, _etag2['default'])(html);
+  var etag = (0, _etag2.default)(html);
 
-  if ((0, _fresh2['default'])(req.headers, { etag: etag })) {
+  if ((0, _fresh2.default)(req.headers, { etag: etag })) {
     res.statusCode = 304;
     res.end();
     return;
@@ -419,7 +413,7 @@ function sendHTML(req, res, html, method, _ref9) {
 function sendJSON(res, obj, method) {
   if ((0, _utils.isResSent)(res)) return;
 
-  var json = (0, _stringify2['default'])(obj);
+  var json = (0, _stringify2.default)(obj);
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Content-Length', Buffer.byteLength(json));
   res.end(method === 'HEAD' ? null : json);
@@ -451,8 +445,8 @@ function serializeError(dev, err) {
 }
 
 function serveStatic(req, res, path) {
-  return new _promise2['default'](function (resolve, reject) {
-    (0, _send2['default'])(req, path).on('directory', function () {
+  return new _promise2.default(function (resolve, reject) {
+    (0, _send2.default)(req, path).on('directory', function () {
       // We don't allow directories to be read.
       var err = new Error('No directory access');
       err.code = 'ENOENT';
@@ -482,7 +476,7 @@ function loadChunks(_ref12) {
   var _iteratorError = undefined;
 
   try {
-    for (var _iterator = (0, _getIterator3['default'])(flushedChunks), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+    for (var _iterator = (0, _getIterator3.default)(flushedChunks), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
       var chunk = _step.value;
 
       var filename = availableChunks[chunk];
@@ -496,8 +490,8 @@ function loadChunks(_ref12) {
     _iteratorError = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator['return']) {
-        _iterator['return']();
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
       }
     } finally {
       if (_didIteratorError) {

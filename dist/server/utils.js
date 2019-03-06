@@ -17,7 +17,7 @@ var _path = require('path');
 
 var _fs = require('fs');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var IS_BUNDLED_PAGE = exports.IS_BUNDLED_PAGE = /^bundles[/\\]pages.*\.js$/;
 var MATCH_ROUTE_NAME = exports.MATCH_ROUTE_NAME = /^bundles[/\\]pages[/\\](.*)\.js$/;
@@ -47,7 +47,7 @@ function isInternalUrl(url) {
   var _iteratorError = undefined;
 
   try {
-    for (var _iterator = (0, _getIterator3['default'])(internalPrefixes), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+    for (var _iterator = (0, _getIterator3.default)(internalPrefixes), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
       var prefix = _step.value;
 
       if (prefix.test(url)) {
@@ -59,8 +59,8 @@ function isInternalUrl(url) {
     _iteratorError = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator['return']) {
-        _iterator['return']();
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
       }
     } finally {
       if (_didIteratorError) {

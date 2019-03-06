@@ -8,7 +8,7 @@ var _map = require('babel-runtime/core-js/map');
 
 var _map2 = _interopRequireDefault(_map);
 
-exports['default'] = getResourceMap;
+exports.default = getResourceMap;
 
 var _findUp = require('find-up');
 
@@ -16,9 +16,9 @@ var _findUp2 = _interopRequireDefault(_findUp);
 
 var _path = require('path');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var cache = new _map2['default']();
+var cache = new _map2.default();
 
 function getResourceMap(dir, dev) {
   if (dev) {
@@ -30,7 +30,7 @@ function getResourceMap(dir, dev) {
 }
 
 function loadResourceMap(dir) {
-  var path = _findUp2['default'].sync('resource.map.json', {
+  var path = _findUp2.default.sync('resource.map.json', {
     cwd: (0, _path.join)(dir, 'resource')
   });
 
@@ -38,7 +38,7 @@ function loadResourceMap(dir) {
 
   if (path && path.length) {
     var resourceMapModule = require(path);
-    resourceMap = resourceMapModule['default'] || resourceMapModule;
+    resourceMap = resourceMapModule.default || resourceMapModule;
   }
 
   return resourceMap;

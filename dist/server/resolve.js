@@ -21,16 +21,16 @@ var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 var isFile = function () {
-  var _ref2 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee2(p) {
+  var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(p) {
     var stat, realpath;
-    return _regenerator2['default'].wrap(function _callee2$(_context2) {
+    return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             stat = void 0;
             _context2.prev = 1;
             _context2.next = 4;
-            return _fs2['default'].stat(p);
+            return _fs2.default.stat(p);
 
           case 4:
             stat = _context2.sent;
@@ -86,9 +86,9 @@ var isFile = function () {
 
 
 var getTrueFilePath = function () {
-  var _ref3 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee3(p) {
+  var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(p) {
     var fsPathNormalized, pathRoot, noDrivePath, result;
-    return _regenerator2['default'].wrap(function _callee3$(_context3) {
+    return _regenerator2.default.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
@@ -111,7 +111,7 @@ var getTrueFilePath = function () {
             // a *literal* path.
 
             _context3.next = 6;
-            return (0, _globPromise2['default'])(noDrivePath, { nocase: true, cwd: pathRoot });
+            return (0, _globPromise2.default)(noDrivePath, { nocase: true, cwd: pathRoot });
 
           case 6:
             result = _context3.sent;
@@ -142,13 +142,13 @@ var _globPromise = require('glob-promise');
 
 var _globPromise2 = _interopRequireDefault(_globPromise);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports['default'] = function () {
-  var _ref = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee(id) {
+exports.default = function () {
+  var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(id) {
     var paths, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, p, err;
 
-    return _regenerator2['default'].wrap(function _callee$(_context) {
+    return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
@@ -157,7 +157,7 @@ exports['default'] = function () {
             _didIteratorError = false;
             _iteratorError = undefined;
             _context.prev = 4;
-            _iterator = (0, _getIterator3['default'])(paths);
+            _iterator = (0, _getIterator3.default)(paths);
 
           case 6:
             if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
@@ -196,8 +196,8 @@ exports['default'] = function () {
             _context.prev = 21;
             _context.prev = 22;
 
-            if (!_iteratorNormalCompletion && _iterator['return']) {
-              _iterator['return']();
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
             }
 
           case 24:
@@ -239,13 +239,13 @@ exports['default'] = function () {
 
 function resolveFromList(id, files) {
   var paths = getPaths(id);
-  var set = new _set2['default'](files);
+  var set = new _set2.default(files);
   var _iteratorNormalCompletion2 = true;
   var _didIteratorError2 = false;
   var _iteratorError2 = undefined;
 
   try {
-    for (var _iterator2 = (0, _getIterator3['default'])(paths), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+    for (var _iterator2 = (0, _getIterator3.default)(paths), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
       var p = _step2.value;
 
       if (set.has(p)) return p;
@@ -255,8 +255,8 @@ function resolveFromList(id, files) {
     _iteratorError2 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion2 && _iterator2['return']) {
-        _iterator2['return']();
+      if (!_iteratorNormalCompletion2 && _iterator2.return) {
+        _iterator2.return();
       }
     } finally {
       if (_didIteratorError2) {

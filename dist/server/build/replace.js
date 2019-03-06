@@ -26,17 +26,17 @@ var _config = require('../config');
 
 var _config2 = _interopRequireDefault(_config);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports['default'] = function () {
-  var _ref = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee(dir, buildDir) {
+exports.default = function () {
+  var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(dir, buildDir) {
     var dist, _dir, _buildDir, oldDir;
 
-    return _regenerator2['default'].wrap(function _callee$(_context) {
+    return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            dist = (0, _config2['default'])(dir).distDir;
+            dist = (0, _config2.default)(dir).distDir;
             _dir = (0, _path.join)(dir, dist);
             _buildDir = (0, _path.join)(buildDir, '.next');
             oldDir = (0, _path.join)(buildDir, '.next.old');
@@ -82,8 +82,8 @@ exports['default'] = function () {
 }();
 
 function move(from, to) {
-  return new _promise2['default'](function (resolve, reject) {
-    return (0, _mv2['default'])(from, to, function (err) {
+  return new _promise2.default(function (resolve, reject) {
+    return (0, _mv2.default)(from, to, function (err) {
       return err ? reject(err) : resolve();
     });
   });

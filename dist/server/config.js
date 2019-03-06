@@ -16,15 +16,15 @@ var _map = require('babel-runtime/core-js/map');
 
 var _map2 = _interopRequireDefault(_map);
 
-exports['default'] = getConfig;
+exports.default = getConfig;
 
 var _findUp = require('find-up');
 
 var _findUp2 = _interopRequireDefault(_findUp);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var cache = new _map2['default']();
+var cache = new _map2.default();
 
 var defaultConfig = {
   webpack: null,
@@ -44,11 +44,11 @@ function getConfig(dir, customConfig) {
 }
 
 function loadConfig(dir, customConfig) {
-  if (customConfig && (typeof customConfig === 'undefined' ? 'undefined' : (0, _typeof3['default'])(customConfig)) === 'object') {
+  if (customConfig && (typeof customConfig === 'undefined' ? 'undefined' : (0, _typeof3.default)(customConfig)) === 'object') {
     customConfig.configOrigin = 'server';
     return withDefaults(customConfig);
   }
-  var path = _findUp2['default'].sync('next.config.js', {
+  var path = _findUp2.default.sync('next.config.js', {
     cwd: dir
   });
 
@@ -56,7 +56,7 @@ function loadConfig(dir, customConfig) {
 
   if (path && path.length) {
     var userConfigModule = require(path);
-    userConfig = userConfigModule['default'] || userConfigModule;
+    userConfig = userConfigModule.default || userConfigModule;
     if (userConfig.poweredByHeader === true || userConfig.poweredByHeader === false) {
       console.warn('> the `poweredByHeader` option has been removed https://err.sh/zeit/next.js/powered-by-header-option-removed');
     }
@@ -67,5 +67,5 @@ function loadConfig(dir, customConfig) {
 }
 
 function withDefaults(config) {
-  return (0, _assign2['default'])({}, defaultConfig, config);
+  return (0, _assign2.default)({}, defaultConfig, config);
 }

@@ -12,9 +12,9 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
-exports['default'] = function (opts) {
+exports.default = function (opts) {
   // 封装好的get和post接口，调用方法情况action文件
-  var $axios = _axios2['default'].create((0, _extends3['default'])({
+  var $axios = _axios2.default.create((0, _extends3.default)({
     timeout: 5000, // 设置超时时间
     headers: { 'X-Custom-Header': 'foobar' }
   }, opts));
@@ -63,7 +63,7 @@ exports['default'] = function (opts) {
   // Setup all helpers to axios instance (Axios.prototype cannot be modified)
   function setupHelpers($axios) {
     for (var key in axiosExtraProto) {
-      $axios[key] = axiosExtraProto[key].bind(_axios2['default']);
+      $axios[key] = axiosExtraProto[key].bind(_axios2.default);
     }
   }
 
@@ -75,7 +75,7 @@ exports['default'] = function (opts) {
     return config;
   }, function (error) {
     // Do something with request error
-    return _promise2['default'].reject(error);
+    return _promise2.default.reject(error);
   });
 
   // Add a response interceptor
@@ -84,7 +84,7 @@ exports['default'] = function (opts) {
     return response;
   }, function (error) {
     // Do something with response error
-    return _promise2['default'].reject(error);
+    return _promise2.default.reject(error);
   });
 
   return $axios;
@@ -94,4 +94,4 @@ var _axios = require('axios');
 
 var _axios2 = _interopRequireDefault(_axios);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

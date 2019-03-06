@@ -18,9 +18,9 @@ var _assign = require('babel-runtime/core-js/object/assign');
 var _assign2 = _interopRequireDefault(_assign);
 
 var loadGetInitialProps = exports.loadGetInitialProps = function () {
-  var _ref = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee(Component, ctx) {
+  var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(Component, ctx) {
     var props, compName, message;
-    return _regenerator2['default'].wrap(function _callee$(_context) {
+    return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
@@ -80,7 +80,7 @@ exports.isResSent = isResSent;
 exports.getLocationOrigin = getLocationOrigin;
 exports.getURL = getURL;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function warn(message) {
   if (process.env.NODE_ENV !== 'production') {
@@ -122,7 +122,7 @@ function deprecated(fn, message) {
   };
 
   // copy all properties
-  (0, _assign2['default'])(newFn, fn);
+  (0, _assign2.default)(newFn, fn);
 
   return newFn;
 }

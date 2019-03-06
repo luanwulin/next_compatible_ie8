@@ -24,25 +24,25 @@ var _unfetch = require('unfetch');
 
 var _unfetch2 = _interopRequireDefault(_unfetch);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* global location */
 
 var _window = window,
     assetPrefix = _window.__NEXT_DATA__.assetPrefix;
 
-exports['default'] = function () {
+exports.default = function () {
   var ping = function () {
-    var _ref = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee() {
+    var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
       var url, res, payload, pageRes;
-      return _regenerator2['default'].wrap(function _callee$(_context) {
+      return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.prev = 0;
-              url = assetPrefix + '/_next/on-demand-entries-ping?page=' + _router2['default'].pathname;
+              url = assetPrefix + '/_next/on-demand-entries-ping?page=' + _router2.default.pathname;
               _context.next = 4;
-              return (0, _unfetch2['default'])(url, {
+              return (0, _unfetch2.default)(url, {
                 credentials: 'omit'
               });
 
@@ -60,7 +60,7 @@ exports['default'] = function () {
               }
 
               _context.next = 11;
-              return (0, _unfetch2['default'])(location.href, {
+              return (0, _unfetch2.default)(location.href, {
                 credentials: 'omit'
               });
 
@@ -95,8 +95,8 @@ exports['default'] = function () {
   }();
 
   var runPinger = function () {
-    var _ref2 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee2() {
-      return _regenerator2['default'].wrap(function _callee2$(_context2) {
+    var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2() {
+      return _regenerator2.default.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
@@ -110,7 +110,7 @@ exports['default'] = function () {
 
             case 3:
               _context2.next = 5;
-              return new _promise2['default'](function (resolve) {
+              return new _promise2.default(function (resolve) {
                 pingerTimeout = setTimeout(resolve, 5000);
               });
 
@@ -131,8 +131,8 @@ exports['default'] = function () {
     };
   }();
 
-  _router2['default'].ready(function () {
-    _router2['default'].router.events.on('routeChangeComplete', ping);
+  _router2.default.ready(function () {
+    _router2.default.router.events.on('routeChangeComplete', ping);
   });
 
   var pingerTimeout = void 0;
@@ -147,7 +147,7 @@ exports['default'] = function () {
   }, false);
 
   setTimeout(function () {
-    runPinger()['catch'](function (err) {
+    runPinger().catch(function (err) {
       console.error(err);
     });
   }, 10000);

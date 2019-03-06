@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports['default'] = asset;
+exports.default = asset;
 exports.setAssetPrefix = setAssetPrefix;
 var assetPrefix = void 0;
 

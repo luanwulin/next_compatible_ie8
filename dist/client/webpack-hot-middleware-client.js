@@ -24,13 +24,13 @@ var _router = require('../lib/router');
 
 var _router2 = _interopRequireDefault(_router);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _window = window,
     assetPrefix = _window.__NEXT_DATA__.assetPrefix;
 
-exports['default'] = function () {
-  _clientAutoConnectFalse2['default'].setOptionsAndConnect({
+exports.default = function () {
+  _clientAutoConnectFalse2.default.setOptionsAndConnect({
     overlay: false,
     reload: true,
     path: assetPrefix + '/_next/webpack-hmr'
@@ -44,14 +44,14 @@ exports['default'] = function () {
         var _iteratorError = undefined;
 
         try {
-          for (var _iterator = (0, _getIterator3['default'])((0, _keys2['default'])(_router2['default'].components)), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          for (var _iterator = (0, _getIterator3.default)((0, _keys2.default)(_router2.default.components)), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var r = _step.value;
-            var err = _router2['default'].components[r].err;
+            var err = _router2.default.components[r].err;
 
             if (err) {
               // reload all error routes
               // which are expected to be errors of '/_error' routes
-              _router2['default'].reload(r);
+              _router2.default.reload(r);
             }
           }
         } catch (err) {
@@ -59,8 +59,8 @@ exports['default'] = function () {
           _iteratorError = err;
         } finally {
           try {
-            if (!_iteratorNormalCompletion && _iterator['return']) {
-              _iterator['return']();
+            if (!_iteratorNormalCompletion && _iterator.return) {
+              _iterator.return();
             }
           } finally {
             if (_didIteratorError) {
@@ -77,7 +77,7 @@ exports['default'] = function () {
         return;
       }
 
-      _router2['default'].reload(route);
+      _router2.default.reload(route);
     },
     change: function change(route) {
       if (route === '/_document') {
@@ -85,16 +85,16 @@ exports['default'] = function () {
         return;
       }
 
-      var _ref = _router2['default'].components[route] || {},
+      var _ref = _router2.default.components[route] || {},
           err = _ref.err,
           Component = _ref.Component;
 
       if (err) {
         // reload to recover from runtime errors
-        _router2['default'].reload(route);
+        _router2.default.reload(route);
       }
 
-      if (_router2['default'].route !== route) {
+      if (_router2.default.route !== route) {
         // If this is a not a change for a currently viewing page.
         // We don't need to worry about it.
         return;
@@ -109,11 +109,11 @@ exports['default'] = function () {
     }
   };
 
-  _clientAutoConnectFalse2['default'].subscribe(function (obj) {
+  _clientAutoConnectFalse2.default.subscribe(function (obj) {
     var fn = handlers[obj.action];
     if (fn) {
       var data = obj.data || [];
-      fn.apply(undefined, (0, _toConsumableArray3['default'])(data));
+      fn.apply(undefined, (0, _toConsumableArray3.default)(data));
     } else {
       throw new Error('Unexpected action ' + obj.action);
     }

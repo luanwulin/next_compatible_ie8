@@ -13,9 +13,17 @@ var _keys = require('babel-runtime/core-js/object/keys');
 
 var _keys2 = _interopRequireDefault(_keys);
 
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
 
 var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
 
@@ -29,7 +37,7 @@ var _set = require('babel-runtime/core-js/set');
 
 var _set2 = _interopRequireDefault(_set);
 
-exports['default'] = dynamicComponent;
+exports.default = dynamicComponent;
 exports.registerChunk = registerChunk;
 exports.flushChunks = flushChunks;
 
@@ -39,9 +47,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _utils = require('./utils');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var currentChunks = new _set2['default']();
+var currentChunks = new _set2.default();
 
 function dynamicComponent(p, o) {
   var promise = void 0;
@@ -66,19 +74,21 @@ function dynamicComponent(p, o) {
   }
 
   return function (_React$Component) {
-    (0, _inherits3['default'])(DynamicComponent, _React$Component);
+    (0, _inherits3.default)(DynamicComponent, _React$Component);
 
     function DynamicComponent() {
-      (0, _classCallCheck3['default'])(this, DynamicComponent);
+      var _ref;
+
+      (0, _classCallCheck3.default)(this, DynamicComponent);
 
       for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
 
-      var _this = (0, _possibleConstructorReturn3['default'])(this, _React$Component.call.apply(_React$Component, [this].concat(args)));
+      var _this = (0, _possibleConstructorReturn3.default)(this, (_ref = DynamicComponent.__proto__ || (0, _getPrototypeOf2.default)(DynamicComponent)).call.apply(_ref, [this].concat(args)));
 
       _this.LoadingComponent = options.loading ? options.loading : function () {
-        return _react2['default'].createElement(
+        return _react2.default.createElement(
           'p',
           null,
           'loading...'
@@ -100,117 +110,124 @@ function dynamicComponent(p, o) {
       return _this;
     }
 
-    DynamicComponent.prototype.load = function load() {
-      if (promise) {
-        this.loadComponent();
-      } else {
-        this.loadBundle(this.props);
-      }
-    };
-
-    DynamicComponent.prototype.loadComponent = function loadComponent() {
-      var _this2 = this;
-
-      promise.then(function (m) {
-        var AsyncComponent = m['default'] || m;
-        // Set a readable displayName for the wrapper component
-        var asyncCompName = (0, _utils.getDisplayName)(AsyncComponent);
-        if (asyncCompName) {
-          DynamicComponent.displayName = 'DynamicComponent for ' + asyncCompName;
-        }
-
-        if (_this2.mounted) {
-          _this2.setState({ AsyncComponent: AsyncComponent });
+    (0, _createClass3.default)(DynamicComponent, [{
+      key: 'load',
+      value: function load() {
+        if (promise) {
+          this.loadComponent();
         } else {
-          if (_this2.isServer) {
-            registerChunk(m.__webpackChunkName);
-          }
-          _this2.state.AsyncComponent = AsyncComponent;
+          this.loadBundle(this.props);
         }
-      });
-    };
+      }
+    }, {
+      key: 'loadComponent',
+      value: function loadComponent() {
+        var _this2 = this;
 
-    DynamicComponent.prototype.loadBundle = function loadBundle(props) {
-      var _this3 = this;
+        promise.then(function (m) {
+          var AsyncComponent = m.default || m;
+          // Set a readable displayName for the wrapper component
+          var asyncCompName = (0, _utils.getDisplayName)(AsyncComponent);
+          if (asyncCompName) {
+            DynamicComponent.displayName = 'DynamicComponent for ' + asyncCompName;
+          }
 
-      this.loadBundleAgain = null;
-      this.loadingBundle = true;
+          if (_this2.mounted) {
+            _this2.setState({ AsyncComponent: AsyncComponent });
+          } else {
+            if (_this2.isServer) {
+              registerChunk(m.__webpackChunkName);
+            }
+            _this2.state.AsyncComponent = AsyncComponent;
+          }
+        });
+      }
+    }, {
+      key: 'loadBundle',
+      value: function loadBundle(props) {
+        var _this3 = this;
 
-      // Run this for prop changes as well.
-      var modulePromiseMap = options.modules(props);
-      var moduleNames = (0, _keys2['default'])(modulePromiseMap);
-      var remainingPromises = moduleNames.length;
-      var moduleMap = {};
+        this.loadBundleAgain = null;
+        this.loadingBundle = true;
 
-      var renderModules = function renderModules() {
-        if (_this3.loadBundleAgain) {
-          _this3.loadBundle(_this3.loadBundleAgain);
+        // Run this for prop changes as well.
+        var modulePromiseMap = options.modules(props);
+        var moduleNames = (0, _keys2.default)(modulePromiseMap);
+        var remainingPromises = moduleNames.length;
+        var moduleMap = {};
+
+        var renderModules = function renderModules() {
+          if (_this3.loadBundleAgain) {
+            _this3.loadBundle(_this3.loadBundleAgain);
+            return;
+          }
+
+          _this3.loadingBundle = false;
+          DynamicComponent.displayName = 'DynamicBundle';
+          var asyncElement = options.render(props, moduleMap);
+          if (_this3.mounted) {
+            _this3.setState({ asyncElement: asyncElement });
+          } else {
+            _this3.state.asyncElement = asyncElement;
+          }
+        };
+
+        var loadModule = function loadModule(name) {
+          var promise = modulePromiseMap[name];
+          promise.then(function (m) {
+            var Component = m.default || m;
+            if (_this3.isServer) {
+              registerChunk(m.__webpackChunkName);
+            }
+            moduleMap[name] = Component;
+            remainingPromises--;
+            if (remainingPromises === 0) {
+              renderModules();
+            }
+          });
+        };
+
+        moduleNames.forEach(loadModule);
+      }
+    }, {
+      key: 'componentDidMount',
+      value: function componentDidMount() {
+        this.mounted = true;
+        if (!this.ssr) {
+          this.load();
+        }
+      }
+    }, {
+      key: 'componentWillReceiveProps',
+      value: function componentWillReceiveProps(nextProps) {
+        if (promise) return;
+
+        this.setState({ asyncElement: null });
+
+        if (this.loadingBundle) {
+          this.loadBundleAgain = nextProps;
           return;
         }
 
-        _this3.loadingBundle = false;
-        DynamicComponent.displayName = 'DynamicBundle';
-        var asyncElement = options.render(props, moduleMap);
-        if (_this3.mounted) {
-          _this3.setState({ asyncElement: asyncElement });
-        } else {
-          _this3.state.asyncElement = asyncElement;
-        }
-      };
-
-      var loadModule = function loadModule(name) {
-        var promise = modulePromiseMap[name];
-        promise.then(function (m) {
-          var Component = m['default'] || m;
-          if (_this3.isServer) {
-            registerChunk(m.__webpackChunkName);
-          }
-          moduleMap[name] = Component;
-          remainingPromises--;
-          if (remainingPromises === 0) {
-            renderModules();
-          }
-        });
-      };
-
-      moduleNames.forEach(loadModule);
-    };
-
-    DynamicComponent.prototype.componentDidMount = function componentDidMount() {
-      this.mounted = true;
-      if (!this.ssr) {
-        this.load();
+        this.loadBundle(nextProps);
       }
-    };
+    }, {
+      key: 'render',
+      value: function render() {
+        var _state = this.state,
+            AsyncComponent = _state.AsyncComponent,
+            asyncElement = _state.asyncElement;
+        var LoadingComponent = this.LoadingComponent;
 
-    DynamicComponent.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-      if (promise) return;
 
-      this.setState({ asyncElement: null });
+        if (asyncElement) return asyncElement;
+        if (AsyncComponent) return _react2.default.createElement(AsyncComponent, this.props);
 
-      if (this.loadingBundle) {
-        this.loadBundleAgain = nextProps;
-        return;
+        return _react2.default.createElement(LoadingComponent, this.props);
       }
-
-      this.loadBundle(nextProps);
-    };
-
-    DynamicComponent.prototype.render = function render() {
-      var _state = this.state,
-          AsyncComponent = _state.AsyncComponent,
-          asyncElement = _state.asyncElement;
-      var LoadingComponent = this.LoadingComponent;
-
-
-      if (asyncElement) return asyncElement;
-      if (AsyncComponent) return _react2['default'].createElement(AsyncComponent, this.props);
-
-      return _react2['default'].createElement(LoadingComponent, this.props);
-    };
-
+    }]);
     return DynamicComponent;
-  }(_react2['default'].Component);
+  }(_react2.default.Component);
 }
 
 function registerChunk(chunk) {
@@ -218,122 +235,131 @@ function registerChunk(chunk) {
 }
 
 function flushChunks() {
-  var chunks = (0, _from2['default'])(currentChunks);
+  var chunks = (0, _from2.default)(currentChunks);
   currentChunks.clear();
   return chunks;
 }
 
 var SameLoopPromise = exports.SameLoopPromise = function () {
-  SameLoopPromise.resolve = function resolve(value) {
-    var promise = new SameLoopPromise(function (done) {
-      return done(value);
-    });
-    return promise;
-  };
+  (0, _createClass3.default)(SameLoopPromise, null, [{
+    key: 'resolve',
+    value: function resolve(value) {
+      var promise = new SameLoopPromise(function (done) {
+        return done(value);
+      });
+      return promise;
+    }
+  }]);
 
   function SameLoopPromise(cb) {
-    (0, _classCallCheck3['default'])(this, SameLoopPromise);
+    (0, _classCallCheck3.default)(this, SameLoopPromise);
 
     this.onResultCallbacks = [];
     this.onErrorCallbacks = [];
     this.cb = cb;
   }
 
-  SameLoopPromise.prototype.setResult = function setResult(result) {
-    this.gotResult = true;
-    this.result = result;
-    this.onResultCallbacks.forEach(function (cb) {
-      return cb(result);
-    });
-    this.onResultCallbacks = [];
-  };
+  (0, _createClass3.default)(SameLoopPromise, [{
+    key: 'setResult',
+    value: function setResult(result) {
+      this.gotResult = true;
+      this.result = result;
+      this.onResultCallbacks.forEach(function (cb) {
+        return cb(result);
+      });
+      this.onResultCallbacks = [];
+    }
+  }, {
+    key: 'setError',
+    value: function setError(error) {
+      this.gotError = true;
+      this.error = error;
+      this.onErrorCallbacks.forEach(function (cb) {
+        return cb(error);
+      });
+      this.onErrorCallbacks = [];
+    }
+  }, {
+    key: 'then',
+    value: function then(onResult, onError) {
+      var _this4 = this;
 
-  SameLoopPromise.prototype.setError = function setError(error) {
-    this.gotError = true;
-    this.error = error;
-    this.onErrorCallbacks.forEach(function (cb) {
-      return cb(error);
-    });
-    this.onErrorCallbacks = [];
-  };
+      this.runIfNeeded();
+      var promise = new SameLoopPromise();
 
-  SameLoopPromise.prototype.then = function then(onResult, onError) {
-    var _this4 = this;
+      var handleError = function handleError() {
+        if (onError) {
+          promise.setResult(onError(_this4.error));
+        } else {
+          promise.setError(_this4.error);
+        }
+      };
 
-    this.runIfNeeded();
-    var promise = new SameLoopPromise();
+      var handleResult = function handleResult() {
+        promise.setResult(onResult(_this4.result));
+      };
 
-    var handleError = function handleError() {
-      if (onError) {
-        promise.setResult(onError(_this4.error));
-      } else {
-        promise.setError(_this4.error);
+      if (this.gotResult) {
+        handleResult();
+        return promise;
       }
-    };
 
-    var handleResult = function handleResult() {
-      promise.setResult(onResult(_this4.result));
-    };
+      if (this.gotError) {
+        handleError();
+        return promise;
+      }
 
-    if (this.gotResult) {
-      handleResult();
+      this.onResultCallbacks.push(handleResult);
+      this.onErrorCallbacks.push(handleError);
+
       return promise;
     }
+  }, {
+    key: 'catch',
+    value: function _catch(onError) {
+      var _this5 = this;
 
-    if (this.gotError) {
-      handleError();
+      this.runIfNeeded();
+      var promise = new SameLoopPromise();
+
+      var handleError = function handleError() {
+        promise.setResult(onError(_this5.error));
+      };
+
+      var handleResult = function handleResult() {
+        promise.setResult(_this5.result);
+      };
+
+      if (this.gotResult) {
+        handleResult();
+        return promise;
+      }
+
+      if (this.gotError) {
+        handleError();
+        return promise;
+      }
+
+      this.onErrorCallbacks.push(handleError);
+      this.onResultCallbacks.push(handleResult);
+
       return promise;
     }
+  }, {
+    key: 'runIfNeeded',
+    value: function runIfNeeded() {
+      var _this6 = this;
 
-    this.onResultCallbacks.push(handleResult);
-    this.onErrorCallbacks.push(handleError);
+      if (!this.cb) return;
+      if (this.ran) return;
 
-    return promise;
-  };
-
-  SameLoopPromise.prototype['catch'] = function _catch(onError) {
-    var _this5 = this;
-
-    this.runIfNeeded();
-    var promise = new SameLoopPromise();
-
-    var handleError = function handleError() {
-      promise.setResult(onError(_this5.error));
-    };
-
-    var handleResult = function handleResult() {
-      promise.setResult(_this5.result);
-    };
-
-    if (this.gotResult) {
-      handleResult();
-      return promise;
+      this.ran = true;
+      this.cb(function (result) {
+        return _this6.setResult(result);
+      }, function (error) {
+        return _this6.setError(error);
+      });
     }
-
-    if (this.gotError) {
-      handleError();
-      return promise;
-    }
-
-    this.onErrorCallbacks.push(handleError);
-    this.onResultCallbacks.push(handleResult);
-
-    return promise;
-  };
-
-  SameLoopPromise.prototype.runIfNeeded = function runIfNeeded() {
-    var _this6 = this;
-
-    if (!this.cb) return;
-    if (this.ran) return;
-
-    this.ran = true;
-    this.cb(function (result) {
-      return _this6.setResult(result);
-    }, function (error) {
-      return _this6.setError(error);
-    });
-  };
-
+  }]);
   return SameLoopPromise;
 }();

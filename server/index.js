@@ -16,7 +16,6 @@ import {
 import Router from './router'
 import { getAvailableChunks, isInternalUrl } from './utils'
 import getConfig from './config'
-import getResourceMap from './resource'
 // We need to go up one more level since we are in the `dist` directory
 import pkg from '../../package'
 import * as asset from '../lib/asset'
@@ -28,12 +27,12 @@ const blockedPages = {
 }
 
 export default class Server {
-  constructor ({dir = '.', dev = false, staticMarkup = false, quiet = false, conf = null} = {}) {
+  constructor ({ dir = '.', dev = false, staticMarkup = false, quiet = false, conf = null } = {}) {
     this.dir = resolve(dir)
     this.dev = dev
     this.quiet = quiet
     this.router = new Router()
-    this.hotReloader = dev ? this.getHotReloader(this.dir, {quiet, conf}) : null
+    this.hotReloader = dev ? this.getHotReloader(this.dir, { quiet, conf }) : null
     this.http = null
     this.config = getConfig(this.dir, conf)
     this.dist = this.config.distDir
@@ -202,7 +201,7 @@ export default class Server {
       '/_next/:buildId/page/_error.js': async (req, res, params) => {
         if (!this.handleBuildId(params.buildId, res)) {
           const error = new Error('INVALID_BUILD_ID')
-          const customFields = {buildIdMismatched: true}
+          const customFields = { buildIdMismatched: true }
 
           return await renderScriptError(req, res, '/_error', error, customFields, this.renderOpts)
         }
@@ -217,7 +216,7 @@ export default class Server {
 
         if (!this.handleBuildId(params.buildId, res)) {
           const error = new Error('INVALID_BUILD_ID')
-          const customFields = {buildIdMismatched: true}
+          const customFields = { buildIdMismatched: true }
 
           return await renderScriptError(req, res, page, error, customFields, this.renderOpts)
         }
@@ -231,7 +230,7 @@ export default class Server {
 
           const compilationErr = await this.getCompilationError()
           if (compilationErr) {
-            const customFields = {statusCode: 500}
+            const customFields = { statusCode: 500 }
             return await renderScriptError(req, res, page, compilationErr, customFields, this.renderOpts)
           }
         }
@@ -241,7 +240,7 @@ export default class Server {
         // [production] If the page is not exists, we need to send a proper Next.js style 404
         // Otherwise, it'll affect the multi-zones feature.
         if (!(await fsAsync.exists(p))) {
-          return await renderScriptError(req, res, page, {code: 'ENOENT'}, {}, this.renderOpts)
+          return await renderScriptError(req, res, page, { code: 'ENOENT' }, {}, this.renderOpts)
         }
 
         await this.serveStatic(req, res, p)
@@ -273,7 +272,7 @@ export default class Server {
 
     if (this.config.useFileSystemPublicRoutes) {
       routes['/:path*'] = async (req, res, params, parsedUrl) => {
-        const {pathname, query} = parsedUrl
+        const { pathname, query } = parsedUrl
         await this.render(req, res, pathname, query)
       }
     }
@@ -336,14 +335,11 @@ export default class Server {
   async renderToHTML (req, res, pathname, query) {
     if (this.dev) {
       const compilationErr = await this.getCompilationError()
-
       if (compilationErr) {
         res.statusCode = 500
         return this.renderErrorToHTML(compilationErr, req, res, pathname, query)
       }
     }
-
-    this.renderOpts.resourceMap = getResourceMap(getConfig(this.dir).distDir, this.dev)
 
     try {
       const out = await renderToHTML(req, res, pathname, query, this.renderOpts)
@@ -388,7 +384,7 @@ export default class Server {
   }
 
   async render404 (req, res, parsedUrl = parseUrl(req.url, true)) {
-    const {pathname, query} = parsedUrl
+    const { pathname, query } = parsedUrl
     res.statusCode = 404
     return this.renderError(null, req, res, pathname, query)
   }

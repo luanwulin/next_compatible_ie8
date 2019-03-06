@@ -6,7 +6,6 @@ import generateETag from 'etag'
 import fresh from 'fresh'
 import requireModule from './require'
 import getConfig from './config'
-import getResourceMap from './resource'
 import { Router } from '../lib/router'
 import { loadGetInitialProps, isResSent } from '../lib/utils'
 import { getAvailableChunks } from './utils'
@@ -31,7 +30,7 @@ export async function renderError (err, req, res, pathname, query, opts) {
 }
 
 export function renderErrorToHTML (err, req, res, pathname, query, opts = {}) {
-  return doRender(req, res, pathname, query, {...opts, err, page: '_error'})
+  return doRender(req, res, pathname, query, { ...opts, err, page: '_error' })
 }
 
 async function doRender (req, res, pathname, query, {
@@ -49,10 +48,9 @@ async function doRender (req, res, pathname, query, {
 } = {}) {
   page = page || pathname
 
-  await ensurePage(page, {dir, hotReloader})
+  await ensurePage(page, { dir, hotReloader })
 
   const dist = getConfig(dir).distDir
-  const resourceMap = getResourceMap(dir, dev)
 
   const pagePath = join(dir, dist, 'dist', 'bundles', 'pages', page)
   const documentPath = join(dir, dist, 'dist', 'bundles', 'pages', '_document')
@@ -64,7 +62,7 @@ async function doRender (req, res, pathname, query, {
   Component = Component.default || Component
   Document = Document.default || Document
   const asPath = req.url
-  const ctx = {err, req, res, pathname, query, asPath, assetPrefix, resourceMap, buildId}
+  const ctx = {err, req, res, pathname, query, asPath, assetPrefix, buildId}
   const props = await loadGetInitialProps(Component, ctx)
 
   // the response might be finshed on the getinitialprops call
@@ -85,7 +83,7 @@ async function doRender (req, res, pathname, query, {
 
     try {
       if (err && dev) {
-        errorHtml = render(createElement(ErrorDebug, {error: err}))
+        errorHtml = render(createElement(ErrorDebug, { error: err }))
       } else if (err) {
         errorHtml = render(app)
       } else {
@@ -94,12 +92,12 @@ async function doRender (req, res, pathname, query, {
     } finally {
       head = Head.rewind() || defaultHead()
     }
-    const chunks = loadChunks({dev, dir, dist, availableChunks})
+    const chunks = loadChunks({ dev, dir, dist, availableChunks })
 
-    return {html, head, errorHtml, chunks}
+    return { html, head, errorHtml, chunks }
   }
 
-  const docProps = await loadGetInitialProps(Document, {...ctx, renderPage})
+  const docProps = await loadGetInitialProps(Document, { ...ctx, renderPage })
 
   if (isResSent(res)) return
 
@@ -112,7 +110,6 @@ async function doRender (req, res, pathname, query, {
       buildId,
       buildStats,
       assetPrefix,
-      resourceMap,
       nextExport,
       err: (err) ? serializeError(dev, err) : null
     },
@@ -125,7 +122,7 @@ async function doRender (req, res, pathname, query, {
   return '<!DOCTYPE html>' + renderToStaticMarkup(doc)
 }
 
-export async function renderScriptError (req, res, page, error, customFields, {dev}) {
+export async function renderScriptError (req, res, page, error, customFields, { dev }) {
   // Asks CDNs and others to not to cache the errored page
   res.setHeader('Cache-Control', 'no-store, must-revalidate')
   // prevent XSS attacks by filtering the page before printing it.
@@ -157,11 +154,11 @@ export async function renderScriptError (req, res, page, error, customFields, {d
   `)
 }
 
-export function sendHTML (req, res, html, method, {dev}) {
+export function sendHTML (req, res, html, method, { dev }) {
   if (isResSent(res)) return
   const etag = generateETag(html)
 
-  if (fresh(req.headers, {etag})) {
+  if (fresh(req.headers, { etag })) {
     res.statusCode = 304
     res.end()
     return
@@ -191,13 +188,13 @@ export function sendJSON (res, obj, method) {
 }
 
 function errorToJSON (err) {
-  const {name, message, stack} = err
-  const json = {name, message, stack}
+  const { name, message, stack } = err
+  const json = { name, message, stack }
 
   if (err.module) {
     // rawRequest contains the filename of the module which has the error.
-    const {rawRequest} = err.module
-    json.module = {rawRequest}
+    const { rawRequest } = err.module
+    json.module = { rawRequest }
   }
 
   return json
@@ -208,32 +205,32 @@ function serializeError (dev, err) {
     return errorToJSON(err)
   }
 
-  return {message: '500 - Internal Server Error.'}
+  return { message: '500 - Internal Server Error.' }
 }
 
 export function serveStatic (req, res, path) {
   return new Promise((resolve, reject) => {
     send(req, path)
-      .on('directory', () => {
-        // We don't allow directories to be read.
-        const err = new Error('No directory access')
-        err.code = 'ENOENT'
-        reject(err)
-      })
-      .on('error', reject)
-      .pipe(res)
-      .on('finish', resolve)
+    .on('directory', () => {
+      // We don't allow directories to be read.
+      const err = new Error('No directory access')
+      err.code = 'ENOENT'
+      reject(err)
+    })
+    .on('error', reject)
+    .pipe(res)
+    .on('finish', resolve)
   })
 }
 
-async function ensurePage (page, {dir, hotReloader}) {
+async function ensurePage (page, { dir, hotReloader }) {
   if (!hotReloader) return
   if (page === '_error' || page === '_document') return
 
   await hotReloader.ensurePage(page)
 }
 
-function loadChunks ({dev, dir, dist, availableChunks}) {
+function loadChunks ({ dev, dir, dist, availableChunks }) {
   const flushedChunks = flushChunks()
   const response = {
     names: [],
