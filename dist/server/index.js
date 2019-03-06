@@ -685,7 +685,7 @@ var Server = function () {
             while (1) {
               switch (_context13.prev = _context13.next) {
                 case 0:
-                  p = _path.join.apply(undefined, [_this3.dist, 'static'].concat((0, _toConsumableArray3['default'])(params.path || [])));
+                  p = _path.join.apply(undefined, [_this3.dir, _this3.dist, 'static'].concat((0, _toConsumableArray3['default'])(params.path || [])));
                   _context13.next = 3;
                   return _this3.serveStatic(req, res, p);
 
