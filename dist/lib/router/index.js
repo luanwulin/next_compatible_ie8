@@ -13,7 +13,6 @@ var _defineProperty = require('babel-runtime/core-js/object/define-property');
 
 var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
-exports._notifyBuildIdMismatch = _notifyBuildIdMismatch;
 exports._rewriteUrlForNextExport = _rewriteUrlForNextExport;
 exports.makePublicRouterInstance = makePublicRouterInstance;
 
@@ -25,9 +24,10 @@ var _withRouter2 = require('./with-router');
 
 var _withRouter3 = _interopRequireDefault(_withRouter2);
 
+var _utils = require('../utils');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* global window */
 var SingletonRouter = {
   router: null, // holds the actual router instance
   readyCallbacks: [],
@@ -40,6 +40,7 @@ var SingletonRouter = {
 };
 
 // Create public properties and methods of the router in the SingletonRouter
+/* global window */
 var propertyFields = ['components', 'pathname', 'route', 'query', 'asPath'];
 var coreMethodFields = ['push', 'replace', 'reload', 'back', 'prefetch'];
 var routerEvents = ['routeChangeStart', 'beforeHistoryChange', 'routeChangeComplete', 'routeChangeError'];
@@ -49,7 +50,7 @@ propertyFields.forEach(function (field) {
   // the property assigned to the actual router
   // The value might get changed as we change routes and this is the
   // proper way to access it
-  (0, _defineProperty2.default)(SingletonRouter, field, {
+  SingletonRouter = (0, _defineProperty2.default)(SingletonRouter, field, {
     get: function get() {
       throwIfNoRouter();
       return SingletonRouter.router[field];
@@ -72,7 +73,9 @@ routerEvents.forEach(function (event) {
       var eventField = 'on' + event.charAt(0).toUpperCase() + event.substring(1);
       if (SingletonRouter[eventField]) {
         try {
-          SingletonRouter[eventField].apply(SingletonRouter, arguments);
+          var _SingletonRouter;
+
+          (_SingletonRouter = SingletonRouter)[eventField].apply(_SingletonRouter, arguments);
         } catch (err) {
           console.error('Error when running the Router event: ' + eventField);
           console.error(err.message + '\n' + err.stack);
@@ -80,6 +83,20 @@ routerEvents.forEach(function (event) {
       }
     });
   });
+});
+
+var warnAboutRouterOnAppUpdated = (0, _utils.execOnce)(function () {
+  console.warn('Router.onAppUpdated is removed - visit https://err.sh/next.js/no-on-app-updated-hook for more information.');
+});
+
+SingletonRouter = Object.defineProperty(SingletonRouter, 'onAppUpdated', {
+  get: function get() {
+    return null;
+  },
+  set: function set() {
+    warnAboutRouterOnAppUpdated();
+    return null;
+  }
 });
 
 function throwIfNoRouter() {
@@ -120,15 +137,6 @@ var createRouter = exports.createRouter = function createRouter() {
 // Export the actual Router class, which is usually used inside the server
 var Router = exports.Router = _router2.default;
 
-function _notifyBuildIdMismatch(nextRoute) {
-  if (SingletonRouter.onAppUpdated) {
-    SingletonRouter.onAppUpdated(nextRoute);
-  } else {
-    console.warn('An app update detected. Loading the SSR version of "' + nextRoute + '"');
-    window.location.href = nextRoute;
-  }
-}
-
 function _rewriteUrlForNextExport(url) {
   var _url$split = url.split('#'),
       _url$split2 = (0, _slicedToArray3.default)(_url$split, 2),
@@ -168,7 +176,7 @@ function makePublicRouterInstance(router) {
     // the property assigned to the actual router
     // The value might get changed as we change routes and this is the
     // proper way to access it
-    (0, _defineProperty2.default)(instance, field, {
+    instance = (0, _defineProperty2.default)(instance, field, {
       get: function get() {
         return router[field];
       }

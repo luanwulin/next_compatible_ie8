@@ -58,6 +58,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /* global __NEXT_DATA__ */
 
+var historyUnavailableWarning = (0, _utils.execOnce)(function () {
+  (0, _utils.warn)('Warning: window.history is not available.');
+});
+var historyMethodWarning = (0, _utils.execOnce)(function (method) {
+  (0, _utils.warn)('Warning: window.history.' + method + ' is not available');
+});
+
 var Router = function () {
   function Router(pathname, query, as, baseRoute) {
     var _ref = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {},
@@ -303,7 +310,7 @@ var Router = function () {
 
                 this.changeState(method, url, as);
                 this.scrollToHash(as);
-                return _context3.abrupt('return');
+                return _context3.abrupt('return', true);
 
               case 10:
                 _parse = (0, _url2.parse)(url, true), pathname = _parse.pathname, query = _parse.query;
@@ -395,9 +402,17 @@ var Router = function () {
     value: function changeState(method, url, as) {
       var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 
-      if (window.frameElement) {
-        (0, _utils.execOnce)(_utils.warn)('Warning: You\'re using Next.js inside an iFrame. Browser history is disabled.');
-      } else if (method !== 'pushState' || (0, _utils.getURL)() !== as) {
+      if (typeof window.history === 'undefined') {
+        historyUnavailableWarning();
+        return;
+      }
+
+      if (typeof window.history[method] === 'undefined') {
+        historyMethodWarning(method);
+        return;
+      }
+
+      if (method !== 'pushState' || (0, _utils.getURL)() !== as) {
         window.history[method]({ url: url, as: as, options: options }, null, as);
       }
     }
@@ -451,35 +466,23 @@ var Router = function () {
 
 
                 this.components[route] = routeInfo;
-                _context4.next = 38;
+                _context4.next = 34;
                 break;
 
               case 19:
                 _context4.prev = 19;
                 _context4.t1 = _context4['catch'](2);
 
-                if (!_context4.t1.buildIdMismatched) {
+                if (!(_context4.t1.code === 'PAGE_LOAD_ERROR')) {
                   _context4.next = 25;
                   break;
                 }
 
-                // Now we need to reload the page or do the action asked by the user
-                (0, _._notifyBuildIdMismatch)(as);
-                // We also need to cancel this current route change.
-                // We do it like this.
-                _context4.t1.cancelled = true;
-                return _context4.abrupt('return', { error: _context4.t1 });
+                // If we can't load the page it could be one of following reasons
+                //  1. Page doesn't exists
+                //  2. Page does exist in a different zone
+                //  3. Internal error while loading the page
 
-              case 25:
-                if (!(_context4.t1.statusCode === 404)) {
-                  _context4.next = 29;
-                  break;
-                }
-
-                // If there's 404 error for the page, it could be due to two reasons.
-                //  1. Page is not exists
-                //  2. Page is exists in a different zone
-                // We are not sure whether this is actual 404 or exists in a different zone.
                 // So, doing a hard reload is the proper way to deal with this.
                 window.location.href = as;
 
@@ -488,32 +491,32 @@ var Router = function () {
                 _context4.t1.cancelled = true;
                 return _context4.abrupt('return', { error: _context4.t1 });
 
-              case 29:
+              case 25:
                 if (!_context4.t1.cancelled) {
-                  _context4.next = 31;
+                  _context4.next = 27;
                   break;
                 }
 
                 return _context4.abrupt('return', { error: _context4.t1 });
 
-              case 31:
+              case 27:
                 _Component = this.ErrorComponent;
 
                 routeInfo = { Component: _Component, err: _context4.t1 };
                 _ctx = { err: _context4.t1, pathname: pathname, query: query, assetPrefix: assetPrefix, buildId: buildId };
-                _context4.next = 36;
+                _context4.next = 32;
                 return this.getInitialProps(_Component, _ctx);
 
-              case 36:
+              case 32:
                 routeInfo.props = _context4.sent;
 
 
                 routeInfo.error = _context4.t1;
 
-              case 38:
+              case 34:
                 return _context4.abrupt('return', routeInfo);
 
-              case 39:
+              case 35:
               case 'end':
                 return _context4.stop();
             }
