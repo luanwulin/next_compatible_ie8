@@ -68,8 +68,15 @@ let stripAnsi = (s) => s
 export const emitter = new EventEmitter()
 
 export default async ({ ErrorDebugComponent: passedDebugComponent, stripAnsi: passedStripAnsi } = {}) => {
+  let promises = []
+
   // Wait for all the dynamic chunks to get loaded
-  const promises = chunks.map(chunkName => (pageLoader.waitForChunk(chunkName)))
+  for (const chunkName in chunks) {
+    if (chunks.hasOwnProperty(chunkName)) {
+      promises.push(pageLoader.waitForChunk(chunks[chunkName]))
+    }
+  }
+
   await Promise.all(promises)
 
   stripAnsi = passedStripAnsi || stripAnsi

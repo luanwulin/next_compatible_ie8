@@ -292,44 +292,50 @@ exports.default = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.de
       passedDebugComponent = _ref4.ErrorDebugComponent,
       passedStripAnsi = _ref4.stripAnsi;
 
-  var promises, hash;
+  var promises, chunkName, hash;
   return _regenerator2.default.wrap(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
+          promises = [];
+
           // Wait for all the dynamic chunks to get loaded
-          promises = chunks.map(function (chunkName) {
-            return pageLoader.waitForChunk(chunkName);
-          });
-          _context.next = 3;
+
+          for (chunkName in chunks) {
+            if (chunks.hasOwnProperty(chunkName)) {
+              promises.push(pageLoader.waitForChunk(chunks[chunkName]));
+            }
+          }
+
+          _context.next = 4;
           return _promise2.default.all(promises);
 
-        case 3:
+        case 4:
 
           stripAnsi = passedStripAnsi || stripAnsi;
           ErrorDebugComponent = passedDebugComponent;
-          _context.next = 7;
+          _context.next = 8;
           return pageLoader.loadPage('/_error');
 
-        case 7:
+        case 8:
           exports.ErrorComponent = ErrorComponent = _context.sent;
-          _context.prev = 8;
-          _context.next = 11;
+          _context.prev = 9;
+          _context.next = 12;
           return pageLoader.loadPage(pathname);
 
-        case 11:
+        case 12:
           Component = _context.sent;
-          _context.next = 18;
+          _context.next = 19;
           break;
 
-        case 14:
-          _context.prev = 14;
-          _context.t0 = _context['catch'](8);
+        case 15:
+          _context.prev = 15;
+          _context.t0 = _context['catch'](9);
 
           console.error(stripAnsi(_context.t0.message + '\n' + _context.t0.stack));
           Component = ErrorComponent;
 
-        case 18:
+        case 19:
 
           exports.router = router = (0, _router2.createRouter)(pathname, query, asPath, baseRoute, {
             pageLoader: pageLoader,
@@ -353,12 +359,12 @@ exports.default = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.de
 
           return _context.abrupt('return', emitter);
 
-        case 23:
+        case 24:
         case 'end':
           return _context.stop();
       }
     }
-  }, _callee, undefined, [[8, 14]]);
+  }, _callee, undefined, [[9, 15]]);
 }));
 
 
