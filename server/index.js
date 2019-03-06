@@ -16,6 +16,7 @@ import {
 import Router from './router'
 import { getAvailableChunks, isInternalUrl } from './utils'
 import getConfig from './config'
+import getResourceMap from './resource'
 // We need to go up one more level since we are in the `dist` directory
 import pkg from '../../package'
 import * as asset from '../lib/asset'
@@ -335,17 +336,14 @@ export default class Server {
   async renderToHTML (req, res, pathname, query) {
     if (this.dev) {
       const compilationErr = await this.getCompilationError()
-      this.resourceMap = this.readResource()
 
       if (compilationErr) {
         res.statusCode = 500
         return this.renderErrorToHTML(compilationErr, req, res, pathname, query)
       }
-    } else {
-      this.resourceMap = this.resourceMap ? this.resourceMap : this.readResource()
     }
 
-    this.renderOpts.resourceMap = this.resourceMap
+    this.renderOpts.resourceMap = getResourceMap(getConfig(this.dir).distDir, this.dev)
 
     try {
       const out = await renderToHTML(req, res, pathname, query, this.renderOpts)
@@ -428,16 +426,6 @@ export default class Server {
     const buildIdPath = join(this.dir, this.dist, 'BUILD_ID')
     const buildId = fs.readFileSync(buildIdPath, 'utf8')
     return buildId.trim()
-  }
-
-  readResource () {
-    const resourceMapPath = join(this.dir, this.dist, 'resource/resource.map.json')
-
-    try {
-      return fs.readFileSync(resourceMapPath, 'utf8')
-    } catch (e) {
-      return ('')
-    }
   }
 
   handleBuildId (buildId, res) {

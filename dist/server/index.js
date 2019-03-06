@@ -74,6 +74,10 @@ var _config = require('./config');
 
 var _config2 = _interopRequireDefault(_config);
 
+var _resource = require('./resource');
+
+var _resource2 = _interopRequireDefault(_resource);
+
 var _package = require('../../package');
 
 var _package2 = _interopRequireDefault(_package);
@@ -977,7 +981,7 @@ var Server = function () {
           switch (_context20.prev = _context20.next) {
             case 0:
               if (!this.dev) {
-                _context20.next = 10;
+                _context20.next = 7;
                 break;
               }
 
@@ -987,58 +991,49 @@ var Server = function () {
             case 3:
               compilationErr = _context20.sent;
 
-              this.resourceMap = this.readResource();
-
               if (!compilationErr) {
-                _context20.next = 8;
+                _context20.next = 7;
                 break;
               }
 
               res.statusCode = 500;
               return _context20.abrupt('return', this.renderErrorToHTML(compilationErr, req, res, pathname, query));
 
-            case 8:
+            case 7:
+
+              this.renderOpts.resourceMap = (0, _resource2['default'])((0, _config2['default'])(this.dir).distDir, this.dev);
+
+              _context20.prev = 8;
               _context20.next = 11;
-              break;
-
-            case 10:
-              this.resourceMap = this.resourceMap ? this.resourceMap : this.readResource();
-
-            case 11:
-
-              this.renderOpts.resourceMap = this.resourceMap;
-
-              _context20.prev = 12;
-              _context20.next = 15;
               return (0, _render.renderToHTML)(req, res, pathname, query, this.renderOpts);
 
-            case 15:
+            case 11:
               out = _context20.sent;
               return _context20.abrupt('return', out);
 
-            case 19:
-              _context20.prev = 19;
-              _context20.t0 = _context20['catch'](12);
+            case 15:
+              _context20.prev = 15;
+              _context20.t0 = _context20['catch'](8);
 
               if (!(_context20.t0.code === 'ENOENT')) {
-                _context20.next = 26;
+                _context20.next = 22;
                 break;
               }
 
               res.statusCode = 404;
               return _context20.abrupt('return', this.renderErrorToHTML(null, req, res, pathname, query));
 
-            case 26:
+            case 22:
               if (!this.quiet) console.error(_context20.t0);
               res.statusCode = 500;
               return _context20.abrupt('return', this.renderErrorToHTML(_context20.t0, req, res, pathname, query));
 
-            case 29:
+            case 25:
             case 'end':
               return _context20.stop();
           }
         }
-      }, _callee20, this, [[12, 19]]);
+      }, _callee20, this, [[8, 15]]);
     }));
 
     function renderToHTML(_x55, _x56, _x57, _x58) {
@@ -1236,16 +1231,6 @@ var Server = function () {
     var buildIdPath = (0, _path.join)(this.dir, this.dist, 'BUILD_ID');
     var buildId = _fs2['default'].readFileSync(buildIdPath, 'utf8');
     return buildId.trim();
-  };
-
-  Server.prototype.readResource = function readResource() {
-    var resourceMapPath = (0, _path.join)(this.dir, this.dist, 'resource/resource.map.json');
-
-    try {
-      return _fs2['default'].readFileSync(resourceMapPath, 'utf8');
-    } catch (e) {
-      return '';
-    }
   };
 
   Server.prototype.handleBuildId = function handleBuildId(buildId, res) {

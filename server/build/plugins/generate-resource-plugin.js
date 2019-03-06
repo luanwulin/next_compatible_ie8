@@ -7,60 +7,61 @@ import {
 export default class GernerateResource {
   apply (compiler) {
     // 数据处理 用于生成 webpackMap
-    compiler.plugin('compilation', function (compilation) {
-      compilation.plugin('additional-chunk-assets', function (chunks) {
-        chunks = chunks
-          .filter(chunk => IS_BUNDLED_PAGE.test(chunk.name))
+    compiler.plugin('done', function (stats) {
+      const compilation = stats.compilation
+      let {chunks} = compilation
 
-        const webpackMap = {}
-        const destPath = compilation.options.output.path
-        const destResourcePath = join(destPath, 'resource')
+      chunks = chunks
+        .filter(chunk => IS_BUNDLED_PAGE.test(chunk.name))
 
-        chunks.forEach((chunk) => {
-          let name = chunk.name
+      const webpackMap = {}
+      const destPath = compilation.options.output.path
+      const destResourcePath = join(destPath, 'resource')
 
-          // 如果入口路径不包含 / 则不输出 例如 入口  name == 'project'
-          if (name.indexOf('/') < 0) {
-            return
-          }
+      chunks.forEach((chunk) => {
+        let name = chunk.name
 
-          // 页面名
-          const rule = /^bundles[/\\]pages[/\\].*[/\\]index\.js$/
-          if (rule.test(name)) {
-            name = name.replace(/[/\\]index\.js$/, `.js`)
-          }
+        // 如果入口路径不包含 / 则不输出 例如 入口  name == 'project'
+        if (name.indexOf('/') < 0) {
+          return
+        }
 
-          const pageName = name.replace(/bundles[/\\]pages[/\\](.*)[/\\]?\.js/, `$1`)
+        // 页面名
+        const rule = /^bundles[/\\]pages[/\\].*[/\\]index\.js$/
+        if (rule.test(name)) {
+          name = name.replace(/[/\\]index\.js$/, `.js`)
+        }
 
-          webpackMap[pageName] = {}
-          webpackMap[pageName].js = []
-          webpackMap[pageName].css = [];
+        const pageName = name.replace(/bundles[/\\]pages[/\\](.*)[/\\]?\.js/, `$1`)
 
-          // 页面级别资源 (映射) 处理
-          [].concat(chunk.files).forEach(mapAsset)
+        webpackMap[pageName] = {}
+        webpackMap[pageName].js = []
+        webpackMap[pageName].css = [];
 
-          /**
-           * 根据资源类型，将其映射(map)到对应的数组中
-           * @param assetsPath  资源路径
-           */
-          function mapAsset (assetsPath) {
-            if (assetsPath) {
-              if (extname(assetsPath) === '.js') {
-                // 绝对路径 = publicPath +  assetsPath
-                webpackMap[pageName].js.push(assetsPath)
-              } else if (extname(assetsPath) === '.css') {
-                webpackMap[pageName].css.push(assetsPath)
-              }
+        // 页面级别资源 (映射) 处理
+        [].concat(chunk.files).forEach(mapAsset)
+
+        /**
+         * 根据资源类型，将其映射(map)到对应的数组中
+         * @param assetsPath  资源路径
+         */
+        function mapAsset (assetsPath) {
+          if (assetsPath) {
+            if (extname(assetsPath) === '.js') {
+              // 绝对路径 = publicPath +  assetsPath
+              webpackMap[pageName].js.push(assetsPath)
+            } else if (extname(assetsPath) === '.css') {
+              webpackMap[pageName].css.push(assetsPath)
             }
           }
+        }
 
-          const newContent = JSON.stringify(webpackMap)
-          // Replace the exisiting chunk with the new content
-          compilation.assets[join(destResourcePath, 'resource.map.json')] = {
-            source: () => newContent,
-            size: () => newContent.length
-          }
-        })
+        const newContent = JSON.stringify(webpackMap)
+        // Replace the exisiting chunk with the new content
+        compilation.assets[join(destResourcePath, 'resource.map.json')] = {
+          source: () => newContent,
+          size: () => newContent.length
+        }
       })
     })
   }

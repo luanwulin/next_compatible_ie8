@@ -106,11 +106,9 @@ var doRender = function () {
         _ref4$staticMarkup = _ref4.staticMarkup,
         staticMarkup = _ref4$staticMarkup === undefined ? false : _ref4$staticMarkup,
         _ref4$nextExport = _ref4.nextExport,
-        nextExport = _ref4$nextExport === undefined ? false : _ref4$nextExport,
-        _ref4$resourceMap = _ref4.resourceMap,
-        resourceMap = _ref4$resourceMap === undefined ? {} : _ref4$resourceMap;
+        nextExport = _ref4$nextExport === undefined ? false : _ref4$nextExport;
 
-    var dist, pagePath, documentPath, _ref5, _ref6, Component, Document, asPath, ctx, props, renderPage, docProps, doc;
+    var dist, resourceMap, pagePath, documentPath, _ref5, _ref6, Component, Document, asPath, ctx, props, renderPage, docProps, doc;
 
     return _regenerator2['default'].wrap(function _callee3$(_context3) {
       while (1) {
@@ -123,12 +121,13 @@ var doRender = function () {
 
           case 3:
             dist = (0, _config2['default'])(dir).distDir;
+            resourceMap = (0, _resource2['default'])(dir, dev);
             pagePath = (0, _path.join)(dir, dist, 'dist', 'bundles', 'pages', page);
             documentPath = (0, _path.join)(dir, dist, 'dist', 'bundles', 'pages', '_document');
-            _context3.next = 8;
+            _context3.next = 9;
             return _promise2['default'].all([(0, _require2['default'])(pagePath), (0, _require2['default'])(documentPath)]);
 
-          case 8:
+          case 9:
             _ref5 = _context3.sent;
             _ref6 = (0, _slicedToArray3['default'])(_ref5, 2);
             Component = _ref6[0];
@@ -138,20 +137,20 @@ var doRender = function () {
             Document = Document['default'] || Document;
             asPath = req.url;
             ctx = { err: err, req: req, res: res, pathname: pathname, query: query, asPath: asPath, assetPrefix: assetPrefix, resourceMap: resourceMap, buildId: buildId };
-            _context3.next = 18;
+            _context3.next = 19;
             return (0, _utils.loadGetInitialProps)(Component, ctx);
 
-          case 18:
+          case 19:
             props = _context3.sent;
 
             if (!(0, _utils.isResSent)(res)) {
-              _context3.next = 21;
+              _context3.next = 22;
               break;
             }
 
             return _context3.abrupt('return');
 
-          case 21:
+          case 22:
             renderPage = function renderPage() {
               var enhancer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function (Page) {
                 return Page;
@@ -185,28 +184,28 @@ var doRender = function () {
               return { html: html, head: head, errorHtml: errorHtml, chunks: chunks };
             };
 
-            _context3.next = 24;
+            _context3.next = 25;
             return (0, _utils.loadGetInitialProps)(Document, (0, _extends3['default'])({}, ctx, { renderPage: renderPage }));
 
-          case 24:
+          case 25:
             docProps = _context3.sent;
 
             if (!(0, _utils.isResSent)(res)) {
-              _context3.next = 27;
+              _context3.next = 28;
               break;
             }
 
             return _context3.abrupt('return');
 
-          case 27:
+          case 28:
             if (!(!Document.prototype || !Document.prototype.isReactComponent)) {
-              _context3.next = 29;
+              _context3.next = 30;
               break;
             }
 
             throw new Error('_document.js is not exporting a React element');
 
-          case 29:
+          case 30:
             doc = (0, _react.createElement)(Document, (0, _extends3['default'])({
               __NEXT_DATA__: {
                 props: props,
@@ -225,7 +224,7 @@ var doRender = function () {
             }, docProps));
             return _context3.abrupt('return', '<!DOCTYPE html>' + (0, _server.renderToStaticMarkup)(doc));
 
-          case 31:
+          case 32:
           case 'end':
             return _context3.stop();
         }
@@ -350,6 +349,10 @@ var _require2 = _interopRequireDefault(_require);
 var _config = require('./config');
 
 var _config2 = _interopRequireDefault(_config);
+
+var _resource = require('./resource');
+
+var _resource2 = _interopRequireDefault(_resource);
 
 var _router = require('../lib/router');
 

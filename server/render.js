@@ -6,6 +6,7 @@ import generateETag from 'etag'
 import fresh from 'fresh'
 import requireModule from './require'
 import getConfig from './config'
+import getResourceMap from './resource'
 import { Router } from '../lib/router'
 import { loadGetInitialProps, isResSent } from '../lib/utils'
 import { getAvailableChunks } from './utils'
@@ -44,14 +45,14 @@ async function doRender (req, res, pathname, query, {
   dir = process.cwd(),
   dev = false,
   staticMarkup = false,
-  nextExport = false,
-  resourceMap = {}
+  nextExport = false
 } = {}) {
   page = page || pathname
 
   await ensurePage(page, {dir, hotReloader})
 
   const dist = getConfig(dir).distDir
+  const resourceMap = getResourceMap(dir, dev)
 
   const pagePath = join(dir, dist, 'dist', 'bundles', 'pages', page)
   const documentPath = join(dir, dist, 'dist', 'bundles', 'pages', '_document')
