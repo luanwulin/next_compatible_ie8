@@ -190,7 +190,7 @@ var Server = function () {
     value: function handleRequest(req, res, parsedUrl) {
       var _this = this;
 
-      var baseRoute = this.config.baseRoute;
+      var baseRoute = this.nextConfig.baseRoute;
 
 
       if (baseRoute) {

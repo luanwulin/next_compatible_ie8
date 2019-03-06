@@ -40,12 +40,13 @@ module.exports = (context, opts = {}) => ({
       'useBuiltIns': 'entry',
       'targets': {
         'browsers': [
-          'ie >= 8'
+          'ie >= 7'
         ]
       },
       'modules': 'commonjs',
       ...opts['preset-env']
     }],
+    [require.resolve('babel-preset-2015'), {'loose': true}],
     require.resolve('babel-preset-react')
   ],
   plugins: [

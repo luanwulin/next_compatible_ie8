@@ -52,10 +52,10 @@ module.exports = function (context) {
     presets: [[require.resolve('babel-preset-env'), (0, _extends3.default)({
       'useBuiltIns': 'entry',
       'targets': {
-        'browsers': ['ie >= 8']
+        'browsers': ['ie >= 7']
       },
       'modules': 'commonjs'
-    }, opts['preset-env'])], require.resolve('babel-preset-react')],
+    }, opts['preset-env'])], [require.resolve('babel-preset-2015'), { 'loose': true }], require.resolve('babel-preset-react')],
     plugins: [require.resolve('babel-plugin-react-require'), require.resolve('./plugins/handle-import'), require.resolve('babel-plugin-transform-object-rest-spread'), require.resolve('babel-plugin-transform-class-properties'), require.resolve('babel-plugin-transform-es3-property-literals'), require.resolve('babel-plugin-transform-es3-member-expression-literals'), [require.resolve('babel-plugin-transform-runtime'), opts['transform-runtime'] || {
       helpers: false,
       polyfill: false,

@@ -87,7 +87,7 @@ export default class Server {
   }
 
   handleRequest (req, res, parsedUrl) {
-    const {baseRoute} = this.config
+    const {baseRoute} = this.nextConfig
 
     if (baseRoute) {
       req.url = req.url.replace(baseRoute, '')

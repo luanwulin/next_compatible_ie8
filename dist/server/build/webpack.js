@@ -60,6 +60,10 @@ var _friendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 var _friendlyErrorsWebpackPlugin2 = _interopRequireDefault(_friendlyErrorsWebpackPlugin);
 
+var _es3ifyWebpackPlugin = require('es3ify-webpack-plugin');
+
+var _es3ifyWebpackPlugin2 = _interopRequireDefault(_es3ifyWebpackPlugin);
+
 var _utils = require('./webpack/utils');
 
 var _pagesPlugin = require('./plugins/pages-plugin');
@@ -276,7 +280,7 @@ exports.default = function () {
                   use: defaultLoaders.babel
                 }].filter(Boolean)
               },
-              plugins: [new _webpack2.default.IgnorePlugin(/(precomputed)/, /node_modules.+(elliptic)/), dev && new _webpack2.default.NoEmitOnErrorsPlugin(), dev && !isServer && new _friendlyErrorsWebpackPlugin2.default(), dev && new _webpack2.default.NamedModulesPlugin(), dev && !isServer && new _webpack2.default.HotModuleReplacementPlugin(), // Hot module replacement
+              plugins: [!isServer && new _es3ifyWebpackPlugin2.default(), new _webpack2.default.IgnorePlugin(/(precomputed)/, /node_modules.+(elliptic)/), dev && new _webpack2.default.NoEmitOnErrorsPlugin(), dev && !isServer && new _friendlyErrorsWebpackPlugin2.default(), dev && new _webpack2.default.NamedModulesPlugin(), dev && !isServer && new _webpack2.default.HotModuleReplacementPlugin(), // Hot module replacement
               dev && new _unlinkFilePlugin2.default(), dev && new _caseSensitivePathsWebpackPlugin2.default(), // Since on macOS the filesystem is case-insensitive this will make sure your path are case-sensitive
               dev && new _webpack2.default.LoaderOptionsPlugin({
                 options: {
