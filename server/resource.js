@@ -1,4 +1,5 @@
 import findUp from 'find-up'
+import { join } from 'path'
 
 const cache = new Map()
 
@@ -12,8 +13,8 @@ export default function getResourceMap (dir, dev) {
 }
 
 function loadResourceMap (dir) {
-  const path = findUp.sync('resource/resource.map.json', {
-    cwd: dir
+  const path = findUp.sync('resource.map.json', {
+    cwd: join(dir, 'resource')
   })
 
   let resourceMap = {}

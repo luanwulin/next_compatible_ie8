@@ -1,38 +1,40 @@
 import { extname, join } from 'path'
 
 import {
-  IS_BUNDLED_PAGE
+  IS_BUNDLED_PAGE, MATCH_ROUTE_NAME
 } from '../../utils'
 
 export default class GernerateResource {
   apply (compiler) {
     // 数据处理 用于生成 webpackMap
-    compiler.plugin('done', function (stats) {
-      const compilation = stats.compilation
-      let {chunks} = compilation
-
-      chunks = chunks
+    compiler.plugin('after-compile', function (compilation, callback) {
+      const pages = compilation
+        .chunks
         .filter(chunk => IS_BUNDLED_PAGE.test(chunk.name))
 
       const webpackMap = {}
       const destPath = compilation.options.output.path
       const destResourcePath = join(destPath, 'resource')
 
-      chunks.forEach((chunk) => {
-        let name = chunk.name
+      pages.forEach((chunk) => {
+        let pageName = MATCH_ROUTE_NAME.exec(chunk.name)[1]
+
+        // We need to convert \ into / when we are in windows
+        // to get the proper route name
+        // Here we need to do windows check because it's possible
+        // to have "\" in the filename in unix.
+        // Anyway if someone did that, he'll be having issues here.
+        // But that's something we cannot avoid.
+        if (/^win/.test(process.platform)) {
+          pageName = pageName.replace(/\\/g, '/')
+        }
+
+        pageName = `/${pageName.replace(/(^|\/)index$/, '')}`
 
         // 如果入口路径不包含 / 则不输出 例如 入口  name == 'project'
-        if (name.indexOf('/') < 0) {
+        if (!pageName) {
           return
         }
-
-        // 页面名
-        const rule = /^bundles[/\\]pages[/\\].*[/\\]index\.js$/
-        if (rule.test(name)) {
-          name = name.replace(/[/\\]index\.js$/, `.js`)
-        }
-
-        const pageName = name.replace(/bundles[/\\]pages[/\\](.*)[/\\]?\.js/, `$1`)
 
         webpackMap[pageName] = {}
         webpackMap[pageName].js = []
@@ -47,11 +49,13 @@ export default class GernerateResource {
          */
         function mapAsset (assetsPath) {
           if (assetsPath) {
+            const truePath = (compilation.options.output.publicPath + assetsPath).replace(/([^:])\/{2,}/g, '$1/')
+
             if (extname(assetsPath) === '.js') {
               // 绝对路径 = publicPath +  assetsPath
-              webpackMap[pageName].js.push(assetsPath)
+              webpackMap[pageName].js.push(truePath)
             } else if (extname(assetsPath) === '.css') {
-              webpackMap[pageName].css.push(assetsPath)
+              webpackMap[pageName].css.push(truePath)
             }
           }
         }
@@ -63,6 +67,8 @@ export default class GernerateResource {
           size: () => newContent.length
         }
       })
+
+      callback()
     })
   }
 }

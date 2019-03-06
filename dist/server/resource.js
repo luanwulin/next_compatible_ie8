@@ -14,6 +14,8 @@ var _findUp = require('find-up');
 
 var _findUp2 = _interopRequireDefault(_findUp);
 
+var _path = require('path');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var cache = new _map2['default']();
@@ -28,8 +30,8 @@ function getResourceMap(dir, dev) {
 }
 
 function loadResourceMap(dir) {
-  var path = _findUp2['default'].sync('resource/resource.map.json', {
-    cwd: dir
+  var path = _findUp2['default'].sync('resource.map.json', {
+    cwd: (0, _path.join)(dir, 'resource')
   });
 
   var resourceMap = {};
