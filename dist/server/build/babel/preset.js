@@ -50,12 +50,18 @@ module.exports = function (context) {
   var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   return {
     presets: [[require.resolve('babel-preset-env'), (0, _extends3.default)({
-      modules: false
+      'useBuiltIns': 'entry',
+      'targets': {
+        'browsers': ['ie >= 8']
+      },
+      'modules': 'commonjs'
     }, opts['preset-env'])], require.resolve('babel-preset-react')],
-    plugins: [require.resolve('babel-plugin-react-require'), require.resolve('./plugins/handle-import'), require.resolve('babel-plugin-transform-object-rest-spread'), require.resolve('babel-plugin-transform-class-properties'), [require.resolve('babel-plugin-transform-runtime'), opts['transform-runtime'] || {
+    plugins: [require.resolve('babel-plugin-react-require'), require.resolve('./plugins/handle-import'), require.resolve('babel-plugin-transform-object-rest-spread'), require.resolve('babel-plugin-transform-class-properties'), require.resolve('babel-plugin-transform-es3-property-literals'), require.resolve('babel-plugin-transform-es3-member-expression-literals'), [require.resolve('babel-plugin-transform-runtime'), opts['transform-runtime'] || {
       helpers: false,
       polyfill: false,
       regenerator: true
+    }], [require.resolve('babel-plugin-transform-es2015-classes'), {
+      loose: true
     }], [require.resolve('styled-jsx/babel'), styledJsxOptions(opts['styled-jsx'])]].concat((0, _toConsumableArray3.default)(plugins))
   };
 };

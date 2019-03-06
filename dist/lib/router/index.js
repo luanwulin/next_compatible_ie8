@@ -13,14 +13,6 @@ var _defineProperty = require('babel-runtime/core-js/object/define-property');
 
 var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
-var _withRouter = require('./with-router');
-
-Object.defineProperty(exports, 'withRouter', {
-  enumerable: true,
-  get: function get() {
-    return _interopRequireDefault(_withRouter).default;
-  }
-});
 exports._notifyBuildIdMismatch = _notifyBuildIdMismatch;
 exports._rewriteUrlForNextExport = _rewriteUrlForNextExport;
 exports.makePublicRouterInstance = makePublicRouterInstance;
@@ -29,8 +21,13 @@ var _router = require('./router');
 
 var _router2 = _interopRequireDefault(_router);
 
+var _withRouter2 = require('./with-router');
+
+var _withRouter3 = _interopRequireDefault(_withRouter2);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* global window */
 var SingletonRouter = {
   router: null, // holds the actual router instance
   readyCallbacks: [],
@@ -43,7 +40,6 @@ var SingletonRouter = {
 };
 
 // Create public properties and methods of the router in the SingletonRouter
-/* global window */
 var propertyFields = ['components', 'pathname', 'route', 'query', 'asPath'];
 var coreMethodFields = ['push', 'replace', 'reload', 'back', 'prefetch'];
 var routerEvents = ['routeChangeStart', 'beforeHistoryChange', 'routeChangeComplete', 'routeChangeError'];
@@ -97,6 +93,8 @@ function throwIfNoRouter() {
 exports.default = SingletonRouter;
 
 // Reexport the withRoute HOC
+
+var withRouter = exports.withRouter = _withRouter3.default;
 
 // INTERNAL APIS
 // -------------
