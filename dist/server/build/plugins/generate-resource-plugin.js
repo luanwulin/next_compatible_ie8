@@ -47,9 +47,8 @@ var GernerateResource = function () {
           pageName = pageName.replace(/\\/g, '/');
         }
 
-        pageName = '/' + pageName.replace(/(^|\/)index$/, '');
+        pageName = pageName.replace(/(^|\/)index$/, '');
 
-        // 如果入口路径不包含 / 则不输出 例如 入口  name == 'project'
         if (!pageName) {
           return;
         }
@@ -67,13 +66,11 @@ var GernerateResource = function () {
          */
         function mapAsset(assetsPath) {
           if (assetsPath) {
-            var truePath = (compilation.options.output.publicPath + assetsPath).replace(/([^:])\/{2,}/g, '$1/');
-
             if ((0, _path.extname)(assetsPath) === '.js') {
               // 绝对路径 = publicPath +  assetsPath
-              webpackMap[pageName].js.push(truePath);
+              webpackMap[pageName].js.push(assetsPath);
             } else if ((0, _path.extname)(assetsPath) === '.css') {
-              webpackMap[pageName].css.push(truePath);
+              webpackMap[pageName].css.push(assetsPath);
             }
           }
         }
