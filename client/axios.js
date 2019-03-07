@@ -4,7 +4,7 @@ export default function (opts) {
   // 封装好的get和post接口，调用方法情况action文件
   const $axios = axios.create({
     timeout: 5000, // 设置超时时间
-    headers: {'X-Custom-Header': 'foobar'},
+    headers: { 'X-Custom-Header': 'foobar' },
     ...opts
   })
 
