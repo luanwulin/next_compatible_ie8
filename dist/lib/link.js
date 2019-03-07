@@ -4,26 +4,14 @@ var _interopRequireWildcard = require("@babel/runtime-corejs2/helpers/interopReq
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+exports.__esModule = true;
+exports["default"] = void 0;
 
 var _stringify = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/json/stringify"));
 
-var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/typeof"));
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/getPrototypeOf"));
-
 var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/assertThisInitialized"));
 
-var _inherits2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inherits"));
+var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inheritsLoose"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/defineProperty"));
 
@@ -64,27 +52,23 @@ function memoizedFormatUrl(formatUrl) {
 var Link =
 /*#__PURE__*/
 function (_Component) {
-  (0, _inherits2.default)(Link, _Component);
+  (0, _inheritsLoose2["default"])(Link, _Component);
 
   function Link() {
-    var _getPrototypeOf2;
-
     var _this;
-
-    (0, _classCallCheck2.default)(this, Link);
 
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(Link)).call.apply(_getPrototypeOf2, [this].concat(args)));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "formatUrls", memoizedFormatUrl(function (href, asHref) {
+    _this = _Component.call.apply(_Component, [this].concat(args)) || this;
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "formatUrls", memoizedFormatUrl(function (href, asHref) {
       return {
-        href: href && (0, _typeof2.default)(href) === 'object' ? (0, _url.format)(href) : href,
-        as: asHref && (0, _typeof2.default)(asHref) === 'object' ? (0, _url.format)(asHref) : asHref
+        href: href && typeof href === 'object' ? (0, _url.format)(href) : href,
+        as: asHref && typeof asHref === 'object' ? (0, _url.format)(asHref) : asHref
       };
     }));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "linkClicked", function (e) {
+    (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "linkClicked", function (e) {
       var _e$currentTarget = e.currentTarget,
           nodeName = _e$currentTarget.nodeName,
           target = _e$currentTarget.target;
@@ -118,7 +102,7 @@ function (_Component) {
       var replace = _this.props.replace;
       var changeMethod = replace ? 'replace' : 'push'; // straight up redirect
 
-      _router.default[changeMethod](href, as, {
+      _router["default"][changeMethod](href, as, {
         shallow: _this.props.shallow
       }).then(function (success) {
         if (!success) return;
@@ -127,88 +111,85 @@ function (_Component) {
           window.scrollTo(0, 0);
           document.body.focus();
         }
-      }).catch(function (err) {
+      })["catch"](function (err) {
         if (_this.props.onError) _this.props.onError(err);
       });
     });
     return _this;
   }
 
-  (0, _createClass2.default)(Link, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
+  var _proto = Link.prototype;
+
+  _proto.componentDidMount = function componentDidMount() {
+    this.prefetch();
+  };
+
+  _proto.componentDidUpdate = function componentDidUpdate(prevProps) {
+    if ((0, _stringify["default"])(this.props.href) !== (0, _stringify["default"])(prevProps.href)) {
       this.prefetch();
     }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      if ((0, _stringify.default)(this.props.href) !== (0, _stringify.default)(prevProps.href)) {
-        this.prefetch();
-      }
-    } // The function is memoized so that no extra lifecycles are needed
-    // as per https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html
+  } // The function is memoized so that no extra lifecycles are needed
+  // as per https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html
+  ;
 
-  }, {
-    key: "prefetch",
-    value: function prefetch() {
-      if (!this.props.prefetch) return;
-      if (typeof window === 'undefined') return; // Prefetch the JSON page if asked (only in the client)
+  _proto.prefetch = function prefetch() {
+    if (!this.props.prefetch) return;
+    if (typeof window === 'undefined') return; // Prefetch the JSON page if asked (only in the client)
 
-      var pathname = window.location.pathname;
+    var pathname = window.location.pathname;
 
-      var _this$formatUrls2 = this.formatUrls(this.props.href, this.props.as),
-          parsedHref = _this$formatUrls2.href;
+    var _this$formatUrls2 = this.formatUrls(this.props.href, this.props.as),
+        parsedHref = _this$formatUrls2.href;
 
-      var href = (0, _url.resolve)(pathname, parsedHref);
+    var href = (0, _url.resolve)(pathname, parsedHref);
 
-      _router.default.prefetch(href);
+    _router["default"].prefetch(href);
+  };
+
+  _proto.render = function render() {
+    var _this2 = this;
+
+    var children = this.props.children;
+
+    var _this$formatUrls3 = this.formatUrls(this.props.href, this.props.as),
+        href = _this$formatUrls3.href,
+        as = _this$formatUrls3.as; // Deprecated. Warning shown by propType check. If the childen provided is a string (<Link>example</Link>) we wrap it in an <a> tag
+
+
+    if (typeof children === 'string') {
+      children = _react["default"].createElement("a", null, children);
+    } // This will return the first child, if multiple are provided it will throw an error
+
+
+    var child = _react.Children.only(children);
+
+    var props = {
+      onClick: function onClick(e) {
+        if (child.props && typeof child.props.onClick === 'function') {
+          child.props.onClick(e);
+        }
+
+        if (!e.defaultPrevented) {
+          _this2.linkClicked(e);
+        }
+      } // If child is an <a> tag and doesn't have a href attribute, or if the 'passHref' property is
+      // defined, we specify the current 'href', so that repetition is not needed by the user
+
+    };
+
+    if (this.props.passHref || child.type === 'a' && !('href' in child.props)) {
+      props.href = as || href;
+    } // Add the ending slash to the paths. So, we can serve the
+    // "<page>/index.html" directly.
+
+
+    if (props.href && typeof __NEXT_DATA__ !== 'undefined' && __NEXT_DATA__.nextExport) {
+      props.href = (0, _router._rewriteUrlForNextExport)(props.href);
     }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this2 = this;
 
-      var children = this.props.children;
+    return _react["default"].cloneElement(child, props);
+  };
 
-      var _this$formatUrls3 = this.formatUrls(this.props.href, this.props.as),
-          href = _this$formatUrls3.href,
-          as = _this$formatUrls3.as; // Deprecated. Warning shown by propType check. If the childen provided is a string (<Link>example</Link>) we wrap it in an <a> tag
-
-
-      if (typeof children === 'string') {
-        children = _react.default.createElement("a", null, children);
-      } // This will return the first child, if multiple are provided it will throw an error
-
-
-      var child = _react.Children.only(children);
-
-      var props = {
-        onClick: function onClick(e) {
-          if (child.props && typeof child.props.onClick === 'function') {
-            child.props.onClick(e);
-          }
-
-          if (!e.defaultPrevented) {
-            _this2.linkClicked(e);
-          }
-        } // If child is an <a> tag and doesn't have a href attribute, or if the 'passHref' property is
-        // defined, we specify the current 'href', so that repetition is not needed by the user
-
-      };
-
-      if (this.props.passHref || child.type === 'a' && !('href' in child.props)) {
-        props.href = as || href;
-      } // Add the ending slash to the paths. So, we can serve the
-      // "<page>/index.html" directly.
-
-
-      if (props.href && typeof __NEXT_DATA__ !== 'undefined' && __NEXT_DATA__.nextExport) {
-        props.href = (0, _router._rewriteUrlForNextExport)(props.href);
-      }
-
-      return _react.default.cloneElement(child, props);
-    }
-  }]);
   return Link;
 }(_react.Component);
 
@@ -218,14 +199,14 @@ if (process.env.NODE_ENV === 'development') {
   var exact = require('prop-types-exact');
 
   Link.propTypes = exact({
-    href: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.object]).isRequired,
-    as: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.object]),
-    prefetch: _propTypes.default.bool,
-    replace: _propTypes.default.bool,
-    shallow: _propTypes.default.bool,
-    passHref: _propTypes.default.bool,
-    scroll: _propTypes.default.bool,
-    children: _propTypes.default.oneOfType([_propTypes.default.element, function (props, propName) {
+    href: _propTypes["default"].oneOfType([_propTypes["default"].string, _propTypes["default"].object]).isRequired,
+    as: _propTypes["default"].oneOfType([_propTypes["default"].string, _propTypes["default"].object]),
+    prefetch: _propTypes["default"].bool,
+    replace: _propTypes["default"].bool,
+    shallow: _propTypes["default"].bool,
+    passHref: _propTypes["default"].bool,
+    scroll: _propTypes["default"].bool,
+    children: _propTypes["default"].oneOfType([_propTypes["default"].element, function (props, propName) {
       var value = props[propName];
 
       if (typeof value === 'string') {
@@ -238,4 +219,4 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 var _default = Link;
-exports.default = _default;
+exports["default"] = _default;

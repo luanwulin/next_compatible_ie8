@@ -1,6 +1,15 @@
 module.exports = {
   'presets': [
-    '@babel/preset-env',
+    ['@babel/preset-env', {
+      'useBuiltIns': 'entry',
+      'targets': {
+        'browsers': [
+          'ie >= 8'
+        ]
+      },
+      'modules': 'commonjs',
+      'loose': true
+    }],
     '@babel/preset-react',
     '@babel/preset-flow'
   ],
@@ -11,6 +20,8 @@ module.exports = {
     ['@babel/plugin-transform-runtime', {
       'corejs': 2
     }],
+    'transform-es3-property-literals',
+    'transform-es3-member-expression-literals',
     ['babel-plugin-transform-define', {
       'process.env.NEXT_VERSION': require('./package.json').version
     }]

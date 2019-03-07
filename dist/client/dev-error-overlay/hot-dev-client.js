@@ -31,10 +31,8 @@ var _interopRequireWildcard = require("@babel/runtime-corejs2/helpers/interopReq
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = connect;
+exports.__esModule = true;
+exports["default"] = connect;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime-corejs2/regenerator"));
 
@@ -73,7 +71,7 @@ function connect(options) {
         colNumber = _ref.colNumber;
     // Resolve invalid paths coming from react-error-overlay
     var resolvedFilename = fileName.replace(/^webpack:\/\//, '');
-    (0, _unfetch.default)('/_next/development/open-stack-frame-in-editor' + "?fileName=".concat(window.encodeURIComponent(resolvedFilename)) + "&lineNumber=".concat(lineNumber || 1) + "&colNumber=".concat(colNumber || 1));
+    (0, _unfetch["default"])('/_next/development/open-stack-frame-in-editor' + ("?fileName=" + window.encodeURIComponent(resolvedFilename)) + ("&lineNumber=" + (lineNumber || 1)) + ("&colNumber=" + (colNumber || 1)));
   }); // We need to keep track of if there has been a runtime error.
   // Essentially, we cannot guarantee application state was not corrupted by the
   // runtime error. To prevent confusing behavior, we forcibly reload the entire
@@ -158,7 +156,7 @@ function handleSuccess() {
 function handleWarnings(warnings) {
   clearOutdatedErrors(); // Print warnings to the console.
 
-  var formatted = (0, _formatWebpackMessages.default)({
+  var formatted = (0, _formatWebpackMessages["default"])({
     warnings: warnings,
     errors: []
   });
@@ -170,7 +168,7 @@ function handleWarnings(warnings) {
         break;
       }
 
-      console.warn((0, _stripAnsi.default)(formatted.warnings[i]));
+      console.warn((0, _stripAnsi["default"])(formatted.warnings[i]));
     }
   }
 } // Compilation with errors (e.g. syntax error or missing modules).
@@ -181,7 +179,7 @@ function handleErrors(errors) {
   isFirstCompilation = false;
   hasCompileErrors = true; // "Massage" webpack messages.
 
-  var formatted = (0, _formatWebpackMessages.default)({
+  var formatted = (0, _formatWebpackMessages["default"])({
     errors: errors,
     warnings: []
   }); // Only show the first error.
@@ -190,7 +188,7 @@ function handleErrors(errors) {
 
   if (typeof console !== 'undefined' && typeof console.error === 'function') {
     for (var i = 0; i < formatted.errors.length; i++) {
-      console.error((0, _stripAnsi.default)(formatted.errors[i]));
+      console.error((0, _stripAnsi["default"])(formatted.errors[i]));
     }
   }
 } // There is a newer version of the code available.
@@ -271,11 +269,11 @@ function tryApplyUpdates(_x) {
 }
 
 function _tryApplyUpdates() {
-  _tryApplyUpdates = (0, _asyncToGenerator2.default)(
+  _tryApplyUpdates = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
-  _regenerator.default.mark(function _callee(onHotUpdateSuccess) {
+  _regenerator["default"].mark(function _callee(onHotUpdateSuccess) {
     var handleApplyUpdates, updatedModules;
-    return _regenerator.default.wrap(function _callee$(_context) {
+    return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:

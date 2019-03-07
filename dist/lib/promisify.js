@@ -6,7 +6,7 @@ var _promise = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/pr
 
 var _symbol = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/symbol"));
 
-var kCustomPromisifyArgsSymbol = (0, _symbol.default)('customPromisifyArgs');
+var kCustomPromisifyArgsSymbol = (0, _symbol["default"])('customPromisifyArgs');
 
 module.exports = function promisify(original) {
   // Names to create an object from in case the callback receives multiple
@@ -19,7 +19,7 @@ module.exports = function promisify(original) {
       args[_key] = arguments[_key];
     }
 
-    return new _promise.default(function (resolve, reject) {
+    return new _promise["default"](function (resolve, reject) {
       try {
         original.call.apply(original, [_this].concat(args, [function (err) {
           if (err) {

@@ -13,7 +13,7 @@ var _build = _interopRequireDefault(require("../build"));
 
 var _utils = require("../server/lib/utils");
 
-var argv = (0, _minimist.default)(process.argv.slice(2), {
+var argv = (0, _minimist["default"])(process.argv.slice(2), {
   alias: {
     h: 'help'
   },
@@ -28,7 +28,7 @@ if (argv.help) {
 var dir = (0, _path.resolve)(argv._[0] || '.'); // Check if pages dir exists and warn if not
 
 if (!(0, _fs.existsSync)(dir)) {
-  (0, _utils.printAndExit)("> No such directory exists as the project root: ".concat(dir));
+  (0, _utils.printAndExit)("> No such directory exists as the project root: " + dir);
 }
 
 if (!(0, _fs.existsSync)((0, _path.join)(dir, 'pages'))) {
@@ -39,6 +39,6 @@ if (!(0, _fs.existsSync)((0, _path.join)(dir, 'pages'))) {
   (0, _utils.printAndExit)('> Couldn\'t find a `pages` directory. Please create one under the project root');
 }
 
-(0, _build.default)(dir).catch(function (err) {
+(0, _build["default"])(dir)["catch"](function (err) {
   (0, _utils.printAndExit)(err);
 });

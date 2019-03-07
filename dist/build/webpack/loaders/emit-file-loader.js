@@ -11,7 +11,7 @@ module.exports = function (content, sourceMap) {
   var callback = this.async();
   var resourcePath = this.resourcePath;
 
-  var query = _loaderUtils.default.getOptions(this); // Allows you to do checks on the file name. For example it's used to check if there's both a .js and .jsx file.
+  var query = _loaderUtils["default"].getOptions(this); // Allows you to do checks on the file name. For example it's used to check if there's both a .js and .jsx file.
 
 
   if (query.validateFileName) {
@@ -36,7 +36,7 @@ module.exports = function (content, sourceMap) {
     return name;
   };
 
-  var interpolatedName = interpolateName(_loaderUtils.default.interpolateName(this, name, opts), {
+  var interpolatedName = interpolateName(_loaderUtils["default"].interpolateName(this, name, opts), {
     name: name,
     opts: opts
   });

@@ -2,18 +2,14 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+exports.__esModule = true;
+exports["default"] = void 0;
 
 var _getIterator2 = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/get-iterator"));
 
+var _isArray2 = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/array/is-array"));
+
 var _stringify = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/json/stringify"));
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
 
 var _webpackSources = require("webpack-sources");
 
@@ -25,63 +21,54 @@ var _constants = require("../../../lib/constants");
 var PagesManifestPlugin =
 /*#__PURE__*/
 function () {
-  function PagesManifestPlugin() {
-    (0, _classCallCheck2.default)(this, PagesManifestPlugin);
-  }
+  function PagesManifestPlugin() {}
 
-  (0, _createClass2.default)(PagesManifestPlugin, [{
-    key: "apply",
-    value: function apply(compiler) {
-      compiler.hooks.emit.tap('NextJsPagesManifest', function (compilation) {
-        var entries = compilation.entries;
-        var pages = {};
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+  var _proto = PagesManifestPlugin.prototype;
 
-        try {
-          for (var _iterator = (0, _getIterator2.default)(entries), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var entry = _step.value;
+  _proto.apply = function apply(compiler) {
+    compiler.hooks.emit.tap('NextJsPagesManifest', function (compilation) {
+      var entries = compilation.entries;
+      var pages = {};
 
-            var result = _constants.ROUTE_NAME_REGEX.exec(entry.name);
+      for (var _iterator = entries, _isArray = (0, _isArray2["default"])(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator2["default"])(_iterator);;) {
+        var _ref;
 
-            if (!result) {
-              continue;
-            }
-
-            var pagePath = result[1];
-
-            if (!pagePath) {
-              continue;
-            }
-
-            var name = entry.name;
-            pages["/".concat(pagePath.replace(/\\/g, '/'))] = name;
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator.return != null) {
-              _iterator.return();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
+        if (_isArray) {
+          if (_i >= _iterator.length) break;
+          _ref = _iterator[_i++];
+        } else {
+          _i = _iterator.next();
+          if (_i.done) break;
+          _ref = _i.value;
         }
 
-        if (typeof pages['/index'] !== 'undefined') {
-          pages['/'] = pages['/index'];
+        var entry = _ref;
+
+        var result = _constants.ROUTE_NAME_REGEX.exec(entry.name);
+
+        if (!result) {
+          continue;
         }
 
-        compilation.assets[_constants.PAGES_MANIFEST] = new _webpackSources.RawSource((0, _stringify.default)(pages));
-      });
-    }
-  }]);
+        var pagePath = result[1];
+
+        if (!pagePath) {
+          continue;
+        }
+
+        var name = entry.name;
+        pages["/" + pagePath.replace(/\\/g, '/')] = name;
+      }
+
+      if (typeof pages['/index'] !== 'undefined') {
+        pages['/'] = pages['/index'];
+      }
+
+      compilation.assets[_constants.PAGES_MANIFEST] = new _webpackSources.RawSource((0, _stringify["default"])(pages));
+    });
+  };
+
   return PagesManifestPlugin;
 }();
 
-exports.default = PagesManifestPlugin;
+exports["default"] = PagesManifestPlugin;

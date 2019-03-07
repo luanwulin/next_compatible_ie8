@@ -2,10 +2,8 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = loadConfig;
+exports.__esModule = true;
+exports["default"] = loadConfig;
 
 var _objectSpread2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/objectSpread"));
 
@@ -34,10 +32,10 @@ var defaultConfig = {
 function loadConfig(phase, dir, customConfig) {
   if (customConfig) {
     customConfig.configOrigin = 'server';
-    return (0, _objectSpread2.default)({}, defaultConfig, customConfig);
+    return (0, _objectSpread2["default"])({}, defaultConfig, customConfig);
   }
 
-  var path = _findUp.default.sync(_constants.CONFIG_FILE, {
+  var path = _findUp["default"].sync(_constants.CONFIG_FILE, {
     cwd: dir
   }); // If config file was found
 
@@ -46,17 +44,17 @@ function loadConfig(phase, dir, customConfig) {
     // $FlowFixMe
     var userConfigModule = require(path);
 
-    var userConfigInitial = userConfigModule.default || userConfigModule;
+    var userConfigInitial = userConfigModule["default"] || userConfigModule;
 
     if (typeof userConfigInitial === 'function') {
-      return (0, _objectSpread2.default)({}, defaultConfig, {
+      return (0, _objectSpread2["default"])({}, defaultConfig, {
         configOrigin: _constants.CONFIG_FILE
       }, userConfigInitial(phase, {
         defaultConfig: defaultConfig
       }));
     }
 
-    return (0, _objectSpread2.default)({}, defaultConfig, {
+    return (0, _objectSpread2["default"])({}, defaultConfig, {
       configOrigin: _constants.CONFIG_FILE
     }, userConfigInitial);
   }

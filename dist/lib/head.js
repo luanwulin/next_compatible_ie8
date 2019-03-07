@@ -2,23 +2,13 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+exports.__esModule = true;
 exports.defaultHead = defaultHead;
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _set = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/set"));
 
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/getPrototypeOf"));
-
-var _inherits2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inherits"));
+var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inheritsLoose"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/defineProperty"));
 
@@ -31,30 +21,32 @@ var _sideEffect = _interopRequireDefault(require("./side-effect"));
 var Head =
 /*#__PURE__*/
 function (_React$Component) {
-  (0, _inherits2.default)(Head, _React$Component);
+  (0, _inheritsLoose2["default"])(Head, _React$Component);
 
   function Head() {
-    (0, _classCallCheck2.default)(this, Head);
-    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Head).apply(this, arguments));
+    return _React$Component.apply(this, arguments) || this;
   }
 
-  (0, _createClass2.default)(Head, [{
-    key: "render",
-    value: function render() {
-      return null;
-    }
-  }]);
-  return Head;
-}(_react.default.Component);
+  var _proto = Head.prototype;
 
-(0, _defineProperty2.default)(Head, "contextTypes", {
-  headManager: _propTypes.default.object
+  _proto.render = function render() {
+    return null;
+  };
+
+  return Head;
+}(_react["default"].Component);
+
+(0, _defineProperty2["default"])(Head, "contextTypes", {
+  headManager: _propTypes["default"].object
 });
 var NEXT_HEAD_IDENTIFIER = 'next-head';
 
-function defaultHead() {
-  var className = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : NEXT_HEAD_IDENTIFIER;
-  return [_react.default.createElement("meta", {
+function defaultHead(className) {
+  if (className === void 0) {
+    className = NEXT_HEAD_IDENTIFIER;
+  }
+
+  return [_react["default"].createElement("meta", {
     key: "charSet",
     charSet: "utf-8",
     className: className
@@ -63,19 +55,19 @@ function defaultHead() {
 
 function reduceComponents(components) {
   return components.map(function (component) {
-    return _react.default.Children.toArray(component.props.children);
+    return _react["default"].Children.toArray(component.props.children);
   }).reduce(function (a, b) {
     return a.concat(b);
   }, []).reduce(function (a, b) {
-    if (_react.default.Fragment && b.type === _react.default.Fragment) {
-      return a.concat(_react.default.Children.toArray(b.props.children));
+    if (_react["default"].Fragment && b.type === _react["default"].Fragment) {
+      return a.concat(_react["default"].Children.toArray(b.props.children));
     }
 
     return a.concat(b);
   }, []).reverse().concat(defaultHead('')).filter(Boolean).filter(unique()).reverse().map(function (c, i) {
     var className = (c.props && c.props.className ? c.props.className + ' ' : '') + NEXT_HEAD_IDENTIFIER;
     var key = c.key || i;
-    return _react.default.cloneElement(c, {
+    return _react["default"].cloneElement(c, {
       key: key,
       className: className
     });
@@ -101,9 +93,9 @@ var ALLOWED_DUPLICATES = ['article:tag', 'og:image', 'og:image:alt', 'og:image:w
 */
 
 function unique() {
-  var keys = new _set.default();
-  var tags = new _set.default();
-  var metaTypes = new _set.default();
+  var keys = new _set["default"]();
+  var tags = new _set["default"]();
+  var metaTypes = new _set["default"]();
   var metaCategories = {};
   return function (h) {
     if (h.key && h.key.indexOf('.$') === 0) {
@@ -128,7 +120,7 @@ function unique() {
             metaTypes.add(metatype);
           } else {
             var category = h.props[metatype];
-            var categories = metaCategories[metatype] || new _set.default();
+            var categories = metaCategories[metatype] || new _set["default"]();
             if (categories.has(category) && ALLOWED_DUPLICATES.indexOf(category) === -1) return false;
             categories.add(category);
             metaCategories[metatype] = categories;
@@ -142,6 +134,6 @@ function unique() {
   };
 }
 
-var _default = (0, _sideEffect.default)(reduceComponents, onStateChange, mapOnServer)(Head);
+var _default = (0, _sideEffect["default"])(reduceComponents, onStateChange, mapOnServer)(Head);
 
-exports.default = _default;
+exports["default"] = _default;

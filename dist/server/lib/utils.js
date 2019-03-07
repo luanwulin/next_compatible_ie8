@@ -1,12 +1,12 @@
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+exports.__esModule = true;
 exports.printAndExit = printAndExit;
 
-function printAndExit(message) {
-  var code = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+function printAndExit(message, code) {
+  if (code === void 0) {
+    code = 1;
+  }
 
   if (code === 0) {
     console.log(message);

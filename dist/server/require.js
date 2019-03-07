@@ -2,13 +2,11 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+exports.__esModule = true;
 exports.pageNotFoundError = pageNotFoundError;
 exports.normalizePagePath = normalizePagePath;
 exports.getPagePath = getPagePath;
-exports.default = requirePage;
+exports["default"] = requirePage;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime-corejs2/regenerator"));
 
@@ -19,7 +17,7 @@ var _path = require("path");
 var _constants = require("../lib/constants");
 
 function pageNotFoundError(page) {
-  var err = new Error("Cannot find module for page: ".concat(page));
+  var err = new Error("Cannot find module for page: " + page);
   err.code = 'ENOENT';
   return err;
 }
@@ -32,7 +30,7 @@ function normalizePagePath(page) {
 
 
   if (page[0] !== '/') {
-    page = "/".concat(page);
+    page = "/" + page;
   } // Throw when using ../ etc in the pathname
 
 
@@ -70,11 +68,11 @@ function requirePage(_x, _x2) {
 }
 
 function _requirePage() {
-  _requirePage = (0, _asyncToGenerator2.default)(
+  _requirePage = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
-  _regenerator.default.mark(function _callee(page, _ref2) {
+  _regenerator["default"].mark(function _callee(page, _ref2) {
     var distDir, pagePath;
-    return _regenerator.default.wrap(function _callee$(_context) {
+    return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:

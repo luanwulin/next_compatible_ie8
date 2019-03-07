@@ -9,7 +9,7 @@ var _minimist = _interopRequireDefault(require("minimist"));
 
 var _startServer = _interopRequireDefault(require("../server/lib/start-server"));
 
-var argv = (0, _minimist.default)(process.argv.slice(2), {
+var argv = (0, _minimist["default"])(process.argv.slice(2), {
   alias: {
     h: 'help',
     H: 'hostname',
@@ -17,7 +17,7 @@ var argv = (0, _minimist.default)(process.argv.slice(2), {
   },
   boolean: ['h'],
   string: ['H'],
-  default: {
+  "default": {
     p: 3000
   }
 });
@@ -33,11 +33,11 @@ if (argv.help) {
 }
 
 var dir = (0, _path.resolve)(argv._[0] || '.');
-(0, _startServer.default)({
+(0, _startServer["default"])({
   dir: dir
 }, argv.port, argv.hostname).then(function () {
-  console.log("> Ready on http://".concat(argv.hostname ? argv.hostname : 'localhost', ":").concat(argv.port));
-}).catch(function (err) {
+  console.log("> Ready on http://" + (argv.hostname ? argv.hostname : 'localhost') + ":" + argv.port);
+})["catch"](function (err) {
   console.error(err);
   process.exit(1);
 });

@@ -4,9 +4,7 @@ var _interopRequireWildcard = require("@babel/runtime-corejs2/helpers/interopReq
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+exports.__esModule = true;
 exports.render = render;
 exports.renderToHTML = renderToHTML;
 exports.renderError = renderError;
@@ -15,13 +13,7 @@ exports.renderScriptError = renderScriptError;
 exports.sendHTML = sendHTML;
 exports.serveStatic = serveStatic;
 
-var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/typeof"));
-
 var _set = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/set"));
-
-var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/toConsumableArray"));
-
-var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/slicedToArray"));
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime-corejs2/regenerator"));
 
@@ -77,11 +69,11 @@ function render(_x, _x2, _x3, _x4, _x5) {
 }
 
 function _render() {
-  _render = (0, _asyncToGenerator2.default)(
+  _render = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
-  _regenerator.default.mark(function _callee(req, res, pathname, query, opts) {
+  _regenerator["default"].mark(function _callee(req, res, pathname, query, opts) {
     var html;
-    return _regenerator.default.wrap(function _callee$(_context) {
+    return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
@@ -111,11 +103,11 @@ function renderError(_x6, _x7, _x8, _x9, _x10, _x11) {
 }
 
 function _renderError() {
-  _renderError = (0, _asyncToGenerator2.default)(
+  _renderError = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
-  _regenerator.default.mark(function _callee2(err, req, res, pathname, query, opts) {
+  _regenerator["default"].mark(function _callee2(err, req, res, pathname, query, opts) {
     var html;
-    return _regenerator.default.wrap(function _callee2$(_context2) {
+    return _regenerator["default"].wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
@@ -136,9 +128,12 @@ function _renderError() {
   return _renderError.apply(this, arguments);
 }
 
-function renderErrorToHTML(err, req, res, pathname, query) {
-  var opts = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : {};
-  return doRender(req, res, pathname, query, (0, _objectSpread2.default)({}, opts, {
+function renderErrorToHTML(err, req, res, pathname, query, opts) {
+  if (opts === void 0) {
+    opts = {};
+  }
+
+  return doRender(req, res, pathname, query, (0, _objectSpread2["default"])({}, opts, {
     err: err,
     page: '/_error'
   }));
@@ -149,63 +144,28 @@ function getPageFiles(buildManifest, page) {
   var files = buildManifest.pages[normalizedPage];
 
   if (!files) {
-    console.warn("Could not find files for ".concat(normalizedPage, " in .next/build-manifest.json"));
+    console.warn("Could not find files for " + normalizedPage + " in .next/build-manifest.json");
     return [];
   }
 
   return files;
 }
 
-function doRender(_x12, _x13, _x14, _x15) {
+function doRender(_x12, _x13, _x14, _x15, _x16) {
   return _doRender.apply(this, arguments);
 }
 
 function _doRender() {
-  _doRender = (0, _asyncToGenerator2.default)(
+  _doRender = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
-  _regenerator.default.mark(function _callee3(req, res, pathname, query) {
-    var _ref2,
-        err,
-        page,
-        buildId,
-        hotReloader,
-        assetPrefix,
-        runtimeConfig,
-        distDir,
-        dir,
-        _ref2$dev,
-        dev,
-        _ref2$staticMarkup,
-        staticMarkup,
-        nextExport,
-        documentPath,
-        appPath,
-        _ref3,
-        _ref4,
-        buildManifest,
-        reactLoadableManifest,
-        Component,
-        Document,
-        App,
-        asPath,
-        ctx,
-        router,
-        props,
-        devFiles,
-        files,
-        reactLoadableModules,
-        renderPage,
-        docProps,
-        dynamicImports,
-        dynamicImportsIds,
-        doc,
-        _args3 = arguments;
+  _regenerator["default"].mark(function _callee3(req, res, pathname, query, _temp) {
+    var _ref2, err, page, buildId, hotReloader, assetPrefix, runtimeConfig, distDir, dir, _ref2$dev, dev, _ref2$staticMarkup, staticMarkup, nextExport, documentPath, appPath, _ref3, buildManifest, reactLoadableManifest, Component, Document, App, asPath, ctx, router, props, devFiles, files, reactLoadableModules, renderPage, docProps, dynamicImports, dynamicImportsIds, doc;
 
-    return _regenerator.default.wrap(function _callee3$(_context3) {
+    return _regenerator["default"].wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            _ref2 = _args3.length > 4 && _args3[4] !== undefined ? _args3[4] : {}, err = _ref2.err, page = _ref2.page, buildId = _ref2.buildId, hotReloader = _ref2.hotReloader, assetPrefix = _ref2.assetPrefix, runtimeConfig = _ref2.runtimeConfig, distDir = _ref2.distDir, dir = _ref2.dir, _ref2$dev = _ref2.dev, dev = _ref2$dev === void 0 ? false : _ref2$dev, _ref2$staticMarkup = _ref2.staticMarkup, staticMarkup = _ref2$staticMarkup === void 0 ? false : _ref2$staticMarkup, nextExport = _ref2.nextExport;
+            _ref2 = _temp === void 0 ? {} : _temp, err = _ref2.err, page = _ref2.page, buildId = _ref2.buildId, hotReloader = _ref2.hotReloader, assetPrefix = _ref2.assetPrefix, runtimeConfig = _ref2.runtimeConfig, distDir = _ref2.distDir, dir = _ref2.dir, _ref2$dev = _ref2.dev, dev = _ref2$dev === void 0 ? false : _ref2$dev, _ref2$staticMarkup = _ref2.staticMarkup, staticMarkup = _ref2$staticMarkup === void 0 ? false : _ref2$staticMarkup, nextExport = _ref2.nextExport;
             page = page || pathname; // In dev mode we use on demand entries to compile the page before rendering
 
             if (!hotReloader) {
@@ -220,30 +180,29 @@ function _doRender() {
             documentPath = (0, _path.join)(distDir, _constants.SERVER_DIRECTORY, _constants.CLIENT_STATIC_FILES_PATH, buildId, 'pages', '_document');
             appPath = (0, _path.join)(distDir, _constants.SERVER_DIRECTORY, _constants.CLIENT_STATIC_FILES_PATH, buildId, 'pages', '_app');
             _context3.next = 9;
-            return _promise.default.all([require((0, _path.join)(distDir, _constants.BUILD_MANIFEST)), require((0, _path.join)(distDir, _constants.REACT_LOADABLE_MANIFEST)), (0, _require.default)(page, {
+            return _promise["default"].all([require((0, _path.join)(distDir, _constants.BUILD_MANIFEST)), require((0, _path.join)(distDir, _constants.REACT_LOADABLE_MANIFEST)), (0, _require["default"])(page, {
               distDir: distDir
             }), require(documentPath), require(appPath)]);
 
           case 9:
             _ref3 = _context3.sent;
-            _ref4 = (0, _slicedToArray2.default)(_ref3, 5);
-            buildManifest = _ref4[0];
-            reactLoadableManifest = _ref4[1];
-            Component = _ref4[2];
-            Document = _ref4[3];
-            App = _ref4[4];
-            Component = Component.default || Component;
+            buildManifest = _ref3[0];
+            reactLoadableManifest = _ref3[1];
+            Component = _ref3[2];
+            Document = _ref3[3];
+            App = _ref3[4];
+            Component = Component["default"] || Component;
 
             if (!(typeof Component !== 'function')) {
-              _context3.next = 19;
+              _context3.next = 18;
               break;
             }
 
-            throw new Error("The default export is not a React Component in page: \"".concat(page, "\""));
+            throw new Error("The default export is not a React Component in page: \"" + page + "\"");
 
-          case 19:
-            App = App.default || App;
-            Document = Document.default || Document;
+          case 18:
+            App = App["default"] || App;
+            Document = Document["default"] || Document;
             asPath = req.url;
             ctx = {
               err: err,
@@ -254,38 +213,41 @@ function _doRender() {
               asPath: asPath
             };
             router = new _router.Router(page, query, asPath);
-            _context3.next = 26;
+            _context3.next = 25;
             return (0, _utils.loadGetInitialProps)(App, {
               Component: Component,
               router: router,
               ctx: ctx
             });
 
-          case 26:
+          case 25:
             props = _context3.sent;
             devFiles = buildManifest.devFiles;
-            files = (0, _toConsumableArray2.default)(new _set.default([].concat((0, _toConsumableArray2.default)(getPageFiles(buildManifest, page)), (0, _toConsumableArray2.default)(getPageFiles(buildManifest, '/_app')), (0, _toConsumableArray2.default)(getPageFiles(buildManifest, '/_error'))))); // the response might be finshed on the getinitialprops call
+            files = [].concat(new _set["default"]([].concat(getPageFiles(buildManifest, page), getPageFiles(buildManifest, '/_app'), getPageFiles(buildManifest, '/_error')))); // the response might be finshed on the getinitialprops call
 
             if (!(0, _utils.isResSent)(res)) {
-              _context3.next = 31;
+              _context3.next = 30;
               break;
             }
 
             return _context3.abrupt("return");
 
-          case 31:
+          case 30:
             reactLoadableModules = [];
 
-            renderPage = function renderPage() {
-              var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function (Page) {
-                return Page;
-              };
+            renderPage = function renderPage(options) {
+              if (options === void 0) {
+                options = function options(Page) {
+                  return Page;
+                };
+              }
+
               var EnhancedApp = App;
               var EnhancedComponent = Component; // For backwards compatibility
 
               if (typeof options === 'function') {
                 EnhancedComponent = options(Component);
-              } else if ((0, _typeof2.default)(options) === 'object') {
+              } else if (typeof options === 'object') {
                 if (options.enhanceApp) {
                   EnhancedApp = options.enhanceApp(App);
                 }
@@ -295,11 +257,11 @@ function _doRender() {
                 }
               }
 
-              var app = _react.default.createElement(_loadableCapture.default, {
+              var app = _react["default"].createElement(_loadableCapture["default"], {
                 report: function report(moduleName) {
                   return reactLoadableModules.push(moduleName);
                 }
-              }, _react.default.createElement(EnhancedApp, (0, _objectSpread2.default)({
+              }, _react["default"].createElement(EnhancedApp, (0, _objectSpread2["default"])({
                 Component: EnhancedComponent,
                 router: router
               }, props)));
@@ -310,7 +272,7 @@ function _doRender() {
 
               try {
                 if (err && dev) {
-                  html = render(_react.default.createElement(_errorDebug.default, {
+                  html = render(_react["default"].createElement(_errorDebug["default"], {
                     error: err
                   }));
                 } else if (err) {
@@ -319,7 +281,7 @@ function _doRender() {
                   html = render(app);
                 }
               } finally {
-                head = _head.default.rewind() || (0, _head.defaultHead)();
+                head = _head["default"].rewind() || (0, _head.defaultHead)();
               }
 
               return {
@@ -329,39 +291,39 @@ function _doRender() {
               };
             };
 
-            _context3.next = 35;
-            return _loadable.default.preloadAll();
+            _context3.next = 34;
+            return _loadable["default"].preloadAll();
 
-          case 35:
-            _context3.next = 37;
-            return (0, _utils.loadGetInitialProps)(Document, (0, _objectSpread2.default)({}, ctx, {
+          case 34:
+            _context3.next = 36;
+            return (0, _utils.loadGetInitialProps)(Document, (0, _objectSpread2["default"])({}, ctx, {
               renderPage: renderPage
             }));
 
-          case 37:
+          case 36:
             docProps = _context3.sent;
-            dynamicImports = (0, _toConsumableArray2.default)(new _set.default(getDynamicImportBundles(reactLoadableManifest, reactLoadableModules)));
+            dynamicImports = [].concat(new _set["default"](getDynamicImportBundles(reactLoadableManifest, reactLoadableModules)));
             dynamicImportsIds = dynamicImports.map(function (bundle) {
               return bundle.id;
             });
 
             if (!(0, _utils.isResSent)(res)) {
-              _context3.next = 42;
+              _context3.next = 41;
               break;
             }
 
             return _context3.abrupt("return");
 
-          case 42:
+          case 41:
             if (!(!Document.prototype || !Document.prototype.isReactComponent)) {
-              _context3.next = 44;
+              _context3.next = 43;
               break;
             }
 
             throw new Error('_document.js is not exporting a React component');
 
-          case 44:
-            doc = _react.default.createElement(Document, (0, _objectSpread2.default)({
+          case 43:
+            doc = _react["default"].createElement(Document, (0, _objectSpread2["default"])({
               __NEXT_DATA__: {
                 props: props,
                 // The result of getInitialProps
@@ -392,7 +354,7 @@ function _doRender() {
             }, docProps));
             return _context3.abrupt("return", '<!DOCTYPE html>' + (0, _server.renderToStaticMarkup)(doc));
 
-          case 46:
+          case 45:
           case "end":
             return _context3.stop();
         }
@@ -402,15 +364,15 @@ function _doRender() {
   return _doRender.apply(this, arguments);
 }
 
-function renderScriptError(_x16, _x17, _x18, _x19) {
+function renderScriptError(_x17, _x18, _x19, _x20) {
   return _renderScriptError.apply(this, arguments);
 }
 
 function _renderScriptError() {
-  _renderScriptError = (0, _asyncToGenerator2.default)(
+  _renderScriptError = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
-  _regenerator.default.mark(function _callee4(req, res, page, error) {
-    return _regenerator.default.wrap(function _callee4$(_context4) {
+  _regenerator["default"].mark(function _callee4(req, res, page, error) {
+    return _regenerator["default"].wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
@@ -445,9 +407,9 @@ function sendHTML(req, res, html, method, _ref) {
   var dev = _ref.dev,
       generateEtags = _ref.generateEtags;
   if ((0, _utils.isResSent)(res)) return;
-  var etag = generateEtags && (0, _etag.default)(html);
+  var etag = generateEtags && (0, _etag["default"])(html);
 
-  if ((0, _fresh.default)(req.headers, {
+  if ((0, _fresh["default"])(req.headers, {
     etag: etag
   })) {
     res.statusCode = 304;
@@ -505,8 +467,8 @@ function serializeError(dev, err) {
 }
 
 function serveStatic(req, res, path) {
-  return new _promise.default(function (resolve, reject) {
-    (0, _send.default)(req, path).on('directory', function () {
+  return new _promise["default"](function (resolve, reject) {
+    (0, _send["default"])(req, path).on('directory', function () {
       // We don't allow directories to be read.
       var err = new Error('No directory access');
       err.code = 'ENOENT';

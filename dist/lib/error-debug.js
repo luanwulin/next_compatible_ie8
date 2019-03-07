@@ -2,10 +2,8 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = ErrorDebug;
+exports.__esModule = true;
+exports["default"] = ErrorDebug;
 exports.styles = void 0;
 
 var _react = _interopRequireDefault(require("react"));
@@ -22,19 +20,19 @@ function ErrorDebug(_ref) {
   var name = error.name,
       message = error.message,
       module = error.module;
-  return _react.default.createElement("div", {
+  return _react["default"].createElement("div", {
     style: styles.errorDebug
-  }, _react.default.createElement(_head.default, null, _react.default.createElement("meta", {
+  }, _react["default"].createElement(_head["default"], null, _react["default"].createElement("meta", {
     name: "viewport",
     content: "width=device-width, initial-scale=1.0"
-  })), module ? _react.default.createElement("h1", {
+  })), module ? _react["default"].createElement("h1", {
     style: styles.heading
-  }, "Error in ", module.rawRequest) : null, name === 'ModuleBuildError' && message ? _react.default.createElement("pre", {
+  }, "Error in ", module.rawRequest) : null, name === 'ModuleBuildError' && message ? _react["default"].createElement("pre", {
     style: styles.stack,
     dangerouslySetInnerHTML: {
-      __html: (0, _ansiHtml.default)(encodeHtml(message))
+      __html: (0, _ansiHtml["default"])(encodeHtml(message))
     }
-  }) : _react.default.createElement(StackTrace, {
+  }) : _react["default"].createElement(StackTrace, {
     error: error,
     info: info
   }));
@@ -46,11 +44,11 @@ var StackTrace = function StackTrace(_ref2) {
       message = _ref2$error.message,
       stack = _ref2$error.stack,
       info = _ref2.info;
-  return _react.default.createElement("div", null, _react.default.createElement("div", {
+  return _react["default"].createElement("div", null, _react["default"].createElement("div", {
     style: styles.heading
-  }, message || name), _react.default.createElement("pre", {
+  }, message || name), _react["default"].createElement("pre", {
     style: styles.stack
-  }, stack), info && _react.default.createElement("pre", {
+  }, stack), info && _react["default"].createElement("pre", {
     style: styles.stack
   }, info.componentStack));
 };
@@ -97,7 +95,7 @@ var encodeHtml = function encodeHtml(str) {
 // https://github.com/babel/babel/blob/master/packages/babel-code-frame/src/index.js
 
 
-_ansiHtml.default.setColors({
+_ansiHtml["default"].setColors({
   reset: ['6F6767', '0e0d0d'],
   darkgrey: '6F6767',
   yellow: '6F6767',

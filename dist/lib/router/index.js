@@ -2,24 +2,12 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+exports.__esModule = true;
 exports._rewriteUrlForNextExport = _rewriteUrlForNextExport;
 exports.makePublicRouterInstance = makePublicRouterInstance;
-Object.defineProperty(exports, "withRouter", {
-  enumerable: true,
-  get: function get() {
-    return _withRouter.default;
-  }
-});
-exports.Router = exports.createRouter = exports.default = void 0;
+exports.Router = exports.createRouter = exports.withRouter = exports["default"] = void 0;
 
 var _objectSpread2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/objectSpread"));
-
-var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/typeof"));
-
-var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/slicedToArray"));
 
 var _construct2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/construct"));
 
@@ -30,6 +18,8 @@ var _router = _interopRequireDefault(require("./router"));
 var _utils = require("../utils");
 
 var _withRouter = _interopRequireDefault(require("./with-router"));
+
+exports.withRouter = _withRouter["default"];
 
 /* global window */
 var SingletonRouter = {
@@ -52,7 +42,7 @@ var coreMethodFields = ['push', 'replace', 'reload', 'back', 'prefetch', 'before
 
 Object.defineProperty(SingletonRouter, 'events', {
   get: function get() {
-    return _router.default.events;
+    return _router["default"].events;
   }
 });
 propertyFields.concat(urlPropertyFields).forEach(function (field) {
@@ -60,7 +50,7 @@ propertyFields.concat(urlPropertyFields).forEach(function (field) {
   // the property assigned to the actual router
   // The value might get changed as we change routes and this is the
   // proper way to access it
-  (0, _defineProperty.default)(SingletonRouter, field, {
+  (0, _defineProperty["default"])(SingletonRouter, field, {
     get: function get() {
       throwIfNoRouter();
       return SingletonRouter.router[field];
@@ -77,15 +67,15 @@ coreMethodFields.forEach(function (field) {
 });
 routerEvents.forEach(function (event) {
   SingletonRouter.ready(function () {
-    _router.default.events.on(event, function () {
-      var eventField = "on".concat(event.charAt(0).toUpperCase()).concat(event.substring(1));
+    _router["default"].events.on(event, function () {
+      var eventField = "on" + event.charAt(0).toUpperCase() + event.substring(1);
 
       if (SingletonRouter[eventField]) {
         try {
           SingletonRouter[eventField].apply(SingletonRouter, arguments);
         } catch (err) {
-          console.error("Error when running the Router event: ".concat(eventField));
-          console.error("".concat(err.message, "\n").concat(err.stack));
+          console.error("Error when running the Router event: " + eventField);
+          console.error(err.message + "\n" + err.stack);
         }
       }
     });
@@ -114,7 +104,7 @@ function throwIfNoRouter() {
 
 var _default = SingletonRouter; // Reexport the withRoute HOC
 
-exports.default = _default;
+exports["default"] = _default;
 
 // INTERNAL APIS
 // -------------
@@ -127,7 +117,7 @@ var createRouter = function createRouter() {
     args[_key] = arguments[_key];
   }
 
-  SingletonRouter.router = (0, _construct2.default)(_router.default, args);
+  SingletonRouter.router = (0, _construct2["default"])(_router["default"], args);
   SingletonRouter.readyCallbacks.forEach(function (cb) {
     return cb();
   });
@@ -137,34 +127,32 @@ var createRouter = function createRouter() {
 
 
 exports.createRouter = createRouter;
-var Router = _router.default;
+var Router = _router["default"];
 exports.Router = Router;
 
 function _rewriteUrlForNextExport(url) {
   var _url$split = url.split('#'),
-      _url$split2 = (0, _slicedToArray2.default)(_url$split, 2),
-      hash = _url$split2[1];
+      hash = _url$split[1];
 
   url = url.replace(/#.*/, '');
 
-  var _url$split3 = url.split('?'),
-      _url$split4 = (0, _slicedToArray2.default)(_url$split3, 2),
-      path = _url$split4[0],
-      qs = _url$split4[1];
+  var _url$split2 = url.split('?'),
+      path = _url$split2[0],
+      qs = _url$split2[1];
 
   path = path.replace(/\/$/, '');
   var newPath = path; // Append a trailing slash if this path does not have an extension
 
   if (!/\.[^/]+\/?$/.test(path)) {
-    newPath = "".concat(path, "/");
+    newPath = path + "/";
   }
 
   if (qs) {
-    newPath = "".concat(newPath, "?").concat(qs);
+    newPath = newPath + "?" + qs;
   }
 
   if (hash) {
-    newPath = "".concat(newPath, "#").concat(hash);
+    newPath = newPath + "#" + hash;
   }
 
   return newPath;
@@ -177,8 +165,8 @@ function makePublicRouterInstance(router) {
   for (var _i = 0; _i < urlPropertyFields.length; _i++) {
     var property = urlPropertyFields[_i];
 
-    if ((0, _typeof2.default)(router[property]) === 'object') {
-      instance[property] = (0, _objectSpread2.default)({}, router[property]); // makes sure query is not stateful
+    if (typeof router[property] === 'object') {
+      instance[property] = (0, _objectSpread2["default"])({}, router[property]); // makes sure query is not stateful
 
       continue;
     }
@@ -187,13 +175,13 @@ function makePublicRouterInstance(router) {
   } // Events is a static property on the router, the router doesn't have to be initialized to use it
 
 
-  instance.events = _router.default.events;
+  instance.events = _router["default"].events;
   propertyFields.forEach(function (field) {
     // Here we need to use Object.defineProperty because, we need to return
     // the property assigned to the actual router
     // The value might get changed as we change routes and this is the
     // proper way to access it
-    (0, _defineProperty.default)(instance, field, {
+    (0, _defineProperty["default"])(instance, field, {
       get: function get() {
         return router[field];
       }

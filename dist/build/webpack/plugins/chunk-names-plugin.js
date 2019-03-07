@@ -1,15 +1,7 @@
 "use strict";
 
-var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
+exports.__esModule = true;
+exports["default"] = void 0;
 
 // This plugin mirrors webpack 3 `filename` and `chunkfilename` behavior
 // This fixes https://github.com/webpack/webpack/issues/6598
@@ -17,44 +9,42 @@ var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpe
 var ChunkNamesPlugin =
 /*#__PURE__*/
 function () {
-  function ChunkNamesPlugin() {
-    (0, _classCallCheck2.default)(this, ChunkNamesPlugin);
-  }
+  function ChunkNamesPlugin() {}
 
-  (0, _createClass2.default)(ChunkNamesPlugin, [{
-    key: "apply",
-    value: function apply(compiler) {
-      compiler.hooks.compilation.tap('NextJsChunkNamesPlugin', function (compilation) {
-        compilation.chunkTemplate.hooks.renderManifest.intercept({
-          register: function register(tapInfo) {
-            if (tapInfo.name === 'JavascriptModulesPlugin') {
-              var originalMethod = tapInfo.fn;
+  var _proto = ChunkNamesPlugin.prototype;
 
-              tapInfo.fn = function (result, options) {
-                var filenameTemplate;
-                var chunk = options.chunk;
-                var outputOptions = options.outputOptions;
+  _proto.apply = function apply(compiler) {
+    compiler.hooks.compilation.tap('NextJsChunkNamesPlugin', function (compilation) {
+      compilation.chunkTemplate.hooks.renderManifest.intercept({
+        register: function register(tapInfo) {
+          if (tapInfo.name === 'JavascriptModulesPlugin') {
+            var originalMethod = tapInfo.fn;
 
-                if (chunk.filenameTemplate) {
-                  filenameTemplate = chunk.filenameTemplate;
-                } else if (chunk.hasEntryModule()) {
-                  filenameTemplate = outputOptions.filename;
-                } else {
-                  filenameTemplate = outputOptions.chunkFilename;
-                }
+            tapInfo.fn = function (result, options) {
+              var filenameTemplate;
+              var chunk = options.chunk;
+              var outputOptions = options.outputOptions;
 
-                options.chunk.filenameTemplate = filenameTemplate;
-                return originalMethod(result, options);
-              };
-            }
+              if (chunk.filenameTemplate) {
+                filenameTemplate = chunk.filenameTemplate;
+              } else if (chunk.hasEntryModule()) {
+                filenameTemplate = outputOptions.filename;
+              } else {
+                filenameTemplate = outputOptions.chunkFilename;
+              }
 
-            return tapInfo;
+              options.chunk.filenameTemplate = filenameTemplate;
+              return originalMethod(result, options);
+            };
           }
-        });
+
+          return tapInfo;
+        }
       });
-    }
-  }]);
+    });
+  };
+
   return ChunkNamesPlugin;
 }();
 
-exports.default = ChunkNamesPlugin;
+exports["default"] = ChunkNamesPlugin;

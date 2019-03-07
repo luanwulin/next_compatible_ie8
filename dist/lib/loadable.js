@@ -2,23 +2,15 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-var _isArray = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/array/is-array"));
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/getPrototypeOf"));
-
 var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/assertThisInitialized"));
 
-var _inherits2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inherits"));
+var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inheritsLoose"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/defineProperty"));
 
 var _getIterator2 = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/get-iterator"));
+
+var _isArray2 = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/array/is-array"));
 
 var _assign = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/object/assign"));
 
@@ -55,7 +47,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
 // https://github.com/jamiebuilds/react-loadable/blob/v5.5.0/src/index.js
 // Modified to be compatible with webpack 4 / Next.js
 var ALL_INITIALIZERS = [];
-var READY_INITIALIZERS = new _map.default();
+var READY_INITIALIZERS = new _map["default"]();
 var initialized = false;
 
 function load(loader) {
@@ -69,7 +61,7 @@ function load(loader) {
     state.loading = false;
     state.loaded = loaded;
     return loaded;
-  }).catch(function (err) {
+  })["catch"](function (err) {
     state.loading = false;
     state.error = err;
     throw err;
@@ -86,7 +78,7 @@ function loadMap(obj) {
   var promises = [];
 
   try {
-    (0, _keys.default)(obj).forEach(function (key) {
+    (0, _keys["default"])(obj).forEach(function (key) {
       var result = load(obj[key]);
 
       if (!result.loading) {
@@ -99,7 +91,7 @@ function loadMap(obj) {
       promises.push(result.promise);
       result.promise.then(function (res) {
         state.loaded[key] = res;
-      }).catch(function (err) {
+      })["catch"](function (err) {
         state.error = err;
       });
     });
@@ -107,10 +99,10 @@ function loadMap(obj) {
     state.error = err;
   }
 
-  state.promise = _promise.default.all(promises).then(function (res) {
+  state.promise = _promise["default"].all(promises).then(function (res) {
     state.loading = false;
     return res;
-  }).catch(function (err) {
+  })["catch"](function (err) {
     state.loading = false;
     throw err;
   });
@@ -118,17 +110,17 @@ function loadMap(obj) {
 }
 
 function resolve(obj) {
-  return obj && obj.__esModule ? obj.default : obj;
+  return obj && obj.__esModule ? obj["default"] : obj;
 }
 
 function render(loaded, props) {
-  return _react.default.createElement(resolve(loaded), props);
+  return _react["default"].createElement(resolve(loaded), props);
 }
 
 function createLoadableComponent(loadFn, options) {
   var _class, _temp;
 
-  var opts = (0, _assign.default)({
+  var opts = (0, _assign["default"])({
     loader: null,
     loading: null,
     delay: 200,
@@ -155,44 +147,36 @@ function createLoadableComponent(loadFn, options) {
 
   if (!initialized && typeof window !== 'undefined' && typeof opts.webpack === 'function') {
     var moduleIds = opts.webpack();
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
 
-    try {
-      for (var _iterator = (0, _getIterator2.default)(moduleIds), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var moduleId = _step.value;
-        READY_INITIALIZERS.set(moduleId, function () {
-          return init();
-        });
+    for (var _iterator = moduleIds, _isArray = (0, _isArray2["default"])(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator2["default"])(_iterator);;) {
+      var _ref;
+
+      if (_isArray) {
+        if (_i >= _iterator.length) break;
+        _ref = _iterator[_i++];
+      } else {
+        _i = _iterator.next();
+        if (_i.done) break;
+        _ref = _i.value;
       }
-    } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator.return != null) {
-          _iterator.return();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
-      }
+
+      var moduleId = _ref;
+      READY_INITIALIZERS.set(moduleId, function () {
+        return init();
+      });
     }
   }
 
   return _temp = _class =
   /*#__PURE__*/
   function (_React$Component) {
-    (0, _inherits2.default)(LoadableComponent, _React$Component);
+    (0, _inheritsLoose2["default"])(LoadableComponent, _React$Component);
 
     function LoadableComponent(props) {
       var _this;
 
-      (0, _classCallCheck2.default)(this, LoadableComponent);
-      _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(LoadableComponent).call(this, props));
-      (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "retry", function () {
+      _this = _React$Component.call(this, props) || this;
+      (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "retry", function () {
         _this.setState({
           error: null,
           loading: true,
@@ -214,111 +198,106 @@ function createLoadableComponent(loadFn, options) {
       return _this;
     }
 
-    (0, _createClass2.default)(LoadableComponent, [{
-      key: "componentWillMount",
-      value: function componentWillMount() {
-        this._mounted = true;
+    LoadableComponent.preload = function preload() {
+      return init();
+    };
 
-        this._loadModule();
+    var _proto = LoadableComponent.prototype;
+
+    _proto.componentWillMount = function componentWillMount() {
+      this._mounted = true;
+
+      this._loadModule();
+    };
+
+    _proto._loadModule = function _loadModule() {
+      var _this2 = this;
+
+      if (this.context.loadable && (0, _isArray2["default"])(opts.modules)) {
+        opts.modules.forEach(function (moduleName) {
+          _this2.context.loadable.report(moduleName);
+        });
       }
-    }, {
-      key: "_loadModule",
-      value: function _loadModule() {
-        var _this2 = this;
 
-        if (this.context.loadable && (0, _isArray.default)(opts.modules)) {
-          opts.modules.forEach(function (moduleName) {
-            _this2.context.loadable.report(moduleName);
+      if (!res.loading) {
+        return;
+      }
+
+      if (typeof opts.delay === 'number') {
+        if (opts.delay === 0) {
+          this.setState({
+            pastDelay: true
           });
+        } else {
+          this._delay = setTimeout(function () {
+            _this2.setState({
+              pastDelay: true
+            });
+          }, opts.delay);
         }
+      }
 
-        if (!res.loading) {
+      if (typeof opts.timeout === 'number') {
+        this._timeout = setTimeout(function () {
+          _this2.setState({
+            timedOut: true
+          });
+        }, opts.timeout);
+      }
+
+      var update = function update() {
+        if (!_this2._mounted) {
           return;
         }
 
-        if (typeof opts.delay === 'number') {
-          if (opts.delay === 0) {
-            this.setState({
-              pastDelay: true
-            });
-          } else {
-            this._delay = setTimeout(function () {
-              _this2.setState({
-                pastDelay: true
-              });
-            }, opts.delay);
-          }
-        }
-
-        if (typeof opts.timeout === 'number') {
-          this._timeout = setTimeout(function () {
-            _this2.setState({
-              timedOut: true
-            });
-          }, opts.timeout);
-        }
-
-        var update = function update() {
-          if (!_this2._mounted) {
-            return;
-          }
-
-          _this2.setState({
-            error: res.error,
-            loaded: res.loaded,
-            loading: res.loading
-          });
-
-          _this2._clearTimeouts();
-        };
-
-        res.promise.then(function () {
-          update();
-        }) // eslint-disable-next-line handle-callback-err
-        .catch(function (err) {
-          update();
+        _this2.setState({
+          error: res.error,
+          loaded: res.loaded,
+          loading: res.loading
         });
-      }
-    }, {
-      key: "componentWillUnmount",
-      value: function componentWillUnmount() {
-        this._mounted = false;
 
-        this._clearTimeouts();
+        _this2._clearTimeouts();
+      };
+
+      res.promise.then(function () {
+        update();
+      }) // eslint-disable-next-line handle-callback-err
+      ["catch"](function (err) {
+        update();
+      });
+    };
+
+    _proto.componentWillUnmount = function componentWillUnmount() {
+      this._mounted = false;
+
+      this._clearTimeouts();
+    };
+
+    _proto._clearTimeouts = function _clearTimeouts() {
+      clearTimeout(this._delay);
+      clearTimeout(this._timeout);
+    };
+
+    _proto.render = function render() {
+      if (this.state.loading || this.state.error) {
+        return _react["default"].createElement(opts.loading, {
+          isLoading: this.state.loading,
+          pastDelay: this.state.pastDelay,
+          timedOut: this.state.timedOut,
+          error: this.state.error,
+          retry: this.retry
+        });
+      } else if (this.state.loaded) {
+        return opts.render(this.state.loaded, this.props);
+      } else {
+        return null;
       }
-    }, {
-      key: "_clearTimeouts",
-      value: function _clearTimeouts() {
-        clearTimeout(this._delay);
-        clearTimeout(this._timeout);
-      }
-    }, {
-      key: "render",
-      value: function render() {
-        if (this.state.loading || this.state.error) {
-          return _react.default.createElement(opts.loading, {
-            isLoading: this.state.loading,
-            pastDelay: this.state.pastDelay,
-            timedOut: this.state.timedOut,
-            error: this.state.error,
-            retry: this.retry
-          });
-        } else if (this.state.loaded) {
-          return opts.render(this.state.loaded, this.props);
-        } else {
-          return null;
-        }
-      }
-    }], [{
-      key: "preload",
-      value: function preload() {
-        return init();
-      }
-    }]);
+    };
+
     return LoadableComponent;
-  }(_react.default.Component), (0, _defineProperty2.default)(_class, "contextTypes", {
-    loadable: _propTypes.default.shape({
-      report: _propTypes.default.func.isRequired
+  }(_react["default"].Component), (0, _defineProperty2["default"])(_class, "contextTypes", {
+    loadable: _propTypes["default"].shape({
+      report: _propTypes["default"].func.isRequired
     })
   }), _temp;
 }
@@ -345,7 +324,7 @@ function flushInitializers(initializers) {
     promises.push(init());
   }
 
-  return _promise.default.all(promises).then(function () {
+  return _promise["default"].all(promises).then(function () {
     if (initializers.length) {
       return flushInitializers(initializers);
     }
@@ -353,13 +332,13 @@ function flushInitializers(initializers) {
 }
 
 Loadable.preloadAll = function () {
-  return new _promise.default(function (resolve, reject) {
+  return new _promise["default"](function (resolve, reject) {
     flushInitializers(ALL_INITIALIZERS).then(resolve, reject);
   });
 };
 
 Loadable.preloadReady = function (webpackIds) {
-  return new _promise.default(function (resolve, reject) {
+  return new _promise["default"](function (resolve, reject) {
     var initializers = webpackIds.reduce(function (allInitalizers, moduleId) {
       var initializer = READY_INITIALIZERS.get(moduleId);
 

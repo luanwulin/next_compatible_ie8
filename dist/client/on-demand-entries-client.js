@@ -2,10 +2,8 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+exports.__esModule = true;
+exports["default"] = void 0;
 
 var _promise = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/promise"));
 
@@ -21,8 +19,8 @@ var _unfetch = _interopRequireDefault(require("unfetch"));
 var _default = function _default(_ref) {
   var assetPrefix = _ref.assetPrefix;
 
-  _router.default.ready(function () {
-    _router.default.events.on('routeChangeComplete', ping);
+  _router["default"].ready(function () {
+    _router["default"].events.on('routeChangeComplete', ping);
   });
 
   function ping() {
@@ -30,18 +28,18 @@ var _default = function _default(_ref) {
   }
 
   function _ping() {
-    _ping = (0, _asyncToGenerator2.default)(
+    _ping = (0, _asyncToGenerator2["default"])(
     /*#__PURE__*/
-    _regenerator.default.mark(function _callee() {
+    _regenerator["default"].mark(function _callee() {
       var url, res, payload, pageRes;
-      return _regenerator.default.wrap(function _callee$(_context) {
+      return _regenerator["default"].wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.prev = 0;
-              url = "".concat(assetPrefix || '', "/_next/on-demand-entries-ping?page=").concat(_router.default.pathname);
+              url = (assetPrefix || '') + "/_next/on-demand-entries-ping?page=" + _router["default"].pathname;
               _context.next = 4;
-              return (0, _unfetch.default)(url, {
+              return (0, _unfetch["default"])(url, {
                 credentials: 'same-origin'
               });
 
@@ -59,7 +57,7 @@ var _default = function _default(_ref) {
               }
 
               _context.next = 11;
-              return (0, _unfetch.default)(location.href, {
+              return (0, _unfetch["default"])(location.href, {
                 credentials: 'same-origin'
               });
 
@@ -77,7 +75,7 @@ var _default = function _default(_ref) {
             case 15:
               _context.prev = 15;
               _context.t0 = _context["catch"](0);
-              console.error("Error with on-demand-entries-ping: ".concat(_context.t0.message));
+              console.error("Error with on-demand-entries-ping: " + _context.t0.message);
 
             case 18:
             case "end":
@@ -96,10 +94,10 @@ var _default = function _default(_ref) {
   }
 
   function _runPinger() {
-    _runPinger = (0, _asyncToGenerator2.default)(
+    _runPinger = (0, _asyncToGenerator2["default"])(
     /*#__PURE__*/
-    _regenerator.default.mark(function _callee2() {
-      return _regenerator.default.wrap(function _callee2$(_context2) {
+    _regenerator["default"].mark(function _callee2() {
+      return _regenerator["default"].wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
@@ -113,7 +111,7 @@ var _default = function _default(_ref) {
 
             case 3:
               _context2.next = 5;
-              return new _promise.default(function (resolve) {
+              return new _promise["default"](function (resolve) {
                 pingerTimeout = setTimeout(resolve, 5000);
               });
 
@@ -139,10 +137,10 @@ var _default = function _default(_ref) {
     }
   }, false);
   setTimeout(function () {
-    runPinger().catch(function (err) {
+    runPinger()["catch"](function (err) {
       console.error(err);
     });
   }, 10000);
 };
 
-exports.default = _default;
+exports["default"] = _default;

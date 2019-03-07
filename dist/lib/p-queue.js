@@ -2,16 +2,12 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
+exports.__esModule = true;
+exports["default"] = void 0;
 
 var _promise = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/promise"));
 
 var _assign = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/object/assign"));
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/classCallCheck"));
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
 
@@ -21,21 +17,20 @@ var Queue =
 /*#__PURE__*/
 function () {
   function Queue() {
-    (0, _classCallCheck2.default)(this, Queue);
     this._queue = [];
   }
 
-  (0, _createClass2.default)(Queue, [{
-    key: "enqueue",
-    value: function enqueue(run) {
-      this._queue.push(run);
-    }
-  }, {
-    key: "dequeue",
-    value: function dequeue() {
-      return this._queue.shift();
-    }
-  }, {
+  var _proto = Queue.prototype;
+
+  _proto.enqueue = function enqueue(run) {
+    this._queue.push(run);
+  };
+
+  _proto.dequeue = function dequeue() {
+    return this._queue.shift();
+  };
+
+  (0, _createClass2["default"])(Queue, [{
     key: "size",
     get: function get() {
       return this._queue.length;
@@ -48,8 +43,7 @@ var PQueue =
 /*#__PURE__*/
 function () {
   function PQueue(opts) {
-    (0, _classCallCheck2.default)(this, PQueue);
-    opts = (0, _assign.default)({
+    opts = (0, _assign["default"])({
       concurrency: Infinity,
       queueClass: Queue
     }, opts);
@@ -66,58 +60,57 @@ function () {
     this._resolveEmpty = function () {};
   }
 
-  (0, _createClass2.default)(PQueue, [{
-    key: "_next",
-    value: function _next() {
-      this._pendingCount--;
+  var _proto2 = PQueue.prototype;
 
-      if (this.queue.size > 0) {
-        this.queue.dequeue()();
+  _proto2._next = function _next() {
+    this._pendingCount--;
+
+    if (this.queue.size > 0) {
+      this.queue.dequeue()();
+    } else {
+      this._resolveEmpty();
+    }
+  };
+
+  _proto2.add = function add(fn, opts) {
+    var _this = this;
+
+    return new _promise["default"](function (resolve, reject) {
+      var run = function run() {
+        _this._pendingCount++;
+        fn().then(function (val) {
+          resolve(val);
+
+          _this._next();
+        }, function (err) {
+          reject(err);
+
+          _this._next();
+        });
+      };
+
+      if (_this._pendingCount < _this._concurrency) {
+        run();
       } else {
-        this._resolveEmpty();
+        _this.queue.enqueue(run, opts);
       }
-    }
-  }, {
-    key: "add",
-    value: function add(fn, opts) {
-      var _this = this;
+    });
+  };
 
-      return new _promise.default(function (resolve, reject) {
-        var run = function run() {
-          _this._pendingCount++;
-          fn().then(function (val) {
-            resolve(val);
+  _proto2.onEmpty = function onEmpty() {
+    var _this2 = this;
 
-            _this._next();
-          }, function (err) {
-            reject(err);
+    return new _promise["default"](function (resolve) {
+      var existingResolve = _this2._resolveEmpty;
 
-            _this._next();
-          });
-        };
+      _this2._resolveEmpty = function () {
+        existingResolve();
+        resolve();
+      };
+    });
+  };
 
-        if (_this._pendingCount < _this._concurrency) {
-          run();
-        } else {
-          _this.queue.enqueue(run, opts);
-        }
-      });
-    }
-  }, {
-    key: "onEmpty",
-    value: function onEmpty() {
-      var _this2 = this;
-
-      return new _promise.default(function (resolve) {
-        var existingResolve = _this2._resolveEmpty;
-
-        _this2._resolveEmpty = function () {
-          existingResolve();
-          resolve();
-        };
-      });
-    }
-  }, {
+  (0, _createClass2["default"])(PQueue, [{
     key: "size",
     get: function get() {
       return this.queue.size;
@@ -131,4 +124,4 @@ function () {
   return PQueue;
 }();
 
-exports.default = PQueue;
+exports["default"] = PQueue;

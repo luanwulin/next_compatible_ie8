@@ -1,9 +1,7 @@
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = asset;
+exports.__esModule = true;
+exports["default"] = asset;
 exports.setAssetPrefix = setAssetPrefix;
 var assetPrefix;
 
@@ -14,7 +12,7 @@ function asset(path) {
   }
 
   var pathWithoutSlash = path.replace(/^\//, '');
-  return "".concat(assetPrefix || '', "/static/").concat(pathWithoutSlash);
+  return (assetPrefix || '') + "/static/" + pathWithoutSlash;
 }
 
 function setAssetPrefix(url) {

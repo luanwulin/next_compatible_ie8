@@ -2,20 +2,14 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = getBaseWebpackConfig;
+exports.__esModule = true;
+exports["default"] = getBaseWebpackConfig;
 
 var _stringify = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/json/stringify"));
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime-corejs2/regenerator"));
 
 var _objectSpread2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/objectSpread"));
-
-var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/toConsumableArray"));
-
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/defineProperty"));
 
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/object/keys"));
 
@@ -72,7 +66,7 @@ function externalsConfig(dir, isServer) {
   }
 
   externals.push(function (context, request, callback) {
-    (0, _resolve.default)(request, {
+    (0, _resolve["default"])(request, {
       basedir: dir,
       preserveSymlinks: true
     }, function (err, res) {
@@ -91,7 +85,7 @@ function externalsConfig(dir, isServer) {
       }
 
       if (res.match(/node_modules[/\\].*\.js$/)) {
-        return callback(null, "commonjs ".concat(request));
+        return callback(null, "commonjs " + request);
       }
 
       callback();
@@ -119,7 +113,7 @@ function optimizationConfig(_ref) {
     },
     splitChunks: {
       cacheGroups: {
-        default: false,
+        "default": false,
         vendors: false
       }
     }
@@ -130,7 +124,7 @@ function optimizationConfig(_ref) {
   } // Terser is a better uglifier
 
 
-  config.minimizer = [new _terserWebpackPlugin.default({
+  config.minimizer = [new _terserWebpackPlugin["default"]({
     parallel: true,
     sourceMap: false,
     cache: true
@@ -157,12 +151,14 @@ function getBaseWebpackConfig(_x, _x2) {
 }
 
 function _getBaseWebpackConfig() {
-  _getBaseWebpackConfig = (0, _asyncToGenerator2.default)(
+  _getBaseWebpackConfig = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
-  _regenerator.default.mark(function _callee3(dir, _ref2) {
+  _regenerator["default"].mark(function _callee3(dir, _ref2) {
+    var _ref3;
+
     var _ref2$dev, dev, _ref2$isServer, isServer, buildId, config, defaultLoaders, nodePathList, distDir, outputPath, pagesEntries, totalPages, clientEntries, resolveConfig, webpackMode, webpackConfig, originalEntry;
 
-    return _regenerator.default.wrap(function _callee3$(_context3) {
+    return _regenerator["default"].wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
@@ -179,10 +175,10 @@ function _getBaseWebpackConfig() {
               hotSelfAccept: {
                 loader: 'hot-self-accept-loader',
                 options: {
-                  include: [_path.default.join(dir, 'pages')],
+                  include: [_path["default"].join(dir, 'pages')],
                   // All pages are javascript files. So we apply hot-self-accept-loader here to facilitate hot reloading of pages.
                   // This makes sure plugins just have to implement `pageExtensions` instead of also implementing the loader
-                  extensions: new RegExp("\\.+(".concat(config.pageExtensions.join('|'), ")$"))
+                  extensions: new RegExp("\\.+(" + config.pageExtensions.join('|') + ")$")
                 }
               } // Support for NODE_PATH
 
@@ -190,8 +186,8 @@ function _getBaseWebpackConfig() {
             nodePathList = (process.env.NODE_PATH || '').split(process.platform === 'win32' ? ';' : ':').filter(function (p) {
               return !!p;
             });
-            distDir = _path.default.join(dir, config.distDir);
-            outputPath = _path.default.join(distDir, isServer ? _constants.SERVER_DIRECTORY : '');
+            distDir = _path["default"].join(dir, config.distDir);
+            outputPath = _path["default"].join(distDir, isServer ? _constants.SERVER_DIRECTORY : '');
             _context3.next = 7;
             return (0, _utils.getPages)(dir, {
               nextPagesDir: _constants.DEFAULT_PAGES_DIR,
@@ -203,14 +199,14 @@ function _getBaseWebpackConfig() {
 
           case 7:
             pagesEntries = _context3.sent;
-            totalPages = (0, _keys.default)(pagesEntries).length;
-            clientEntries = !isServer ? (0, _defineProperty2.default)({
+            totalPages = (0, _keys["default"])(pagesEntries).length;
+            clientEntries = !isServer ? (_ref3 = {
               // Backwards compatibility
               'main.js': []
-            }, _constants.CLIENT_STATIC_FILES_RUNTIME_MAIN, [_path.default.join(_constants.NEXT_PROJECT_ROOT_DIST, 'client', dev ? "next-dev" : 'next')].filter(Boolean)) : {};
+            }, _ref3[_constants.CLIENT_STATIC_FILES_RUNTIME_MAIN] = [_path["default"].join(_constants.NEXT_PROJECT_ROOT_DIST, 'client', dev ? "next-dev" : 'next')].filter(Boolean), _ref3) : {};
             resolveConfig = {
               extensions: ['.wasm', '.mjs', '.js', '.jsx', '.json'],
-              modules: [_constants.NEXT_PROJECT_ROOT_NODE_MODULES, 'node_modules'].concat((0, _toConsumableArray2.default)(nodePathList)),
+              modules: [_constants.NEXT_PROJECT_ROOT_NODE_MODULES, 'node_modules'].concat(nodePathList),
               alias: {
                 next: _constants.NEXT_PROJECT_ROOT
               }
@@ -229,18 +225,18 @@ function _getBaseWebpackConfig() {
                 isServer: isServer,
                 totalPages: totalPages
               }),
-              recordsPath: _path.default.join(outputPath, 'records.json'),
+              recordsPath: _path["default"].join(outputPath, 'records.json'),
               context: dir,
               // Kept as function to be backwards compatible
               entry: function () {
-                var _entry = (0, _asyncToGenerator2.default)(
+                var _entry = (0, _asyncToGenerator2["default"])(
                 /*#__PURE__*/
-                _regenerator.default.mark(function _callee() {
-                  return _regenerator.default.wrap(function _callee$(_context) {
+                _regenerator["default"].mark(function _callee() {
+                  return _regenerator["default"].wrap(function _callee$(_context) {
                     while (1) {
                       switch (_context.prev = _context.next) {
                         case 0:
-                          return _context.abrupt("return", (0, _objectSpread2.default)({}, clientEntries, pagesEntries));
+                          return _context.abrupt("return", (0, _objectSpread2["default"])({}, clientEntries, pagesEntries));
 
                         case 1:
                         case "end":
@@ -272,7 +268,7 @@ function _getBaseWebpackConfig() {
                 hotUpdateChunkFilename: 'static/webpack/[id].[hash].hot-update.js',
                 hotUpdateMainFilename: 'static/webpack/[hash].hot-update.json',
                 // This saves chunks with the name given via `import()`
-                chunkFilename: isServer ? "".concat(dev ? '[name]' : '[name].[contenthash]', ".js") : "static/chunks/".concat(dev ? '[name]' : '[name].[contenthash]', ".js"),
+                chunkFilename: isServer ? (dev ? '[name]' : '[name].[contenthash]') + ".js" : "static/chunks/" + (dev ? '[name]' : '[name].[contenthash]') + ".js",
                 strictModuleExceptionHandling: true
               },
               performance: {
@@ -280,7 +276,7 @@ function _getBaseWebpackConfig() {
               },
               resolve: resolveConfig,
               resolveLoader: {
-                modules: [_constants.NEXT_PROJECT_ROOT_NODE_MODULES, 'node_modules', _path.default.join(__dirname, 'webpack', 'loaders')].concat((0, _toConsumableArray2.default)(nodePathList))
+                modules: [_constants.NEXT_PROJECT_ROOT_NODE_MODULES, 'node_modules', _path["default"].join(__dirname, 'webpack', 'loaders')].concat(nodePathList)
               },
               module: {
                 rules: [dev && !isServer && {
@@ -295,7 +291,7 @@ function _getBaseWebpackConfig() {
                 }].filter(Boolean)
               },
               plugins: [// Precompile react / react-dom for development, speeding up webpack
-              dev && !isServer && new _autodllWebpackPlugin.default({
+              dev && !isServer && new _autodllWebpackPlugin["default"]({
                 filename: '[name]_[hash].js',
                 path: './static/development/dll',
                 context: dir,
@@ -307,12 +303,12 @@ function _getBaseWebpackConfig() {
                   resolve: resolveConfig
                 }
               }), // This plugin makes sure `output.filename` is used for entry chunks
-              new _chunkNamesPlugin.default(), !isServer && new _reactLoadablePlugin.ReactLoadablePlugin({
+              new _chunkNamesPlugin["default"](), !isServer && new _reactLoadablePlugin.ReactLoadablePlugin({
                 filename: _constants.REACT_LOADABLE_MANIFEST
-              }), new _webpackbar.default({
+              }), new _webpackbar["default"]({
                 name: isServer ? 'server' : 'client'
-              }), dev && !isServer && new _friendlyErrorsWebpackPlugin.default(), new _webpack.default.IgnorePlugin(/(precomputed)/, /node_modules.+(elliptic)/), // This removes prop-types-exact in production, as it's not used there.
-              !dev && new _webpack.default.IgnorePlugin({
+              }), dev && !isServer && new _friendlyErrorsWebpackPlugin["default"](), new _webpack["default"].IgnorePlugin(/(precomputed)/, /node_modules.+(elliptic)/), // This removes prop-types-exact in production, as it's not used there.
+              !dev && new _webpack["default"].IgnorePlugin({
                 checkResource: function checkResource(resource) {
                   return /prop-types-exact/.test(resource);
                 },
@@ -321,19 +317,19 @@ function _getBaseWebpackConfig() {
                 }
               }), // Even though require.cache is server only we have to clear assets from both compilations
               // This is because the client compilation generates the build manifest that's used on the server side
-              dev && new _nextjsRequireCacheHotReloader.default(), dev && !isServer && new _webpack.default.HotModuleReplacementPlugin(), dev && new _webpack.default.NoEmitOnErrorsPlugin(), dev && new _unlinkFilePlugin.default(), dev && new _caseSensitivePathsWebpackPlugin.default(), // Since on macOS the filesystem is case-insensitive this will make sure your path are case-sensitive
-              dev && new _writeFileWebpackPlugin.default({
+              dev && new _nextjsRequireCacheHotReloader["default"](), dev && !isServer && new _webpack["default"].HotModuleReplacementPlugin(), dev && new _webpack["default"].NoEmitOnErrorsPlugin(), dev && new _unlinkFilePlugin["default"](), dev && new _caseSensitivePathsWebpackPlugin["default"](), // Since on macOS the filesystem is case-insensitive this will make sure your path are case-sensitive
+              dev && new _writeFileWebpackPlugin["default"]({
                 exitOnErrors: false,
                 log: false,
                 // required not to cache removed files
                 useHashIndex: false
               }), // Removes server/client code by minifier
-              new _webpack.default.DefinePlugin({
-                'process.browser': (0, _stringify.default)(!isServer)
+              new _webpack["default"].DefinePlugin({
+                'process.browser': (0, _stringify["default"])(!isServer)
               }), // This is used in client/dev-error-overlay/hot-dev-client.js to replace the dist directory
-              !isServer && dev && new _webpack.default.DefinePlugin({
-                'process.env.__NEXT_DIST_DIR': (0, _stringify.default)(distDir)
-              }), isServer && new _pagesManifestPlugin.default(), !isServer && new _buildManifestPlugin.default(), !isServer && new _pagesPlugin.default(), isServer && new _nextjsSsrImport.default(), isServer && new _nextjsSsrModuleCache.default({
+              !isServer && dev && new _webpack["default"].DefinePlugin({
+                'process.env.__NEXT_DIST_DIR': (0, _stringify["default"])(distDir)
+              }), isServer && new _pagesManifestPlugin["default"](), !isServer && new _buildManifestPlugin["default"](), !isServer && new _pagesPlugin["default"](), isServer && new _nextjsSsrImport["default"](), isServer && new _nextjsSsrModuleCache["default"]({
                 outputPath: outputPath
               })].filter(Boolean)
             };
@@ -354,15 +350,15 @@ function _getBaseWebpackConfig() {
             originalEntry = webpackConfig.entry;
             webpackConfig.entry =
             /*#__PURE__*/
-            (0, _asyncToGenerator2.default)(
+            (0, _asyncToGenerator2["default"])(
             /*#__PURE__*/
-            _regenerator.default.mark(function _callee2() {
+            _regenerator["default"].mark(function _callee2() {
               var entry;
-              return _regenerator.default.wrap(function _callee2$(_context2) {
+              return _regenerator["default"].wrap(function _callee2$(_context2) {
                 while (1) {
                   switch (_context2.prev = _context2.next) {
                     case 0:
-                      _context2.t0 = _objectSpread2.default;
+                      _context2.t0 = _objectSpread2["default"];
                       _context2.t1 = {};
                       _context2.next = 4;
                       return originalEntry();
@@ -373,7 +369,7 @@ function _getBaseWebpackConfig() {
 
                       // Server compilation doesn't have main.js
                       if (typeof entry['main.js'] !== 'undefined') {
-                        entry[_constants.CLIENT_STATIC_FILES_RUNTIME_MAIN] = [].concat((0, _toConsumableArray2.default)(entry['main.js']), (0, _toConsumableArray2.default)(entry[_constants.CLIENT_STATIC_FILES_RUNTIME_MAIN]));
+                        entry[_constants.CLIENT_STATIC_FILES_RUNTIME_MAIN] = [].concat(entry['main.js'], entry[_constants.CLIENT_STATIC_FILES_RUNTIME_MAIN]);
                         delete entry['main.js'];
                       }
 

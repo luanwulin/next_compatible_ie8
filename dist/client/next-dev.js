@@ -18,14 +18,14 @@ import('./noop');
 var _window = window,
     assetPrefix = _window.__NEXT_DATA__.assetPrefix;
 var prefix = assetPrefix || '';
-var webpackHMR = (0, _webpackHotMiddlewareClient.default)({
+var webpackHMR = (0, _webpackHotMiddlewareClient["default"])({
   assetPrefix: prefix
 });
 window.next = next;
-(0, next.default)({
+(0, next["default"])({
   webpackHMR: webpackHMR
 }).then(function (emitter) {
-  (0, _onDemandEntriesClient.default)({
+  (0, _onDemandEntriesClient["default"])({
     assetPrefix: prefix
   });
   var lastScroll;
@@ -57,6 +57,6 @@ window.next = next;
       lastScroll = null;
     }
   });
-}).catch(function (err) {
+})["catch"](function (err) {
   console.error('Error was not caught', err);
 });
