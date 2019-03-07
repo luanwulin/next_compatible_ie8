@@ -13,11 +13,11 @@ var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime-corejs2/hel
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/defineProperty"));
 
-var _set = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/set"));
-
 var _react = _interopRequireWildcard(require("react"));
 
 var _utils = require("./utils");
+
+var _set = _interopRequireDefault(require("./set"));
 
 function withSideEffect(reduceComponentsToState, handleStateChangeOnClient, mapStateOnServer) {
   if (typeof reduceComponentsToState !== 'function') {

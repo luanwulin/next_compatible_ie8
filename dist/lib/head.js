@@ -6,8 +6,6 @@ exports.__esModule = true;
 exports.defaultHead = defaultHead;
 exports["default"] = void 0;
 
-var _set = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/set"));
-
 var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inheritsLoose"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/defineProperty"));
@@ -17,6 +15,8 @@ var _react = _interopRequireDefault(require("react"));
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _sideEffect = _interopRequireDefault(require("./side-effect"));
+
+var _set = _interopRequireDefault(require("./set"));
 
 var Head =
 /*#__PURE__*/

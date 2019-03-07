@@ -41,7 +41,7 @@ module.exports = function (context, opts) {
     presets: [[require('@babel/preset-env')["default"], (0, _objectSpread2["default"])({
       // In the test environment `modules` is often needed to be set to true, babel figures that out by itself using the `'auto'` option
       // In production/development this option is set to `false` so that webpack can handle import/export with tree-shaking
-      modules: isDevelopment || isProduction ? false : 'auto'
+      modules: isDevelopment || isProduction ? 'commonjs' : 'auto'
     }, opts['preset-env'])], [require('@babel/preset-react'), (0, _objectSpread2["default"])({
       // This adds @babel/plugin-transform-react-jsx-source and
       // @babel/plugin-transform-react-jsx-self automatically in development
