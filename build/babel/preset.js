@@ -40,6 +40,7 @@ module.exports = (context, opts = {}) => ({
           'ie >= 8'
         ]
       },
+      loose: true,
       ...opts['preset-env']
     }],
     [require('@babel/preset-react'), {
@@ -57,7 +58,6 @@ module.exports = (context, opts = {}) => ({
     require('@babel/plugin-proposal-object-rest-spread'),
     require('babel-plugin-transform-es3-property-literals'),
     require('babel-plugin-transform-es3-member-expression-literals'),
-    require('@babel/plugin-proposal-object-rest-spread'),
     [require('@babel/plugin-transform-runtime'), {
       helpers: false,
       regenerator: true,

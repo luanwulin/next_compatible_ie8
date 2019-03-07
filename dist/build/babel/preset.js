@@ -45,13 +45,14 @@ module.exports = function (context, opts) {
       useBuiltIns: 'entry',
       targets: {
         'browsers': ['ie >= 8']
-      }
+      },
+      loose: true
     }, opts['preset-env'])], [require('@babel/preset-react'), (0, _objectSpread2["default"])({
       // This adds @babel/plugin-transform-react-jsx-source and
       // @babel/plugin-transform-react-jsx-self automatically in development
       development: isDevelopment || isTest
     }, opts['preset-react'])]],
-    plugins: [require('babel-plugin-react-require'), require('@babel/plugin-syntax-dynamic-import'), require('./plugins/react-loadable-plugin'), [require('@babel/plugin-proposal-class-properties'), opts['class-properties'] || {}], require('@babel/plugin-proposal-object-rest-spread'), require('babel-plugin-transform-es3-property-literals'), require('babel-plugin-transform-es3-member-expression-literals'), require('@babel/plugin-proposal-object-rest-spread'), [require('@babel/plugin-transform-runtime'), (0, _objectSpread2["default"])({
+    plugins: [require('babel-plugin-react-require'), require('@babel/plugin-syntax-dynamic-import'), require('./plugins/react-loadable-plugin'), [require('@babel/plugin-proposal-class-properties'), opts['class-properties'] || {}], require('@babel/plugin-proposal-object-rest-spread'), require('babel-plugin-transform-es3-property-literals'), require('babel-plugin-transform-es3-member-expression-literals'), [require('@babel/plugin-transform-runtime'), (0, _objectSpread2["default"])({
       helpers: false,
       regenerator: true
     }, opts['transform-runtime'])], [require('styled-jsx/babel'), styledJsxOptions(opts['styled-jsx'])], process.env.NODE_ENV === 'production' && require('babel-plugin-transform-react-remove-prop-types')].filter(Boolean)
