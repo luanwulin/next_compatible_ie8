@@ -1,9 +1,11 @@
 const notifier = require('node-notifier')
 const childProcess = require('child_process')
+const rimraf = require('rimraf')
+const mkdirp = require('mkdirp')
 const isWindows = /^win/.test(process.platform)
 
 export async function compile (task) {
-  await task.parallel(['bin', 'server', 'lib', 'client'])
+  await task.parallel(['bin', 'server', 'nextbuild', 'nextbuildstatic', 'lib', 'client'])
 }
 
 export async function bin (task, opts) {
@@ -21,9 +23,29 @@ export async function server (task, opts) {
   notify('Compiled server files')
 }
 
+export async function nextbuild (task, opts) {
+  await task.source(opts.src || 'build/**/*.js').babel().target('dist/build')
+  notify('Compiled build files')
+}
+
 export async function client (task, opts) {
   await task.source(opts.src || 'client/**/*.js').babel().target('dist/client')
   notify('Compiled client files')
+}
+
+// export is a reserved keyword for functions
+export async function nextbuildstatic (task, opts) {
+  await task.source(opts.src || 'export/**/*.js').babel().target('dist/export')
+  notify('Compiled export files')
+}
+
+// Create node_modules/next for the use of test apps
+export async function symlinkNextForTesting () {
+  rimraf.sync('test/node_modules/next')
+  mkdirp.sync('test/node_modules')
+
+  const symlinkCommand = isWindows ? 'mklink /D "next" "..\\..\\"' : 'ln -s ../../ next'
+  childProcess.execSync(symlinkCommand, { cwd: 'test/node_modules' })
 }
 
 export async function copy (task) {
@@ -31,7 +53,7 @@ export async function copy (task) {
 }
 
 export async function build (task) {
-  await task.serial(['copy', 'compile'])
+  await task.serial(['symlinkNextForTesting', 'copy', 'compile'])
 }
 
 export default async function (task) {
@@ -39,6 +61,8 @@ export default async function (task) {
   await task.watch('bin/*', 'bin')
   await task.watch('pages/**/*.js', 'copy')
   await task.watch('server/**/*.js', 'server')
+  await task.watch('build/**/*.js', 'nextbuild')
+  await task.watch('export/**/*.js', 'nextexport')
   await task.watch('client/**/*.js', 'client')
   await task.watch('lib/**/*.js', 'lib')
 }
@@ -53,8 +77,10 @@ export async function release (task) {
 // the lifetime of the original npm script.
 
 export async function pretest (task) {
+  // Start chromedriver
   const processName = isWindows ? 'chromedriver.cmd' : 'chromedriver'
   childProcess.spawn(processName, { stdio: 'inherit' })
+
   // We need to do this, otherwise this task's process will keep waiting.
   setTimeout(() => process.exit(0), 2000)
 }

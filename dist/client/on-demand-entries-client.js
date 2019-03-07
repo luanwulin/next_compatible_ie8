@@ -1,45 +1,45 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-var _promise = require('babel-runtime/core-js/promise');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _promise2 = _interopRequireDefault(_promise);
+var _promise = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/promise"));
 
-var _regenerator = require('babel-runtime/regenerator');
+var _regenerator = _interopRequireDefault(require("@babel/runtime-corejs2/regenerator"));
 
-var _regenerator2 = _interopRequireDefault(_regenerator);
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/asyncToGenerator"));
 
-var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
+var _router = _interopRequireDefault(require("../lib/router"));
 
-var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
-
-var _router = require('../lib/router');
-
-var _router2 = _interopRequireDefault(_router);
-
-var _unfetch = require('unfetch');
-
-var _unfetch2 = _interopRequireDefault(_unfetch);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+var _unfetch = _interopRequireDefault(require("unfetch"));
 
 /* global location */
+var _default = function _default(_ref) {
+  var assetPrefix = _ref.assetPrefix;
 
-exports['default'] = function () {
-  var ping = function () {
-    var _ref = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee() {
+  _router["default"].ready(function () {
+    _router["default"].events.on('routeChangeComplete', ping);
+  });
+
+  function ping() {
+    return _ping.apply(this, arguments);
+  }
+
+  function _ping() {
+    _ping = (0, _asyncToGenerator2["default"])(
+    /*#__PURE__*/
+    _regenerator["default"].mark(function _callee() {
       var url, res, payload, pageRes;
-      return _regenerator2['default'].wrap(function _callee$(_context) {
+      return _regenerator["default"].wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.prev = 0;
-              url = '/_next/on-demand-entries-ping?page=' + _router2['default'].pathname;
+              url = (assetPrefix || '') + "/_next/on-demand-entries-ping?page=" + _router["default"].pathname;
               _context.next = 4;
-              return (0, _unfetch2['default'])(url, {
+              return (0, _unfetch["default"])(url, {
                 credentials: 'same-origin'
               });
 
@@ -57,7 +57,7 @@ exports['default'] = function () {
               }
 
               _context.next = 11;
-              return (0, _unfetch2['default'])(location.href, {
+              return (0, _unfetch["default"])(location.href, {
                 credentials: 'same-origin'
               });
 
@@ -74,26 +74,30 @@ exports['default'] = function () {
 
             case 15:
               _context.prev = 15;
-              _context.t0 = _context['catch'](0);
-
-              console.error('Error with on-demand-entries-ping: ' + _context.t0.message);
+              _context.t0 = _context["catch"](0);
+              console.error("Error with on-demand-entries-ping: " + _context.t0.message);
 
             case 18:
-            case 'end':
+            case "end":
               return _context.stop();
           }
         }
-      }, _callee, this, [[0, 15]]);
+      }, _callee, null, [[0, 15]]);
     }));
+    return _ping.apply(this, arguments);
+  }
 
-    return function ping() {
-      return _ref.apply(this, arguments);
-    };
-  }();
+  var pingerTimeout;
 
-  var runPinger = function () {
-    var _ref2 = (0, _asyncToGenerator3['default'])( /*#__PURE__*/_regenerator2['default'].mark(function _callee2() {
-      return _regenerator2['default'].wrap(function _callee2$(_context2) {
+  function runPinger() {
+    return _runPinger.apply(this, arguments);
+  }
+
+  function _runPinger() {
+    _runPinger = (0, _asyncToGenerator2["default"])(
+    /*#__PURE__*/
+    _regenerator["default"].mark(function _callee2() {
+      return _regenerator["default"].wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
@@ -107,7 +111,7 @@ exports['default'] = function () {
 
             case 3:
               _context2.next = 5;
-              return new _promise2['default'](function (resolve) {
+              return new _promise["default"](function (resolve) {
                 pingerTimeout = setTimeout(resolve, 5000);
               });
 
@@ -116,24 +120,14 @@ exports['default'] = function () {
               break;
 
             case 7:
-            case 'end':
+            case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, this);
+      }, _callee2);
     }));
-
-    return function runPinger() {
-      return _ref2.apply(this, arguments);
-    };
-  }();
-
-  _router2['default'].ready(function () {
-    _router2['default'].router.events.on('routeChangeComplete', ping);
-  });
-
-  var pingerTimeout = void 0;
-
+    return _runPinger.apply(this, arguments);
+  }
 
   document.addEventListener('visibilitychange', function () {
     if (!document.hidden) {
@@ -142,10 +136,11 @@ exports['default'] = function () {
       clearTimeout(pingerTimeout);
     }
   }, false);
-
   setTimeout(function () {
-    runPinger()['catch'](function (err) {
+    runPinger()["catch"](function (err) {
       console.error(err);
     });
   }, 10000);
 };
+
+exports["default"] = _default;

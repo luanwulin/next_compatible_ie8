@@ -1,38 +1,23 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var _interopRequireWildcard = require("@babel/runtime-corejs2/helpers/interopRequireWildcard");
 
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+exports.__esModule = true;
+exports["default"] = withSideEffect;
 
-var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/assertThisInitialized"));
 
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inheritsLoose"));
 
-var _inherits2 = require('babel-runtime/helpers/inherits');
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/defineProperty"));
 
-var _inherits3 = _interopRequireDefault(_inherits2);
+var _set = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/set"));
 
-var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+var _react = _interopRequireWildcard(require("react"));
 
-var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
-var _set = require('babel-runtime/core-js/set');
-
-var _set2 = _interopRequireDefault(_set);
-
-exports['default'] = withSideEffect;
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _utils = require('./utils');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+var _utils = require("./utils");
 
 function withSideEffect(reduceComponentsToState, handleStateChangeOnClient, mapStateOnServer) {
   if (typeof reduceComponentsToState !== 'function') {
@@ -52,11 +37,11 @@ function withSideEffect(reduceComponentsToState, handleStateChangeOnClient, mapS
       throw new Error('Expected WrappedComponent to be a React component.');
     }
 
-    var mountedInstances = new _set2['default']();
-    var state = void 0;
+    var mountedInstances = new _set["default"]();
+    var state;
 
     function emitChange(component) {
-      state = reduceComponentsToState([].concat((0, _toConsumableArray3['default'])(mountedInstances)));
+      state = reduceComponentsToState([].concat(mountedInstances));
 
       if (SideEffect.canUseDOM) {
         handleStateChangeOnClient.call(component, state);
@@ -65,22 +50,16 @@ function withSideEffect(reduceComponentsToState, handleStateChangeOnClient, mapS
       }
     }
 
-    var SideEffect = function (_Component) {
-      (0, _inherits3['default'])(SideEffect, _Component);
+    var SideEffect =
+    /*#__PURE__*/
+    function (_Component) {
+      (0, _inheritsLoose2["default"])(SideEffect, _Component);
 
-      function SideEffect() {
-        (0, _classCallCheck3['default'])(this, SideEffect);
-        return (0, _possibleConstructorReturn3['default'])(this, _Component.apply(this, arguments));
-      }
-
+      // Expose canUseDOM so tests can monkeypatch it
+      // Try to use displayName of wrapped component
       SideEffect.peek = function peek() {
         return state;
       };
-
-      // Expose canUseDOM so tests can monkeypatch it
-
-      // Try to use displayName of wrapped component
-
 
       SideEffect.rewind = function rewind() {
         if (SideEffect.canUseDOM) {
@@ -93,36 +72,45 @@ function withSideEffect(reduceComponentsToState, handleStateChangeOnClient, mapS
         return recordedState;
       };
 
-      SideEffect.prototype.componentWillMount = function componentWillMount() {
+      function SideEffect(props) {
+        var _this;
+
+        _this = _Component.call(this, props) || this;
+
+        if (!SideEffect.canUseDOM) {
+          mountedInstances.add((0, _assertThisInitialized2["default"])(_this));
+          emitChange((0, _assertThisInitialized2["default"])(_this));
+        }
+
+        return _this;
+      }
+
+      var _proto = SideEffect.prototype;
+
+      _proto.componentDidMount = function componentDidMount() {
         mountedInstances.add(this);
         emitChange(this);
       };
 
-      SideEffect.prototype.componentDidUpdate = function componentDidUpdate() {
+      _proto.componentDidUpdate = function componentDidUpdate() {
         emitChange(this);
       };
 
-      SideEffect.prototype.componentWillUnmount = function componentWillUnmount() {
-        mountedInstances['delete'](this);
+      _proto.componentWillUnmount = function componentWillUnmount() {
+        mountedInstances["delete"](this);
         emitChange(this);
       };
 
-      SideEffect.prototype.render = function render() {
-        return _react2['default'].createElement(
-          WrappedComponent,
-          null,
-          this.props.children
-        );
+      _proto.render = function render() {
+        return _react["default"].createElement(WrappedComponent, null, this.props.children);
       };
 
       return SideEffect;
     }(_react.Component);
 
-    SideEffect.displayName = 'SideEffect(' + (0, _utils.getDisplayName)(WrappedComponent) + ')';
-    SideEffect.contextTypes = WrappedComponent.contextTypes;
-    SideEffect.canUseDOM = typeof window !== 'undefined';
-
-
+    (0, _defineProperty2["default"])(SideEffect, "canUseDOM", typeof window !== 'undefined');
+    (0, _defineProperty2["default"])(SideEffect, "contextTypes", WrappedComponent.contextTypes);
+    (0, _defineProperty2["default"])(SideEffect, "displayName", "SideEffect(" + (0, _utils.getDisplayName)(WrappedComponent) + ")");
     return SideEffect;
   };
 }

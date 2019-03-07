@@ -1,213 +1,201 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var _interopRequireWildcard = require("@babel/runtime-corejs2/helpers/interopRequireWildcard");
 
-var _extends2 = require('babel-runtime/helpers/extends');
+var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-var _extends3 = _interopRequireDefault(_extends2);
+exports.__esModule = true;
+exports.createUrl = createUrl;
+exports.Container = exports["default"] = void 0;
 
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+var _extends2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/extends"));
 
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+var _regenerator = _interopRequireDefault(require("@babel/runtime-corejs2/regenerator"));
 
-var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/asyncToGenerator"));
 
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inheritsLoose"));
 
-var _inherits2 = require('babel-runtime/helpers/inherits');
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/defineProperty"));
 
-var _inherits3 = _interopRequireDefault(_inherits2);
+var _react = _interopRequireWildcard(require("react"));
 
-var _react = require('react');
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _react2 = _interopRequireDefault(_react);
+var _utils = require("./utils");
 
-var _propTypes = require('prop-types');
+var _router = require("./router");
 
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _shallowEquals = require('./shallow-equals');
-
-var _shallowEquals2 = _interopRequireDefault(_shallowEquals);
-
-var _utils = require('./utils');
-
-var _router = require('./router');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var Fragment = _react2['default'].Fragment || function Fragment(_ref) {
-  var children = _ref.children;
-
-  return _react2['default'].createElement(
-    'div',
-    null,
-    children
-  );
-};
-
-var App = function (_Component) {
-  (0, _inherits3['default'])(App, _Component);
+var App =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inheritsLoose2["default"])(App, _Component);
 
   function App() {
-    var _temp, _this, _ret;
-
-    (0, _classCallCheck3['default'])(this, App);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3['default'])(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.state = {
-      hasError: null
-    }, _temp), (0, _possibleConstructorReturn3['default'])(_this, _ret);
+    return _Component.apply(this, arguments) || this;
   }
 
-  App.prototype.getChildContext = function getChildContext() {
-    var headManager = this.props.headManager;
+  App.getInitialProps =
+  /*#__PURE__*/
+  function () {
+    var _getInitialProps = (0, _asyncToGenerator2["default"])(
+    /*#__PURE__*/
+    _regenerator["default"].mark(function _callee(_ref) {
+      var Component, router, ctx, pageProps;
+      return _regenerator["default"].wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              Component = _ref.Component, router = _ref.router, ctx = _ref.ctx;
+              _context.next = 3;
+              return (0, _utils.loadGetInitialProps)(Component, ctx);
 
+            case 3:
+              pageProps = _context.sent;
+              return _context.abrupt("return", {
+                pageProps: pageProps
+              });
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    function getInitialProps(_x) {
+      return _getInitialProps.apply(this, arguments);
+    }
+
+    return getInitialProps;
+  }();
+
+  var _proto = App.prototype;
+
+  _proto.getChildContext = function getChildContext() {
+    var headManager = this.props.headManager;
     return {
       headManager: headManager,
       router: (0, _router.makePublicRouterInstance)(this.props.router)
     };
+  } // Kept here for backwards compatibility.
+  // When someone ended App they could call `super.componentDidCatch`. This is now deprecated.
+  ;
+
+  _proto.componentDidCatch = function componentDidCatch(err) {
+    throw err;
   };
 
-  App.prototype.componentDidCatch = function componentDidCatch(error, info) {
-    error.stack = error.stack + '\n\n' + info.componentStack;
-    window.next.renderError(error);
-    this.setState({ hasError: true });
-  };
-
-  App.prototype.render = function render() {
-    if (this.state.hasError) return null;
-
-    var _props = this.props,
-        Component = _props.Component,
-        props = _props.props,
-        hash = _props.hash,
-        router = _props.router;
-
+  _proto.render = function render() {
+    var _this$props = this.props,
+        router = _this$props.router,
+        Component = _this$props.Component,
+        pageProps = _this$props.pageProps;
     var url = createUrl(router);
-    // If there no component exported we can't proceed.
-    // We'll tackle that here.
-    if (typeof Component !== 'function') {
-      throw new Error('The default export is not a React Component in page: "' + url.pathname + '"');
-    }
-    var containerProps = { Component: Component, props: props, hash: hash, router: router, url: url };
-
-    return _react2['default'].createElement(
-      Fragment,
-      null,
-      _react2['default'].createElement(Container, containerProps)
-    );
+    return _react["default"].createElement(Container, null, _react["default"].createElement(Component, (0, _extends2["default"])({}, pageProps, {
+      url: url
+    })));
   };
 
   return App;
 }(_react.Component);
 
-App.childContextTypes = {
-  headManager: _propTypes2['default'].object,
-  router: _propTypes2['default'].object
-};
-exports['default'] = App;
+exports["default"] = App;
+(0, _defineProperty2["default"])(App, "childContextTypes", {
+  headManager: _propTypes["default"].object,
+  router: _propTypes["default"].object
+});
 
-var Container = function (_Component2) {
-  (0, _inherits3['default'])(Container, _Component2);
+var Container =
+/*#__PURE__*/
+function (_Component2) {
+  (0, _inheritsLoose2["default"])(Container, _Component2);
 
   function Container() {
-    (0, _classCallCheck3['default'])(this, Container);
-    return (0, _possibleConstructorReturn3['default'])(this, _Component2.apply(this, arguments));
+    return _Component2.apply(this, arguments) || this;
   }
 
-  Container.prototype.componentDidMount = function componentDidMount() {
+  var _proto2 = Container.prototype;
+
+  _proto2.componentDidMount = function componentDidMount() {
     this.scrollToHash();
   };
 
-  Container.prototype.componentDidUpdate = function componentDidUpdate() {
+  _proto2.componentDidUpdate = function componentDidUpdate() {
     this.scrollToHash();
   };
 
-  Container.prototype.scrollToHash = function scrollToHash() {
-    var hash = this.props.hash;
-
+  _proto2.scrollToHash = function scrollToHash() {
+    var hash = window.location.hash;
+    hash = hash ? hash.substring(1) : false;
     if (!hash) return;
-
     var el = document.getElementById(hash);
-    if (!el) return;
-
-    // If we call scrollIntoView() in here without a setTimeout
+    if (!el) return; // If we call scrollIntoView() in here without a setTimeout
     // it won't scroll properly.
+
     setTimeout(function () {
       return el.scrollIntoView();
     }, 0);
   };
 
-  Container.prototype.shouldComponentUpdate = function shouldComponentUpdate(nextProps) {
-    // need this check not to rerender component which has already thrown an error
-    return !(0, _shallowEquals2['default'])(this.props, nextProps);
-  };
-
-  Container.prototype.render = function render() {
-    var _props2 = this.props,
-        Component = _props2.Component,
-        props = _props2.props,
-        url = _props2.url;
-
-
-    if (process.env.NODE_ENV === 'production') {
-      return _react2['default'].createElement(Component, (0, _extends3['default'])({}, props, { url: url }));
-    } else {
-      var ErrorDebug = require('./error-debug')['default'];
-
-      var _require = require('react-hot-loader'),
-          AppContainer = _require.AppContainer;
-
-      // includes AppContainer which bypasses shouldComponentUpdate method
-      // https://github.com/gaearon/react-hot-loader/issues/442
-
-
-      return _react2['default'].createElement(
-        AppContainer,
-        { warnings: false, errorReporter: ErrorDebug },
-        _react2['default'].createElement(Component, (0, _extends3['default'])({}, props, { url: url }))
-      );
-    }
+  _proto2.render = function render() {
+    return this.props.children;
   };
 
   return Container;
 }(_react.Component);
 
+exports.Container = Container;
+var warnUrl = (0, _utils.execOnce)(function () {
+  if (process.env.NODE_ENV !== 'production') {
+    console.error("Warning: the 'url' property is deprecated. https://err.sh/zeit/next.js/url-deprecated");
+  }
+});
+
 function createUrl(router) {
+  // This is to make sure we don't references the router object at call time
+  var pathname = router.pathname,
+      asPath = router.asPath,
+      query = router.query;
   return {
-    query: router.query,
-    pathname: router.pathname,
-    asPath: router.asPath,
+    get query() {
+      warnUrl();
+      return query;
+    },
+
+    get pathname() {
+      warnUrl();
+      return pathname;
+    },
+
+    get asPath() {
+      warnUrl();
+      return asPath;
+    },
+
     back: function back() {
-      (0, _utils.warn)('Warning: \'url.back()\' is deprecated. Use "window.history.back()"');
+      warnUrl();
       router.back();
     },
     push: function push(url, as) {
-      (0, _utils.warn)('Warning: \'url.push()\' is deprecated. Use "next/router" APIs.');
+      warnUrl();
       return router.push(url, as);
     },
     pushTo: function pushTo(href, as) {
-      (0, _utils.warn)('Warning: \'url.pushTo()\' is deprecated. Use "next/router" APIs.');
+      warnUrl();
       var pushRoute = as ? href : null;
       var pushUrl = as || href;
-
       return router.push(pushRoute, pushUrl);
     },
     replace: function replace(url, as) {
-      (0, _utils.warn)('Warning: \'url.replace()\' is deprecated. Use "next/router" APIs.');
+      warnUrl();
       return router.replace(url, as);
     },
     replaceTo: function replaceTo(href, as) {
-      (0, _utils.warn)('Warning: \'url.replaceTo()\' is deprecated. Use "next/router" APIs.');
+      warnUrl();
       var replaceRoute = as ? href : null;
       var replaceUrl = as || href;
-
       return router.replace(replaceRoute, replaceUrl);
     }
   };

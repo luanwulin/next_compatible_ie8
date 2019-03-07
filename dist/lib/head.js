@@ -1,81 +1,76 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-var _set = require('babel-runtime/core-js/set');
-
-var _set2 = _interopRequireDefault(_set);
-
-var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
-
-var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
-
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
-
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-var _inherits2 = require('babel-runtime/helpers/inherits');
-
-var _inherits3 = _interopRequireDefault(_inherits2);
-
+exports.__esModule = true;
 exports.defaultHead = defaultHead;
+exports["default"] = void 0;
 
-var _react = require('react');
+var _set = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/set"));
 
-var _react2 = _interopRequireDefault(_react);
+var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inheritsLoose"));
 
-var _propTypes = require('prop-types');
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/defineProperty"));
 
-var _propTypes2 = _interopRequireDefault(_propTypes);
+var _react = _interopRequireDefault(require("react"));
 
-var _sideEffect = require('./side-effect');
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _sideEffect2 = _interopRequireDefault(_sideEffect);
+var _sideEffect = _interopRequireDefault(require("./side-effect"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var Head = function (_React$Component) {
-  (0, _inherits3['default'])(Head, _React$Component);
+var Head =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inheritsLoose2["default"])(Head, _React$Component);
 
   function Head() {
-    (0, _classCallCheck3['default'])(this, Head);
-    return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+    return _React$Component.apply(this, arguments) || this;
   }
 
-  Head.prototype.render = function render() {
+  var _proto = Head.prototype;
+
+  _proto.render = function render() {
     return null;
   };
 
   return Head;
-}(_react2['default'].Component);
+}(_react["default"].Component);
 
-Head.contextTypes = {
-  headManager: _propTypes2['default'].object
-};
-function defaultHead() {
-  return [_react2['default'].createElement('meta', { charSet: 'utf-8', className: 'next-head' })];
+(0, _defineProperty2["default"])(Head, "contextTypes", {
+  headManager: _propTypes["default"].object
+});
+var NEXT_HEAD_IDENTIFIER = 'next-head';
+
+function defaultHead(className) {
+  if (className === void 0) {
+    className = NEXT_HEAD_IDENTIFIER;
+  }
+
+  return [_react["default"].createElement("meta", {
+    key: "charSet",
+    charSet: "utf-8",
+    className: className
+  })];
 }
 
 function reduceComponents(components) {
-  var _components$map$map$r;
-
-  return (_components$map$map$r = components.map(function (c) {
-    return c.props.children;
-  }).map(function (children) {
-    return _react2['default'].Children.toArray(children);
+  return components.map(function (component) {
+    return _react["default"].Children.toArray(component.props.children);
   }).reduce(function (a, b) {
     return a.concat(b);
-  }, []).reverse()).concat.apply(_components$map$map$r, (0, _toConsumableArray3['default'])(defaultHead())).filter(function (c) {
-    return !!c;
-  }).filter(unique()).reverse().map(function (c) {
-    var className = (c.className ? c.className + ' ' : '') + 'next-head';
-    return _react2['default'].cloneElement(c, { className: className });
+  }, []).reduce(function (a, b) {
+    if (_react["default"].Fragment && b.type === _react["default"].Fragment) {
+      return a.concat(_react["default"].Children.toArray(b.props.children));
+    }
+
+    return a.concat(b);
+  }, []).reverse().concat(defaultHead('')).filter(Boolean).filter(unique()).reverse().map(function (c, i) {
+    var className = (c.props && c.props.className ? c.props.className + ' ' : '') + NEXT_HEAD_IDENTIFIER;
+    var key = c.key || i;
+    return _react["default"].cloneElement(c, {
+      key: key,
+      className: className
+    });
   });
 }
 
@@ -90,22 +85,31 @@ function onStateChange(head) {
 }
 
 var METATYPES = ['name', 'httpEquiv', 'charSet', 'itemProp', 'property'];
-
-// returns a function for filtering head child elements
-// which shouldn't be duplicated, like <title/>.
+var ALLOWED_DUPLICATES = ['article:tag', 'og:image', 'og:image:alt', 'og:image:width', 'og:image:height', 'og:image:type', 'og:image:secure_url', 'og:image:url'];
+/*
+ returns a function for filtering head child elements
+ which shouldn't be duplicated, like <title/>,
+ except we explicit allow it in ALLOWED_DUPLICATES array
+*/
 
 function unique() {
-  var tags = new _set2['default']();
-  var metaTypes = new _set2['default']();
+  var keys = new _set["default"]();
+  var tags = new _set["default"]();
+  var metaTypes = new _set["default"]();
   var metaCategories = {};
-
   return function (h) {
+    if (h.key && h.key.indexOf('.$') === 0) {
+      if (keys.has(h.key)) return false;
+      keys.add(h.key);
+    }
+
     switch (h.type) {
       case 'title':
       case 'base':
         if (tags.has(h.type)) return false;
         tags.add(h.type);
         break;
+
       case 'meta':
         for (var i = 0, len = METATYPES.length; i < len; i++) {
           var metatype = METATYPES[i];
@@ -116,16 +120,20 @@ function unique() {
             metaTypes.add(metatype);
           } else {
             var category = h.props[metatype];
-            var categories = metaCategories[metatype] || new _set2['default']();
-            if (categories.has(category)) return false;
+            var categories = metaCategories[metatype] || new _set["default"]();
+            if (categories.has(category) && ALLOWED_DUPLICATES.indexOf(category) === -1) return false;
             categories.add(category);
             metaCategories[metatype] = categories;
           }
         }
+
         break;
     }
+
     return true;
   };
 }
 
-exports['default'] = (0, _sideEffect2['default'])(reduceComponents, onStateChange, mapOnServer)(Head);
+var _default = (0, _sideEffect["default"])(reduceComponents, onStateChange, mapOnServer)(Head);
+
+exports["default"] = _default;

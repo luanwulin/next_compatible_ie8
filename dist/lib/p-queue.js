@@ -1,47 +1,37 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-var _promise = require('babel-runtime/core-js/promise');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _promise2 = _interopRequireDefault(_promise);
+var _promise = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/promise"));
 
-var _assign = require('babel-runtime/core-js/object/assign');
+var _assign = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/object/assign"));
 
-var _assign2 = _interopRequireDefault(_assign);
-
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = require('babel-runtime/helpers/createClass');
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
 
 // based on https://github.com/sindresorhus/p-queue (MIT)
 // modified for browser support
-
-var Queue = function () {
+var Queue =
+/*#__PURE__*/
+function () {
   function Queue() {
-    (0, _classCallCheck3['default'])(this, Queue);
-
     this._queue = [];
   }
 
-  Queue.prototype.enqueue = function enqueue(run) {
+  var _proto = Queue.prototype;
+
+  _proto.enqueue = function enqueue(run) {
     this._queue.push(run);
   };
 
-  Queue.prototype.dequeue = function dequeue() {
+  _proto.dequeue = function dequeue() {
     return this._queue.shift();
   };
 
-  (0, _createClass3['default'])(Queue, [{
-    key: 'size',
+  (0, _createClass2["default"])(Queue, [{
+    key: "size",
     get: function get() {
       return this._queue.length;
     }
@@ -49,11 +39,11 @@ var Queue = function () {
   return Queue;
 }();
 
-var PQueue = function () {
+var PQueue =
+/*#__PURE__*/
+function () {
   function PQueue(opts) {
-    (0, _classCallCheck3['default'])(this, PQueue);
-
-    opts = (0, _assign2['default'])({
+    opts = (0, _assign["default"])({
       concurrency: Infinity,
       queueClass: Queue
     }, opts);
@@ -63,12 +53,16 @@ var PQueue = function () {
     }
 
     this.queue = new opts.queueClass(); // eslint-disable-line new-cap
+
     this._pendingCount = 0;
     this._concurrency = opts.concurrency;
+
     this._resolveEmpty = function () {};
   }
 
-  PQueue.prototype._next = function _next() {
+  var _proto2 = PQueue.prototype;
+
+  _proto2._next = function _next() {
     this._pendingCount--;
 
     if (this.queue.size > 0) {
@@ -78,18 +72,19 @@ var PQueue = function () {
     }
   };
 
-  PQueue.prototype.add = function add(fn, opts) {
+  _proto2.add = function add(fn, opts) {
     var _this = this;
 
-    return new _promise2['default'](function (resolve, reject) {
+    return new _promise["default"](function (resolve, reject) {
       var run = function run() {
         _this._pendingCount++;
-
         fn().then(function (val) {
           resolve(val);
+
           _this._next();
         }, function (err) {
           reject(err);
+
           _this._next();
         });
       };
@@ -102,11 +97,12 @@ var PQueue = function () {
     });
   };
 
-  PQueue.prototype.onEmpty = function onEmpty() {
+  _proto2.onEmpty = function onEmpty() {
     var _this2 = this;
 
-    return new _promise2['default'](function (resolve) {
+    return new _promise["default"](function (resolve) {
       var existingResolve = _this2._resolveEmpty;
+
       _this2._resolveEmpty = function () {
         existingResolve();
         resolve();
@@ -114,13 +110,13 @@ var PQueue = function () {
     });
   };
 
-  (0, _createClass3['default'])(PQueue, [{
-    key: 'size',
+  (0, _createClass2["default"])(PQueue, [{
+    key: "size",
     get: function get() {
       return this.queue.size;
     }
   }, {
-    key: 'pending',
+    key: "pending",
     get: function get() {
       return this._pendingCount;
     }
@@ -128,4 +124,4 @@ var PQueue = function () {
   return PQueue;
 }();
 
-exports['default'] = PQueue;
+exports["default"] = PQueue;

@@ -1,306 +1,353 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.NextScript = exports.Main = exports.Head = undefined;
+var _interopRequireWildcard = require("@babel/runtime-corejs2/helpers/interopRequireWildcard");
 
-var _extends2 = require('babel-runtime/helpers/extends');
+var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-var _extends3 = _interopRequireDefault(_extends2);
+exports.__esModule = true;
+exports.NextScript = exports.Main = exports.Head = exports["default"] = void 0;
 
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inheritsLoose"));
 
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/defineProperty"));
 
-var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+var _react = _interopRequireWildcard(require("react"));
 
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _inherits2 = require('babel-runtime/helpers/inherits');
+var _htmlescape = _interopRequireDefault(require("htmlescape"));
 
-var _inherits3 = _interopRequireDefault(_inherits2);
+var _server = _interopRequireDefault(require("styled-jsx/server"));
 
-var _react = require('react');
+/* eslint-disable */
+var Fragment = _react["default"].Fragment || function Fragment(_ref) {
+  var children = _ref.children;
+  return _react["default"].createElement("div", null, children);
+};
 
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _htmlescape = require('htmlescape');
-
-var _htmlescape2 = _interopRequireDefault(_htmlescape);
-
-var _server = require('styled-jsx/server');
-
-var _server2 = _interopRequireDefault(_server);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var Document = function (_Component) {
-  (0, _inherits3['default'])(Document, _Component);
+var Document =
+/*#__PURE__*/
+function (_Component) {
+  (0, _inheritsLoose2["default"])(Document, _Component);
 
   function Document() {
-    (0, _classCallCheck3['default'])(this, Document);
-    return (0, _possibleConstructorReturn3['default'])(this, _Component.apply(this, arguments));
+    return _Component.apply(this, arguments) || this;
   }
 
-  Document.getInitialProps = function getInitialProps(_ref) {
-    var renderPage = _ref.renderPage;
+  Document.getInitialProps = function getInitialProps(_ref2) {
+    var renderPage = _ref2.renderPage;
 
     var _renderPage = renderPage(),
         html = _renderPage.html,
         head = _renderPage.head,
-        errorHtml = _renderPage.errorHtml,
-        chunks = _renderPage.chunks;
+        buildManifest = _renderPage.buildManifest;
 
-    var styles = (0, _server2['default'])();
-    return { html: html, head: head, errorHtml: errorHtml, chunks: chunks, styles: styles };
+    var styles = (0, _server["default"])();
+    return {
+      html: html,
+      head: head,
+      styles: styles,
+      buildManifest: buildManifest
+    };
   };
 
-  Document.prototype.getChildContext = function getChildContext() {
-    return { _documentProps: this.props };
+  var _proto = Document.prototype;
+
+  _proto.getChildContext = function getChildContext() {
+    return {
+      _documentProps: this.props
+    };
   };
 
-  Document.prototype.render = function render() {
-    return _react2['default'].createElement(
-      'html',
-      null,
-      _react2['default'].createElement(Head, null),
-      _react2['default'].createElement(
-        'body',
-        null,
-        _react2['default'].createElement(Main, null),
-        _react2['default'].createElement(NextScript, null)
-      )
-    );
+  _proto.render = function render() {
+    return _react["default"].createElement("html", null, _react["default"].createElement(Head, null), _react["default"].createElement("body", null, _react["default"].createElement(Main, null), _react["default"].createElement(NextScript, null)));
   };
 
   return Document;
 }(_react.Component);
 
-Document.childContextTypes = {
-  _documentProps: _propTypes2['default'].any
-};
-exports['default'] = Document;
+exports["default"] = Document;
+(0, _defineProperty2["default"])(Document, "childContextTypes", {
+  _documentProps: _propTypes["default"].any
+});
 
-var Head = exports.Head = function (_Component2) {
-  (0, _inherits3['default'])(Head, _Component2);
+var Head =
+/*#__PURE__*/
+function (_Component2) {
+  (0, _inheritsLoose2["default"])(Head, _Component2);
 
   function Head() {
-    (0, _classCallCheck3['default'])(this, Head);
-    return (0, _possibleConstructorReturn3['default'])(this, _Component2.apply(this, arguments));
+    return _Component2.apply(this, arguments) || this;
   }
 
-  Head.prototype.getChunkPreloadLink = function getChunkPreloadLink(filename) {
-    var __NEXT_DATA__ = this.context._documentProps.__NEXT_DATA__;
-    var buildStats = __NEXT_DATA__.buildStats,
-        assetPrefix = __NEXT_DATA__.assetPrefix,
-        buildId = __NEXT_DATA__.buildId;
+  var _proto2 = Head.prototype;
 
-    var hash = buildStats ? buildStats[filename].hash : buildId;
+  _proto2.getCssLinks = function getCssLinks() {
+    var _this = this;
 
-    return _react2['default'].createElement('link', {
-      key: filename,
-      rel: 'preload',
-      href: assetPrefix + '/_next/' + hash + '/' + filename,
-      as: 'script'
-    });
-  };
+    var _this$context$_docume = this.context._documentProps,
+        assetPrefix = _this$context$_docume.assetPrefix,
+        files = _this$context$_docume.files;
 
-  Head.prototype.getPreloadMainLinks = function getPreloadMainLinks() {
-    var dev = this.context._documentProps.dev;
-
-    if (dev) {
-      return [this.getChunkPreloadLink('manifest.js'), this.getChunkPreloadLink('commons.js'), this.getChunkPreloadLink('main.js')];
+    if (!files || files.length === 0) {
+      return null;
     }
 
-    // In the production mode, we have a single asset with all the JS content.
-    return [this.getChunkPreloadLink('app.js')];
-  };
+    return files.map(function (file) {
+      // Only render .css files here
+      if (!/\.css$/.exec(file)) {
+        return null;
+      }
 
-  Head.prototype.getPreloadDynamicChunks = function getPreloadDynamicChunks() {
-    var _context$_documentPro = this.context._documentProps,
-        chunks = _context$_documentPro.chunks,
-        __NEXT_DATA__ = _context$_documentPro.__NEXT_DATA__;
-    var assetPrefix = __NEXT_DATA__.assetPrefix,
-        buildId = __NEXT_DATA__.buildId;
-
-    return chunks.map(function (chunk) {
-      return _react2['default'].createElement('link', {
-        key: chunk,
-        rel: 'preload',
-        href: assetPrefix + '/_next/' + buildId + '/webpack/chunks/' + chunk,
-        as: 'script'
+      return _react["default"].createElement("link", {
+        key: file,
+        nonce: _this.props.nonce,
+        rel: "stylesheet",
+        href: assetPrefix + "/_next/" + file
       });
     });
   };
 
-  Head.prototype.render = function render() {
-    var _context$_documentPro2 = this.context._documentProps,
-        head = _context$_documentPro2.head,
-        styles = _context$_documentPro2.styles,
-        __NEXT_DATA__ = _context$_documentPro2.__NEXT_DATA__;
-    var pathname = __NEXT_DATA__.pathname,
-        buildId = __NEXT_DATA__.buildId,
-        assetPrefix = __NEXT_DATA__.assetPrefix;
+  _proto2.getPreloadDynamicChunks = function getPreloadDynamicChunks() {
+    var _this2 = this;
 
+    var _this$context$_docume2 = this.context._documentProps,
+        dynamicImports = _this$context$_docume2.dynamicImports,
+        assetPrefix = _this$context$_docume2.assetPrefix;
+    return dynamicImports.map(function (bundle) {
+      return _react["default"].createElement("link", {
+        rel: "preload",
+        key: bundle.file,
+        href: assetPrefix + "/_next/" + bundle.file,
+        as: "script",
+        nonce: _this2.props.nonce
+      });
+    });
+  };
+
+  _proto2.getPreloadMainLinks = function getPreloadMainLinks() {
+    var _this3 = this;
+
+    var _this$context$_docume3 = this.context._documentProps,
+        assetPrefix = _this$context$_docume3.assetPrefix,
+        files = _this$context$_docume3.files;
+
+    if (!files || files.length === 0) {
+      return null;
+    }
+
+    return files.map(function (file) {
+      // Only render .js files here
+      if (!/\.js$/.exec(file)) {
+        return null;
+      }
+
+      return _react["default"].createElement("link", {
+        key: file,
+        nonce: _this3.props.nonce,
+        rel: "preload",
+        href: assetPrefix + "/_next/" + file,
+        as: "script"
+      });
+    });
+  };
+
+  _proto2.render = function render() {
+    var _this$context$_docume4 = this.context._documentProps,
+        head = _this$context$_docume4.head,
+        styles = _this$context$_docume4.styles,
+        assetPrefix = _this$context$_docume4.assetPrefix,
+        __NEXT_DATA__ = _this$context$_docume4.__NEXT_DATA__;
+    var page = __NEXT_DATA__.page,
+        pathname = __NEXT_DATA__.pathname,
+        buildId = __NEXT_DATA__.buildId;
     var pagePathname = getPagePathname(pathname);
+    var children = this.props.children; // show a warning if Head contains <title> (only in development)
 
-    return _react2['default'].createElement(
-      'head',
-      this.props,
-      (head || []).map(function (h, i) {
-        return _react2['default'].cloneElement(h, { key: i });
-      }),
-      _react2['default'].createElement('link', { rel: 'preload', href: assetPrefix + '/_next/' + buildId + '/page' + pagePathname, as: 'script' }),
-      _react2['default'].createElement('link', { rel: 'preload', href: assetPrefix + '/_next/' + buildId + '/page/_error.js', as: 'script' }),
-      this.getPreloadDynamicChunks(),
-      this.getPreloadMainLinks(),
-      styles || null,
-      this.props.children
-    );
+    if (process.env.NODE_ENV !== 'production') {
+      children = _react["default"].Children.map(children, function (child) {
+        if (child && child.type === 'title') {
+          console.warn("Warning: <title> should not be used in _document.js's <Head>. https://err.sh/next.js/no-document-title");
+        }
+
+        return child;
+      });
+    }
+
+    return _react["default"].createElement("head", this.props, head, page !== '/_error' && _react["default"].createElement("link", {
+      rel: "preload",
+      href: assetPrefix + "/_next/static/" + buildId + "/pages" + pagePathname,
+      as: "script",
+      nonce: this.props.nonce
+    }), _react["default"].createElement("link", {
+      rel: "preload",
+      href: assetPrefix + "/_next/static/" + buildId + "/pages/_app.js",
+      as: "script",
+      nonce: this.props.nonce
+    }), _react["default"].createElement("link", {
+      rel: "preload",
+      href: assetPrefix + "/_next/static/" + buildId + "/pages/_error.js",
+      as: "script",
+      nonce: this.props.nonce
+    }), this.getPreloadDynamicChunks(), this.getPreloadMainLinks(), this.getCssLinks(), styles || null, children);
   };
 
   return Head;
 }(_react.Component);
 
-Head.contextTypes = {
-  _documentProps: _propTypes2['default'].any
-};
+exports.Head = Head;
+(0, _defineProperty2["default"])(Head, "contextTypes", {
+  _documentProps: _propTypes["default"].any
+});
+(0, _defineProperty2["default"])(Head, "propTypes", {
+  nonce: _propTypes["default"].string
+});
 
-var Main = exports.Main = function (_Component3) {
-  (0, _inherits3['default'])(Main, _Component3);
+var Main =
+/*#__PURE__*/
+function (_Component3) {
+  (0, _inheritsLoose2["default"])(Main, _Component3);
 
   function Main() {
-    (0, _classCallCheck3['default'])(this, Main);
-    return (0, _possibleConstructorReturn3['default'])(this, _Component3.apply(this, arguments));
+    return _Component3.apply(this, arguments) || this;
   }
 
-  Main.prototype.render = function render() {
-    var _context$_documentPro3 = this.context._documentProps,
-        html = _context$_documentPro3.html,
-        errorHtml = _context$_documentPro3.errorHtml;
-    var className = this.props.className;
+  var _proto3 = Main.prototype;
 
-    return _react2['default'].createElement(
-      'div',
-      { className: className },
-      _react2['default'].createElement('div', { id: '__next', dangerouslySetInnerHTML: { __html: html } }),
-      _react2['default'].createElement('div', { id: '__next-error', dangerouslySetInnerHTML: { __html: errorHtml } })
-    );
+  _proto3.render = function render() {
+    var html = this.context._documentProps.html;
+    return _react["default"].createElement("div", {
+      id: "__next",
+      dangerouslySetInnerHTML: {
+        __html: html
+      }
+    });
   };
 
   return Main;
 }(_react.Component);
 
-Main.propTypes = {
-  className: _propTypes2['default'].string
-};
-Main.contextTypes = {
-  _documentProps: _propTypes2['default'].any
-};
+exports.Main = Main;
+(0, _defineProperty2["default"])(Main, "contextTypes", {
+  _documentProps: _propTypes["default"].any
+});
 
-var NextScript = exports.NextScript = function (_Component4) {
-  (0, _inherits3['default'])(NextScript, _Component4);
+var NextScript =
+/*#__PURE__*/
+function (_Component4) {
+  (0, _inheritsLoose2["default"])(NextScript, _Component4);
 
   function NextScript() {
-    (0, _classCallCheck3['default'])(this, NextScript);
-    return (0, _possibleConstructorReturn3['default'])(this, _Component4.apply(this, arguments));
+    return _Component4.apply(this, arguments) || this;
   }
 
-  NextScript.prototype.getChunkScript = function getChunkScript(filename) {
-    var additionalProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var __NEXT_DATA__ = this.context._documentProps.__NEXT_DATA__;
-    var buildStats = __NEXT_DATA__.buildStats,
-        assetPrefix = __NEXT_DATA__.assetPrefix,
-        buildId = __NEXT_DATA__.buildId;
+  var _proto4 = NextScript.prototype;
 
-    var hash = buildStats ? buildStats[filename].hash : buildId;
+  _proto4.getDynamicChunks = function getDynamicChunks() {
+    var _this4 = this;
 
-    return _react2['default'].createElement('script', (0, _extends3['default'])({
-      key: filename,
-      type: 'text/javascript',
-      src: assetPrefix + '/_next/' + hash + '/' + filename
-    }, additionalProps));
+    var _this$context$_docume5 = this.context._documentProps,
+        dynamicImports = _this$context$_docume5.dynamicImports,
+        assetPrefix = _this$context$_docume5.assetPrefix;
+    return dynamicImports.map(function (bundle) {
+      return _react["default"].createElement("script", {
+        async: true,
+        key: bundle.file,
+        src: assetPrefix + "/_next/" + bundle.file,
+        nonce: _this4.props.nonce
+      });
+    });
   };
 
-  NextScript.prototype.getScripts = function getScripts() {
-    var dev = this.context._documentProps.dev;
+  _proto4.getScripts = function getScripts() {
+    var _this5 = this;
 
-    if (dev) {
-      return [this.getChunkScript('manifest.js'), this.getChunkScript('commons.js'), this.getChunkScript('main.js')];
+    var _this$context$_docume6 = this.context._documentProps,
+        assetPrefix = _this$context$_docume6.assetPrefix,
+        files = _this$context$_docume6.files;
+
+    if (!files || files.length === 0) {
+      return null;
     }
 
-    // In the production mode, we have a single asset with all the JS content.
-    // So, we can load the script with async
-    return [this.getChunkScript('app.js', { async: true })];
+    return files.map(function (file) {
+      // Only render .js files here
+      if (!/\.js$/.exec(file)) {
+        return null;
+      }
+
+      return _react["default"].createElement("script", {
+        key: file,
+        src: assetPrefix + "/_next/" + file,
+        nonce: _this5.props.nonce,
+        async: true
+      });
+    });
   };
 
-  NextScript.prototype.getDynamicChunks = function getDynamicChunks() {
-    var _context$_documentPro4 = this.context._documentProps,
-        chunks = _context$_documentPro4.chunks,
-        __NEXT_DATA__ = _context$_documentPro4.__NEXT_DATA__;
-    var assetPrefix = __NEXT_DATA__.assetPrefix,
+  NextScript.getInlineScriptSource = function getInlineScriptSource(documentProps) {
+    var __NEXT_DATA__ = documentProps.__NEXT_DATA__;
+    var page = __NEXT_DATA__.page,
+        pathname = __NEXT_DATA__.pathname;
+    return "__NEXT_DATA__ = " + (0, _htmlescape["default"])(__NEXT_DATA__) + ";__NEXT_LOADED_PAGES__=[];__NEXT_REGISTER_PAGE=function(r,f){__NEXT_LOADED_PAGES__.push([r, f])}" + (page === '/_error' ? ";__NEXT_REGISTER_PAGE(" + (0, _htmlescape["default"])(pathname) + ",function(){var e = new Error('Page does not exist: " + (0, _htmlescape["default"])(pathname) + "');e.statusCode=404;return {error:e}})" : '');
+  };
+
+  _proto4.render = function render() {
+    var _this6 = this;
+
+    var _this$context$_docume7 = this.context._documentProps,
+        staticMarkup = _this$context$_docume7.staticMarkup,
+        assetPrefix = _this$context$_docume7.assetPrefix,
+        devFiles = _this$context$_docume7.devFiles,
+        __NEXT_DATA__ = _this$context$_docume7.__NEXT_DATA__;
+    var page = __NEXT_DATA__.page,
+        pathname = __NEXT_DATA__.pathname,
         buildId = __NEXT_DATA__.buildId;
-
-    return _react2['default'].createElement(
-      'div',
-      null,
-      chunks.map(function (chunk) {
-        return _react2['default'].createElement('script', {
-          async: true,
-          key: chunk,
-          type: 'text/javascript',
-          src: assetPrefix + '/_next/' + buildId + '/webpack/chunks/' + chunk
-        });
-      })
-    );
-  };
-
-  NextScript.prototype.render = function render() {
-    var _context$_documentPro5 = this.context._documentProps,
-        staticMarkup = _context$_documentPro5.staticMarkup,
-        __NEXT_DATA__ = _context$_documentPro5.__NEXT_DATA__,
-        chunks = _context$_documentPro5.chunks;
-    var pathname = __NEXT_DATA__.pathname,
-        buildId = __NEXT_DATA__.buildId,
-        assetPrefix = __NEXT_DATA__.assetPrefix;
-
     var pagePathname = getPagePathname(pathname);
-
-    __NEXT_DATA__.chunks = chunks;
-
-    return _react2['default'].createElement(
-      'div',
-      null,
-      staticMarkup ? null : _react2['default'].createElement('script', { nonce: this.props.nonce, dangerouslySetInnerHTML: {
-          __html: '\n          __NEXT_DATA__ = ' + (0, _htmlescape2['default'])(__NEXT_DATA__) + '\n          module={}\n          __NEXT_LOADED_PAGES__ = []\n          __NEXT_LOADED_CHUNKS__ = []\n\n          __NEXT_REGISTER_PAGE = function (route, fn) {\n            __NEXT_LOADED_PAGES__.push({ route: route, fn: fn })\n          }\n\n          __NEXT_REGISTER_CHUNK = function (chunkName, fn) {\n            __NEXT_LOADED_CHUNKS__.push({ chunkName: chunkName, fn: fn })\n          }\n        '
-        } }),
-      _react2['default'].createElement('script', { async: true, id: '__NEXT_PAGE__' + pathname, type: 'text/javascript', src: assetPrefix + '/_next/' + buildId + '/page' + pagePathname }),
-      _react2['default'].createElement('script', { async: true, id: '__NEXT_PAGE__/_error', type: 'text/javascript', src: assetPrefix + '/_next/' + buildId + '/page/_error.js' }),
-      staticMarkup ? null : this.getDynamicChunks(),
-      staticMarkup ? null : this.getScripts()
-    );
+    return _react["default"].createElement(Fragment, null, devFiles ? devFiles.map(function (file) {
+      return _react["default"].createElement("script", {
+        key: file,
+        src: assetPrefix + "/_next/" + file,
+        nonce: _this6.props.nonce
+      });
+    }) : null, staticMarkup ? null : _react["default"].createElement("script", {
+      nonce: this.props.nonce,
+      dangerouslySetInnerHTML: {
+        __html: NextScript.getInlineScriptSource(this.context._documentProps)
+      }
+    }), page !== '/_error' && _react["default"].createElement("script", {
+      async: true,
+      id: "__NEXT_PAGE__" + pathname,
+      src: assetPrefix + "/_next/static/" + buildId + "/pages" + pagePathname,
+      nonce: this.props.nonce
+    }), _react["default"].createElement("script", {
+      async: true,
+      id: "__NEXT_PAGE__/_app",
+      src: assetPrefix + "/_next/static/" + buildId + "/pages/_app.js",
+      nonce: this.props.nonce
+    }), _react["default"].createElement("script", {
+      async: true,
+      id: "__NEXT_PAGE__/_error",
+      src: assetPrefix + "/_next/static/" + buildId + "/pages/_error.js",
+      nonce: this.props.nonce
+    }), staticMarkup ? null : this.getDynamicChunks(), staticMarkup ? null : this.getScripts());
   };
 
   return NextScript;
 }(_react.Component);
 
-NextScript.propTypes = {
-  nonce: _propTypes2['default'].string
-};
-NextScript.contextTypes = {
-  _documentProps: _propTypes2['default'].any
-};
-
+exports.NextScript = NextScript;
+(0, _defineProperty2["default"])(NextScript, "contextTypes", {
+  _documentProps: _propTypes["default"].any
+});
+(0, _defineProperty2["default"])(NextScript, "propTypes", {
+  nonce: _propTypes["default"].string
+});
 
 function getPagePathname(pathname) {
   if (pathname === '/') {
     return '/index.js';
   }
 
-  return pathname + '.js';
+  return pathname + ".js";
 }

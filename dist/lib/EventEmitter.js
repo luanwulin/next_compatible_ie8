@@ -1,28 +1,26 @@
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-var _set = require("babel-runtime/core-js/set");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _set2 = _interopRequireDefault(_set);
+var _set = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/set"));
 
-var _classCallCheck2 = require("babel-runtime/helpers/classCallCheck");
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/defineProperty"));
 
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-var EventEmitter = function () {
+var EventEmitter =
+/*#__PURE__*/
+function () {
   function EventEmitter() {
-    (0, _classCallCheck3["default"])(this, EventEmitter);
-    this.listeners = {};
+    (0, _defineProperty2["default"])(this, "listeners", {});
   }
 
-  EventEmitter.prototype.on = function on(event, cb) {
+  var _proto = EventEmitter.prototype;
+
+  _proto.on = function on(event, cb) {
     if (!this.listeners[event]) {
-      this.listeners[event] = new _set2["default"]();
+      this.listeners[event] = new _set["default"]();
     }
 
     if (this.listeners[event].has(cb)) {
@@ -30,21 +28,31 @@ var EventEmitter = function () {
     }
 
     this.listeners[event].add(cb);
+    return this;
   };
 
-  EventEmitter.prototype.emit = function emit(event) {
-    for (var _len = arguments.length, data = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+  _proto.emit = function emit(event) {
+    for (var _len = arguments.length, data = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
       data[_key - 1] = arguments[_key];
     }
 
-    if (!this.listeners[event]) return;
-    this.listeners[event].forEach(function (cb) {
-      return cb.apply(undefined, data);
-    });
+    var listeners = this.listeners[event];
+    var hasListeners = listeners && listeners.size;
+
+    if (!hasListeners) {
+      return false;
+    }
+
+    listeners.forEach(function (cb) {
+      return cb.apply(void 0, data);
+    }); // eslint-disable-line standard/no-callback-literal
+
+    return true;
   };
 
-  EventEmitter.prototype.off = function off(event, cb) {
+  _proto.off = function off(event, cb) {
     this.listeners[event]["delete"](cb);
+    return this;
   };
 
   return EventEmitter;

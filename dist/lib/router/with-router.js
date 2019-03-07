@@ -1,70 +1,53 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var _interopRequireWildcard = require("@babel/runtime-corejs2/helpers/interopRequireWildcard");
 
-var _extends2 = require('babel-runtime/helpers/extends');
+var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-var _extends3 = _interopRequireDefault(_extends2);
+exports.__esModule = true;
+exports["default"] = withRouter;
 
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+var _objectSpread2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/objectSpread"));
 
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inheritsLoose"));
 
-var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/defineProperty"));
 
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+var _react = _interopRequireWildcard(require("react"));
 
-var _inherits2 = require('babel-runtime/helpers/inherits');
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _inherits3 = _interopRequireDefault(_inherits2);
+var _hoistNonReactStatics = _interopRequireDefault(require("hoist-non-react-statics"));
 
-exports['default'] = withRouter;
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _hoistNonReactStatics = require('hoist-non-react-statics');
-
-var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
-
-var _utils = require('../utils');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+var _utils = require("../utils");
 
 function withRouter(ComposedComponent) {
   var displayName = (0, _utils.getDisplayName)(ComposedComponent);
 
-  var WithRouteWrapper = function (_Component) {
-    (0, _inherits3['default'])(WithRouteWrapper, _Component);
+  var WithRouteWrapper =
+  /*#__PURE__*/
+  function (_Component) {
+    (0, _inheritsLoose2["default"])(WithRouteWrapper, _Component);
 
     function WithRouteWrapper() {
-      (0, _classCallCheck3['default'])(this, WithRouteWrapper);
-      return (0, _possibleConstructorReturn3['default'])(this, _Component.apply(this, arguments));
+      return _Component.apply(this, arguments) || this;
     }
 
-    WithRouteWrapper.prototype.render = function render() {
-      var props = (0, _extends3['default'])({
+    var _proto = WithRouteWrapper.prototype;
+
+    _proto.render = function render() {
+      var props = (0, _objectSpread2["default"])({
         router: this.context.router
       }, this.props);
-
-      return _react2['default'].createElement(ComposedComponent, props);
+      return _react["default"].createElement(ComposedComponent, props);
     };
 
     return WithRouteWrapper;
   }(_react.Component);
 
-  WithRouteWrapper.contextTypes = {
-    router: _propTypes2['default'].object
-  };
-  WithRouteWrapper.displayName = 'withRoute(' + displayName + ')';
-
-
-  return (0, _hoistNonReactStatics2['default'])(WithRouteWrapper, ComposedComponent);
+  (0, _defineProperty2["default"])(WithRouteWrapper, "contextTypes", {
+    router: _propTypes["default"].object
+  });
+  (0, _defineProperty2["default"])(WithRouteWrapper, "displayName", "withRouter(" + displayName + ")");
+  return (0, _hoistNonReactStatics["default"])(WithRouteWrapper, ComposedComponent);
 }
