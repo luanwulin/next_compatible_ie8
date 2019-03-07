@@ -2,24 +2,26 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/toConsumableArray"));
+
 var _assign = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/object/assign"));
 
 var _set = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/set"));
 
 var _babelLoader = _interopRequireDefault(require("babel-loader"));
 
-module.exports = _babelLoader["default"].custom(function (babel) {
+module.exports = _babelLoader.default.custom(function (babel) {
   var presetItem = babel.createConfigItem(require('../../babel/preset'), {
     type: 'preset'
   });
-  var configs = new _set["default"]();
+  var configs = new _set.default();
   return {
     customOptions: function customOptions(opts) {
       var custom = {
         isServer: opts.isServer,
         dev: opts.dev
       };
-      var loader = (0, _assign["default"])({
+      var loader = (0, _assign.default)({
         cacheDirectory: true
       }, opts);
       delete loader.isServer;
@@ -33,7 +35,7 @@ module.exports = _babelLoader["default"].custom(function (babel) {
       var _ref$customOptions = _ref.customOptions,
           isServer = _ref$customOptions.isServer,
           dev = _ref$customOptions.dev;
-      var options = (0, _assign["default"])({}, cfg.options);
+      var options = (0, _assign.default)({}, cfg.options);
 
       if (cfg.hasFilesystemConfig()) {
         var _arr = [cfg.babelrc, cfg.config];
@@ -45,12 +47,12 @@ module.exports = _babelLoader["default"].custom(function (babel) {
           if (file && !isServer && !configs.has(file)) {
             configs.add(file);
             console.log("> Using external babel configuration");
-            console.log("> Location: \"" + file + "\"");
+            console.log("> Location: \"".concat(file, "\""));
           }
         }
       } else {
         // Add our default preset if the no "babelrc" found.
-        options.presets = [].concat(options.presets, [presetItem]);
+        options.presets = [].concat((0, _toConsumableArray2.default)(options.presets), [presetItem]);
       }
 
       return options;

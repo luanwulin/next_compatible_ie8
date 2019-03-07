@@ -1,6 +1,8 @@
 "use strict";
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.isInternalUrl = isInternalUrl;
 exports.addCorsSupport = addCorsSupport;
 var internalPrefixes = [/^\/_next\//, /^\/static\//];

@@ -4,16 +4,20 @@ var _interopRequireWildcard = require("@babel/runtime-corejs2/helpers/interopReq
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.render = render;
 exports.renderError = renderError;
-exports["default"] = exports.emitter = exports.ErrorComponent = exports.router = void 0;
+exports.default = exports.emitter = exports.ErrorComponent = exports.router = void 0;
 
 var _objectSpread2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/objectSpread"));
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime-corejs2/regenerator"));
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/asyncToGenerator"));
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/slicedToArray"));
 
 var _promise = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/promise"));
 
@@ -45,7 +49,7 @@ var _loadable = _interopRequireDefault(require("../lib/loadable"));
 // So, we need to polyfill it.
 // See: https://webpack.js.org/guides/code-splitting/#dynamic-imports
 if (!window.Promise) {
-  window.Promise = _promise["default"];
+  window.Promise = _promise.default;
 }
 
 var _window = window,
@@ -53,7 +57,6 @@ var _window = window,
     props = _window$__NEXT_DATA__.props,
     err = _window$__NEXT_DATA__.err,
     page = _window$__NEXT_DATA__.page,
-    pathname = _window$__NEXT_DATA__.pathname,
     query = _window$__NEXT_DATA__.query,
     buildId = _window$__NEXT_DATA__.buildId,
     assetPrefix = _window$__NEXT_DATA__.assetPrefix,
@@ -62,7 +65,7 @@ var _window = window,
 var prefix = assetPrefix || ''; // With dynamic assetPrefix it's no longer possible to set assetPrefix at the build time
 // So, this is how we do it in the client side at runtime
 
-__webpack_public_path__ = prefix + "/_next/"; //eslint-disable-line
+__webpack_public_path__ = "".concat(prefix, "/_next/"); //eslint-disable-line
 // Initialize next/asset with the assetPrefix
 
 asset.setAssetPrefix(prefix); // Initialize next/config with the environment configuration
@@ -72,17 +75,19 @@ envConfig.setConfig({
   publicRuntimeConfig: runtimeConfig
 });
 var asPath = (0, _utils.getURL)();
-var pageLoader = new _pageLoader["default"](buildId, prefix);
+var pageLoader = new _pageLoader.default(buildId, prefix);
 
 window.__NEXT_LOADED_PAGES__.forEach(function (_ref) {
-  var r = _ref[0],
-      f = _ref[1];
+  var _ref2 = (0, _slicedToArray2.default)(_ref, 2),
+      r = _ref2[0],
+      f = _ref2[1];
+
   pageLoader.registerPage(r, f);
 });
 
 delete window.__NEXT_LOADED_PAGES__;
 window.__NEXT_REGISTER_PAGE = pageLoader.registerPage.bind(pageLoader);
-var headManager = new _headManager["default"]();
+var headManager = new _headManager.default();
 var appContainer = document.getElementById('__next');
 var lastAppProps;
 var webpackHMR;
@@ -92,114 +97,111 @@ var ErrorComponent;
 exports.ErrorComponent = ErrorComponent;
 var Component;
 var App;
-var emitter = new _EventEmitter["default"]();
+var emitter = new _EventEmitter.default();
 exports.emitter = emitter;
 
 var _default =
 /*#__PURE__*/
-function () {
-  var _ref2 = (0, _asyncToGenerator2["default"])(
-  /*#__PURE__*/
-  _regenerator["default"].mark(function _callee(_temp) {
-    var _ref3, passedWebpackHMR, initialErr;
+(0, _asyncToGenerator2.default)(
+/*#__PURE__*/
+_regenerator.default.mark(function _callee() {
+  var _ref4,
+      passedWebpackHMR,
+      initialErr,
+      _args = arguments;
 
-    return _regenerator["default"].wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            _ref3 = _temp === void 0 ? {} : _temp, passedWebpackHMR = _ref3.webpackHMR;
+  return _regenerator.default.wrap(function _callee$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          _ref4 = _args.length > 0 && _args[0] !== undefined ? _args[0] : {}, passedWebpackHMR = _ref4.webpackHMR;
 
-            // This makes sure this specific line is removed in production
-            if (process.env.NODE_ENV === 'development') {
-              webpackHMR = passedWebpackHMR;
-            }
+          // This makes sure this specific line is removed in production
+          if (process.env.NODE_ENV === 'development') {
+            webpackHMR = passedWebpackHMR;
+          }
 
-            _context.next = 4;
-            return pageLoader.loadPage('/_error');
+          _context.next = 4;
+          return pageLoader.loadPage('/_error');
 
-          case 4:
-            exports.ErrorComponent = ErrorComponent = _context.sent;
-            _context.next = 7;
-            return pageLoader.loadPage('/_app');
+        case 4:
+          exports.ErrorComponent = ErrorComponent = _context.sent;
+          _context.next = 7;
+          return pageLoader.loadPage('/_app');
 
-          case 7:
-            App = _context.sent;
-            initialErr = err;
-            _context.prev = 9;
-            _context.next = 12;
-            return pageLoader.loadPage(page);
+        case 7:
+          App = _context.sent;
+          initialErr = err;
+          _context.prev = 9;
+          _context.next = 12;
+          return pageLoader.loadPage(page);
 
-          case 12:
-            Component = _context.sent;
+        case 12:
+          Component = _context.sent;
 
-            if (!(typeof Component !== 'function')) {
-              _context.next = 15;
-              break;
-            }
-
-            throw new Error("The default export is not a React Component in page: \"" + pathname + "\"");
-
-          case 15:
-            _context.next = 20;
+          if (!(typeof Component !== 'function')) {
+            _context.next = 15;
             break;
+          }
 
-          case 17:
-            _context.prev = 17;
-            _context.t0 = _context["catch"](9);
-            // This catches errors like throwing in the top level of a module
-            initialErr = _context.t0;
+          throw new Error("The default export is not a React Component in page: \"".concat(page, "\""));
 
-          case 20:
-            _context.next = 22;
-            return _loadable["default"].preloadReady(dynamicIds || []);
+        case 15:
+          _context.next = 20;
+          break;
 
-          case 22:
-            exports.router = router = (0, _router2.createRouter)(pathname, query, asPath, {
-              initialProps: props,
-              pageLoader: pageLoader,
-              App: App,
-              Component: Component,
-              ErrorComponent: ErrorComponent,
-              err: initialErr
-            });
-            router.subscribe(function (_ref4) {
-              var App = _ref4.App,
-                  Component = _ref4.Component,
-                  props = _ref4.props,
-                  err = _ref4.err;
-              render({
-                App: App,
-                Component: Component,
-                props: props,
-                err: err,
-                emitter: emitter
-              });
-            });
+        case 17:
+          _context.prev = 17;
+          _context.t0 = _context["catch"](9);
+          // This catches errors like throwing in the top level of a module
+          initialErr = _context.t0;
+
+        case 20:
+          _context.next = 22;
+          return _loadable.default.preloadReady(dynamicIds || []);
+
+        case 22:
+          exports.router = router = (0, _router2.createRouter)(page, query, asPath, {
+            initialProps: props,
+            pageLoader: pageLoader,
+            App: App,
+            Component: Component,
+            ErrorComponent: ErrorComponent,
+            err: initialErr
+          });
+          router.subscribe(function (_ref5) {
+            var App = _ref5.App,
+                Component = _ref5.Component,
+                props = _ref5.props,
+                err = _ref5.err;
             render({
               App: App,
               Component: Component,
               props: props,
-              err: initialErr,
+              err: err,
               emitter: emitter
             });
-            return _context.abrupt("return", emitter);
+          });
+          render({
+            App: App,
+            Component: Component,
+            props: props,
+            err: initialErr,
+            emitter: emitter
+          });
+          return _context.abrupt("return", emitter);
 
-          case 26:
-          case "end":
-            return _context.stop();
-        }
+        case 26:
+        case "end":
+          return _context.stop();
       }
-    }, _callee, null, [[9, 17]]);
-  }));
+    }
+  }, _callee, null, [[9, 17]]);
+}));
 
-  return function (_x) {
-    return _ref2.apply(this, arguments);
-  };
-}();
+exports.default = _default;
 
-exports["default"] = _default;
-
-function render(_x2) {
+function render(_x) {
   return _render.apply(this, arguments);
 } // This method handles all runtime and debug errors.
 // 404 and 500 errors are special kind of errors
@@ -207,10 +209,10 @@ function render(_x2) {
 
 
 function _render() {
-  _render = (0, _asyncToGenerator2["default"])(
+  _render = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
-  _regenerator["default"].mark(function _callee2(props) {
-    return _regenerator["default"].wrap(function _callee2$(_context2) {
+  _regenerator.default.mark(function _callee2(props) {
+    return _regenerator.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
@@ -238,7 +240,7 @@ function _render() {
             _context2.prev = 9;
             _context2.t0 = _context2["catch"](4);
             _context2.next = 13;
-            return renderError((0, _objectSpread2["default"])({}, props, {
+            return renderError((0, _objectSpread2.default)({}, props, {
               err: _context2.t0
             }));
 
@@ -252,16 +254,16 @@ function _render() {
   return _render.apply(this, arguments);
 }
 
-function renderError(_x3) {
+function renderError(_x2) {
   return _renderError.apply(this, arguments);
 }
 
 function _renderError() {
-  _renderError = (0, _asyncToGenerator2["default"])(
+  _renderError = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
-  _regenerator["default"].mark(function _callee3(props) {
+  _regenerator.default.mark(function _callee3(props) {
     var App, err, initProps;
-    return _regenerator["default"].wrap(function _callee3$(_context3) {
+    return _regenerator.default.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
@@ -296,7 +298,7 @@ function _renderError() {
               router: router,
               ctx: {
                 err: err,
-                pathname: pathname,
+                pathname: page,
                 query: query,
                 asPath: asPath
               }
@@ -308,7 +310,7 @@ function _renderError() {
           case 11:
             initProps = _context3.t0;
             _context3.next = 14;
-            return doRender((0, _objectSpread2["default"])({}, props, {
+            return doRender((0, _objectSpread2.default)({}, props, {
               err: err,
               Component: ErrorComponent,
               props: initProps
@@ -328,44 +330,44 @@ var isInitialRender = true;
 
 function renderReactElement(reactEl, domEl) {
   // The check for `.hydrate` is there to support React alternatives like preact
-  if (isInitialRender && typeof _reactDom["default"].hydrate === 'function') {
-    _reactDom["default"].hydrate(reactEl, domEl);
+  if (isInitialRender && typeof _reactDom.default.hydrate === 'function') {
+    _reactDom.default.hydrate(reactEl, domEl);
 
     isInitialRender = false;
   } else {
-    _reactDom["default"].render(reactEl, domEl);
+    _reactDom.default.render(reactEl, domEl);
   }
 }
 
-function doRender(_x4) {
+function doRender(_x3) {
   return _doRender.apply(this, arguments);
 }
 
 function _doRender() {
-  _doRender = (0, _asyncToGenerator2["default"])(
+  _doRender = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
-  _regenerator["default"].mark(function _callee5(_ref5) {
-    var App, Component, props, err, _ref5$emitter, emitterProp, _router, _pathname, _query, _asPath, appProps, onError;
+  _regenerator.default.mark(function _callee5(_ref6) {
+    var App, Component, props, err, _ref6$emitter, emitterProp, _router, pathname, _query, _asPath, appProps, onError;
 
-    return _regenerator["default"].wrap(function _callee5$(_context5) {
+    return _regenerator.default.wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
-            App = _ref5.App, Component = _ref5.Component, props = _ref5.props, err = _ref5.err, _ref5$emitter = _ref5.emitter, emitterProp = _ref5$emitter === void 0 ? emitter : _ref5$emitter;
+            App = _ref6.App, Component = _ref6.Component, props = _ref6.props, err = _ref6.err, _ref6$emitter = _ref6.emitter, emitterProp = _ref6$emitter === void 0 ? emitter : _ref6$emitter;
 
             if (!(!props && Component && Component !== ErrorComponent && lastAppProps.Component === ErrorComponent)) {
               _context5.next = 6;
               break;
             }
 
-            _router = router, _pathname = _router.pathname, _query = _router.query, _asPath = _router.asPath;
+            _router = router, pathname = _router.pathname, _query = _router.query, _asPath = _router.asPath;
             _context5.next = 5;
             return (0, _utils.loadGetInitialProps)(App, {
               Component: Component,
               router: router,
               ctx: {
                 err: err,
-                pathname: _pathname,
+                pathname: pathname,
                 query: _query,
                 asPath: _asPath
               }
@@ -377,7 +379,7 @@ function _doRender() {
           case 6:
             Component = Component || lastAppProps.Component;
             props = props || lastAppProps.props;
-            appProps = (0, _objectSpread2["default"])({
+            appProps = (0, _objectSpread2.default)({
               Component: Component,
               err: err,
               router: router,
@@ -392,16 +394,16 @@ function _doRender() {
             }); // In development runtime errors are caught by react-error-overlay.
 
             if (process.env.NODE_ENV === 'development') {
-              renderReactElement(_react["default"].createElement(App, appProps), appContainer);
+              renderReactElement(_react.default.createElement(App, appProps), appContainer);
             } else {
               // In production we catch runtime errors using componentDidCatch which will trigger renderError.
               onError =
               /*#__PURE__*/
               function () {
-                var _ref6 = (0, _asyncToGenerator2["default"])(
+                var _ref7 = (0, _asyncToGenerator2.default)(
                 /*#__PURE__*/
-                _regenerator["default"].mark(function _callee4(error) {
-                  return _regenerator["default"].wrap(function _callee4$(_context4) {
+                _regenerator.default.mark(function _callee4(error) {
+                  return _regenerator.default.wrap(function _callee4$(_context4) {
                     while (1) {
                       switch (_context4.prev = _context4.next) {
                         case 0:
@@ -429,14 +431,14 @@ function _doRender() {
                   }, _callee4, null, [[0, 5]]);
                 }));
 
-                return function onError(_x5) {
-                  return _ref6.apply(this, arguments);
+                return function onError(_x4) {
+                  return _ref7.apply(this, arguments);
                 };
               }();
 
-              renderReactElement(_react["default"].createElement(_errorBoundary["default"], {
+              renderReactElement(_react.default.createElement(_errorBoundary.default, {
                 onError: onError
-              }, _react["default"].createElement(App, appProps)), appContainer);
+              }, _react.default.createElement(App, appProps)), appContainer);
             }
 
             emitterProp.emit('after-reactdom-render', {

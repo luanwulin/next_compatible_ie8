@@ -34,13 +34,6 @@ module.exports = (context, opts = {}) => ({
       // In the test environment `modules` is often needed to be set to true, babel figures that out by itself using the `'auto'` option
       // In production/development this option is set to `false` so that webpack can handle import/export with tree-shaking
       modules: isDevelopment || isProduction ? false : 'auto',
-      useBuiltIns: 'entry',
-      targets: {
-        'browsers': [
-          'ie >= 8'
-        ]
-      },
-      loose: true,
       ...opts['preset-env']
     }],
     [require('@babel/preset-react'), {
@@ -56,8 +49,6 @@ module.exports = (context, opts = {}) => ({
     require('./plugins/react-loadable-plugin'),
     [require('@babel/plugin-proposal-class-properties'), opts['class-properties'] || {}],
     require('@babel/plugin-proposal-object-rest-spread'),
-    require('babel-plugin-transform-es3-property-literals'),
-    require('babel-plugin-transform-es3-member-expression-literals'),
     [require('@babel/plugin-transform-runtime'), {
       helpers: false,
       regenerator: true,

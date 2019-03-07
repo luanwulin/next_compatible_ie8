@@ -2,7 +2,9 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.execOnce = execOnce;
 exports.getDisplayName = getDisplayName;
 exports.isResSent = isResSent;
@@ -48,12 +50,12 @@ function loadGetInitialProps(_x, _x2) {
 }
 
 function _loadGetInitialProps() {
-  _loadGetInitialProps = (0, _asyncToGenerator2["default"])(
+  _loadGetInitialProps = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
-  _regenerator["default"].mark(function _callee(Component, ctx) {
+  _regenerator.default.mark(function _callee(Component, ctx) {
     var compName, message, props, _compName, _message;
 
-    return _regenerator["default"].wrap(function _callee$(_context) {
+    return _regenerator.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
@@ -68,7 +70,7 @@ function _loadGetInitialProps() {
             }
 
             compName = getDisplayName(Component);
-            message = "\"" + compName + ".getInitialProps()\" is defined as an instance method - visit https://err.sh/zeit/next.js/get-initial-props-as-an-instance-method for more information.";
+            message = "\"".concat(compName, ".getInitialProps()\" is defined as an instance method - visit https://err.sh/zeit/next.js/get-initial-props-as-an-instance-method for more information.");
             throw new Error(message);
 
           case 5:
@@ -100,7 +102,7 @@ function _loadGetInitialProps() {
             }
 
             _compName = getDisplayName(Component);
-            _message = "\"" + _compName + ".getInitialProps()\" should resolve to an object. But found \"" + props + "\" instead.";
+            _message = "\"".concat(_compName, ".getInitialProps()\" should resolve to an object. But found \"").concat(props, "\" instead.");
             throw new Error(_message);
 
           case 16:
@@ -121,7 +123,7 @@ function getLocationOrigin() {
       protocol = _window$location.protocol,
       hostname = _window$location.hostname,
       port = _window$location.port;
-  return protocol + "//" + hostname + (port ? ':' + port : '');
+  return "".concat(protocol, "//").concat(hostname).concat(port ? ':' + port : '');
 }
 
 function getURL() {

@@ -13,14 +13,14 @@ var _export = _interopRequireDefault(require("../export"));
 
 var _utils = require("../server/lib/utils");
 
-var argv = (0, _minimist["default"])(process.argv.slice(2), {
+var argv = (0, _minimist.default)(process.argv.slice(2), {
   alias: {
     h: 'help',
     s: 'silent',
     o: 'outdir'
   },
   boolean: ['h'],
-  "default": {
+  default: {
     s: false,
     o: null
   }
@@ -34,7 +34,7 @@ if (argv.help) {
 var dir = (0, _path.resolve)(argv._[0] || '.'); // Check if pages dir exists and warn if not
 
 if (!(0, _fs.existsSync)(dir)) {
-  (0, _utils.printAndExit)("> No such directory exists as the project root: " + dir);
+  (0, _utils.printAndExit)("> No such directory exists as the project root: ".concat(dir));
 }
 
 if (!(0, _fs.existsSync)((0, _path.join)(dir, 'pages'))) {
@@ -49,8 +49,8 @@ var options = {
   silent: argv.silent,
   outdir: argv.outdir ? (0, _path.resolve)(argv.outdir) : (0, _path.resolve)(dir, 'out')
 };
-(0, _export["default"])(dir, options).then(function () {
+(0, _export.default)(dir, options).then(function () {
   (0, _utils.printAndExit)('Export successful', 0);
-})["catch"](function (err) {
+}).catch(function (err) {
   (0, _utils.printAndExit)(err);
 });

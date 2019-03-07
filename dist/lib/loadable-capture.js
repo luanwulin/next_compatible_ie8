@@ -2,10 +2,20 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
-exports["default"] = void 0;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inheritsLoose"));
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inherits"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/defineProperty"));
 
@@ -38,35 +48,37 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
 var Capture =
 /*#__PURE__*/
 function (_React$Component) {
-  (0, _inheritsLoose2["default"])(Capture, _React$Component);
+  (0, _inherits2.default)(Capture, _React$Component);
 
   function Capture() {
-    return _React$Component.apply(this, arguments) || this;
+    (0, _classCallCheck2.default)(this, Capture);
+    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Capture).apply(this, arguments));
   }
 
-  var _proto = Capture.prototype;
-
-  _proto.getChildContext = function getChildContext() {
-    return {
-      loadable: {
-        report: this.props.report
-      }
-    };
-  };
-
-  _proto.render = function render() {
-    return _react["default"].Children.only(this.props.children);
-  };
-
+  (0, _createClass2.default)(Capture, [{
+    key: "getChildContext",
+    value: function getChildContext() {
+      return {
+        loadable: {
+          report: this.props.report
+        }
+      };
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.Children.only(this.props.children);
+    }
+  }]);
   return Capture;
-}(_react["default"].Component);
+}(_react.default.Component);
 
-exports["default"] = Capture;
-(0, _defineProperty2["default"])(Capture, "propTypes", {
-  report: _propTypes["default"].func.isRequired
+exports.default = Capture;
+(0, _defineProperty2.default)(Capture, "propTypes", {
+  report: _propTypes.default.func.isRequired
 });
-(0, _defineProperty2["default"])(Capture, "childContextTypes", {
-  loadable: _propTypes["default"].shape({
-    report: _propTypes["default"].func.isRequired
+(0, _defineProperty2.default)(Capture, "childContextTypes", {
+  loadable: _propTypes.default.shape({
+    report: _propTypes.default.func.isRequired
   }).isRequired
 });

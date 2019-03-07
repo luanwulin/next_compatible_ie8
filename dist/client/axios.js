@@ -2,8 +2,10 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
-exports["default"] = _default;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
 
 var _promise = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/promise"));
 
@@ -15,7 +17,7 @@ var _axios = _interopRequireDefault(require("axios"));
 
 function _default(opts) {
   // 封装好的get和post接口，调用方法情况action文件
-  var $axios = _axios["default"].create((0, _objectSpread2["default"])({
+  var $axios = _axios.default.create((0, _objectSpread2.default)({
     timeout: 5000,
     // 设置超时时间
     headers: {
@@ -26,14 +28,12 @@ function _default(opts) {
 
   var axiosExtraProto = {}; // Sets a common header
 
-  axiosExtraProto.setHeader = function setHeader(name, value, scopes) {
+  axiosExtraProto.setHeader = function setHeader(name, value) {
     var _this = this;
 
-    if (scopes === void 0) {
-      scopes = 'common';
-    }
+    var scopes = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'common';
 
-    if (!(0, _isArray["default"])(scopes)) {
+    if (!(0, _isArray.default)(scopes)) {
       scopes = [scopes];
     }
 
@@ -48,11 +48,8 @@ function _default(opts) {
   }; // Set requests token
 
 
-  axiosExtraProto.setToken = function setToken(token, type, scopes) {
-    if (scopes === void 0) {
-      scopes = 'common';
-    }
-
+  axiosExtraProto.setToken = function setToken(token, type) {
+    var scopes = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'common';
     var value = !token ? null : (type ? type + ' ' : '') + token;
     this.setHeader('Authorization', value, scopes);
   }; // Request helpers
@@ -71,7 +68,7 @@ function _default(opts) {
 
   function setupHelpers($axios) {
     for (var key in axiosExtraProto) {
-      $axios[key] = axiosExtraProto[key].bind(_axios["default"]);
+      $axios[key] = axiosExtraProto[key].bind(_axios.default);
     }
   }
 
@@ -82,7 +79,7 @@ function _default(opts) {
     return config;
   }, function (error) {
     // Do something with request error
-    return _promise["default"].reject(error);
+    return _promise.default.reject(error);
   }); // Add a response interceptor
 
   $axios.interceptors.response.use(function (response) {
@@ -90,7 +87,7 @@ function _default(opts) {
     return response;
   }, function (error) {
     // Do something with response error
-    return _promise["default"].reject(error);
+    return _promise.default.reject(error);
   });
   return $axios;
 }

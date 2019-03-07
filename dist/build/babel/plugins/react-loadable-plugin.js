@@ -1,7 +1,9 @@
 "use strict";
 
-exports.__esModule = true;
-exports["default"] = _default;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
 
 /**
 COPYRIGHT (c) 2017-present James Kyle <me@thejameskyle.com>

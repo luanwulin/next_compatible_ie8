@@ -2,13 +2,17 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.noSSR = noSSR;
-exports["default"] = dynamic;
+exports.default = dynamic;
 
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/object/keys"));
 
 var _objectSpread2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/objectSpread"));
+
+var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/typeof"));
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -27,7 +31,7 @@ function noSSR(LoadableInitializer, loadableOptions) {
 
 
   return function () {
-    return _react["default"].createElement(loadableOptions.loading, {
+    return _react.default.createElement(loadableOptions.loading, {
       error: null,
       isLoading: true,
       pastDelay: false,
@@ -37,11 +41,11 @@ function noSSR(LoadableInitializer, loadableOptions) {
 }
 
 function DefaultLoading() {
-  return _react["default"].createElement("p", null, "loading...");
+  return _react.default.createElement("p", null, "loading...");
 }
 
 function dynamic(dynamicOptions, options) {
-  var loadableFn = _loadable["default"];
+  var loadableFn = _loadable.default;
   var loadableOptions = {
     // A loading component is not required, so we default it
     loading: function loading(_ref) {
@@ -50,15 +54,15 @@ function dynamic(dynamicOptions, options) {
 
       if (process.env.NODE_ENV === 'development') {
         if (isLoading) {
-          return _react["default"].createElement(DefaultLoading, null);
+          return _react.default.createElement(DefaultLoading, null);
         }
 
         if (error) {
-          return _react["default"].createElement("p", null, error.message, _react["default"].createElement("br", null), error.stack);
+          return _react.default.createElement("p", null, error.message, _react.default.createElement("br", null), error.stack);
         }
       }
 
-      return _react["default"].createElement(DefaultLoading, null);
+      return _react.default.createElement(DefaultLoading, null);
     } // Support for direct import(), eg: dynamic(import('../hello-world'))
     // Note that this is only kept for the edge case where someone is passing in a promise as first argument
     // The react-loadable babel plugin will turn dynamic(import('../hello-world')) into dynamic(() => import('../hello-world'))
@@ -73,12 +77,12 @@ function dynamic(dynamicOptions, options) {
 
   } else if (typeof dynamicOptions === 'function') {
     loadableOptions.loader = dynamicOptions; // Support for having first argument being options, eg: dynamic({loader: import('../hello-world')})
-  } else if (typeof dynamicOptions === 'object') {
-    loadableOptions = (0, _objectSpread2["default"])({}, loadableOptions, dynamicOptions);
+  } else if ((0, _typeof2.default)(dynamicOptions) === 'object') {
+    loadableOptions = (0, _objectSpread2.default)({}, loadableOptions, dynamicOptions);
   } // Support for passing options, eg: dynamic(import('../hello-world'), {loading: () => <p>Loading something</p>})
 
 
-  loadableOptions = (0, _objectSpread2["default"])({}, loadableOptions, options); // Support for `render` when using a mapping, eg: `dynamic({ modules: () => {return {HelloWorld: import('../hello-world')}, render(props, loaded) {} } })
+  loadableOptions = (0, _objectSpread2.default)({}, loadableOptions, options); // Support for `render` when using a mapping, eg: `dynamic({ modules: () => {return {HelloWorld: import('../hello-world')}, render(props, loaded) {} } })
 
   if (dynamicOptions.render) {
     loadableOptions.render = function (loaded, props) {
@@ -88,16 +92,16 @@ function dynamic(dynamicOptions, options) {
 
 
   if (dynamicOptions.modules) {
-    loadableFn = _loadable["default"].Map;
+    loadableFn = _loadable.default.Map;
     var loadModules = {};
     var modules = dynamicOptions.modules();
-    (0, _keys["default"])(modules).forEach(function (key) {
+    (0, _keys.default)(modules).forEach(function (key) {
       var value = modules[key];
 
       if (typeof value.then === 'function') {
         loadModules[key] = function () {
           return value.then(function (mod) {
-            return mod["default"] || mod;
+            return mod.default || mod;
           });
         };
 
@@ -111,7 +115,7 @@ function dynamic(dynamicOptions, options) {
 
 
   if (loadableOptions.loadableGenerated) {
-    loadableOptions = (0, _objectSpread2["default"])({}, loadableOptions, loadableOptions.loadableGenerated);
+    loadableOptions = (0, _objectSpread2.default)({}, loadableOptions, loadableOptions.loadableGenerated);
     delete loadableOptions.loadableGenerated;
   } // support for disabling server side rendering, eg: dynamic(import('../hello-world'), {ssr: false})
 

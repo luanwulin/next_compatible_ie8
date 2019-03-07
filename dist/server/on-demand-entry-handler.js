@@ -2,11 +2,19 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
-exports["default"] = onDemandEntryHandler;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = onDemandEntryHandler;
 exports.normalizePage = normalizePage;
 
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
+
 var _stringify = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/json/stringify"));
+
+var _isArray = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/array/is-array"));
 
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/object/keys"));
 
@@ -16,9 +24,11 @@ var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime-corejs2/
 
 var _now = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/date/now"));
 
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/slicedToArray"));
+
 var _getIterator2 = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/get-iterator"));
 
-var _isArray5 = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/array/is-array"));
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/toConsumableArray"));
 
 var _promise = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/promise"));
 
@@ -44,15 +54,15 @@ var _utils = require("../build/webpack/utils");
 
 var _constants = require("../lib/constants");
 
-var ADDED = (0, _symbol["default"])('added');
-var BUILDING = (0, _symbol["default"])('building');
-var BUILT = (0, _symbol["default"])('built');
-var glob = (0, _promisify["default"])(_glob["default"]);
-var access = (0, _promisify["default"])(_fs["default"].access); // Based on https://github.com/webpack/webpack/blob/master/lib/DynamicEntryPlugin.js#L29-L37
+var ADDED = (0, _symbol.default)('added');
+var BUILDING = (0, _symbol.default)('building');
+var BUILT = (0, _symbol.default)('built');
+var glob = (0, _promisify.default)(_glob.default);
+var access = (0, _promisify.default)(_fs.default.access); // Based on https://github.com/webpack/webpack/blob/master/lib/DynamicEntryPlugin.js#L29-L37
 
 function addEntry(compilation, context, name, entry) {
-  return new _promise["default"](function (resolve, reject) {
-    var dep = _DynamicEntryPlugin["default"].createDependency(entry, name);
+  return new _promise.default(function (resolve, reject) {
+    var dep = _DynamicEntryPlugin.default.createDependency(entry, name);
 
     compilation.addEntry(context, dep, name, function (err) {
       if (err) return reject(err);
@@ -79,115 +89,133 @@ function onDemandEntryHandler(devMiddleware, multiCompiler, _ref) {
   var reloading = false;
   var stopped = false;
   var reloadCallbacks = new _events.EventEmitter();
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
 
-  var _loop = function _loop() {
-    if (_isArray) {
-      if (_i >= _iterator.length) return "break";
-      _ref2 = _iterator[_i++];
-    } else {
-      _i = _iterator.next();
-      if (_i.done) return "break";
-      _ref2 = _i.value;
-    }
-
-    var compiler = _ref2;
-    compiler.hooks.make.tapPromise('NextJsOnDemandEntries', function (compilation) {
-      invalidator.startBuilding();
-      var allEntries = (0, _keys["default"])(entries).map(
-      /*#__PURE__*/
-      function () {
-        var _ref5 = (0, _asyncToGenerator2["default"])(
+  try {
+    var _loop = function _loop() {
+      var compiler = _step.value;
+      compiler.hooks.make.tapPromise('NextJsOnDemandEntries', function (compilation) {
+        invalidator.startBuilding();
+        var allEntries = (0, _keys.default)(entries).map(
         /*#__PURE__*/
-        _regenerator["default"].mark(function _callee2(page) {
-          var _entries$page, name, entry, files, _iterator3, _isArray3, _i3, _ref6, file;
+        function () {
+          var _ref2 = (0, _asyncToGenerator2.default)(
+          /*#__PURE__*/
+          _regenerator.default.mark(function _callee2(page) {
+            var _entries$page, name, entry, files, _iteratorNormalCompletion3, _didIteratorError3, _iteratorError3, _iterator3, _step3, file;
 
-          return _regenerator["default"].wrap(function _callee2$(_context2) {
-            while (1) {
-              switch (_context2.prev = _context2.next) {
-                case 0:
-                  _entries$page = entries[page], name = _entries$page.name, entry = _entries$page.entry;
-                  files = (0, _isArray5["default"])(entry) ? entry : [entry]; // Is just one item. But it's passed as an array.
+            return _regenerator.default.wrap(function _callee2$(_context2) {
+              while (1) {
+                switch (_context2.prev = _context2.next) {
+                  case 0:
+                    _entries$page = entries[page], name = _entries$page.name, entry = _entries$page.entry;
+                    files = (0, _isArray.default)(entry) ? entry : [entry]; // Is just one item. But it's passed as an array.
 
-                  _iterator3 = files, _isArray3 = (0, _isArray5["default"])(_iterator3), _i3 = 0, _iterator3 = _isArray3 ? _iterator3 : (0, _getIterator2["default"])(_iterator3);
+                    _iteratorNormalCompletion3 = true;
+                    _didIteratorError3 = false;
+                    _iteratorError3 = undefined;
+                    _context2.prev = 5;
+                    _iterator3 = (0, _getIterator2.default)(files);
 
-                case 3:
-                  if (!_isArray3) {
-                    _context2.next = 9;
-                    break;
-                  }
+                  case 7:
+                    if (_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done) {
+                      _context2.next = 22;
+                      break;
+                    }
 
-                  if (!(_i3 >= _iterator3.length)) {
-                    _context2.next = 6;
-                    break;
-                  }
-
-                  return _context2.abrupt("break", 26);
-
-                case 6:
-                  _ref6 = _iterator3[_i3++];
-                  _context2.next = 13;
-                  break;
-
-                case 9:
-                  _i3 = _iterator3.next();
-
-                  if (!_i3.done) {
+                    file = _step3.value;
+                    _context2.prev = 9;
                     _context2.next = 12;
+                    return access((0, _path.join)(dir, file), (_fs.default.constants || _fs.default).W_OK);
+
+                  case 12:
+                    _context2.next = 19;
                     break;
-                  }
 
-                  return _context2.abrupt("break", 26);
+                  case 14:
+                    _context2.prev = 14;
+                    _context2.t0 = _context2["catch"](9);
+                    console.warn('Page was removed', page);
+                    delete entries[page];
+                    return _context2.abrupt("return");
 
-                case 12:
-                  _ref6 = _i3.value;
+                  case 19:
+                    _iteratorNormalCompletion3 = true;
+                    _context2.next = 7;
+                    break;
 
-                case 13:
-                  file = _ref6;
-                  _context2.prev = 14;
-                  _context2.next = 17;
-                  return access((0, _path.join)(dir, file), (_fs["default"].constants || _fs["default"]).W_OK);
+                  case 22:
+                    _context2.next = 28;
+                    break;
 
-                case 17:
-                  _context2.next = 24;
-                  break;
+                  case 24:
+                    _context2.prev = 24;
+                    _context2.t1 = _context2["catch"](5);
+                    _didIteratorError3 = true;
+                    _iteratorError3 = _context2.t1;
 
-                case 19:
-                  _context2.prev = 19;
-                  _context2.t0 = _context2["catch"](14);
-                  console.warn('Page was removed', page);
-                  delete entries[page];
-                  return _context2.abrupt("return");
+                  case 28:
+                    _context2.prev = 28;
+                    _context2.prev = 29;
 
-                case 24:
-                  _context2.next = 3;
-                  break;
+                    if (!_iteratorNormalCompletion3 && _iterator3.return != null) {
+                      _iterator3.return();
+                    }
 
-                case 26:
-                  entries[page].status = BUILDING;
-                  return _context2.abrupt("return", addEntry(compilation, compiler.context, name, entry));
+                  case 31:
+                    _context2.prev = 31;
 
-                case 28:
-                case "end":
-                  return _context2.stop();
+                    if (!_didIteratorError3) {
+                      _context2.next = 34;
+                      break;
+                    }
+
+                    throw _iteratorError3;
+
+                  case 34:
+                    return _context2.finish(31);
+
+                  case 35:
+                    return _context2.finish(28);
+
+                  case 36:
+                    entries[page].status = BUILDING;
+                    return _context2.abrupt("return", addEntry(compilation, compiler.context, name, entry));
+
+                  case 38:
+                  case "end":
+                    return _context2.stop();
+                }
               }
-            }
-          }, _callee2, null, [[14, 19]]);
-        }));
+            }, _callee2, null, [[5, 24, 28, 36], [9, 14], [29,, 31, 35]]);
+          }));
 
-        return function (_x2) {
-          return _ref5.apply(this, arguments);
-        };
-      }());
-      return _promise["default"].all(allEntries);
-    });
-  };
+          return function (_x2) {
+            return _ref2.apply(this, arguments);
+          };
+        }());
+        return _promise.default.all(allEntries);
+      });
+    };
 
-  for (var _iterator = compilers, _isArray = (0, _isArray5["default"])(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator2["default"])(_iterator);;) {
-    var _ref2;
-
-    var _ret = _loop();
-
-    if (_ret === "break") break;
+    for (var _iterator = (0, _getIterator2.default)(compilers), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      _loop();
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator.return != null) {
+        _iterator.return();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
   }
 
   multiCompiler.hooks.done.tap('NextJsOnDemandEntries', function (multiStats) {
@@ -205,67 +233,75 @@ function onDemandEntryHandler(devMiddleware, multiCompiler, _ref) {
     }).map(function (e) {
       return e.module.chunks;
     }).reduce(function (a, b) {
-      return [].concat(a, b);
+      return [].concat((0, _toConsumableArray2.default)(a), (0, _toConsumableArray2.default)(b));
     }, []).map(function (c) {
       var pageName = _constants.ROUTE_NAME_REGEX.exec(c.name)[1];
 
-      return normalizePage("/" + pageName);
+      return normalizePage("/".concat(pageName));
     }); // compilation.entrypoints is a Map object, so iterating over it 0 is the key and 1 is the value
 
-    for (var _iterator2 = compilation.entrypoints.entries(), _isArray2 = (0, _isArray5["default"])(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : (0, _getIterator2["default"])(_iterator2);;) {
-      var _ref3;
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
 
-      if (_isArray2) {
-        if (_i2 >= _iterator2.length) break;
-        _ref3 = _iterator2[_i2++];
-      } else {
-        _i2 = _iterator2.next();
-        if (_i2.done) break;
-        _ref3 = _i2.value;
+    try {
+      for (var _iterator2 = (0, _getIterator2.default)(compilation.entrypoints.entries()), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        var _step2$value = (0, _slicedToArray2.default)(_step2.value, 2),
+            entrypoint = _step2$value[1];
+
+        var result = _constants.ROUTE_NAME_REGEX.exec(entrypoint.name);
+
+        if (!result) {
+          continue;
+        }
+
+        var pagePath = result[1];
+
+        if (!pagePath) {
+          continue;
+        }
+
+        var page = normalizePage('/' + pagePath);
+        var entry = entries[page];
+
+        if (!entry) {
+          continue;
+        }
+
+        if (entry.status !== BUILDING) {
+          continue;
+        }
+
+        entry.status = BUILT;
+        entry.lastActiveTime = (0, _now.default)();
+        doneCallbacks.emit(page);
       }
-
-      var _ref4 = _ref3,
-          entrypoint = _ref4[1];
-
-      var result = _constants.ROUTE_NAME_REGEX.exec(entrypoint.name);
-
-      if (!result) {
-        continue;
+    } catch (err) {
+      _didIteratorError2 = true;
+      _iteratorError2 = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+          _iterator2.return();
+        }
+      } finally {
+        if (_didIteratorError2) {
+          throw _iteratorError2;
+        }
       }
-
-      var pagePath = result[1];
-
-      if (!pagePath) {
-        continue;
-      }
-
-      var page = normalizePage('/' + pagePath);
-      var entry = entries[page];
-
-      if (!entry) {
-        continue;
-      }
-
-      if (entry.status !== BUILDING) {
-        continue;
-      }
-
-      entry.status = BUILT;
-      entry.lastActiveTime = (0, _now["default"])();
-      doneCallbacks.emit(page);
     }
 
     invalidator.doneBuilding();
 
     if (hardFailedPages.length > 0 && !reloading) {
-      console.log("> Reloading webpack due to inconsistant state of pages(s): " + hardFailedPages.join(', '));
+      console.log("> Reloading webpack due to inconsistant state of pages(s): ".concat(hardFailedPages.join(', ')));
       reloading = true;
       reload().then(function () {
         console.log('> Webpack reloaded.');
         reloadCallbacks.emit('done');
         stop();
-      })["catch"](function (err) {
-        console.error("> Webpack reloading failed: " + err.message);
+      }).catch(function (err) {
+        console.error("> Webpack reloading failed: ".concat(err.message));
         console.error(err.stack);
         process.exit(1);
       });
@@ -286,20 +322,20 @@ function onDemandEntryHandler(devMiddleware, multiCompiler, _ref) {
 
   return {
     waitUntilReloaded: function waitUntilReloaded() {
-      if (!reloading) return _promise["default"].resolve(true);
-      return new _promise["default"](function (resolve) {
+      if (!reloading) return _promise.default.resolve(true);
+      return new _promise.default(function (resolve) {
         reloadCallbacks.once('done', function () {
           resolve();
         });
       });
     },
     ensurePage: function () {
-      var _ensurePage = (0, _asyncToGenerator2["default"])(
+      var _ensurePage = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
-      _regenerator["default"].mark(function _callee(page) {
+      _regenerator.default.mark(function _callee(page) {
         var normalizedPagePath, extensions, paths, relativePathToPage, pathname, _createEntry, name, files;
 
-        return _regenerator["default"].wrap(function _callee$(_context) {
+        return _regenerator.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
@@ -322,7 +358,7 @@ function onDemandEntryHandler(devMiddleware, multiCompiler, _ref) {
               case 11:
                 extensions = pageExtensions.join('|');
                 _context.next = 14;
-                return glob("pages/{" + normalizedPagePath + "/index," + normalizedPagePath + "}.+(" + extensions + ")", {
+                return glob("pages/{".concat(normalizedPagePath, "/index,").concat(normalizedPagePath, "}.+(").concat(extensions, ")"), {
                   cwd: dir
                 });
 
@@ -344,7 +380,7 @@ function onDemandEntryHandler(devMiddleware, multiCompiler, _ref) {
                   pageExtensions: extensions
                 }), name = _createEntry.name, files = _createEntry.files;
                 _context.next = 22;
-                return new _promise["default"](function (resolve, reject) {
+                return new _promise.default(function (resolve, reject) {
                   var entryInfo = entries[page];
 
                   if (entryInfo) {
@@ -359,7 +395,7 @@ function onDemandEntryHandler(devMiddleware, multiCompiler, _ref) {
                     }
                   }
 
-                  console.log("> Building page: " + page);
+                  console.log("> Building page: ".concat(page));
                   entries[page] = {
                     name: name,
                     entry: files,
@@ -419,7 +455,7 @@ function onDemandEntryHandler(devMiddleware, multiCompiler, _ref) {
           // Then it seems like an weird issue.
 
           if (!entryInfo) {
-            var message = "Client pings, but there's no entry for page: " + page;
+            var message = "Client pings, but there's no entry for page: ".concat(page);
             console.error(message);
             sendJson(res, {
               invalid: true
@@ -439,7 +475,7 @@ function onDemandEntryHandler(devMiddleware, multiCompiler, _ref) {
             if (lastAccessPages.length > pagesBufferLength) lastAccessPages.pop();
           }
 
-          entryInfo.lastActiveTime = (0, _now["default"])();
+          entryInfo.lastActiveTime = (0, _now.default)();
         }
       };
     }
@@ -448,7 +484,7 @@ function onDemandEntryHandler(devMiddleware, multiCompiler, _ref) {
 
 function disposeInactiveEntries(devMiddleware, entries, lastAccessPages, maxInactiveAge) {
   var disposingPages = [];
-  (0, _keys["default"])(entries).forEach(function (page) {
+  (0, _keys.default)(entries).forEach(function (page) {
     var _entries$page2 = entries[page],
         lastActiveTime = _entries$page2.lastActiveTime,
         status = _entries$page2.status; // This means this entry is currently building or just added
@@ -460,7 +496,7 @@ function disposeInactiveEntries(devMiddleware, entries, lastAccessPages, maxInac
 
     if (lastAccessPages.includes(page)) return;
 
-    if ((0, _now["default"])() - lastActiveTime > maxInactiveAge) {
+    if ((0, _now.default)() - lastActiveTime > maxInactiveAge) {
       disposingPages.push(page);
     }
   });
@@ -469,7 +505,7 @@ function disposeInactiveEntries(devMiddleware, entries, lastAccessPages, maxInac
     disposingPages.forEach(function (page) {
       delete entries[page];
     });
-    console.log("> Disposing inactive page(s): " + disposingPages.join(', '));
+    console.log("> Disposing inactive page(s): ".concat(disposingPages.join(', ')));
     devMiddleware.invalidate();
   }
 } // /index and / is the same. So, we need to identify both pages as the same.
@@ -489,7 +525,7 @@ function normalizePage(page) {
 function sendJson(res, payload) {
   res.setHeader('Content-Type', 'application/json');
   res.status = 200;
-  res.end((0, _stringify["default"])(payload));
+  res.end((0, _stringify.default)(payload));
 } // Make sure only one invalidation happens at a time
 // Otherwise, webpack hash gets changed and it'll force the client to reload.
 
@@ -498,6 +534,7 @@ var Invalidator =
 /*#__PURE__*/
 function () {
   function Invalidator(devMiddleware, multiCompiler) {
+    (0, _classCallCheck2.default)(this, Invalidator);
     this.multiCompiler = multiCompiler;
     this.devMiddleware = devMiddleware; // contains an array of types of compilers currently building
 
@@ -505,52 +542,62 @@ function () {
     this.rebuildAgain = false;
   }
 
-  var _proto = Invalidator.prototype;
-
-  _proto.invalidate = function invalidate() {
-    // If there's a current build is processing, we won't abort it by invalidating.
-    // (If aborted, it'll cause a client side hard reload)
-    // But let it to invalidate just after the completion.
-    // So, it can re-build the queued pages at once.
-    if (this.building) {
-      this.rebuildAgain = true;
-      return;
-    }
-
-    this.building = true; // Work around a bug in webpack, calling `invalidate` on Watching.js
-    // doesn't trigger the invalid call used to keep track of the `.done` hook on multiCompiler
-
-    for (var _iterator4 = this.multiCompiler.compilers, _isArray4 = (0, _isArray5["default"])(_iterator4), _i4 = 0, _iterator4 = _isArray4 ? _iterator4 : (0, _getIterator2["default"])(_iterator4);;) {
-      var _ref7;
-
-      if (_isArray4) {
-        if (_i4 >= _iterator4.length) break;
-        _ref7 = _iterator4[_i4++];
-      } else {
-        _i4 = _iterator4.next();
-        if (_i4.done) break;
-        _ref7 = _i4.value;
+  (0, _createClass2.default)(Invalidator, [{
+    key: "invalidate",
+    value: function invalidate() {
+      // If there's a current build is processing, we won't abort it by invalidating.
+      // (If aborted, it'll cause a client side hard reload)
+      // But let it to invalidate just after the completion.
+      // So, it can re-build the queued pages at once.
+      if (this.building) {
+        this.rebuildAgain = true;
+        return;
       }
 
-      var compiler = _ref7;
-      compiler.hooks.invalid.call();
+      this.building = true; // Work around a bug in webpack, calling `invalidate` on Watching.js
+      // doesn't trigger the invalid call used to keep track of the `.done` hook on multiCompiler
+
+      var _iteratorNormalCompletion4 = true;
+      var _didIteratorError4 = false;
+      var _iteratorError4 = undefined;
+
+      try {
+        for (var _iterator4 = (0, _getIterator2.default)(this.multiCompiler.compilers), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+          var compiler = _step4.value;
+          compiler.hooks.invalid.call();
+        }
+      } catch (err) {
+        _didIteratorError4 = true;
+        _iteratorError4 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion4 && _iterator4.return != null) {
+            _iterator4.return();
+          }
+        } finally {
+          if (_didIteratorError4) {
+            throw _iteratorError4;
+          }
+        }
+      }
+
+      this.devMiddleware.invalidate();
     }
-
-    this.devMiddleware.invalidate();
-  };
-
-  _proto.startBuilding = function startBuilding() {
-    this.building = true;
-  };
-
-  _proto.doneBuilding = function doneBuilding() {
-    this.building = false;
-
-    if (this.rebuildAgain) {
-      this.rebuildAgain = false;
-      this.invalidate();
+  }, {
+    key: "startBuilding",
+    value: function startBuilding() {
+      this.building = true;
     }
-  };
+  }, {
+    key: "doneBuilding",
+    value: function doneBuilding() {
+      this.building = false;
 
+      if (this.rebuildAgain) {
+        this.rebuildAgain = false;
+        this.invalidate();
+      }
+    }
+  }]);
   return Invalidator;
 }();
