@@ -2,21 +2,37 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
+require("core-js/modules/es6.array.reduce");
+
+var _isArray = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/array/is-array"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/getPrototypeOf"));
+
 var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/assertThisInitialized"));
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inheritsLoose"));
+var _inherits2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inherits"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/defineProperty"));
 
 var _getIterator2 = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/get-iterator"));
 
-var _isArray2 = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/array/is-array"));
-
 var _assign = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/object/assign"));
 
 var _promise = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/promise"));
 
+require("core-js/modules/es6.array.iterator");
+
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/object/keys"));
+
+require("core-js/modules/web.dom.iterable");
+
+require("core-js/modules/es6.array.for-each");
 
 var _map = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/map"));
 
@@ -147,35 +163,43 @@ function createLoadableComponent(loadFn, options) {
 
   if (!initialized && typeof window !== 'undefined' && typeof opts.webpack === 'function') {
     var moduleIds = opts.webpack();
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
 
-    for (var _iterator = moduleIds, _isArray = (0, _isArray2["default"])(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator2["default"])(_iterator);;) {
-      var _ref;
-
-      if (_isArray) {
-        if (_i >= _iterator.length) break;
-        _ref = _iterator[_i++];
-      } else {
-        _i = _iterator.next();
-        if (_i.done) break;
-        _ref = _i.value;
+    try {
+      for (var _iterator = (0, _getIterator2["default"])(moduleIds), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var moduleId = _step.value;
+        READY_INITIALIZERS.set(moduleId, function () {
+          return init();
+        });
       }
-
-      var moduleId = _ref;
-      READY_INITIALIZERS.set(moduleId, function () {
-        return init();
-      });
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+          _iterator["return"]();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
     }
   }
 
   return _temp = _class =
   /*#__PURE__*/
   function (_React$Component) {
-    (0, _inheritsLoose2["default"])(LoadableComponent, _React$Component);
+    (0, _inherits2["default"])(LoadableComponent, _React$Component);
 
     function LoadableComponent(props) {
       var _this;
 
-      _this = _React$Component.call(this, props) || this;
+      (0, _classCallCheck2["default"])(this, LoadableComponent);
+      _this = (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(LoadableComponent).call(this, props));
       (0, _defineProperty2["default"])((0, _assertThisInitialized2["default"])(_this), "retry", function () {
         _this.setState({
           error: null,
@@ -198,102 +222,107 @@ function createLoadableComponent(loadFn, options) {
       return _this;
     }
 
-    LoadableComponent.preload = function preload() {
-      return init();
-    };
+    (0, _createClass2["default"])(LoadableComponent, [{
+      key: "componentWillMount",
+      value: function componentWillMount() {
+        this._mounted = true;
 
-    var _proto = LoadableComponent.prototype;
-
-    _proto.componentWillMount = function componentWillMount() {
-      this._mounted = true;
-
-      this._loadModule();
-    };
-
-    _proto._loadModule = function _loadModule() {
-      var _this2 = this;
-
-      if (this.context.loadable && (0, _isArray2["default"])(opts.modules)) {
-        opts.modules.forEach(function (moduleName) {
-          _this2.context.loadable.report(moduleName);
-        });
+        this._loadModule();
       }
+    }, {
+      key: "_loadModule",
+      value: function _loadModule() {
+        var _this2 = this;
 
-      if (!res.loading) {
-        return;
-      }
-
-      if (typeof opts.delay === 'number') {
-        if (opts.delay === 0) {
-          this.setState({
-            pastDelay: true
+        if (this.context.loadable && (0, _isArray["default"])(opts.modules)) {
+          opts.modules.forEach(function (moduleName) {
+            _this2.context.loadable.report(moduleName);
           });
-        } else {
-          this._delay = setTimeout(function () {
-            _this2.setState({
-              pastDelay: true
-            });
-          }, opts.delay);
         }
-      }
 
-      if (typeof opts.timeout === 'number') {
-        this._timeout = setTimeout(function () {
-          _this2.setState({
-            timedOut: true
-          });
-        }, opts.timeout);
-      }
-
-      var update = function update() {
-        if (!_this2._mounted) {
+        if (!res.loading) {
           return;
         }
 
-        _this2.setState({
-          error: res.error,
-          loaded: res.loaded,
-          loading: res.loading
+        if (typeof opts.delay === 'number') {
+          if (opts.delay === 0) {
+            this.setState({
+              pastDelay: true
+            });
+          } else {
+            this._delay = setTimeout(function () {
+              _this2.setState({
+                pastDelay: true
+              });
+            }, opts.delay);
+          }
+        }
+
+        if (typeof opts.timeout === 'number') {
+          this._timeout = setTimeout(function () {
+            _this2.setState({
+              timedOut: true
+            });
+          }, opts.timeout);
+        }
+
+        var update = function update() {
+          if (!_this2._mounted) {
+            return;
+          }
+
+          _this2.setState({
+            error: res.error,
+            loaded: res.loaded,
+            loading: res.loading
+          });
+
+          _this2._clearTimeouts();
+        };
+
+        res.promise.then(function () {
+          update();
+        }) // eslint-disable-next-line handle-callback-err
+        ["catch"](function (err) {
+          update();
         });
-
-        _this2._clearTimeouts();
-      };
-
-      res.promise.then(function () {
-        update();
-      }) // eslint-disable-next-line handle-callback-err
-      ["catch"](function (err) {
-        update();
-      });
-    };
-
-    _proto.componentWillUnmount = function componentWillUnmount() {
-      this._mounted = false;
-
-      this._clearTimeouts();
-    };
-
-    _proto._clearTimeouts = function _clearTimeouts() {
-      clearTimeout(this._delay);
-      clearTimeout(this._timeout);
-    };
-
-    _proto.render = function render() {
-      if (this.state.loading || this.state.error) {
-        return _react["default"].createElement(opts.loading, {
-          isLoading: this.state.loading,
-          pastDelay: this.state.pastDelay,
-          timedOut: this.state.timedOut,
-          error: this.state.error,
-          retry: this.retry
-        });
-      } else if (this.state.loaded) {
-        return opts.render(this.state.loaded, this.props);
-      } else {
-        return null;
       }
-    };
+    }, {
+      key: "componentWillUnmount",
+      value: function componentWillUnmount() {
+        this._mounted = false;
 
+        this._clearTimeouts();
+      }
+    }, {
+      key: "_clearTimeouts",
+      value: function _clearTimeouts() {
+        clearTimeout(this._delay);
+        clearTimeout(this._timeout);
+      }
+    }, {
+      key: "render",
+      value: function render() {
+        if (this.state.loading || this.state.error) {
+          return _react["default"].createElement(opts.loading, {
+            isLoading: this.state.loading,
+            pastDelay: this.state.pastDelay,
+            timedOut: this.state.timedOut,
+            error: this.state.error,
+            retry: this.retry
+          });
+        } else if (this.state.loaded) {
+          return opts.render(this.state.loaded, this.props);
+        } else {
+          return null;
+        }
+      }
+    }], [{
+      key: "preload",
+      value: function preload() {
+        return init();
+      }
+    }]);
     return LoadableComponent;
   }(_react["default"].Component), (0, _defineProperty2["default"])(_class, "contextTypes", {
     loadable: _propTypes["default"].shape({

@@ -1,7 +1,21 @@
 "use strict";
 
-exports.__esModule = true;
+require("core-js/modules/es6.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports["default"] = _default;
+
+require("core-js/modules/es6.array.map");
+
+require("core-js/modules/web.dom.iterable");
+
+require("core-js/modules/es6.array.for-each");
+
+require("core-js/modules/es6.function.name");
+
+require("core-js/modules/es6.array.find");
 
 /**
 COPYRIGHT (c) 2017-present James Kyle <me@thejameskyle.com>

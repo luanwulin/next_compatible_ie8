@@ -2,7 +2,11 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
+require("core-js/modules/es6.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports["default"] = loadConfig;
 
 var _objectSpread2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/objectSpread"));

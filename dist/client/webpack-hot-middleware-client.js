@@ -2,8 +2,14 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
+require("core-js/modules/es6.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports["default"] = void 0;
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/toConsumableArray"));
 
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/object/keys"));
 
@@ -71,7 +77,7 @@ var handlers = {
     if (!Component) {
       // This only happens when we create a new page without a default export.
       // If you removed a default export from a exising viewing page, this has no effect.
-      console.warn("Hard reloading due to no default component in page: " + route);
+      console.warn("Hard reloading due to no default component in page: ".concat(route));
       window.location.reload();
     }
   }
@@ -80,7 +86,7 @@ var handlers = {
 var _default = function _default(_ref2) {
   var assetPrefix = _ref2.assetPrefix;
   var options = {
-    path: assetPrefix + "/_next/webpack-hmr"
+    path: "".concat(assetPrefix, "/_next/webpack-hmr")
   };
   var devClient = (0, _hotDevClient["default"])(options);
   devClient.subscribeToHmrEvent(function (obj) {
@@ -88,7 +94,7 @@ var _default = function _default(_ref2) {
 
     if (fn) {
       var data = obj.data || [];
-      fn.apply(void 0, data);
+      fn.apply(void 0, (0, _toConsumableArray2["default"])(data));
     } else {
       throw new Error('Unexpected action ' + obj.action);
     }

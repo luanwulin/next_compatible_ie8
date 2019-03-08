@@ -27,6 +27,28 @@ SOFTWARE.
 // This is quite hacky and hopefully won't be needed when Webpack fixes this.
 // https://github.com/webpack/webpack/issues/2878
 
+require("core-js/modules/es6.array.some");
+
+require("core-js/modules/es6.array.map");
+
+require("core-js/modules/es6.string.trim");
+
+require("core-js/modules/es6.regexp.match");
+
+require("core-js/modules/es6.regexp.replace");
+
+require("core-js/modules/es6.array.filter");
+
+require("core-js/modules/web.dom.iterable");
+
+require("core-js/modules/es6.array.for-each");
+
+require("core-js/modules/es6.array.last-index-of");
+
+require("core-js/modules/es6.regexp.split");
+
+require("core-js/modules/es6.array.index-of");
+
 var friendlySyntaxErrorLabel = 'Syntax error:';
 
 function isLikelyASyntaxError(message) {

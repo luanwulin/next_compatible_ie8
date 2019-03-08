@@ -2,13 +2,23 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
+require("core-js/modules/es6.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.noSSR = noSSR;
 exports["default"] = dynamic;
 
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/object/keys"));
 
+require("core-js/modules/web.dom.iterable");
+
+require("core-js/modules/es6.array.for-each");
+
 var _objectSpread2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/objectSpread"));
+
+var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/typeof"));
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -73,7 +83,7 @@ function dynamic(dynamicOptions, options) {
 
   } else if (typeof dynamicOptions === 'function') {
     loadableOptions.loader = dynamicOptions; // Support for having first argument being options, eg: dynamic({loader: import('../hello-world')})
-  } else if (typeof dynamicOptions === 'object') {
+  } else if ((0, _typeof2["default"])(dynamicOptions) === 'object') {
     loadableOptions = (0, _objectSpread2["default"])({}, loadableOptions, dynamicOptions);
   } // Support for passing options, eg: dynamic(import('../hello-world'), {loading: () => <p>Loading something</p>})
 

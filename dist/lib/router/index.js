@@ -2,24 +2,44 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports._rewriteUrlForNextExport = _rewriteUrlForNextExport;
 exports.makePublicRouterInstance = makePublicRouterInstance;
-exports.Router = exports.createRouter = exports.withRouter = exports["default"] = void 0;
+Object.defineProperty(exports, "withRouter", {
+  enumerable: true,
+  get: function get() {
+    return _withRouter["default"];
+  }
+});
+exports.Router = exports.createRouter = exports["default"] = void 0;
 
 var _objectSpread2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/objectSpread"));
+
+var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/typeof"));
+
+require("core-js/modules/es6.regexp.replace");
+
+require("core-js/modules/es6.regexp.split");
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/slicedToArray"));
 
 var _construct2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/construct"));
 
 var _defineProperty = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/object/define-property"));
+
+require("core-js/modules/web.dom.iterable");
+
+require("core-js/modules/es6.array.for-each");
+
+require("core-js/modules/es6.object.define-property");
 
 var _router = _interopRequireDefault(require("./router"));
 
 var _utils = require("../utils");
 
 var _withRouter = _interopRequireDefault(require("./with-router"));
-
-exports.withRouter = _withRouter["default"];
 
 /* global window */
 var SingletonRouter = {
@@ -68,14 +88,14 @@ coreMethodFields.forEach(function (field) {
 routerEvents.forEach(function (event) {
   SingletonRouter.ready(function () {
     _router["default"].events.on(event, function () {
-      var eventField = "on" + event.charAt(0).toUpperCase() + event.substring(1);
+      var eventField = "on".concat(event.charAt(0).toUpperCase()).concat(event.substring(1));
 
       if (SingletonRouter[eventField]) {
         try {
           SingletonRouter[eventField].apply(SingletonRouter, arguments);
         } catch (err) {
-          console.error("Error when running the Router event: " + eventField);
-          console.error(err.message + "\n" + err.stack);
+          console.error("Error when running the Router event: ".concat(eventField));
+          console.error("".concat(err.message, "\n").concat(err.stack));
         }
       }
     });
@@ -132,27 +152,29 @@ exports.Router = Router;
 
 function _rewriteUrlForNextExport(url) {
   var _url$split = url.split('#'),
-      hash = _url$split[1];
+      _url$split2 = (0, _slicedToArray2["default"])(_url$split, 2),
+      hash = _url$split2[1];
 
   url = url.replace(/#.*/, '');
 
-  var _url$split2 = url.split('?'),
-      path = _url$split2[0],
-      qs = _url$split2[1];
+  var _url$split3 = url.split('?'),
+      _url$split4 = (0, _slicedToArray2["default"])(_url$split3, 2),
+      path = _url$split4[0],
+      qs = _url$split4[1];
 
   path = path.replace(/\/$/, '');
   var newPath = path; // Append a trailing slash if this path does not have an extension
 
   if (!/\.[^/]+\/?$/.test(path)) {
-    newPath = path + "/";
+    newPath = "".concat(path, "/");
   }
 
   if (qs) {
-    newPath = newPath + "?" + qs;
+    newPath = "".concat(newPath, "?").concat(qs);
   }
 
   if (hash) {
-    newPath = newPath + "#" + hash;
+    newPath = "".concat(newPath, "#").concat(hash);
   }
 
   return newPath;
@@ -165,7 +187,7 @@ function makePublicRouterInstance(router) {
   for (var _i = 0; _i < urlPropertyFields.length; _i++) {
     var property = urlPropertyFields[_i];
 
-    if (typeof router[property] === 'object') {
+    if ((0, _typeof2["default"])(router[property]) === 'object') {
       instance[property] = (0, _objectSpread2["default"])({}, router[property]); // makes sure query is not stateful
 
       continue;

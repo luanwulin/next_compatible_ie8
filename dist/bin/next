@@ -3,11 +3,23 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/toConsumableArray"));
+
 var _from = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/array/from"));
+
+require("core-js/modules/es7.array.includes");
+
+require("core-js/modules/es6.string.includes");
+
+require("core-js/modules/es6.array.find");
 
 var _set = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/set"));
 
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/object/keys"));
+
+require("core-js/modules/web.dom.iterable");
+
+require("core-js/modules/es6.array.for-each");
 
 var _path = require("path");
 
@@ -23,7 +35,7 @@ if (_package["default"].peerDependencies) {
       // When 'npm link' is used it checks the clone location. Not the project.
       require.resolve(dependency);
     } catch (err) {
-      console.warn("The module '" + dependency + "' was not found. Next.js requires that you include it in 'dependencies' of your 'package.json'. To add it, run 'npm install --save " + dependency + "'");
+      console.warn("The module '".concat(dependency, "' was not found. Next.js requires that you include it in 'dependencies' of your 'package.json'. To add it, run 'npm install --save ").concat(dependency, "'"));
     }
   });
 }
@@ -35,7 +47,7 @@ var args = [];
 var nodeArgs = [];
 
 if (new _set["default"](['--version', '-v']).has(cmd)) {
-  console.log("next.js v" + _package["default"].version);
+  console.log("next.js v".concat(_package["default"].version));
   process.exit(0);
 }
 
@@ -48,7 +60,7 @@ if (inspectArg) {
 }
 
 if (new _set["default"](['--help', '-h']).has(cmd)) {
-  console.log("\n    Usage\n      $ next <command>\n\n    Available commands\n      " + (0, _from["default"])(commands).join(', ') + "\n\n    For more information run a command with the --help flag\n      $ next init --help\n  ");
+  console.log("\n    Usage\n      $ next <command>\n\n    Available commands\n      ".concat((0, _from["default"])(commands).join(', '), "\n\n    For more information run a command with the --help flag\n      $ next init --help\n  "));
   process.exit(0);
 }
 
@@ -64,7 +76,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || defaultEnv;
 var bin = (0, _path.join)(__dirname, 'next-' + cmd);
 
 var startProcess = function startProcess() {
-  var proc = (0, _crossSpawn.spawn)('node', [].concat(nodeArgs, [bin], args), {
+  var proc = (0, _crossSpawn.spawn)('node', [].concat(nodeArgs, [bin], (0, _toConsumableArray2["default"])(args)), {
     stdio: 'inherit',
     customFds: [0, 1, 2]
   });
@@ -78,7 +90,7 @@ var startProcess = function startProcess() {
         process.exit(137);
       }
 
-      console.log("got signal " + signal + ", exiting");
+      console.log("got signal ".concat(signal, ", exiting"));
       process.exit(signal === 'SIGINT' ? 0 : 1);
     }
 
@@ -107,9 +119,9 @@ if (cmd === 'dev') {
   var _require = require('fs'),
       watchFile = _require.watchFile;
 
-  watchFile(process.cwd() + "/" + _constants.CONFIG_FILE, function (cur, prev) {
+  watchFile("".concat(process.cwd(), "/").concat(_constants.CONFIG_FILE), function (cur, prev) {
     if (cur.size > 0 || prev.size > 0) {
-      console.log("\n> Found a change in " + _constants.CONFIG_FILE + ", restarting the server..."); // Don't listen to 'close' now since otherwise parent gets killed by listener
+      console.log("\n> Found a change in ".concat(_constants.CONFIG_FILE, ", restarting the server...")); // Don't listen to 'close' now since otherwise parent gets killed by listener
 
       proc.removeAllListeners('close');
       proc.kill();

@@ -2,6 +2,8 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
+require("core-js/modules/es6.function.name");
+
 var _loaderUtils = _interopRequireDefault(require("loader-utils"));
 
 module.exports = function (content, sourceMap) {

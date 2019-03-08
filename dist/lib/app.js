@@ -4,17 +4,33 @@ var _interopRequireWildcard = require("@babel/runtime-corejs2/helpers/interopReq
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
+require("core-js/modules/es6.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.createUrl = createUrl;
 exports.Container = exports["default"] = void 0;
 
-var _extends2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/extends"));
+require("core-js/modules/es6.regexp.replace");
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime-corejs2/regenerator"));
 
+require("regenerator-runtime/runtime");
+
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/asyncToGenerator"));
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inheritsLoose"));
+var _extends2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/extends"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inherits"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/defineProperty"));
 
@@ -29,75 +45,77 @@ var _router = require("./router");
 var App =
 /*#__PURE__*/
 function (_Component) {
-  (0, _inheritsLoose2["default"])(App, _Component);
+  (0, _inherits2["default"])(App, _Component);
 
   function App() {
-    return _Component.apply(this, arguments) || this;
+    (0, _classCallCheck2["default"])(this, App);
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(App).apply(this, arguments));
   }
 
-  App.getInitialProps =
-  /*#__PURE__*/
-  function () {
-    var _getInitialProps = (0, _asyncToGenerator2["default"])(
-    /*#__PURE__*/
-    _regenerator["default"].mark(function _callee(_ref) {
-      var Component, router, ctx, pageProps;
-      return _regenerator["default"].wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              Component = _ref.Component, router = _ref.router, ctx = _ref.ctx;
-              _context.next = 3;
-              return (0, _utils.loadGetInitialProps)(Component, ctx);
+  (0, _createClass2["default"])(App, [{
+    key: "getChildContext",
+    value: function getChildContext() {
+      var headManager = this.props.headManager;
+      return {
+        headManager: headManager,
+        router: (0, _router.makePublicRouterInstance)(this.props.router)
+      };
+    } // Kept here for backwards compatibility.
+    // When someone ended App they could call `super.componentDidCatch`. This is now deprecated.
 
-            case 3:
-              pageProps = _context.sent;
-              return _context.abrupt("return", {
-                pageProps: pageProps
-              });
-
-            case 5:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-
-    function getInitialProps(_x) {
-      return _getInitialProps.apply(this, arguments);
+  }, {
+    key: "componentDidCatch",
+    value: function componentDidCatch(err) {
+      throw err;
     }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          router = _this$props.router,
+          Component = _this$props.Component,
+          pageProps = _this$props.pageProps;
+      var url = createUrl(router);
+      return _react["default"].createElement(Container, null, _react["default"].createElement(Component, (0, _extends2["default"])({}, pageProps, {
+        url: url
+      })));
+    }
+  }], [{
+    key: "getInitialProps",
+    value: function () {
+      var _getInitialProps = (0, _asyncToGenerator2["default"])(
+      /*#__PURE__*/
+      _regenerator["default"].mark(function _callee(_ref) {
+        var Component, router, ctx, pageProps;
+        return _regenerator["default"].wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                Component = _ref.Component, router = _ref.router, ctx = _ref.ctx;
+                _context.next = 3;
+                return (0, _utils.loadGetInitialProps)(Component, ctx);
 
-    return getInitialProps;
-  }();
+              case 3:
+                pageProps = _context.sent;
+                return _context.abrupt("return", {
+                  pageProps: pageProps
+                });
 
-  var _proto = App.prototype;
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
 
-  _proto.getChildContext = function getChildContext() {
-    var headManager = this.props.headManager;
-    return {
-      headManager: headManager,
-      router: (0, _router.makePublicRouterInstance)(this.props.router)
-    };
-  } // Kept here for backwards compatibility.
-  // When someone ended App they could call `super.componentDidCatch`. This is now deprecated.
-  ;
+      function getInitialProps(_x) {
+        return _getInitialProps.apply(this, arguments);
+      }
 
-  _proto.componentDidCatch = function componentDidCatch(err) {
-    throw err;
-  };
-
-  _proto.render = function render() {
-    var _this$props = this.props,
-        router = _this$props.router,
-        Component = _this$props.Component,
-        pageProps = _this$props.pageProps;
-    var url = createUrl(router);
-    return _react["default"].createElement(Container, null, _react["default"].createElement(Component, (0, _extends2["default"])({}, pageProps, {
-      url: url
-    })));
-  };
-
+      return getInitialProps;
+    }()
+  }]);
   return App;
 }(_react.Component);
 
@@ -110,39 +128,43 @@ exports["default"] = App;
 var Container =
 /*#__PURE__*/
 function (_Component2) {
-  (0, _inheritsLoose2["default"])(Container, _Component2);
+  (0, _inherits2["default"])(Container, _Component2);
 
   function Container() {
-    return _Component2.apply(this, arguments) || this;
+    (0, _classCallCheck2["default"])(this, Container);
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(Container).apply(this, arguments));
   }
 
-  var _proto2 = Container.prototype;
+  (0, _createClass2["default"])(Container, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.scrollToHash();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      this.scrollToHash();
+    }
+  }, {
+    key: "scrollToHash",
+    value: function scrollToHash() {
+      var hash = window.location.hash;
+      hash = hash ? hash.substring(1) : false;
+      if (!hash) return;
+      var el = document.getElementById(hash);
+      if (!el) return; // If we call scrollIntoView() in here without a setTimeout
+      // it won't scroll properly.
 
-  _proto2.componentDidMount = function componentDidMount() {
-    this.scrollToHash();
-  };
-
-  _proto2.componentDidUpdate = function componentDidUpdate() {
-    this.scrollToHash();
-  };
-
-  _proto2.scrollToHash = function scrollToHash() {
-    var hash = window.location.hash;
-    hash = hash ? hash.substring(1) : false;
-    if (!hash) return;
-    var el = document.getElementById(hash);
-    if (!el) return; // If we call scrollIntoView() in here without a setTimeout
-    // it won't scroll properly.
-
-    setTimeout(function () {
-      return el.scrollIntoView();
-    }, 0);
-  };
-
-  _proto2.render = function render() {
-    return this.props.children;
-  };
-
+      setTimeout(function () {
+        return el.scrollIntoView();
+      }, 0);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return this.props.children;
+    }
+  }]);
   return Container;
 }(_react.Component);
 

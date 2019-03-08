@@ -2,6 +2,8 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/toConsumableArray"));
+
 var _assign = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/object/assign"));
 
 var _set = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/set"));
@@ -45,12 +47,12 @@ module.exports = _babelLoader["default"].custom(function (babel) {
           if (file && !isServer && !configs.has(file)) {
             configs.add(file);
             console.log("> Using external babel configuration");
-            console.log("> Location: \"" + file + "\"");
+            console.log("> Location: \"".concat(file, "\""));
           }
         }
       } else {
         // Add our default preset if the no "babelrc" found.
-        options.presets = [].concat(options.presets, [presetItem]);
+        options.presets = [].concat((0, _toConsumableArray2["default"])(options.presets), [presetItem]);
       }
 
       return options;

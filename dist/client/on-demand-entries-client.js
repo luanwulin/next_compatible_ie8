@@ -2,12 +2,18 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
+require("core-js/modules/es6.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports["default"] = void 0;
 
 var _promise = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/promise"));
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime-corejs2/regenerator"));
+
+require("regenerator-runtime/runtime");
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/asyncToGenerator"));
 
@@ -37,7 +43,7 @@ var _default = function _default(_ref) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.prev = 0;
-              url = (assetPrefix || '') + "/_next/on-demand-entries-ping?page=" + _router["default"].pathname;
+              url = "".concat(assetPrefix || '', "/_next/on-demand-entries-ping?page=").concat(_router["default"].pathname);
               _context.next = 4;
               return (0, _unfetch["default"])(url, {
                 credentials: 'same-origin'
@@ -75,7 +81,7 @@ var _default = function _default(_ref) {
             case 15:
               _context.prev = 15;
               _context.t0 = _context["catch"](0);
-              console.error("Error with on-demand-entries-ping: " + _context.t0.message);
+              console.error("Error with on-demand-entries-ping: ".concat(_context.t0.message));
 
             case 18:
             case "end":

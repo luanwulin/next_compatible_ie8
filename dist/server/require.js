@@ -2,13 +2,19 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
+require("core-js/modules/es6.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.pageNotFoundError = pageNotFoundError;
 exports.normalizePagePath = normalizePagePath;
 exports.getPagePath = getPagePath;
 exports["default"] = requirePage;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime-corejs2/regenerator"));
+
+require("regenerator-runtime/runtime");
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/asyncToGenerator"));
 
@@ -17,7 +23,7 @@ var _path = require("path");
 var _constants = require("../lib/constants");
 
 function pageNotFoundError(page) {
-  var err = new Error("Cannot find module for page: " + page);
+  var err = new Error("Cannot find module for page: ".concat(page));
   err.code = 'ENOENT';
   return err;
 }
@@ -30,7 +36,7 @@ function normalizePagePath(page) {
 
 
   if (page[0] !== '/') {
-    page = "/" + page;
+    page = "/".concat(page);
   } // Throw when using ../ etc in the pathname
 
 

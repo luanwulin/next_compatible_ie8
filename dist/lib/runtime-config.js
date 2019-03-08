@@ -1,6 +1,10 @@
 "use strict";
 
-exports.__esModule = true;
+require("core-js/modules/es6.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.setConfig = setConfig;
 exports["default"] = void 0;
 var runtimeConfig;

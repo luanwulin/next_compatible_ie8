@@ -1,7 +1,20 @@
 "use strict";
 
-exports.__esModule = true;
+require("core-js/modules/es6.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.rewriteStacktrace = rewriteStacktrace;
+
+require("core-js/modules/es6.regexp.replace");
+
+require("core-js/modules/es6.regexp.match");
+
+require("core-js/modules/es6.array.map");
+
+require("core-js/modules/es6.regexp.split");
+
 var filenameRE = /\(([^)]+\.js):(\d+):(\d+)\)$/;
 
 function rewriteStacktrace(e, distDir) {

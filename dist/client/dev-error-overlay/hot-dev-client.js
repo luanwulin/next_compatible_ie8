@@ -31,12 +31,22 @@ var _interopRequireWildcard = require("@babel/runtime-corejs2/helpers/interopReq
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
+require("core-js/modules/es6.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports["default"] = connect;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime-corejs2/regenerator"));
 
+require("regenerator-runtime/runtime");
+
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/asyncToGenerator"));
+
+require("core-js/modules/es6.function.name");
+
+require("core-js/modules/es6.regexp.replace");
 
 var _eventsource = require("./eventsource");
 
@@ -71,7 +81,7 @@ function connect(options) {
         colNumber = _ref.colNumber;
     // Resolve invalid paths coming from react-error-overlay
     var resolvedFilename = fileName.replace(/^webpack:\/\//, '');
-    (0, _unfetch["default"])('/_next/development/open-stack-frame-in-editor' + ("?fileName=" + window.encodeURIComponent(resolvedFilename)) + ("&lineNumber=" + (lineNumber || 1)) + ("&colNumber=" + (colNumber || 1)));
+    (0, _unfetch["default"])('/_next/development/open-stack-frame-in-editor' + "?fileName=".concat(window.encodeURIComponent(resolvedFilename)) + "&lineNumber=".concat(lineNumber || 1) + "&colNumber=".concat(colNumber || 1));
   }); // We need to keep track of if there has been a runtime error.
   // Essentially, we cannot guarantee application state was not corrupted by the
   // runtime error. To prevent confusing behavior, we forcibly reload the entire

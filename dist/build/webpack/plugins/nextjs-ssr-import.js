@@ -1,7 +1,21 @@
 "use strict";
 
-exports.__esModule = true;
+var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
+
+require("core-js/modules/es6.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports["default"] = void 0;
+
+require("core-js/modules/es6.regexp.replace");
+
+require("core-js/modules/es6.function.name");
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
 
 var _path = require("path");
 
@@ -10,25 +24,27 @@ var _path = require("path");
 var NextJsSsrImportPlugin =
 /*#__PURE__*/
 function () {
-  function NextJsSsrImportPlugin() {}
+  function NextJsSsrImportPlugin() {
+    (0, _classCallCheck2["default"])(this, NextJsSsrImportPlugin);
+  }
 
-  var _proto = NextJsSsrImportPlugin.prototype;
+  (0, _createClass2["default"])(NextJsSsrImportPlugin, [{
+    key: "apply",
+    value: function apply(compiler) {
+      compiler.hooks.compilation.tap('NextJsSSRImport', function (compilation) {
+        compilation.mainTemplate.hooks.requireEnsure.tap('NextJsSSRImport', function (code, chunk) {
+          // Update to load chunks from our custom chunks directory
+          var outputPath = (0, _path.resolve)('/');
+          var pagePath = (0, _path.join)('/', (0, _path.dirname)(chunk.name));
+          var relativePathToBaseDir = (0, _path.relative)(pagePath, outputPath); // Make sure even in windows, the path looks like in unix
+          // Node.js require system will convert it accordingly
 
-  _proto.apply = function apply(compiler) {
-    compiler.hooks.compilation.tap('NextJsSSRImport', function (compilation) {
-      compilation.mainTemplate.hooks.requireEnsure.tap('NextJsSSRImport', function (code, chunk) {
-        // Update to load chunks from our custom chunks directory
-        var outputPath = (0, _path.resolve)('/');
-        var pagePath = (0, _path.join)('/', (0, _path.dirname)(chunk.name));
-        var relativePathToBaseDir = (0, _path.relative)(pagePath, outputPath); // Make sure even in windows, the path looks like in unix
-        // Node.js require system will convert it accordingly
-
-        var relativePathToBaseDirNormalized = relativePathToBaseDir.replace(/\\/g, '/');
-        return code.replace('require("./"', "require(\"" + relativePathToBaseDirNormalized + "/\"").replace('readFile(join(__dirname', "readFile(join(__dirname, \"" + relativePathToBaseDirNormalized + "\"");
+          var relativePathToBaseDirNormalized = relativePathToBaseDir.replace(/\\/g, '/');
+          return code.replace('require("./"', "require(\"".concat(relativePathToBaseDirNormalized, "/\"")).replace('readFile(join(__dirname', "readFile(join(__dirname, \"".concat(relativePathToBaseDirNormalized, "\""));
+        });
       });
-    });
-  };
-
+    }
+  }]);
   return NextJsSsrImportPlugin;
 }();
 

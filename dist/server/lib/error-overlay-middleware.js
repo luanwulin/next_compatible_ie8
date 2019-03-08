@@ -2,10 +2,16 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
+require("core-js/modules/es6.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports["default"] = errorOverlayMiddleware;
 
 var _parseInt2 = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/parse-int"));
+
+require("core-js/modules/es6.string.starts-with");
 
 var _url = _interopRequireDefault(require("url"));
 
@@ -17,7 +23,7 @@ function errorOverlayMiddleware(req, res, next) {
 
     var lineNumber = (0, _parseInt2["default"])(query.lineNumber, 10) || 1;
     var colNumber = (0, _parseInt2["default"])(query.colNumber, 10) || 1;
-    (0, _launchEditor["default"])(query.fileName + ":" + lineNumber + ":" + colNumber);
+    (0, _launchEditor["default"])("".concat(query.fileName, ":").concat(lineNumber, ":").concat(colNumber));
     res.end();
   } else {
     next();

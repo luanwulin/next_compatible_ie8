@@ -2,11 +2,33 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
+require("core-js/modules/es6.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.defaultHead = defaultHead;
 exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inheritsLoose"));
+require("core-js/modules/es6.array.index-of");
+
+var _set = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/set"));
+
+require("core-js/modules/es6.array.reduce");
+
+require("core-js/modules/es6.array.filter");
+
+require("core-js/modules/es6.array.map");
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/inherits"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/defineProperty"));
 
@@ -16,23 +38,22 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _sideEffect = _interopRequireDefault(require("./side-effect"));
 
-var _set = _interopRequireDefault(require("./set"));
-
 var Head =
 /*#__PURE__*/
 function (_React$Component) {
-  (0, _inheritsLoose2["default"])(Head, _React$Component);
+  (0, _inherits2["default"])(Head, _React$Component);
 
   function Head() {
-    return _React$Component.apply(this, arguments) || this;
+    (0, _classCallCheck2["default"])(this, Head);
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(Head).apply(this, arguments));
   }
 
-  var _proto = Head.prototype;
-
-  _proto.render = function render() {
-    return null;
-  };
-
+  (0, _createClass2["default"])(Head, [{
+    key: "render",
+    value: function render() {
+      return null;
+    }
+  }]);
   return Head;
 }(_react["default"].Component);
 
@@ -41,11 +62,8 @@ function (_React$Component) {
 });
 var NEXT_HEAD_IDENTIFIER = 'next-head';
 
-function defaultHead(className) {
-  if (className === void 0) {
-    className = NEXT_HEAD_IDENTIFIER;
-  }
-
+function defaultHead() {
+  var className = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : NEXT_HEAD_IDENTIFIER;
   return [_react["default"].createElement("meta", {
     key: "charSet",
     charSet: "utf-8",

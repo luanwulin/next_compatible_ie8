@@ -4,7 +4,11 @@ var _interopRequireWildcard = require("@babel/runtime-corejs2/helpers/interopReq
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
+require("core-js/modules/es6.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.render = render;
 exports.renderToHTML = renderToHTML;
 exports.renderError = renderError;
@@ -13,15 +17,33 @@ exports.renderScriptError = renderScriptError;
 exports.sendHTML = sendHTML;
 exports.serveStatic = serveStatic;
 
+require("core-js/modules/es6.array.map");
+
+var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/typeof"));
+
 var _set = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/set"));
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/toConsumableArray"));
+
+require("core-js/modules/web.dom.iterable");
+
+require("core-js/modules/es6.array.iterator");
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/slicedToArray"));
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime-corejs2/regenerator"));
 
+require("regenerator-runtime/runtime");
+
 var _promise = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/promise"));
+
+require("core-js/modules/es6.function.name");
 
 var _objectSpread2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/objectSpread"));
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/asyncToGenerator"));
+
+require("core-js/modules/es6.array.reduce");
 
 var _path = require("path");
 
@@ -128,11 +150,8 @@ function _renderError() {
   return _renderError.apply(this, arguments);
 }
 
-function renderErrorToHTML(err, req, res, pathname, query, opts) {
-  if (opts === void 0) {
-    opts = {};
-  }
-
+function renderErrorToHTML(err, req, res, pathname, query) {
+  var opts = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : {};
   return doRender(req, res, pathname, query, (0, _objectSpread2["default"])({}, opts, {
     err: err,
     page: '/_error'
@@ -144,28 +163,63 @@ function getPageFiles(buildManifest, page) {
   var files = buildManifest.pages[normalizedPage];
 
   if (!files) {
-    console.warn("Could not find files for " + normalizedPage + " in .next/build-manifest.json");
+    console.warn("Could not find files for ".concat(normalizedPage, " in .next/build-manifest.json"));
     return [];
   }
 
   return files;
 }
 
-function doRender(_x12, _x13, _x14, _x15, _x16) {
+function doRender(_x12, _x13, _x14, _x15) {
   return _doRender.apply(this, arguments);
 }
 
 function _doRender() {
   _doRender = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
-  _regenerator["default"].mark(function _callee3(req, res, pathname, query, _temp) {
-    var _ref2, err, page, buildId, hotReloader, assetPrefix, runtimeConfig, distDir, dir, _ref2$dev, dev, _ref2$staticMarkup, staticMarkup, nextExport, documentPath, appPath, _ref3, buildManifest, reactLoadableManifest, Component, Document, App, asPath, ctx, router, props, devFiles, files, reactLoadableModules, renderPage, docProps, dynamicImports, dynamicImportsIds, doc;
+  _regenerator["default"].mark(function _callee3(req, res, pathname, query) {
+    var _ref2,
+        err,
+        page,
+        buildId,
+        hotReloader,
+        assetPrefix,
+        runtimeConfig,
+        distDir,
+        dir,
+        _ref2$dev,
+        dev,
+        _ref2$staticMarkup,
+        staticMarkup,
+        nextExport,
+        documentPath,
+        appPath,
+        _ref3,
+        _ref4,
+        buildManifest,
+        reactLoadableManifest,
+        Component,
+        Document,
+        App,
+        asPath,
+        ctx,
+        router,
+        props,
+        devFiles,
+        files,
+        reactLoadableModules,
+        renderPage,
+        docProps,
+        dynamicImports,
+        dynamicImportsIds,
+        doc,
+        _args3 = arguments;
 
     return _regenerator["default"].wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            _ref2 = _temp === void 0 ? {} : _temp, err = _ref2.err, page = _ref2.page, buildId = _ref2.buildId, hotReloader = _ref2.hotReloader, assetPrefix = _ref2.assetPrefix, runtimeConfig = _ref2.runtimeConfig, distDir = _ref2.distDir, dir = _ref2.dir, _ref2$dev = _ref2.dev, dev = _ref2$dev === void 0 ? false : _ref2$dev, _ref2$staticMarkup = _ref2.staticMarkup, staticMarkup = _ref2$staticMarkup === void 0 ? false : _ref2$staticMarkup, nextExport = _ref2.nextExport;
+            _ref2 = _args3.length > 4 && _args3[4] !== undefined ? _args3[4] : {}, err = _ref2.err, page = _ref2.page, buildId = _ref2.buildId, hotReloader = _ref2.hotReloader, assetPrefix = _ref2.assetPrefix, runtimeConfig = _ref2.runtimeConfig, distDir = _ref2.distDir, dir = _ref2.dir, _ref2$dev = _ref2.dev, dev = _ref2$dev === void 0 ? false : _ref2$dev, _ref2$staticMarkup = _ref2.staticMarkup, staticMarkup = _ref2$staticMarkup === void 0 ? false : _ref2$staticMarkup, nextExport = _ref2.nextExport;
             page = page || pathname; // In dev mode we use on demand entries to compile the page before rendering
 
             if (!hotReloader) {
@@ -186,21 +240,22 @@ function _doRender() {
 
           case 9:
             _ref3 = _context3.sent;
-            buildManifest = _ref3[0];
-            reactLoadableManifest = _ref3[1];
-            Component = _ref3[2];
-            Document = _ref3[3];
-            App = _ref3[4];
+            _ref4 = (0, _slicedToArray2["default"])(_ref3, 5);
+            buildManifest = _ref4[0];
+            reactLoadableManifest = _ref4[1];
+            Component = _ref4[2];
+            Document = _ref4[3];
+            App = _ref4[4];
             Component = Component["default"] || Component;
 
             if (!(typeof Component !== 'function')) {
-              _context3.next = 18;
+              _context3.next = 19;
               break;
             }
 
-            throw new Error("The default export is not a React Component in page: \"" + page + "\"");
+            throw new Error("The default export is not a React Component in page: \"".concat(page, "\""));
 
-          case 18:
+          case 19:
             App = App["default"] || App;
             Document = Document["default"] || Document;
             asPath = req.url;
@@ -213,41 +268,38 @@ function _doRender() {
               asPath: asPath
             };
             router = new _router.Router(page, query, asPath);
-            _context3.next = 25;
+            _context3.next = 26;
             return (0, _utils.loadGetInitialProps)(App, {
               Component: Component,
               router: router,
               ctx: ctx
             });
 
-          case 25:
+          case 26:
             props = _context3.sent;
             devFiles = buildManifest.devFiles;
-            files = [].concat(new _set["default"]([].concat(getPageFiles(buildManifest, page), getPageFiles(buildManifest, '/_app'), getPageFiles(buildManifest, '/_error')))); // the response might be finshed on the getinitialprops call
+            files = (0, _toConsumableArray2["default"])(new _set["default"]([].concat((0, _toConsumableArray2["default"])(getPageFiles(buildManifest, page)), (0, _toConsumableArray2["default"])(getPageFiles(buildManifest, '/_app')), (0, _toConsumableArray2["default"])(getPageFiles(buildManifest, '/_error'))))); // the response might be finshed on the getinitialprops call
 
             if (!(0, _utils.isResSent)(res)) {
-              _context3.next = 30;
+              _context3.next = 31;
               break;
             }
 
             return _context3.abrupt("return");
 
-          case 30:
+          case 31:
             reactLoadableModules = [];
 
-            renderPage = function renderPage(options) {
-              if (options === void 0) {
-                options = function options(Page) {
-                  return Page;
-                };
-              }
-
+            renderPage = function renderPage() {
+              var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function (Page) {
+                return Page;
+              };
               var EnhancedApp = App;
               var EnhancedComponent = Component; // For backwards compatibility
 
               if (typeof options === 'function') {
                 EnhancedComponent = options(Component);
-              } else if (typeof options === 'object') {
+              } else if ((0, _typeof2["default"])(options) === 'object') {
                 if (options.enhanceApp) {
                   EnhancedApp = options.enhanceApp(App);
                 }
@@ -291,38 +343,38 @@ function _doRender() {
               };
             };
 
-            _context3.next = 34;
+            _context3.next = 35;
             return _loadable["default"].preloadAll();
 
-          case 34:
-            _context3.next = 36;
+          case 35:
+            _context3.next = 37;
             return (0, _utils.loadGetInitialProps)(Document, (0, _objectSpread2["default"])({}, ctx, {
               renderPage: renderPage
             }));
 
-          case 36:
+          case 37:
             docProps = _context3.sent;
-            dynamicImports = [].concat(new _set["default"](getDynamicImportBundles(reactLoadableManifest, reactLoadableModules)));
+            dynamicImports = (0, _toConsumableArray2["default"])(new _set["default"](getDynamicImportBundles(reactLoadableManifest, reactLoadableModules)));
             dynamicImportsIds = dynamicImports.map(function (bundle) {
               return bundle.id;
             });
 
             if (!(0, _utils.isResSent)(res)) {
-              _context3.next = 41;
+              _context3.next = 42;
               break;
             }
 
             return _context3.abrupt("return");
 
-          case 41:
+          case 42:
             if (!(!Document.prototype || !Document.prototype.isReactComponent)) {
-              _context3.next = 43;
+              _context3.next = 44;
               break;
             }
 
             throw new Error('_document.js is not exporting a React component');
 
-          case 43:
+          case 44:
             doc = _react["default"].createElement(Document, (0, _objectSpread2["default"])({
               __NEXT_DATA__: {
                 props: props,
@@ -354,7 +406,7 @@ function _doRender() {
             }, docProps));
             return _context3.abrupt("return", '<!DOCTYPE html>' + (0, _server.renderToStaticMarkup)(doc));
 
-          case 45:
+          case 46:
           case "end":
             return _context3.stop();
         }
@@ -364,7 +416,7 @@ function _doRender() {
   return _doRender.apply(this, arguments);
 }
 
-function renderScriptError(_x17, _x18, _x19, _x20) {
+function renderScriptError(_x16, _x17, _x18, _x19) {
   return _renderScriptError.apply(this, arguments);
 }
 

@@ -2,10 +2,20 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
+require("core-js/modules/es6.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports["default"] = build;
 
+require("core-js/modules/web.dom.iterable");
+
+require("core-js/modules/es6.array.iterator");
+
 var _regenerator = _interopRequireDefault(require("@babel/runtime-corejs2/regenerator"));
+
+require("regenerator-runtime/runtime");
 
 var _promise = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/promise"));
 
@@ -28,23 +38,25 @@ var _webpack2 = _interopRequireDefault(require("./webpack"));
 var access = (0, _promisify["default"])(_fs["default"].access);
 var writeFile = (0, _promisify["default"])(_fs["default"].writeFile);
 
-function build(_x, _x2) {
+function build(_x) {
   return _build.apply(this, arguments);
 }
 
 function _build() {
   _build = (0, _asyncToGenerator2["default"])(
   /*#__PURE__*/
-  _regenerator["default"].mark(function _callee2(dir, conf) {
-    var config, buildId, distDir, configs;
+  _regenerator["default"].mark(function _callee2(dir) {
+    var conf,
+        config,
+        buildId,
+        distDir,
+        configs,
+        _args2 = arguments;
     return _regenerator["default"].wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            if (conf === void 0) {
-              conf = null;
-            }
-
+            conf = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
             config = (0, _config["default"])(_constants.PHASE_PRODUCTION_BUILD, dir, conf);
             _context2.next = 4;
             return config.generateBuildId();
@@ -154,13 +166,13 @@ function runCompiler(compiler) {
       }, _callee);
     }));
 
-    return function (_x3, _x4) {
+    return function (_x2, _x3) {
       return _ref.apply(this, arguments);
     };
   }());
 }
 
-function writeBuildId(_x5, _x6) {
+function writeBuildId(_x4, _x5) {
   return _writeBuildId.apply(this, arguments);
 }
 

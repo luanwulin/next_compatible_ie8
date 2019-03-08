@@ -2,12 +2,18 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
+require("core-js/modules/es6.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports["default"] = start;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime-corejs2/regenerator"));
 
 var _promise = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/promise"));
+
+require("regenerator-runtime/runtime");
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/asyncToGenerator"));
 

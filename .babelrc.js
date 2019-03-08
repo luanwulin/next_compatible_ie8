@@ -1,14 +1,13 @@
 module.exports = {
   'presets': [
     ['@babel/preset-env', {
-      'useBuiltIns': 'entry',
+      'useBuiltIns': 'usage',
+      'modules': 'commonjs',
       'targets': {
         'browsers': [
           'ie >= 8'
         ]
-      },
-      'modules': 'commonjs',
-      'loose': true
+      }
     }],
     '@babel/preset-react',
     '@babel/preset-flow'

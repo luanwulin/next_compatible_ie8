@@ -2,14 +2,28 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
+require("core-js/modules/es6.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.ReactLoadablePlugin = void 0;
 
 var _stringify = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/json/stringify"));
 
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
+
+require("core-js/modules/es6.function.name");
+
+require("core-js/modules/es6.regexp.match");
+
 var _getIterator2 = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/get-iterator"));
 
-var _isArray2 = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/array/is-array"));
+require("core-js/modules/web.dom.iterable");
+
+require("core-js/modules/es6.array.for-each");
 
 var _url = _interopRequireDefault(require("url"));
 
@@ -40,46 +54,54 @@ function buildManifest(compiler, compilation) {
   var manifest = {};
   compilation.chunks.forEach(function (chunk) {
     chunk.files.forEach(function (file) {
-      for (var _iterator = chunk.modulesIterable, _isArray = (0, _isArray2["default"])(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator2["default"])(_iterator);;) {
-        var _ref;
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
 
-        if (_isArray) {
-          if (_i >= _iterator.length) break;
-          _ref = _iterator[_i++];
-        } else {
-          _i = _iterator.next();
-          if (_i.done) break;
-          _ref = _i.value;
+      try {
+        for (var _iterator = (0, _getIterator2["default"])(chunk.modulesIterable), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var module = _step.value;
+          var id = module.id;
+          var name = typeof module.libIdent === 'function' ? module.libIdent({
+            context: context
+          }) : null; // If it doesn't end in `.js` Next.js can't handle it right now.
+
+          if (!file.match(/\.js$/) || !file.match(/^static\/chunks\//)) {
+            return;
+          }
+
+          var publicPath = _url["default"].resolve(compilation.outputOptions.publicPath || '', file);
+
+          var currentModule = module;
+
+          if (module.constructor.name === 'ConcatenatedModule') {
+            currentModule = module.rootModule;
+          }
+
+          if (!manifest[currentModule.rawRequest]) {
+            manifest[currentModule.rawRequest] = [];
+          }
+
+          manifest[currentModule.rawRequest].push({
+            id: id,
+            name: name,
+            file: file,
+            publicPath: publicPath
+          });
         }
-
-        var module = _ref;
-        var id = module.id;
-        var name = typeof module.libIdent === 'function' ? module.libIdent({
-          context: context
-        }) : null; // If it doesn't end in `.js` Next.js can't handle it right now.
-
-        if (!file.match(/\.js$/) || !file.match(/^static\/chunks\//)) {
-          return;
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
         }
-
-        var publicPath = _url["default"].resolve(compilation.outputOptions.publicPath || '', file);
-
-        var currentModule = module;
-
-        if (module.constructor.name === 'ConcatenatedModule') {
-          currentModule = module.rootModule;
-        }
-
-        if (!manifest[currentModule.rawRequest]) {
-          manifest[currentModule.rawRequest] = [];
-        }
-
-        manifest[currentModule.rawRequest].push({
-          id: id,
-          name: name,
-          file: file,
-          publicPath: publicPath
-        });
       }
     });
   });
@@ -89,34 +111,32 @@ function buildManifest(compiler, compilation) {
 var ReactLoadablePlugin =
 /*#__PURE__*/
 function () {
-  function ReactLoadablePlugin(opts) {
-    if (opts === void 0) {
-      opts = {};
-    }
-
+  function ReactLoadablePlugin() {
+    var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    (0, _classCallCheck2["default"])(this, ReactLoadablePlugin);
     this.filename = opts.filename;
   }
 
-  var _proto = ReactLoadablePlugin.prototype;
+  (0, _createClass2["default"])(ReactLoadablePlugin, [{
+    key: "apply",
+    value: function apply(compiler) {
+      var _this = this;
 
-  _proto.apply = function apply(compiler) {
-    var _this = this;
-
-    compiler.hooks.emit.tapAsync('ReactLoadableManifest', function (compilation, callback) {
-      var manifest = buildManifest(compiler, compilation);
-      var json = (0, _stringify["default"])(manifest, null, 2);
-      compilation.assets[_this.filename] = {
-        source: function source() {
-          return json;
-        },
-        size: function size() {
-          return json.length;
-        }
-      };
-      callback();
-    });
-  };
-
+      compiler.hooks.emit.tapAsync('ReactLoadableManifest', function (compilation, callback) {
+        var manifest = buildManifest(compiler, compilation);
+        var json = (0, _stringify["default"])(manifest, null, 2);
+        compilation.assets[_this.filename] = {
+          source: function source() {
+            return json;
+          },
+          size: function size() {
+            return json.length;
+          }
+        };
+        callback();
+      });
+    }
+  }]);
   return ReactLoadablePlugin;
 }();
 

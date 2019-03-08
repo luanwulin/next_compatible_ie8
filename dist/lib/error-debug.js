@@ -2,9 +2,17 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
+require("core-js/modules/es6.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports["default"] = ErrorDebug;
 exports.styles = void 0;
+
+require("core-js/modules/es6.regexp.replace");
+
+require("core-js/modules/es6.function.name");
 
 var _react = _interopRequireDefault(require("react"));
 

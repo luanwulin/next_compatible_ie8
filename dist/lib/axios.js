@@ -2,10 +2,22 @@
 
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 
-exports.__esModule = true;
+require("core-js/modules/es6.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports["default"] = _default;
 
 var _promise = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/promise"));
+
+require("core-js/modules/es6.function.bind");
+
+require("core-js/modules/es6.function.name");
+
+require("core-js/modules/web.dom.iterable");
+
+require("core-js/modules/es6.array.for-each");
 
 var _isArray = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/array/is-array"));
 
@@ -26,12 +38,10 @@ function _default(opts) {
 
   var axiosExtraProto = {}; // Sets a common header
 
-  axiosExtraProto.setHeader = function setHeader(name, value, scopes) {
+  axiosExtraProto.setHeader = function setHeader(name, value) {
     var _this = this;
 
-    if (scopes === void 0) {
-      scopes = 'common';
-    }
+    var scopes = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'common';
 
     if (!(0, _isArray["default"])(scopes)) {
       scopes = [scopes];
@@ -48,11 +58,8 @@ function _default(opts) {
   }; // Set requests token
 
 
-  axiosExtraProto.setToken = function setToken(token, type, scopes) {
-    if (scopes === void 0) {
-      scopes = 'common';
-    }
-
+  axiosExtraProto.setToken = function setToken(token, type) {
+    var scopes = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'common';
     var value = !token ? null : (type ? type + ' ' : '') + token;
     this.setHeader('Authorization', value, scopes);
   }; // Request helpers
