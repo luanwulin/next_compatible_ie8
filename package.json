@@ -129,7 +129,7 @@
     "chromedriver": "2.32.3",
     "coveralls": "2.13.1",
     "cross-env": "5.0.5",
-    "express": "4.16.3",
+    "express": "4.17.3",
     "fkill": "5.1.0",
     "husky": "0.14.3",
     "jest-cli": "21.2.0",
